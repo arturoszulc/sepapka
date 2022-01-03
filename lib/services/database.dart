@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sepapka/objects/question.dart';
-import 'package:sepapka/objects/question_consts.dart';
+import 'package:sepapka/models/question.dart';
+import 'package:sepapka/models/question_consts.dart';
 
 
 
