@@ -23,8 +23,33 @@ class _WrapperState extends State<Wrapper> {
     //1. authetnticate
     // AuthenticateService.user
 
+    final loggedUser = Provider.of<LoggedUser>(context);
+    const String uid = '123';
+
+    return FutureBuilder(
+        future: tempUser = db.getUserData(uid),
+        builder: (context, AsyncSnapshot<LoggedUser> snapshot) {
+          if (snapshot.hasData) {
+            debugPrint('OK: ${snapshot.data!.documentId}');
+            return Menu();
+          } else
+            debugPrint('NOT OK');
+          return Container();
+        }
+    );
+  }
+
+  Future<LoggedUser> prepareUserData(LoggedUser loggedUser, String uid) async {
+    debugPrint('prepareUserData function deployed');
+
+
     //2. fetch user from DB
     //var LoggedUser = DatabaseService.getUserData
+    loggedUser = await db.getUserData(uid);
+
+    debugPrint('LOGGED USER DOWNLOADED');
+    debugPrint('LOGGED USER ID: ${loggedUser.documentId}');
+    debugPrint('LOGGED USER qKnown: ${loggedUser.qKnown}');
 
     ///3. Sprawdź czy lista pytań jest aktualna
     ///a) wyciągnij numer listy pytań z Usera USERSERVICE
@@ -37,14 +62,9 @@ class _WrapperState extends State<Wrapper> {
     ///
     //get user data and create LoggedUser object
 
-    final loggedUser = Provider.of<LoggedUser>(context);
 
     //fill loggedUser object
 
-
-
-    return FutureBuilder(
-      future: tempUser = db.getUserData(user.uid),
-        builder: builder);
+    return loggedUser;
   }
 }

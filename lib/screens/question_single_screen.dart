@@ -56,7 +56,7 @@ class _QuestionSingleScreenState extends State<QuestionSingleScreen> {
                             // expandedAlignment: Alignment.centerLeft,
                             // childrenPadding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
                             title: Text(
-                              q.a,
+                              q.a1,
                               style: const TextStyle(
                                   fontSize: 16.0, fontWeight: FontWeight.bold),
                             ),
