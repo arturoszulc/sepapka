@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sepapka/models/question.dart';
 import 'package:sepapka/models/question_consts.dart';
 

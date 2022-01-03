@@ -5,6 +5,8 @@ class Menu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('Menu built');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('SEPapka'),
