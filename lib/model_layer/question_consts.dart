@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sepapka/models/question.dart';
+import 'package:sepapka/model_layer/question.dart';
 
 const labelNew = 'nowy';
 const labelKnown = 'znam';
