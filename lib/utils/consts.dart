@@ -78,3 +78,8 @@ Question q6 = Question(
   level: 1,
 
 );
+
+//Errors
+
+const NO_USER = 100;
+const GET_USER_ERROR = 101;
