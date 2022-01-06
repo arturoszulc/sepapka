@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:sepapka/model_layer/services/database.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
@@ -10,17 +11,20 @@ import '../question.dart';
 
 class QuestionService{
 
-  List<Question> qListGlobal = [q1, q2, q3, q4, q5, q6];
-  Question? _singleKnownQuestion;
-
-  Question? getSingleKnownQuestion() {
-    return _singleKnownQuestion;
-  }
-
   //Services Injection
   UserService _userService = serviceLocator.get<UserService>();
   DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
 
+  //Properties
+  List<Question> qListGlobal = [q1, q2, q3, q4, q5, q6];
+  Question? _singleKnownQuestion;
+
+
+  //Getters
+  Question? get singleKnownQuestion => _singleKnownQuestion;
+
+
+  //Methods
   Future prepareKnownQuestion() async {
 
     //get ID of first KnownQuestion from user qKnownList
@@ -36,17 +40,16 @@ class QuestionService{
     }
   }
 
-  //mark as known
-  Future markQuestionAsKnown(String questionId) async {
-    var updatedUser = await _userService.addQuestionToKnown(questionId);
 
-    //create Update User in Database Method in DataBase Service
+  Future moveQuestionToPractice(String questionId) async {
+
+    //Place Question in the right list
+    var updatedUser = await _userService.moveQuestionToPractice(questionId);
+
+    if (updatedUser != null) {
+      //Send updated User to database
+    }
 
   }
-  //move to unknown
-
-  //move to new
-
-
 
 }

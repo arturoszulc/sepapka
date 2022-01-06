@@ -15,17 +15,17 @@ class DatabaseService {
     List<Question> qList = [q1, q2, q3, q4, q5, q6];
     return LoggedUser(
       documentId: uid,
-      qVersion: 1,
-      qNew: [
+      qListVersion: 1,
+      qListNew: [
         QMap(id: qList[0].id, dateModified: '2021-00-00', numberFib: 0),
       ],
-      qUnknown: [
+      qListPractice: [
         QMap(id: qList[1].id, dateModified: '2021-00-00', numberFib: 0),
         QMap(id: qList[2].id, dateModified: '2021-00-00', numberFib: 0),
         QMap(id: qList[3].id, dateModified: '2021-00-00', numberFib: 0),
 
       ],
-      qKnown: [
+      qListDeleted: [
         QMap(id: qList[4].id, dateModified: '2021-00-00', numberFib: 0),
         QMap(id: qList[5].id, dateModified: '2021-00-00', numberFib: 0),
 

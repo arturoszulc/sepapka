@@ -22,7 +22,10 @@ class QuestionSingleScreen extends StatelessWidget {
           children: [
             Card(child: Text(question.q)),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                await manager.moveQuestionToPractice(question.id);
+
+              },
               child: Text('Show answer'),
             ),
           ],

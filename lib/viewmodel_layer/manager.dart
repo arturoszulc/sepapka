@@ -16,11 +16,14 @@ class Manager extends ChangeNotifier {
   //Manager properties
   bool _loading = false;
 
-  //Getters
-  LoggedUser? get loggedUser => _userService.getUser();
-  Question? get singleKnownQuestion => _questionService.getSingleKnownQuestion();
-
+  //Manager getters
   bool get loading => _loading;
+
+  //External Getters
+  LoggedUser? get loggedUser => _userService.loggedUser;
+  Question? get singleKnownQuestion => _questionService.singleKnownQuestion;
+
+
 
   setLoading(bool loading) async {
     _loading = loading;
@@ -40,11 +43,11 @@ class Manager extends ChangeNotifier {
     setLoading(false);
   }
 
-  prepareKnownQuestion() async {
+  prepareSingleQuestion() async {
     await _questionService.prepareKnownQuestion();
   }
 
-  markQuestionAsKnown(String questionId) async {
-    await _questionService.markQuestionAsKnown(questionId);
+  moveQuestionToPractice(String questionId) async {
+    await _questionService.moveQuestionToPractice(questionId);
 }
 }

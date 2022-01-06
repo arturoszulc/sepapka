@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
+import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
 
 class UserService {
   //Models
   LoggedUser? _loggedUser;
 
-  LoggedUser? getUser() {
-    return _loggedUser;
-  }
+  LoggedUser? get loggedUser => _loggedUser;
 
   createUser(LoggedUser user) {
     _loggedUser = user;
@@ -17,7 +16,7 @@ class UserService {
 
   getKnownQuestionID() {
     debugPrint('UserService.getKnownQuestionID deployed');
-    String? qId = _loggedUser!.qKnown.first['id'];
+    String? qId = _loggedUser!.qListDeleted.first['id'];
 
     if (qId != null) {
       return Success(response: qId);
@@ -26,20 +25,25 @@ class UserService {
     }
   }
 
-  Future<LoggedUser?> addQuestionToKnown(String questionId) async {
-    var removeNewResult = await removeQuestionFromNew(questionId);
-    var removeKnownResult = await removeQuestionFromKnown(questionId);
-    var removeUnknownResult = await removeQUestionFromUnknown(questionId);
-    if (removeNewResult || removeUnknownResult) {
-      return getUser();
-    }
-    else {
-      return null;
-    }
+  Future<LoggedUser?> moveQuestionToPractice(String questionId) async {
+
+    //find Question by ID, retrieve it's QMap, and delete it form list
+
+    //Update QMap
+
+    //Add QMap to Practice List
+
+      return _loggedUser;
+
+  }
+
+  QMap? getQMapById(String questionId) {
+    //Look it up
+    return null;
   }
 
  removeQuestionFromNew(String questionId) {
-  if (_loggedUser!.qNew.contains({'id': questionId})) {
+  if (_loggedUser!.qListNew.contains({'id': questionId})) {
     return true;
   }
 }
