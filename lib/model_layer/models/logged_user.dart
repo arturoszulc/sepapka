@@ -1,17 +1,19 @@
 
+import 'package:sepapka/model_layer/models/question_map.dart';
+
 class LoggedUser {
   String documentId;
-  // int qVersion;
-  // List<Map> qNew;
-  // List<Map> qUnknown;
-  // List<Map> qKnown;
+  int qVersion;
+  List<QMap> qNew;
+  List<QMap> qUnknown;
+  List<QMap> qKnown;
 
   LoggedUser(
       {
         required this.documentId,
-        // required this.qVersion,
-        // required this.qNew,
-        // required this.qUnknown,
-        // required this.qKnown
+        required this.qVersion,
+        required this.qNew,
+        required this.qUnknown,
+        required this.qKnown
       });
 }

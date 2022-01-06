@@ -1,22 +1,26 @@
-// import 'package:flutter/material.dart';
-//
-//
-// class QuestionListScreen extends StatelessWidget {
-//   const QuestionListScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Lista pytań'),
-//         elevation: 0.0,
-//       ),
-//       body: BuildQuestionList(),
-//     );
-//   }
-//
-//
-// }
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sepapka/viewmodel_layer/manager.dart';
+
+
+class QuestionListScreen extends StatelessWidget {
+  const QuestionListScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Lista pytań'),
+        elevation: 0.0,
+      ),
+      body: Container(),
+    );
+  }
+
+
+}
 //
 //
 //
@@ -28,8 +32,7 @@
 // }
 //
 // class _BuildQuestionListState extends State<BuildQuestionList> {
-//   DatabaseService db = DatabaseService();
-//   List<Question> qList = [];
+//
 //
 //
 //   @override
@@ -41,8 +44,9 @@
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     debugPrint('Question list built');
+//     debugPrint('*** Question list built ***');
 //
+//     final manager = Provider.of<Manager>(context);
 //
 //     return ListView.builder(
 //           itemCount: qList.length,

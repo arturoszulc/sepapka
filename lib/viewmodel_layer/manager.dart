@@ -1,22 +1,24 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
+import 'package:sepapka/model_layer/question.dart';
+import 'package:sepapka/model_layer/services/auth.dart';
+import 'package:sepapka/model_layer/services/question.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 
 class Manager extends ChangeNotifier {
-  //Services Initialization
-  // final UserService _userService = UserService();
+  //Services Injection
+  AuthService _authService = serviceLocator.get<AuthService>();
+  UserService _userService = serviceLocator.get<UserService>();
+  QuestionService _questionService = serviceLocator.get<QuestionService>();
 
-  //Models
-  LoggedUser? _loggedUser;
-
-  //Other properties
+  //Manager properties
   bool _loading = false;
 
   //Getters
-  LoggedUser? get loggedUser => _loggedUser;
+  LoggedUser? get loggedUser => _userService.getUser();
+  Question? get singleKnownQuestion => _questionService.getSingleKnownQuestion();
 
   bool get loading => _loading;
 
@@ -27,18 +29,22 @@ class Manager extends ChangeNotifier {
 
   signIn({required String email, required String password}) async {
     setLoading(true);
-    var result = await UserService.getUser(email, password);
+    var result = await _authService.signInEmail(email, password);
+    // var result = await UserService.getUser(email, password);
     if (result is Success) {
-      debugPrint('SUCCESS response: ${result.response}');
-      setLoggedUser(result.response as String);
+      debugPrint('Manager.signIn() SUCCESS response: ${result.response}');
     }
     if (result is Failure) {
-      debugPrint('FAILURE response: ${result.errorResponse}');
+      debugPrint('Manager.signIn() failure response: ${result.errorResponse}');
     }
     setLoading(false);
   }
 
-  setLoggedUser(String uid) {
-    _loggedUser = LoggedUser(documentId: uid);
+  prepareKnownQuestion() async {
+    await _questionService.prepareKnownQuestion();
   }
+
+  markQuestionAsKnown(String questionId) async {
+    await _questionService.markQuestionAsKnown(questionId);
+}
 }

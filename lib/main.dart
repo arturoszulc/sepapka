@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sepapka/locator.dart';
+import 'package:sepapka/view_layer/question_single_screen.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 
 void main() {
+  setupGetIt();
   runApp(const MyApp());
 }
 
@@ -26,6 +29,11 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.yellow,
         ),
         home: const Wrapper(),
+        routes: {
+          '/wrapper': (context) => const Wrapper(),
+          '/question-single': (context) => const QuestionSingleScreen(),
+
+        },
 
       ),
     );

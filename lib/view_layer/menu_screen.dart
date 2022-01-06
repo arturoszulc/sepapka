@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('Menu built');
+    debugPrint('*** Menu built ***');
+
+    final manager = Provider.of<Manager>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -23,9 +27,17 @@ class Menu extends StatelessWidget {
             ),
             ElevatedButton(
 
-              onPressed: () {},
+              onPressed: () async {
+                await manager.prepareKnownQuestion();
+                Navigator.pushNamed(context, '/question-single');
+              },
               child: Text('Losowe pytanie'),
             ),
+            Text('LoggedUser ID: ${manager.loggedUser!.documentId}'),
+            Text('LoggedUser qNew: ${manager.loggedUser!.qNew}'),
+            Text('LoggedUser qKnown: ${manager.loggedUser!.qKnown}'),
+            Text('LoggedUser qUnknown: ${manager.loggedUser!.qUnknown}'),
+
           ],
         ),
       ),

@@ -1,27 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/utils/api_status.dart';
-import 'package:sepapka/utils/consts.dart';
-
 
 class UserService {
+  //Models
+  LoggedUser? _loggedUser;
 
+  LoggedUser? getUser() {
+    return _loggedUser;
+  }
 
-  static Future<Object> getUser(String email, String password) async {
-    try {
-      //TODO: Make auth service implementation
-      var result = 1;
-      if (result == 1) return Success(response: '123456');
+  createUser(LoggedUser user) {
+    _loggedUser = user;
+    debugPrint('LoggedUser created: $_loggedUser');
+  }
 
-      return Failure(code: NO_USER, errorResponse: 'getUser try error');
-    }
-    catch (e) {
-      return Failure(code: GET_USER_ERROR, errorResponse: 'getUser catched error');
+  getKnownQuestionID() {
+    debugPrint('UserService.getKnownQuestionID deployed');
+    String? qId = _loggedUser!.qKnown.first['id'];
+
+    if (qId != null) {
+      return Success(response: qId);
+    } else {
+      return Failure(errorResponse: 'No question found');
     }
   }
 
-  authUser(String email, String password) {
-    debugPrint('UserService, authUser method deployed');
+  Future<LoggedUser?> addQuestionToKnown(String questionId) async {
+    var removeNewResult = await removeQuestionFromNew(questionId);
+    var removeKnownResult = await removeQuestionFromKnown(questionId);
+    var removeUnknownResult = await removeQUestionFromUnknown(questionId);
+    if (removeNewResult || removeUnknownResult) {
+      return getUser();
+    }
+    else {
+      return null;
+    }
+  }
+
+ removeQuestionFromNew(String questionId) {
+  if (_loggedUser!.qNew.contains({'id': questionId})) {
     return true;
   }
+}
 
+removeQuestionFromKnown(String questionId) {}
+
+removeQUestionFromUnknown(String questionId) {}
 }

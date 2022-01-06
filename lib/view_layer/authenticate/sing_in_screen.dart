@@ -3,18 +3,25 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+  SignInScreen({Key? key}) : super(key: key);
 
+  String error = '';
   @override
   Widget build(BuildContext context) {
-    debugPrint('SignInScreen built');
+    debugPrint('*** SignInScreen built ***');
     final manager = Provider.of<Manager>(context);
-    return Center(
-      child: ElevatedButton(
-        onPressed: () {
-          var result = manager.signIn(email: 'test', password: '111');
-        },
-        child: Text('Sign in'),
+    return Scaffold(
+      appBar: AppBar(title: Text('Sign In Screen'),),
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              var result = manager.signIn(email: 'test', password: '111');
+            },
+            child: Text('Sign in'),
+          ),
+
+        ],
       ),
     );
   }

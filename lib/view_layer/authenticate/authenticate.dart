@@ -21,7 +21,7 @@ class _AuthenticateState extends State<Authenticate> {
   Widget build(BuildContext context) {
 
     // brak ekranu register, więc zwraca tylko jedną możliwość. W razie czego zrobić tu funkcję if{} else{}
-    return const SignInScreen();
+    return SignInScreen();
 
   }
 }

@@ -13,70 +13,70 @@ Map<String, Color?> labelColors = {
   labelUnknown: Colors.green[50]
 };
 
-Question q1 = Question(
-    id: '1',
-    q: 'Jakie zadanie mają środki ochrony podstawowej w urządzeniach i instalacjach elektrycznych? ',
-    a1: '${q1.id}answer1',
-    a2: '${q1.id}answer2',
-    a3: '${q1.id}answer3',
-    a4: '${q1.id}answer4',
-    labels: [labelNew],
-    level: 1);
+final Question q1 = Question(
+  id: '1',
+  q: 'Question 1 Question 1 Question 1 Question 1 Question 1 Question 1',
+  a1: '1answer1',
+  a2: '1answer2',
+  a3: '1answer3',
+  a4: '1answer4',
+  labels: [labelKnown],
+  level: 1,
+);
 
-Question q2 = Question(
+final Question q2 = Question(
   id: '2',
-  q: 'Czy wyłącznik różnicowoprądowy zadziała w sieci dwuprzewodowej? ',
-  a1: 'answer21',
-  a2: 'answer22',
-  a3: 'answer23',
-  a4: 'answer24',
-  labels: [labelUnknown],
+  q: 'Question 2 Question 2 Question 2 Question 2 Question 2 Question 2',
+  a1: '2answer1',
+  a2: '2answer2',
+  a3: '2answer3',
+  a4: '2answer4',
+  labels: [labelKnown],
   level: 1,
 );
 
-Question q3 = Question(
+final Question q3 = Question(
   id: '3',
-  q: 'Jaki kolor powinna mieć izolacja przewodu ochronnego w kablach i przewodach elektrycznych? ',
-  a1: 'answer31',
-  a2: 'answer32',
-  a3: 'answer33',
-  a4: 'answer34',
+  q: 'Question 3 Question 3 Question 3 Question 3 Question 3 Question 3',
+  a1: '3answer1',
+  a2: '3answer2',
+  a3: '3answer3',
+  a4: '3answer4',
   labels: [labelKnown],
   level: 1,
 );
 
-Question q4 = Question(
+final Question q4 = Question(
   id: '4',
-  q: 'Jakie zadanie mają środki ochrony podstawowej w urządzeniach i instalacjach elektrycznych? ',
-  a1: 'answer41',
-  a2: 'answer42',
-  a3: 'answer3',
-  a4: 'answer4',
+  q: 'Question 4 Question 4 Question 4 Question 4 Question 4 Question 4',
+  a1: '4answer1',
+  a2: '4answer2',
+  a3: '4answer3',
+  a4: '4answer4',
   labels: [labelKnown],
   level: 1,
 );
 
-Question q5 = Question(
-    id: '5',
-    q: 'Czy wyłącznik różnicowoprądowy zadziała w sieci dwuprzewodowej? ',
-    a1: 'answer1',
-    a2: 'answer2',
-    a3: 'answer3',
-    a4: 'answer4',
-    labels: [labelUnknown],
-    level: 1,
+final Question q5 = Question(
+  id: '5',
+  q: 'Question 5 Question 5 Question 5 Question 5 Question 5 Question 5',
+  a1: '5answer1',
+  a2: '5answer2',
+  a3: '5answer3',
+  a4: '5answer4',
+  labels: [labelKnown],
+  level: 1,
 );
 
-Question q6 = Question(
-    id: '6',
-    q: 'Jaki kolor powinna mieć izolacja przewodu ochronnego w kablach i przewodach elektrycznych? ',
-  a1: 'answer1',
-  a2: 'answer2',
-  a3: 'answer3',
-  a4: 'answer4',
-  labels: [labelUnknown],
+final Question q6 = Question(
+  id: '6',
+  q: 'Question 6 Question 6 Question 6 Question 6 Question 6 Question 6',
+  a1: '6answer1',
+  a2: '6answer2',
+  a3: '6answer3',
+  a4: '6answer4',
+  labels: [labelKnown],
   level: 1,
-
 );
 
 //Errors

@@ -11,9 +11,10 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('Wrapper built');
+    debugPrint('*** Wrapper built ***');
 
     final manager = Provider.of<Manager>(context);
+
     if (manager.loading == true) {
       return const Loading();
     }
