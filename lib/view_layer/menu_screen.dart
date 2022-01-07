@@ -28,14 +28,14 @@ class Menu extends StatelessWidget {
             ElevatedButton(
 
               onPressed: () async {
-                await manager.prepareSingleQuestion();
+                await manager.prepareNewQuestion();
                 Navigator.pushNamed(context, '/question-single');
               },
               child: Text('Losowe pytanie'),
             ),
             Text('LoggedUser ID: ${manager.loggedUser!.documentId}'),
             Text('LoggedUser qNew: ${manager.loggedUser!.qListNew}'),
-            Text('LoggedUser qKnown: ${manager.loggedUser!.qListDeleted}'),
+            Text('LoggedUser qKnown: ${manager.loggedUser!.qListNotShown}'),
             Text('LoggedUser qUnknown: ${manager.loggedUser!.qListPractice}'),
 
           ],

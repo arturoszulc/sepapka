@@ -1,13 +1,14 @@
 class Success {
   int? code;
-  Object? response;
+  Object? object;
 
-  Success({this.code, this.response});
+  Success({this.code, this.object});
 }
 
 class Failure {
   int? code;
-  Object? errorResponse;
+  String? errorResponse;
+
 
   Failure({this.code, this.errorResponse});
 }

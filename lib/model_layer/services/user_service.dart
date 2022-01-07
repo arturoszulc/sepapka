@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
@@ -14,18 +15,26 @@ class UserService {
     debugPrint('LoggedUser created: $_loggedUser');
   }
 
-  getKnownQuestionID() {
-    debugPrint('UserService.getKnownQuestionID deployed');
-    String? qId = _loggedUser!.qListDeleted.first['id'];
+  getNewQuestionQMap() {
+    QMap qMap = _loggedUser!.qListNew.first;
 
-    if (qId != null) {
-      return Success(response: qId);
+    if (qMap != null) {
+      return Success(object: qMap);
     } else {
-      return Failure(errorResponse: 'No question found');
+      return Failure(errorResponse: 'No New question found');
     }
   }
 
-  Future<LoggedUser?> moveQuestionToPractice(String questionId) async {
+  Future<Object> moveNewQuestionToPractice(String questionId) async {
+    //Get QMap by ID from qNewList
+    var qMap = getQMapFromNewById(questionId);
+
+    if (qMap != null) {
+      var addResult = await addQuestionToPractice(qMap);
+      if (addResult is Success) {
+        return Success(object: _loggedUser);
+      }
+    }
 
     //find Question by ID, retrieve it's QMap, and delete it form list
 
@@ -33,22 +42,27 @@ class UserService {
 
     //Add QMap to Practice List
 
-      return _loggedUser;
-
+    return _loggedUser!;
   }
 
-  QMap? getQMapById(String questionId) {
+  QMap? getQMapFromNewById(String questionId) {
     //Look it up
-    return null;
+    QMap? qMap = _loggedUser!.qListNew
+        .firstWhereOrNull((element) => element.id == questionId);
+    if (qMap != null) {
+      _loggedUser!.qListNew.remove(qMap);
+    }
+    return qMap;
   }
 
- removeQuestionFromNew(String questionId) {
-  if (_loggedUser!.qListNew.contains({'id': questionId})) {
-    return true;
+  addQuestionToPractice(QMap qMap) {
+    if (_loggedUser!.qListPractice.contains(qMap)) {
+      return Failure(
+          errorResponse:
+              'addQuestionToPractice() error: Question is already in qListPractice');
+    } else {
+      _loggedUser!.qListPractice.add(qMap);
+      return Success();
+    }
   }
-}
-
-removeQuestionFromKnown(String questionId) {}
-
-removeQUestionFromUnknown(String questionId) {}
 }

@@ -6,7 +6,7 @@ class LoggedUser {
   int qListVersion;
   List<QMap> qListNew;
   List<QMap> qListPractice;
-  List<QMap> qListDeleted;
+  List<QMap> qListNotShown;
 
   LoggedUser(
       {
@@ -14,6 +14,6 @@ class LoggedUser {
         required this.qListVersion,
         required this.qListNew,
         required this.qListPractice,
-        required this.qListDeleted
+        required this.qListNotShown
       });
 }

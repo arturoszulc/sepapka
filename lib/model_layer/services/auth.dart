@@ -29,9 +29,9 @@ UserService _userService = serviceLocator.get<UserService>();
 
       if (data != null) {
         await _userService.createUser(data);
-        var result = _userService.getUser();
+        var result = _userService.loggedUser;
       if (result != null) {
-        return Success(response: 'User created successfully');
+        return Success(object: 'User created successfully');
       }
       }
     } catch (e) {

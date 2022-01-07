@@ -18,14 +18,14 @@ class DatabaseService {
       qListVersion: 1,
       qListNew: [
         QMap(id: qList[0].id, dateModified: '2021-00-00', numberFib: 0),
+        QMap(id: qList[1].id, dateModified: '2021-00-00', numberFib: 0),
       ],
       qListPractice: [
-        QMap(id: qList[1].id, dateModified: '2021-00-00', numberFib: 0),
         QMap(id: qList[2].id, dateModified: '2021-00-00', numberFib: 0),
         QMap(id: qList[3].id, dateModified: '2021-00-00', numberFib: 0),
 
       ],
-      qListDeleted: [
+      qListNotShown: [
         QMap(id: qList[4].id, dateModified: '2021-00-00', numberFib: 0),
         QMap(id: qList[5].id, dateModified: '2021-00-00', numberFib: 0),
 

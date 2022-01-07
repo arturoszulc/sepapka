@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:sepapka/model_layer/question.dart';
 
+
+//Question labels - to be rebuilt
 const labelNew = 'nowy';
 const labelKnown = 'znam';
 const labelUnknown = 'nie znam';
+
+//Button colors
+const Color normalButtonColor = Colors.yellow;
+const Color wrongButtonColor = Colors.redAccent;
+const Color rightButtonColor = Colors.lightGreenAccent;
 
 const int questionVersionDB = 1;
 
@@ -16,7 +23,7 @@ Map<String, Color?> labelColors = {
 final Question q1 = Question(
   id: '1',
   q: 'Question 1 Question 1 Question 1 Question 1 Question 1 Question 1',
-  a1: '1answer1',
+  a1: '1answer1 1answer1 1answer1 1answer1',
   a2: '1answer2',
   a3: '1answer3',
   a4: '1answer4',

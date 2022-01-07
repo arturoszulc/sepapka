@@ -35,7 +35,7 @@ class Manager extends ChangeNotifier {
     var result = await _authService.signInEmail(email, password);
     // var result = await UserService.getUser(email, password);
     if (result is Success) {
-      debugPrint('Manager.signIn() SUCCESS response: ${result.response}');
+      debugPrint('Manager.signIn() SUCCESS response: ${result.object}');
     }
     if (result is Failure) {
       debugPrint('Manager.signIn() failure response: ${result.errorResponse}');
@@ -43,11 +43,23 @@ class Manager extends ChangeNotifier {
     setLoading(false);
   }
 
-  prepareSingleQuestion() async {
-    await _questionService.prepareKnownQuestion();
+  prepareNewQuestion() async {
+    await _questionService.prepareNewQuestion();
+  }
+  preparePracticeQuestion() async {
+
   }
 
-  moveQuestionToPractice(String questionId) async {
-    await _questionService.moveQuestionToPractice(questionId);
+  moveQuestionToNew() {
+
+  }
+  moveNewQuestionToPractice(String questionId) async {
+    var result = await _questionService.moveNewQuestionToPractice(questionId);
+    if (result is Success) {
+      debugPrint('moveNewQuestionToPractice done');
+    }
+    if (result is Failure) {
+      debugPrint(result.errorResponse);
+    }
 }
 }

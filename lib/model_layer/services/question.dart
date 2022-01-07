@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/model_layer/services/database.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
@@ -25,14 +26,14 @@ class QuestionService{
 
 
   //Methods
-  Future prepareKnownQuestion() async {
+  Future prepareNewQuestion() async {
 
     //get ID of first KnownQuestion from user qKnownList
-    var result = await _userService.getKnownQuestionID();
+    var result = await _userService.getNewQuestionQMap();
     
     if (result is Success) {
-      var qId = result.response as String;
-      _singleKnownQuestion = qListGlobal.firstWhereOrNull((element) => element.id == qId);
+      var qMap = result.object as QMap;
+      _singleKnownQuestion = qListGlobal.firstWhereOrNull((element) => element.id == qMap.id);
       debugPrint('single question known: $_singleKnownQuestion');
     }
     else {
@@ -41,15 +42,19 @@ class QuestionService{
   }
 
 
-  Future moveQuestionToPractice(String questionId) async {
+  Future<Object> moveNewQuestionToPractice(String questionId) async {
 
-    //Place Question in the right list
-    var updatedUser = await _userService.moveQuestionToPractice(questionId);
+    //Place Question in the right list and get updated User object
+    var moveResult = await _userService.moveNewQuestionToPractice(questionId);
 
-    if (updatedUser != null) {
-      //Send updated User to database
+    if (moveResult is Success) {
+      //If question was moved successfully, the response contains updated user
+    return Success();
     }
-
+    else {
+      //return error message back
+      return moveResult;
+    }
   }
 
 }
