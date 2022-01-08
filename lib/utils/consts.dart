@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sepapka/model_layer/question.dart';
 
+//Enums
+enum QuestionStatus{noAnswer, rightAnswer, wrongAnswer }
 
 //Question labels - to be rebuilt
 const labelNew = 'nowy';

@@ -16,8 +16,10 @@ class UserService {
   }
 
   getNewQuestionQMap() {
-    QMap qMap = _loggedUser!.qListNew.first;
-
+    QMap? qMap;
+    if (_loggedUser!.qListNew.isNotEmpty) {
+    qMap = _loggedUser!.qListNew.first;
+    }
     if (qMap != null) {
       return Success(object: qMap);
     } else {

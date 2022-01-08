@@ -19,22 +19,30 @@ class QuestionService {
   List<Question> qListGlobal = [q1, q2, q3, q4, q5, q6];
   Question? _singleKnownQuestion;
   List<AMap> _aMapList = []; //shuffled answers map with button colors
+  QuestionStatus _qStatus = QuestionStatus.noAnswer;
 
   //Getters
   Question? get singleKnownQuestion => _singleKnownQuestion;
 
   List<AMap> get aMapList => _aMapList;
+  QuestionStatus get qStatus => _qStatus;
 
   //Methods
 
   Future checkAnswer(String answer) async {
+
+    //If it is a right answer
     if (answer == _singleKnownQuestion!.a1) {
       debugPrint('Right Answer');
+      _qStatus = QuestionStatus.rightAnswer;
       var aMap = _aMapList.firstWhere((element) => element.answer == answer);
       aMap.color = rightButtonColor;
+      moveNewQuestionToPractice(_singleKnownQuestion!.id);
     }
+    //if it is a wrong answer
     else {
       debugPrint('not right answer');
+      _qStatus = QuestionStatus.wrongAnswer;
       //set wrong button
       _aMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
       //set right button
@@ -43,9 +51,9 @@ class QuestionService {
   }
 
   Future prepareNewQuestion() async {
+    _qStatus = QuestionStatus.noAnswer;
     //get ID of first KnownQuestion from user qKnownList
     var result = await _userService.getNewQuestionQMap();
-
     if (result is Success) {
       var qMap = result.object as QMap;
       _singleKnownQuestion =
@@ -57,6 +65,7 @@ class QuestionService {
           AMap(answer: _singleKnownQuestion!.a3, color: normalButtonColor),
           AMap(answer: _singleKnownQuestion!.a4, color: normalButtonColor),
         ];
+        _aMapList.shuffle();
       }
     } else {
       _singleKnownQuestion = null;

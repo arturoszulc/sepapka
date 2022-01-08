@@ -8,7 +8,7 @@ import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'custom_widgets/answer_button.dart';
 
 class QuestionSingleScreen extends StatelessWidget {
-  QuestionSingleScreen({Key? key}) : super(key: key);
+  const QuestionSingleScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +16,20 @@ class QuestionSingleScreen extends StatelessWidget {
     final manager = Provider.of<Manager>(context);
     Question? question = manager.singleKnownQuestion;
     List<AMap> aMapList = manager.aMapList;
-
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Single question'),
-      ),
       body: question == null
-          ? const Center(
-              child: Text('NO QUESTION FOUND'),
+          ? Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Brak nowych pytań'),
+                  const SizedBox(height: 20.0),
+                  ElevatedButton(
+                      onPressed: () {
+                    Navigator.pop(context);
+                  }, child: const Text('Powrót'))
+                ],
+              ),
             )
           : Padding(
               padding: const EdgeInsets.all(20.0),
@@ -35,7 +41,7 @@ class QuestionSingleScreen extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: Card(
                       child: Text(
-                        manager.isAnswered.toString(),
+                        manager.aMapList.toString(),
                         // maxLines: 3,
                       ),
                     ),
@@ -47,7 +53,7 @@ class QuestionSingleScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AnswerButton(
-                          isActive: manager.isAnswered,
+                          qStatus: manager.qStatus,
                           answer: aMapList[0].answer,
                           color: aMapList[0].color,
                           onSelected: () {
@@ -55,7 +61,7 @@ class QuestionSingleScreen extends StatelessWidget {
                           },
                         ),
                         AnswerButton(
-                          isActive: manager.isAnswered,
+                          qStatus: manager.qStatus,
                           answer: aMapList[1].answer,
                           color: aMapList[1].color,
                           onSelected: () {
@@ -63,7 +69,7 @@ class QuestionSingleScreen extends StatelessWidget {
                           },
                         ),
                         AnswerButton(
-                          isActive: manager.isAnswered,
+                          qStatus: manager.qStatus,
                           answer: aMapList[2].answer,
                           color: aMapList[2].color,
                           onSelected: () {
@@ -71,7 +77,7 @@ class QuestionSingleScreen extends StatelessWidget {
                           },
                         ),
                         AnswerButton(
-                          isActive: manager.isAnswered,
+                          qStatus: manager.qStatus,
                           answer: aMapList[3].answer,
                           color: aMapList[3].color,
                           onSelected: () {
@@ -84,13 +90,13 @@ class QuestionSingleScreen extends StatelessWidget {
               ]),
             ),
     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: manager.isAnswered ? FloatingActionButton.extended(
+      floatingActionButton: manager.qStatus != QuestionStatus.noAnswer ? FloatingActionButton.extended(
           onPressed: () async {
             await context.read<Manager>().prepareNewQuestion();
             Navigator.pushReplacementNamed(context, '/question-single');
           },
-          label: Text('Dobrze!'),
-      ): null,
+          label: const Text('Dalej >'),
+      ) : null,
     );
   }
 

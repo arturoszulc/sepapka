@@ -9,6 +9,7 @@ import 'package:sepapka/model_layer/services/auth.dart';
 import 'package:sepapka/model_layer/services/question.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
+import 'package:sepapka/utils/consts.dart';
 
 class Manager extends ChangeNotifier {
   //Services Injection
@@ -22,21 +23,18 @@ class Manager extends ChangeNotifier {
 
   //Manager getters
   bool get loading => _loading;
-  bool get isAnswered => _isAnswered;
 
   //External Getters
   LoggedUser? get loggedUser => _userService.loggedUser;
 
   Question? get singleKnownQuestion => _questionService.singleKnownQuestion;
   List<AMap> get aMapList => _questionService.aMapList;
+  QuestionStatus get qStatus => _questionService.qStatus;
+
 
 
   setLoading(bool loading) async {
     _loading = loading;
-    notifyListeners();
-  }
-  setIsAnswered(bool answered) async {
-    _isAnswered = answered;
     notifyListeners();
   }
 
@@ -55,25 +53,23 @@ class Manager extends ChangeNotifier {
   checkAnswer(String answer) async {
     await _questionService.checkAnswer(answer);
     debugPrint('CheckAnswer done');
-    setIsAnswered(true);
     notifyListeners();
   }
   prepareNewQuestion() async {
     await _questionService.prepareNewQuestion();
-    setIsAnswered(false);
   }
   preparePracticeQuestion() async {
   }
 
   moveQuestionToNew() {
   }
-  moveNewQuestionToPractice(String questionId) async {
-    var result = await _questionService.moveNewQuestionToPractice(questionId);
-    if (result is Success) {
-      debugPrint('moveNewQuestionToPractice done');
-    }
-    if (result is Failure) {
-      debugPrint(result.errorResponse);
-    }
-}
+//   moveNewQuestionToPractice(String questionId) async {
+//     var result = await _questionService.moveNewQuestionToPractice(questionId);
+//     if (result is Success) {
+//       debugPrint('moveNewQuestionToPractice done');
+//     }
+//     if (result is Failure) {
+//       debugPrint(result.errorResponse);
+//     }
+// }
 }
