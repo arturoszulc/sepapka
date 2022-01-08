@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
@@ -13,16 +14,26 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Wrapper built ***');
 
+    return Selector<Manager, bool>(
+      selector: (_, manager) => manager.loading,
+      builder: (_, loading, __) =>
+          Selector<Manager, LoggedUser?>(
+        selector: (_, manager) => manager.loggedUser,
+        builder: (_, loggedUser, __) =>
+            loggedUser != null ? const Menu() : Authenticate(),
+      ),
+    );
+
     final manager = Provider.of<Manager>(context);
 
     if (manager.loading == true) {
       return const Loading();
-    }
-    if (manager.loggedUser == null) {
-      return Authenticate();
     } else {
-      return Menu();
-
+      if (manager.loggedUser == null) {
+        return Authenticate();
+      } else {
+        return Menu();
+      }
     }
   }
 }

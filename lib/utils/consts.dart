@@ -10,7 +10,7 @@ const labelUnknown = 'nie znam';
 //Button colors
 const Color normalButtonColor = Colors.yellow;
 const Color wrongButtonColor = Colors.redAccent;
-const Color rightButtonColor = Colors.lightGreenAccent;
+Color rightButtonColor = Colors.green.shade500;
 
 const int questionVersionDB = 1;
 

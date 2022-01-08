@@ -16,7 +16,7 @@ class SignInScreen extends StatelessWidget {
         child:
           ElevatedButton(
             onPressed: () {
-              var result = manager.signIn(email: 'test', password: '111');
+              manager.signIn(email: 'test', password: '111');
             },
             child: Text('Sign in'),
           ),

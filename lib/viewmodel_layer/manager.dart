@@ -18,9 +18,11 @@ class Manager extends ChangeNotifier {
 
   //Manager properties
   bool _loading = false;
+  bool _isAnswered = false;
 
   //Manager getters
   bool get loading => _loading;
+  bool get isAnswered => _isAnswered;
 
   //External Getters
   LoggedUser? get loggedUser => _userService.loggedUser;
@@ -31,6 +33,10 @@ class Manager extends ChangeNotifier {
 
   setLoading(bool loading) async {
     _loading = loading;
+    notifyListeners();
+  }
+  setIsAnswered(bool answered) async {
+    _isAnswered = answered;
     notifyListeners();
   }
 
@@ -44,18 +50,19 @@ class Manager extends ChangeNotifier {
     if (result is Failure) {
       debugPrint('Manager.signIn() failure response: ${result.errorResponse}');
     }
-    setLoading(false);
+    // setLoading(false);
   }
   checkAnswer(String answer) async {
     await _questionService.checkAnswer(answer);
     debugPrint('CheckAnswer done');
+    setIsAnswered(true);
     notifyListeners();
   }
   prepareNewQuestion() async {
     await _questionService.prepareNewQuestion();
+    setIsAnswered(false);
   }
   preparePracticeQuestion() async {
-
   }
 
   moveQuestionToNew() {

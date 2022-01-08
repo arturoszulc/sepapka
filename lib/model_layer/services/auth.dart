@@ -20,11 +20,13 @@ UserService _userService = serviceLocator.get<UserService>();
       if (email == 'test') {
         resultID = '123456';
       }
+      else {
+        return Failure(errorResponse: 'invalid email');
+      }
 
       //mocking getUserData from DatabaseService
 
       var data = await _databaseService.getUserData(resultID);
-      debugPrint('getUserData from DB Result: $data');
       //mocking createUser from UserService
 
       if (data != null) {

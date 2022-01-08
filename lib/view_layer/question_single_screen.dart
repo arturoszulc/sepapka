@@ -8,10 +8,11 @@ import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'custom_widgets/answer_button.dart';
 
 class QuestionSingleScreen extends StatelessWidget {
-  const QuestionSingleScreen({Key? key}) : super(key: key);
+  QuestionSingleScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('*** QuestionSingleScreen built ***');
     final manager = Provider.of<Manager>(context);
     Question? question = manager.singleKnownQuestion;
     List<AMap> aMapList = manager.aMapList;
@@ -34,7 +35,7 @@ class QuestionSingleScreen extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: Card(
                       child: Text(
-                        aMapList.toString(),
+                        manager.isAnswered.toString(),
                         // maxLines: 3,
                       ),
                     ),
@@ -46,6 +47,7 @@ class QuestionSingleScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AnswerButton(
+                          isActive: manager.isAnswered,
                           answer: aMapList[0].answer,
                           color: aMapList[0].color,
                           onSelected: () {
@@ -53,6 +55,7 @@ class QuestionSingleScreen extends StatelessWidget {
                           },
                         ),
                         AnswerButton(
+                          isActive: manager.isAnswered,
                           answer: aMapList[1].answer,
                           color: aMapList[1].color,
                           onSelected: () {
@@ -60,6 +63,7 @@ class QuestionSingleScreen extends StatelessWidget {
                           },
                         ),
                         AnswerButton(
+                          isActive: manager.isAnswered,
                           answer: aMapList[2].answer,
                           color: aMapList[2].color,
                           onSelected: () {
@@ -67,9 +71,11 @@ class QuestionSingleScreen extends StatelessWidget {
                           },
                         ),
                         AnswerButton(
+                          isActive: manager.isAnswered,
                           answer: aMapList[3].answer,
                           color: aMapList[3].color,
                           onSelected: () {
+
                             manager.checkAnswer(aMapList[3].answer);
                           },
                         ),
@@ -77,6 +83,14 @@ class QuestionSingleScreen extends StatelessWidget {
                 ),
               ]),
             ),
+    floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: manager.isAnswered ? FloatingActionButton.extended(
+          onPressed: () async {
+            await context.read<Manager>().prepareNewQuestion();
+            Navigator.pushReplacementNamed(context, '/question-single');
+          },
+          label: Text('Dobrze!'),
+      ): null,
     );
   }
 

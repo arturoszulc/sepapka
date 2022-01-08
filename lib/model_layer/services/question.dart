@@ -28,11 +28,17 @@ class QuestionService {
   //Methods
 
   Future checkAnswer(String answer) async {
-    debugPrint('Checking answer: $answer');
     if (answer == _singleKnownQuestion!.a1) {
-      _aMapList.map((e) {
-        if (e.answer == _singleKnownQuestion!.a1) e.color = rightButtonColor;
-      });
+      debugPrint('Right Answer');
+      var aMap = _aMapList.firstWhere((element) => element.answer == answer);
+      aMap.color = rightButtonColor;
+    }
+    else {
+      debugPrint('not right answer');
+      //set wrong button
+      _aMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
+      //set right button
+      _aMapList.firstWhere((element) => element.answer == _singleKnownQuestion!.a1).color = rightButtonColor;
     }
   }
 

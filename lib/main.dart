@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         home: const Wrapper(),
         routes: {
           '/wrapper': (context) => const Wrapper(),
-          '/question-single': (context) => const QuestionSingleScreen(),
+          '/question-single': (context) => QuestionSingleScreen(),
 
         },
 

@@ -9,8 +9,6 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Menu built ***');
 
-    final manager = Provider.of<Manager>(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('SEPapka'),
@@ -28,15 +26,13 @@ class Menu extends StatelessWidget {
             ElevatedButton(
 
               onPressed: () async {
-                await manager.prepareNewQuestion();
+                await context.read<Manager>().prepareNewQuestion();
                 Navigator.pushNamed(context, '/question-single');
               },
               child: Text('Losowe pytanie'),
             ),
-            Text('LoggedUser ID: ${manager.loggedUser!.documentId}'),
-            Text('LoggedUser qNew: ${manager.loggedUser!.qListNew}'),
-            Text('LoggedUser qKnown: ${manager.loggedUser!.qListNotShown}'),
-            Text('LoggedUser qUnknown: ${manager.loggedUser!.qListPractice}'),
+            Text('LoggedUser ID: ${context.read<Manager>().loggedUser!.documentId}'),
+
 
           ],
         ),

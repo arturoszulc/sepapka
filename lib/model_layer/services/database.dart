@@ -10,7 +10,6 @@ class DatabaseService {
 
   // GET LOGGED USER DATA
   Future<LoggedUser> getUserData(String uid) async {
-    debugPrint('DATABASESERVICE getUserData method deployed');
     //ZAKOMENTOWAC
     List<Question> qList = [q1, q2, q3, q4, q5, q6];
     return LoggedUser(
