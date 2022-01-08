@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sepapka/model_layer/models/answer_map.dart';
 import 'package:sepapka/model_layer/question.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
@@ -13,6 +14,8 @@ class QuestionSingleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final manager = Provider.of<Manager>(context);
     Question? question = manager.singleKnownQuestion;
+    List<AMap> aMapList = manager.aMapList;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Single question'),
@@ -27,12 +30,12 @@ class QuestionSingleScreen extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Container(
-                    padding: EdgeInsets.all(15.0),
+                    padding: const EdgeInsets.all(15.0),
                     alignment: Alignment.bottomLeft,
                     child: Card(
                       child: Text(
-                        question.q,
-                        maxLines: 3,
+                        aMapList.toString(),
+                        // maxLines: 3,
                       ),
                     ),
                   ),
@@ -43,20 +46,32 @@ class QuestionSingleScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         AnswerButton(
-                          answer: question.a1,
-                          onSelected: () {},
+                          answer: aMapList[0].answer,
+                          color: aMapList[0].color,
+                          onSelected: () {
+                            manager.checkAnswer(aMapList[0].answer);
+                          },
                         ),
                         AnswerButton(
-                          answer: question.a2,
-                          onSelected: () {},
+                          answer: aMapList[1].answer,
+                          color: aMapList[1].color,
+                          onSelected: () {
+                            manager.checkAnswer(aMapList[1].answer);
+                          },
                         ),
                         AnswerButton(
-                          answer: question.a3,
-                          onSelected: () {},
+                          answer: aMapList[2].answer,
+                          color: aMapList[2].color,
+                          onSelected: () {
+                            manager.checkAnswer(aMapList[2].answer);
+                          },
                         ),
                         AnswerButton(
-                          answer: question.a4,
-                          onSelected: () {},
+                          answer: aMapList[3].answer,
+                          color: aMapList[3].color,
+                          onSelected: () {
+                            manager.checkAnswer(aMapList[3].answer);
+                          },
                         ),
                       ]),
                 ),

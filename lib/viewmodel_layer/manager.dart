@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:sepapka/locator.dart';
+import 'package:sepapka/model_layer/models/answer_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/question.dart';
 import 'package:sepapka/model_layer/services/auth.dart';
@@ -21,8 +24,9 @@ class Manager extends ChangeNotifier {
 
   //External Getters
   LoggedUser? get loggedUser => _userService.loggedUser;
-  Question? get singleKnownQuestion => _questionService.singleKnownQuestion;
 
+  Question? get singleKnownQuestion => _questionService.singleKnownQuestion;
+  List<AMap> get aMapList => _questionService.aMapList;
 
 
   setLoading(bool loading) async {
@@ -42,7 +46,11 @@ class Manager extends ChangeNotifier {
     }
     setLoading(false);
   }
-
+  checkAnswer(String answer) async {
+    await _questionService.checkAnswer(answer);
+    debugPrint('CheckAnswer done');
+    notifyListeners();
+  }
   prepareNewQuestion() async {
     await _questionService.prepareNewQuestion();
   }
@@ -51,7 +59,6 @@ class Manager extends ChangeNotifier {
   }
 
   moveQuestionToNew() {
-
   }
   moveNewQuestionToPractice(String questionId) async {
     var result = await _questionService.moveNewQuestionToPractice(questionId);

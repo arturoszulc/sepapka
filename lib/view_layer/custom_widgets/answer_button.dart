@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 
 
 class AnswerButton extends StatelessWidget {
-  final String answer;
+  final String? answer;
+  final Color color;
   final VoidCallback onSelected;
 
-  const AnswerButton({Key? key, required this.answer, required this.onSelected}) : super(key: key);
+  const AnswerButton({Key? key, this.answer, required this.color, required this.onSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +22,8 @@ class AnswerButton extends StatelessWidget {
         },
         minWidth: 300,
         height: 45.0,
-        color: Colors.yellow,
-        child: Text(answer),
+        color: color,
+        child: Text(answer!),
       ),
     );
   }
