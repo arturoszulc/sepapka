@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:sepapka/locator.dart';
-import 'package:sepapka/model_layer/models/answer_map.dart';
+import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/question.dart';
 import 'package:sepapka/model_layer/services/auth.dart';
@@ -27,8 +27,8 @@ class Manager extends ChangeNotifier {
   //External Getters
   LoggedUser? get loggedUser => _userService.loggedUser;
 
-  Question? get singleKnownQuestion => _questionService.singleKnownQuestion;
-  List<AMap> get aMapList => _questionService.aMapList;
+  Question? get currentQuestion => _questionService.currentQuestion;
+  List<BMap> get bMapList => _questionService.bMapList;
   QuestionStatus get qStatus => _questionService.qStatus;
 
 
@@ -39,30 +39,37 @@ class Manager extends ChangeNotifier {
   }
 
   signIn({required String email, required String password}) async {
+    //start loading app
     setLoading(true);
+    // sign in and prepare data
     var result = await _authService.signInEmail(email, password);
-    // var result = await UserService.getUser(email, password);
+    //if sign in succeeded, prepare question data
     if (result is Success) {
-      debugPrint('Manager.signIn() SUCCESS response: ${result.object}');
+
     }
     if (result is Failure) {
-      debugPrint('Manager.signIn() failure response: ${result.errorResponse}');
+      debugPrint('${result.errorResponse}, errCode: ${result.code}');
     }
-    // setLoading(false);
+
+    // finish loading app
+    setLoading(false);
   }
   checkAnswer(String answer) async {
     await _questionService.checkAnswer(answer);
-    debugPrint('CheckAnswer done');
     notifyListeners();
   }
   prepareNewQuestion() async {
-    await _questionService.prepareNewQuestion();
+    var result = await _questionService.prepareNewQuestion();
+    if (result is Failure) {
+      debugPrint('${result.errorResponse}, errCode: ${result.code}');
+    }
   }
   preparePracticeQuestion() async {
   }
 
   moveQuestionToNew() {
   }
+
 //   moveNewQuestionToPractice(String questionId) async {
 //     var result = await _questionService.moveNewQuestionToPractice(questionId);
 //     if (result is Success) {

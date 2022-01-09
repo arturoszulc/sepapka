@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/model_layer/models/answer_map.dart';
+import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/question.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
@@ -14,8 +14,8 @@ class QuestionSingleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** QuestionSingleScreen built ***');
     final manager = Provider.of<Manager>(context);
-    Question? question = manager.singleKnownQuestion;
-    List<AMap> aMapList = manager.aMapList;
+    Question? question = manager.currentQuestion;
+    List<BMap> aMapList = manager.bMapList;
     return Scaffold(
       body: question == null
           ? Center(
@@ -41,7 +41,7 @@ class QuestionSingleScreen extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: Card(
                       child: Text(
-                        manager.aMapList.toString(),
+                        manager.bMapList.toString(),
                         // maxLines: 3,
                       ),
                     ),

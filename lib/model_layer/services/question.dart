@@ -1,11 +1,11 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
-import 'package:sepapka/model_layer/models/answer_map.dart';
+import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/model_layer/services/database.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
-import 'package:collection/collection.dart';
 
 import '../../locator.dart';
 import '../question.dart';
@@ -17,71 +17,65 @@ class QuestionService {
 
   //Properties
   List<Question> qListGlobal = [q1, q2, q3, q4, q5, q6];
-  Question? _singleKnownQuestion;
-  List<AMap> _aMapList = []; //shuffled answers map with button colors
+  Question? _currentQuestion;
+  List<BMap> _bMapList = []; //shuffled list of answers & colors for butotns
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
 
   //Getters
-  Question? get singleKnownQuestion => _singleKnownQuestion;
+  Question? get currentQuestion => _currentQuestion;
 
-  List<AMap> get aMapList => _aMapList;
+  List<BMap> get bMapList => _bMapList;
+
   QuestionStatus get qStatus => _qStatus;
 
   //Methods
 
   Future checkAnswer(String answer) async {
-
-    //If it is a right answer
-    if (answer == _singleKnownQuestion!.a1) {
-      debugPrint('Right Answer');
+    //If right answer
+    if (answer == _currentQuestion!.a1) {
+      //set QuestionStatus
       _qStatus = QuestionStatus.rightAnswer;
-      var aMap = _aMapList.firstWhere((element) => element.answer == answer);
-      aMap.color = rightButtonColor;
-      moveNewQuestionToPractice(_singleKnownQuestion!.id);
+      //set button color
+      _bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
+      //move question to Practice List
+      await _userService.moveNewQuestionToPractice(_currentQuestion!.id);
     }
-    //if it is a wrong answer
+    //if wrong answer
     else {
       debugPrint('not right answer');
       _qStatus = QuestionStatus.wrongAnswer;
       //set wrong button
-      _aMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
+      _bMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
       //set right button
-      _aMapList.firstWhere((element) => element.answer == _singleKnownQuestion!.a1).color = rightButtonColor;
+      _bMapList.firstWhere((element) => element.answer == _currentQuestion!.a1).color =
+          rightButtonColor;
+      //move question to the end of New List
+      _userService.moveNewQuestionToNew(_currentQuestion!.id);
     }
   }
 
   Future prepareNewQuestion() async {
+    //reset QuestionStatus
     _qStatus = QuestionStatus.noAnswer;
-    //get ID of first KnownQuestion from user qKnownList
+
+    //get QMap of first NewQuestion from user qNewList
     var result = await _userService.getNewQuestionQMap();
-    if (result is Success) {
-      var qMap = result.object as QMap;
-      _singleKnownQuestion =
-          qListGlobal.firstWhereOrNull((element) => element.id == qMap.id);
-      if (_singleKnownQuestion != null) {
-        _aMapList = [
-          AMap(answer: _singleKnownQuestion!.a1, color: normalButtonColor),
-          AMap(answer: _singleKnownQuestion!.a2, color: normalButtonColor),
-          AMap(answer: _singleKnownQuestion!.a3, color: normalButtonColor),
-          AMap(answer: _singleKnownQuestion!.a4, color: normalButtonColor),
+    if (result.object is QMap) {
+      //if question exists, prepare it and set AMap
+      _currentQuestion = qListGlobal.firstWhereOrNull((element) => element.id == result.object.id);
+      if (_currentQuestion != null) {
+        _bMapList = [
+          BMap(answer: _currentQuestion!.a1, color: normalButtonColor),
+          BMap(answer: _currentQuestion!.a2, color: normalButtonColor),
+          BMap(answer: _currentQuestion!.a3, color: normalButtonColor),
+          BMap(answer: _currentQuestion!.a4, color: normalButtonColor),
         ];
-        _aMapList.shuffle();
+        _bMapList.shuffle();
       }
-    } else {
-      _singleKnownQuestion = null;
-    }
-  }
-
-  Future<Object> moveNewQuestionToPractice(String questionId) async {
-    //Place Question in the right list and get updated User object
-    var moveResult = await _userService.moveNewQuestionToPractice(questionId);
-
-    if (moveResult is Success) {
-      //If question was moved successfully, the response contains updated user
       return Success();
     } else {
-      //return error message back
-      return moveResult;
+      _currentQuestion = null;
+      return Failure(errorResponse: result.errorResponse, code: result.errorCode);
     }
   }
 }

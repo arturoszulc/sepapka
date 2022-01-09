@@ -18,7 +18,7 @@ class UserService {
   getNewQuestionQMap() {
     QMap? qMap;
     if (_loggedUser!.qListNew.isNotEmpty) {
-    qMap = _loggedUser!.qListNew.first;
+      qMap = _loggedUser!.qListNew.first;
     }
     if (qMap != null) {
       return Success(object: qMap);
@@ -27,15 +27,12 @@ class UserService {
     }
   }
 
-  Future<Object> moveNewQuestionToPractice(String questionId) async {
+  moveNewQuestionToPractice(String questionId) async {
     //Get QMap by ID from qNewList
-    var qMap = getQMapFromNewById(questionId);
+    QMap? qMap = getQMapFromNewById(questionId);
 
     if (qMap != null) {
-      var addResult = await addQuestionToPractice(qMap);
-      if (addResult is Success) {
-        return Success(object: _loggedUser);
-      }
+      await addQuestionToPractice(qMap);
     }
 
     //find Question by ID, retrieve it's QMap, and delete it form list
@@ -43,14 +40,25 @@ class UserService {
     //Update QMap
 
     //Add QMap to Practice List
+  }
 
+  Future<Object> moveNewQuestionToNew(String questionId) async {
+    //Get QMap by ID and delete from qNewList
+    QMap? qMap = getQMapFromNewById(questionId);
+    if (qMap != null) {
+      var addResult = await addQuestionToNew(qMap);
+      if (addResult is Success) {
+        return Success(object: _loggedUser);
+      } else {
+        return addResult;
+      }
+    }
     return _loggedUser!;
   }
 
   QMap? getQMapFromNewById(String questionId) {
     //Look it up
-    QMap? qMap = _loggedUser!.qListNew
-        .firstWhereOrNull((element) => element.id == questionId);
+    QMap? qMap = _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == questionId);
     if (qMap != null) {
       _loggedUser!.qListNew.remove(qMap);
     }
@@ -59,11 +67,17 @@ class UserService {
 
   addQuestionToPractice(QMap qMap) {
     if (_loggedUser!.qListPractice.contains(qMap)) {
-      return Failure(
-          errorResponse:
-              'addQuestionToPractice() error: Question is already in qListPractice');
+      debugPrint('addQuestionToPractice() error: Question is already in qListPractice');
     } else {
       _loggedUser!.qListPractice.add(qMap);
+    }
+  }
+
+  addQuestionToNew(QMap qMap) {
+    if (_loggedUser!.qListNew.contains(qMap)) {
+      return Failure(errorResponse: 'addQuestionToNew() error: Question is already in qListNew');
+    } else {
+      _loggedUser!.qListNew.add(qMap);
       return Success();
     }
   }

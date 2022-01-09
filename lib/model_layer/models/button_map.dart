@@ -1,10 +1,10 @@
 import 'dart:ui';
 
-class AMap {
+class BMap {
   String answer;
   Color color;
 
-  AMap({
+  BMap({
     required this.answer,
     required this.color
 

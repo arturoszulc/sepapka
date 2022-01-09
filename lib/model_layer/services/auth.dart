@@ -16,7 +16,7 @@ UserService _userService = serviceLocator.get<UserService>();
   Future signInEmail(String email, String password) async {
     String resultID = '';
     try {
-      //mocking userID returned by AuthService
+      //mocked userID returned from Firestore
       if (email == 'test') {
         resultID = '123456';
       }
