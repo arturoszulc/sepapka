@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
-import 'package:sepapka/model_layer/question.dart';
+import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 

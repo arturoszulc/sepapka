@@ -4,7 +4,7 @@ import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
 
-import '../question.dart';
+import '../models/question.dart';
 
 class UserService {
   //Models
@@ -23,14 +23,15 @@ class UserService {
         return false;
       }
   }
-  updateQuestionVersion(List<Question> qListGlobal) {
+  updateQNewList(List<Question> qListGlobal) {
     for (var question in qListGlobal) {
     //check if question is on any list
     bool isOnAnyList = isQuestionOnAnyLoggedUserList(question.id);
 
-    if (isOnAnyList) {
-      //jeśli tak
-
+    if (!isOnAnyList) {
+      //jeśli nie, stwórz jego mapę i zapisz do qNewList
+      QMap qMap = createQMapForNewQuestion(question.id);
+      addQuestionToNew(qMap);
     }
     }
   }
@@ -49,7 +50,12 @@ class UserService {
     return false;
   }
   }
-
+  QMap createQMapForNewQuestion(String qId) {
+    return QMap(
+        id: qId,
+        dateModified: DateTime.now().toString(),
+        numberFib: 0);
+  }
 
   QMap? getNewQuestionQMap() {
     QMap? qMap;

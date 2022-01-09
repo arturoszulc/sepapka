@@ -42,6 +42,9 @@ class Menu extends StatelessWidget {
               child: Text('Lista pytań'),
             ),
             Text('LoggedUser ID: ${context.read<Manager>().loggedUser!.documentId}'),
+            Text('LoggedUser qNewList: ${context.read<Manager>().loggedUser!.qListNew}'),
+            Text('LoggedUser qPracticeList: ${context.read<Manager>().loggedUser!.qListPractice}'),
+            Text('LoggedUser qNotShownList: ${context.read<Manager>().loggedUser!.qListNotShown}'),
 
 
           ],

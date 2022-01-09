@@ -11,14 +11,14 @@ class SignInScreen extends StatelessWidget {
     debugPrint('*** SignInScreen built ***');
     final manager = Provider.of<Manager>(context);
     return Scaffold(
-      appBar: AppBar(title: Text('Sign In Screen'),),
+      appBar: AppBar(title: const Text('Sign In Screen'),),
       body: Center(
         child:
           ElevatedButton(
             onPressed: () {
-              manager.signIn(email: 'test', password: '111');
+              manager.signInAndPrepareData(email: 'test', password: '111');
             },
-            child: Text('Sign in'),
+            child: const Text('Zaloguj'),
           ),
 
 

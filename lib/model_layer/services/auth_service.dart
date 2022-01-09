@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sepapka/model_layer/services/database.dart';
+import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
-import 'package:sepapka/utils/api_status.dart';
+import 'package:sepapka/utils/consts.dart';
 
 import '../../locator.dart';
 
@@ -17,11 +17,11 @@ UserService _userService = serviceLocator.get<UserService>();
     String resultID = '';
     try {
       //mocked userID returned from Firestore
-      if (email == 'test1') {
+      if (email == 'test') {
         resultID = '123456';
       }
       else {
-        debugPrint('signInEmail Error: No such user');
+        debugPrint(errorSignIn);
         return false;
       }
 

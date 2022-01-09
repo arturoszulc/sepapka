@@ -2,30 +2,24 @@ import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/consts.dart';
 
-import '../question.dart';
+import '../models/question.dart';
 
 
 class DatabaseService {
 
   // GET LOGGED USER DATA
   Future<LoggedUser?> getUserData(String uid) async {
-    List<Question> qList = [q1, q2, q3, q4, q5, q6]; //ZAKOMENTOWAC
     return LoggedUser(
       documentId: uid,
-      qVersion: 1,
+      qVersion: questionVersionLocal,
       qListNew: [
-        QMap(id: qList[0].id, dateModified: '2021-00-00', numberFib: 0),
-        QMap(id: qList[1].id, dateModified: '2021-00-00', numberFib: 0),
+        QMap(id: q1.id, dateModified: '2021-00-00', numberFib: 0),
+        QMap(id: q2.id, dateModified: '2021-00-00', numberFib: 0),
       ],
       qListPractice: [
-        QMap(id: qList[2].id, dateModified: '2021-00-00', numberFib: 0),
-        QMap(id: qList[3].id, dateModified: '2021-00-00', numberFib: 0),
-
+        QMap(id: q3.id, dateModified: '2021-00-00', numberFib: 0),
       ],
       qListNotShown: [
-        QMap(id: qList[4].id, dateModified: '2021-00-00', numberFib: 0),
-        QMap(id: qList[5].id, dateModified: '2021-00-00', numberFib: 0),
-
       ],
     );
     //
@@ -80,7 +74,7 @@ class DatabaseService {
           a2: doc.a2,
           a3: doc.a3,
           a4: doc.a4,
-          labels: doc.labels,
+          label: doc.label,
           level: doc.level);
     }).toList();
   }

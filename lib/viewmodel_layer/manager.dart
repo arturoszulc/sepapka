@@ -4,11 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
-import 'package:sepapka/model_layer/question.dart';
-import 'package:sepapka/model_layer/services/auth.dart';
-import 'package:sepapka/model_layer/services/question.dart';
+import 'package:sepapka/model_layer/models/question.dart';
+import 'package:sepapka/model_layer/services/auth_service.dart';
+import 'package:sepapka/model_layer/services/question_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
-import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
 
 class Manager extends ChangeNotifier {
@@ -37,7 +36,7 @@ class Manager extends ChangeNotifier {
     notifyListeners();
   }
 
-  signIn({required String email, required String password}) async {
+  signInAndPrepareData({required String email, required String password}) async {
     //start loading app
     setLoading(true);
     // sign in and prepare data

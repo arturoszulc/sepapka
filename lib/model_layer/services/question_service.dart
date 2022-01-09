@@ -2,18 +2,19 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
-import 'package:sepapka/model_layer/services/database.dart';
+import 'package:sepapka/model_layer/services/database_service.dart';
+import 'package:sepapka/model_layer/services/file_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
-import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
 
 import '../../locator.dart';
-import '../question.dart';
+import '../models/question.dart';
 
 class QuestionService {
   //Services Injection
   UserService _userService = serviceLocator.get<UserService>();
   DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
+  FileService _fileService = serviceLocator.get<FileService>();
 
   //Properties
   List<Question> _qListGlobal = [];
@@ -36,19 +37,24 @@ class QuestionService {
     int? qVersion = await _databaseService.getQuestionVersion();
 
     if (qVersion is int) {
-      //jeśli pobrano wersję, porównaj ją z wersją w user service
+      //if version is downloaded, compare it with local
       bool compareResult = _userService.compareQVersion(qVersion);
 
       if (compareResult == true) {
-        debugPrint('/// wersja pytań jest taka sama');
+        debugPrint('/// wersja pytań jest taka sama ///');
         //if local qVersion is the same, use qList from JSON
       }
       if (compareResult == false) {
-        debugPrint('/// wersja pytań jest inna');
+        debugPrint('/// wersja pytań jest inna ///');
         //if local qVersion is different, get new qList from DB
         _qListGlobal = await _databaseService.getQuestionList();
-        //add all new question IDs to user qNewList
-        await _userService.updateQuestionVersion(_qListGlobal);
+
+        //save new qList to new JSON File
+
+        await _fileService.saveQuestionListToFile(_qListGlobal);
+
+        //add any new questions to user qNewList
+        await _userService.updateQNewList(_qListGlobal);
       }
 
     }
@@ -88,7 +94,7 @@ class QuestionService {
     _qStatus = QuestionStatus.noAnswer;
 
     //get QMap of first NewQuestion from user qNewList
-    QMap? qMap = await _userService.getNewQuestionQMap();
+    QMap? qMap = _userService.getNewQuestionQMap();
     if (qMap != null) {
       //if question exists, prepare it and set AMap
       _currentQuestion = _qListGlobal.firstWhereOrNull((element) => element.id == qMap.id);
