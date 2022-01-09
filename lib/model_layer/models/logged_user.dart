@@ -3,7 +3,7 @@ import 'package:sepapka/model_layer/models/question_map.dart';
 
 class LoggedUser {
   String documentId;
-  int qListVersion;
+  int qVersion;
   List<QMap> qListNew;
   List<QMap> qListPractice;
   List<QMap> qListNotShown;
@@ -11,7 +11,7 @@ class LoggedUser {
   LoggedUser(
       {
         required this.documentId,
-        required this.qListVersion,
+        required this.qVersion,
         required this.qListNew,
         required this.qListPractice,
         required this.qListNotShown

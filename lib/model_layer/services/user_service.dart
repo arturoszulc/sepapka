@@ -4,6 +4,8 @@ import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
 
+import '../question.dart';
+
 class UserService {
   //Models
   LoggedUser? _loggedUser;
@@ -12,19 +14,53 @@ class UserService {
 
   createUser(LoggedUser user) {
     _loggedUser = user;
-    debugPrint('LoggedUser created: $_loggedUser');
   }
 
-  getNewQuestionQMap() {
+  compareQVersion(int qVersion) {
+      if (qVersion == loggedUser!.qVersion) {
+        return true;
+      } else {
+        return false;
+      }
+  }
+  updateQuestionVersion(List<Question> qListGlobal) {
+    for (var question in qListGlobal) {
+    //check if question is on any list
+    bool isOnAnyList = isQuestionOnAnyLoggedUserList(question.id);
+
+    if (isOnAnyList) {
+      //jeśli tak
+
+    }
+    }
+  }
+
+  bool isQuestionOnAnyLoggedUserList(String questionId) {
+    QMap? qMap;
+    //check in qNewList
+    qMap ??= _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == questionId);
+    qMap ??= _loggedUser!.qListPractice.firstWhereOrNull((element) => element.id == questionId);
+    qMap ??= _loggedUser!.qListNotShown.firstWhereOrNull((element) => element.id == questionId);
+
+    if (qMap != null) {
+      return true;
+    }
+    else {
+    return false;
+  }
+  }
+
+
+  QMap? getNewQuestionQMap() {
     QMap? qMap;
     if (_loggedUser!.qListNew.isNotEmpty) {
       qMap = _loggedUser!.qListNew.first;
     }
-    if (qMap != null) {
-      return Success(object: qMap);
-    } else {
-      return Failure(errorResponse: 'No New question found');
+    if (qMap == null) {
+      debugPrint('getNewQuestionQMap error: No new questions');
     }
+    return qMap;
+
   }
 
   moveNewQuestionToPractice(String questionId) async {

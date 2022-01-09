@@ -22,6 +22,8 @@ Map<String, Color?> labelColors = {
   labelUnknown: Colors.green[50]
 };
 
+final questionListDB = [q1, q2, q3, q4, q5, q6];
+
 final Question q1 = Question(
   id: '1',
   q: 'Question 1 Question 1 Question 1 Question 1 Question 1 Question 1',
@@ -88,7 +90,8 @@ final Question q6 = Question(
   level: 1,
 );
 
-//Errors
+//////Errors
 
-const NO_USER = 100;
-const GET_USER_ERROR = 101;
+//DB Errors
+
+const String errorQVersion = '### Nie udało się pobrać wersji pytań z bazy danych ###';

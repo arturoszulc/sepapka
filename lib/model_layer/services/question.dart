@@ -16,7 +16,7 @@ class QuestionService {
   DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
 
   //Properties
-  List<Question> qListGlobal = [q1, q2, q3, q4, q5, q6];
+  List<Question> _qListGlobal = [];
   Question? _currentQuestion;
   List<BMap> _bMapList = []; //shuffled list of answers & colors for butotns
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
@@ -29,6 +29,35 @@ class QuestionService {
   QuestionStatus get qStatus => _qStatus;
 
   //Methods
+
+  Future<bool> prepareGlobalData() async {
+
+    //Get questionVersion number from DB
+    int? qVersion = await _databaseService.getQuestionVersion();
+
+    if (qVersion is int) {
+      //jeśli pobrano wersję, porównaj ją z wersją w user service
+      bool compareResult = _userService.compareQVersion(qVersion);
+
+      if (compareResult == true) {
+        debugPrint('/// wersja pytań jest taka sama');
+        //if local qVersion is the same, use qList from JSON
+      }
+      if (compareResult == false) {
+        debugPrint('/// wersja pytań jest inna');
+        //if local qVersion is different, get new qList from DB
+        _qListGlobal = await _databaseService.getQuestionList();
+        //add all new question IDs to user qNewList
+        await _userService.updateQuestionVersion(_qListGlobal);
+      }
+
+    }
+    else {
+      debugPrint(errorQVersion);
+    }
+    return false;
+  }
+
 
   Future checkAnswer(String answer) async {
     //If right answer
@@ -59,10 +88,10 @@ class QuestionService {
     _qStatus = QuestionStatus.noAnswer;
 
     //get QMap of first NewQuestion from user qNewList
-    var result = await _userService.getNewQuestionQMap();
-    if (result.object is QMap) {
+    QMap? qMap = await _userService.getNewQuestionQMap();
+    if (qMap != null) {
       //if question exists, prepare it and set AMap
-      _currentQuestion = qListGlobal.firstWhereOrNull((element) => element.id == result.object.id);
+      _currentQuestion = _qListGlobal.firstWhereOrNull((element) => element.id == qMap.id);
       if (_currentQuestion != null) {
         _bMapList = [
           BMap(answer: _currentQuestion!.a1, color: normalButtonColor),
@@ -72,10 +101,9 @@ class QuestionService {
         ];
         _bMapList.shuffle();
       }
-      return Success();
     } else {
+      //if question does not exist, set it to null
       _currentQuestion = null;
-      return Failure(errorResponse: result.errorResponse, code: result.errorCode);
     }
   }
 }

@@ -19,7 +19,6 @@ class Manager extends ChangeNotifier {
 
   //Manager properties
   bool _loading = false;
-  bool _isAnswered = false;
 
   //Manager getters
   bool get loading => _loading;
@@ -42,27 +41,23 @@ class Manager extends ChangeNotifier {
     //start loading app
     setLoading(true);
     // sign in and prepare data
-    var result = await _authService.signInEmail(email, password);
+    bool result = await _authService.signInEmail(email, password);
+
     //if sign in succeeded, prepare question data
-    if (result is Success) {
-
-    }
-    if (result is Failure) {
-      debugPrint('${result.errorResponse}, errCode: ${result.code}');
-    }
-
+    if (result)
+      {
+        bool result = await _questionService.prepareGlobalData();
+      }
     // finish loading app
     setLoading(false);
   }
   checkAnswer(String answer) async {
+    ///TODO: LOCK POSSIBILITY OF PUSHING ANOTHER BUTTON BEFORE ANSWER IS CHECKED
     await _questionService.checkAnswer(answer);
     notifyListeners();
   }
   prepareNewQuestion() async {
-    var result = await _questionService.prepareNewQuestion();
-    if (result is Failure) {
-      debugPrint('${result.errorResponse}, errCode: ${result.code}');
-    }
+    await _questionService.prepareNewQuestion();
   }
   preparePracticeQuestion() async {
   }

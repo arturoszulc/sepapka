@@ -13,32 +13,31 @@ UserService _userService = serviceLocator.get<UserService>();
 
 //  // sign in with e-mail and password
 
-  Future signInEmail(String email, String password) async {
+  Future<bool> signInEmail(String email, String password) async {
     String resultID = '';
     try {
       //mocked userID returned from Firestore
-      if (email == 'test') {
+      if (email == 'test1') {
         resultID = '123456';
       }
       else {
-        return Failure(errorResponse: 'invalid email');
+        debugPrint('signInEmail Error: No such user');
+        return false;
       }
 
       //mocking getUserData from DatabaseService
 
-      var data = await _databaseService.getUserData(resultID);
+      var userData = await _databaseService.getUserData(resultID);
       //mocking createUser from UserService
 
-      if (data != null) {
-        await _userService.createUser(data);
-        var result = _userService.loggedUser;
-      if (result != null) {
-        return Success(object: 'User created successfully');
+      if (userData != null) {
+        await _userService.createUser(userData);
+        return true;
       }
-      }
+      return false;
     } catch (e) {
       debugPrint('AuthService caught ERROR: ${e.toString()}');
-      return Failure(errorResponse: 'Unknown AuthService error');
+      return false;
     }
   }
 
