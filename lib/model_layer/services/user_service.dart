@@ -69,7 +69,17 @@ class UserService {
       debugPrint('getNewQuestionQMap error: No new questions');
     }
     return qMap;
+  }
 
+  QMap? getPracticeQuestionQMap() {
+    QMap? qMap;
+    if (_loggedUser!.qListPractice.isNotEmpty) {
+      qMap = _loggedUser!.qListPractice.first;
+    }
+    if (qMap == null) {
+      debugPrint('getPracticeQuestionQMap error: No practice questions');
+    }
+    return qMap;
   }
 
   moveNewQuestionToPractice(String questionId) async {

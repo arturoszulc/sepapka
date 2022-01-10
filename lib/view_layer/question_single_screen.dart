@@ -92,7 +92,7 @@ class QuestionSingleScreen extends StatelessWidget {
     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: manager.qStatus != QuestionStatus.noAnswer ? FloatingActionButton.extended(
           onPressed: () async {
-            await context.read<Manager>().prepareNewQuestion();
+            await context.read<Manager>().prepareQuestion(manager.qType);
             Navigator.pushReplacementNamed(context, '/question-single');
           },
           label: const Text('Dalej >'),

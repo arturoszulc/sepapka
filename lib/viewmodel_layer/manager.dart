@@ -26,8 +26,10 @@ class Manager extends ChangeNotifier {
   LoggedUser? get loggedUser => _userService.loggedUser;
 
   Question? get currentQuestion => _questionService.currentQuestion;
-  List<BMap> get bMapList => _questionService.bMapList;
   QuestionStatus get qStatus => _questionService.qStatus;
+  QuestionType get qType => _questionService.qType;
+  List<BMap> get bMapList => _questionService.bMapList;
+
 
 
 
@@ -62,10 +64,8 @@ class Manager extends ChangeNotifier {
     await _questionService.checkAnswer(answer);
     notifyListeners();
   }
-  prepareNewQuestion() async {
-    await _questionService.prepareNewQuestion();
-  }
-  preparePracticeQuestion() async {
+  prepareQuestion(QuestionType qType) async {
+    await _questionService.prepareQuestion(qType);
   }
 
   moveQuestionToNew() {

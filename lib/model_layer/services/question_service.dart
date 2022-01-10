@@ -19,15 +19,17 @@ class QuestionService {
   //Properties
   List<Question>? _qListGlobal;
   Question? _currentQuestion;
-  List<BMap> _bMapList = []; //shuffled list of answers & colors for butotns
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
+  QuestionType _qType = QuestionType.newQuestion;
+  List<BMap> _bMapList = []; //shuffled list of answers & colors for butotns
+
 
   //Getters
   Question? get currentQuestion => _currentQuestion;
-
+  QuestionStatus get qStatus => _qStatus;
+  QuestionType get qType => _qType;
   List<BMap> get bMapList => _bMapList;
 
-  QuestionStatus get qStatus => _qStatus;
 
   //Methods
 
@@ -67,6 +69,7 @@ class QuestionService {
   }
 
   Future checkAnswer(String answer) async {
+
     //If right answer
     if (answer == _currentQuestion!.a1) {
       //set QuestionStatus
@@ -74,6 +77,8 @@ class QuestionService {
       //set button color
       _bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
       //move question to Practice List
+      ///TODO: check if question is New or Practice and deicde where to put it
+
       await _userService.moveNewQuestionToPractice(_currentQuestion!.id);
     }
     //if wrong answer
@@ -90,25 +95,53 @@ class QuestionService {
     }
   }
 
-  Future prepareNewQuestion() async {
+  Future prepareQuestion(QuestionType qType) async {
     //reset QuestionStatus
     _qStatus = QuestionStatus.noAnswer;
 
+    //get question based on type
+    if (qType == QuestionType.newQuestion){
+      _currentQuestion = getNewQuestion();
+      _qType = QuestionType.newQuestion;
+  }
+    else {
+      _currentQuestion = getPracticeQuestion();
+      _qType = QuestionType.practiceQuestion;
+
+    }
+    //if question exists, prepare button map
+    if (_currentQuestion != null) {
+      _bMapList = [
+        BMap(answer: _currentQuestion!.a1, color: normalButtonColor),
+        BMap(answer: _currentQuestion!.a2, color: normalButtonColor),
+        BMap(answer: _currentQuestion!.a3, color: normalButtonColor),
+        BMap(answer: _currentQuestion!.a4, color: normalButtonColor),
+      ];
+      _bMapList.shuffle();
+    }
+  }
+
+  Question? getNewQuestion() {
     //get QMap of first NewQuestion from user qNewList
     QMap? qMap = _userService.getNewQuestionQMap();
     if (qMap != null) {
       //if question exists, prepare it and set AMap
-      _currentQuestion = _qListGlobal!.firstWhereOrNull((element) => element.id == qMap.id);
-      if (_currentQuestion != null) {
-        _bMapList = [
-          BMap(answer: _currentQuestion!.a1, color: normalButtonColor),
-          BMap(answer: _currentQuestion!.a2, color: normalButtonColor),
-          BMap(answer: _currentQuestion!.a3, color: normalButtonColor),
-          BMap(answer: _currentQuestion!.a4, color: normalButtonColor),
-        ];
-        _bMapList.shuffle();
-      }
-    } else {
+      return _qListGlobal!.firstWhereOrNull((element) => element.id == qMap.id);
+
+    }
+    else {
+      //if question does not exist, set it to null
+      _currentQuestion = null;
+    }
+  }
+  Question? getPracticeQuestion() {
+    //get QMap of first NewQuestion from user qNewList
+    QMap? qMap = _userService.getPracticeQuestionQMap();
+    if (qMap != null) {
+      //if question exists, prepare it and set AMap
+      return _qListGlobal!.firstWhereOrNull((element) => element.id == qMap.id);
+    }
+    else {
       //if question does not exist, set it to null
       _currentQuestion = null;
     }

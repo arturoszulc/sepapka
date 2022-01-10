@@ -3,6 +3,7 @@ import 'package:sepapka/model_layer/models/question.dart';
 
 //Enums
 enum QuestionStatus{noAnswer, rightAnswer, wrongAnswer }
+enum QuestionType{newQuestion, practiceQuestion}
 
 //Question labels - to be rebuilt
 const label1 = 'nowy';
