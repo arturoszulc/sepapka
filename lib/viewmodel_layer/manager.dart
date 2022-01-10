@@ -50,6 +50,13 @@ class Manager extends ChangeNotifier {
     // finish loading app
     setLoading(false);
   }
+
+  signOut() async {
+    setLoading(true);
+    bool result = await _authService.signOut();
+    setLoading(false);
+  }
+
   checkAnswer(String answer) async {
     ///TODO: LOCK POSSIBILITY OF PUSHING ANOTHER BUTTON BEFORE ANSWER IS CHECKED
     await _questionService.checkAnswer(answer);

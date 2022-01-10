@@ -11,7 +11,7 @@ class DatabaseService {
   Future<LoggedUser?> getUserData(String uid) async {
     return LoggedUser(
       documentId: uid,
-      qVersion: questionVersionLocal,
+      qVersion: 1,
       qListNew: [
         QMap(id: q1.id, dateModified: '2021-00-00', numberFib: 0),
         QMap(id: q2.id, dateModified: '2021-00-00', numberFib: 0),

@@ -13,7 +13,11 @@ class Menu extends StatelessWidget {
       appBar: AppBar(
         title: const Text('SEPapka'),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.account_circle)),
+          IconButton(
+              onPressed: () {
+                context.read<Manager>().signOut();
+              },
+              icon: const Icon(Icons.account_circle)),
         ],
       ),
       body: Center(
@@ -21,7 +25,6 @@ class Menu extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ElevatedButton(
-
               onPressed: () async {
                 await context.read<Manager>().prepareNewQuestion();
                 Navigator.pushNamed(context, '/question-single');
@@ -45,8 +48,6 @@ class Menu extends StatelessWidget {
             Text('LoggedUser qNewList: ${context.read<Manager>().loggedUser!.qListNew}'),
             Text('LoggedUser qPracticeList: ${context.read<Manager>().loggedUser!.qListPractice}'),
             Text('LoggedUser qNotShownList: ${context.read<Manager>().loggedUser!.qListNotShown}'),
-
-
           ],
         ),
       ),

@@ -1,4 +1,4 @@
-import 'package:collection/collection.dart';
+import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
@@ -17,7 +17,7 @@ class QuestionService {
   FileService _fileService = serviceLocator.get<FileService>();
 
   //Properties
-  List<Question> _qListGlobal = [];
+  List<Question>? _qListGlobal;
   Question? _currentQuestion;
   List<BMap> _bMapList = []; //shuffled list of answers & colors for butotns
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
@@ -32,9 +32,9 @@ class QuestionService {
   //Methods
 
   Future<bool> prepareGlobalData() async {
-
     //Get questionVersion number from DB
     int? qVersion = await _databaseService.getQuestionVersion();
+    debugPrint('wersja pytań DB: $qVersion');
 
     if (qVersion is int) {
       //if version is downloaded, compare it with local
@@ -42,7 +42,7 @@ class QuestionService {
 
       if (compareResult == true) {
         debugPrint('/// wersja pytań jest taka sama ///');
-        //if local qVersion is the same, use qList from JSON
+        _qListGlobal = await _fileService.getQuestionListFromFile();
       }
       if (compareResult == false) {
         debugPrint('/// wersja pytań jest inna ///');
@@ -50,20 +50,21 @@ class QuestionService {
         _qListGlobal = await _databaseService.getQuestionList();
 
         //save new qList to new JSON File
-
-        await _fileService.saveQuestionListToFile(_qListGlobal);
-
-        //add any new questions to user qNewList
-        await _userService.updateQNewList(_qListGlobal);
+        if (_qListGlobal != null) {
+          bool result = await _fileService.saveQuestionListToFile(_qListGlobal!);
+          if (result) {
+            //add any new questions to user qNewList
+            await _userService.updateQNewList(_qListGlobal!);
+            _userService.loggedUser!.qVersion = qVersion;
+            debugPrint('wersja pytań usera: ${_userService.loggedUser!.qVersion}');
+          }
+        }
       }
-
-    }
-    else {
+    } else {
       debugPrint(errorQVersion);
     }
     return false;
   }
-
 
   Future checkAnswer(String answer) async {
     //If right answer
@@ -97,7 +98,7 @@ class QuestionService {
     QMap? qMap = _userService.getNewQuestionQMap();
     if (qMap != null) {
       //if question exists, prepare it and set AMap
-      _currentQuestion = _qListGlobal.firstWhereOrNull((element) => element.id == qMap.id);
+      _currentQuestion = _qListGlobal!.firstWhereOrNull((element) => element.id == qMap.id);
       if (_currentQuestion != null) {
         _bMapList = [
           BMap(answer: _currentQuestion!.a1, color: normalButtonColor),

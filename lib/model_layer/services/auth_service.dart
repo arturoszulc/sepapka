@@ -41,5 +41,10 @@ UserService _userService = serviceLocator.get<UserService>();
     }
   }
 
+  Future<bool> signOut() async {
+    await _userService.logOutUser();
+    return true;
+  }
+
 
 }

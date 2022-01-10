@@ -15,6 +15,9 @@ class UserService {
   createUser(LoggedUser user) {
     _loggedUser = user;
   }
+  logOutUser() {
+    _loggedUser = null;
+  }
 
   compareQVersion(int qVersion) {
       if (qVersion == loggedUser!.qVersion) {

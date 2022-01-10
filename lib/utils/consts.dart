@@ -96,3 +96,7 @@ const String errorQVersion = '### Nie udało się pobrać wersji pytań z bazy d
 
 //AuthService Errors
 const String errorSignIn = '### AuthService.signInEmail() error: No such user found ###';
+
+//FileManager error
+const String errorWritingFile = '### FileService.saveQuestionListToFile() error: Couldnt write data to file ###';
+const String errorReadingFile = '### FileService.getQuestionListFromFile() error: Couldnt read data from file ###';
