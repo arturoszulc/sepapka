@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/consts.dart';
@@ -7,28 +8,43 @@ import '../../locator.dart';
 
 class AuthService {
 
+  //Services injection
 DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
 UserService _userService = serviceLocator.get<UserService>();
 
+  //Other
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
-//  // sign in with e-mail and password
+
+  // register with e-mail and password
+
+  Future<bool> registerWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User? authUser = result.user;
+
+      //create user document in DB
+      await _databaseService.createUser(authUser!.uid);
+
+    }
+    catch(e) {
+      return false;
+    }
+    return true;
+  }
+
+  // sign in with e-mail and password
 
   Future<bool> signInEmail(String email, String password) async {
-    String resultID = '';
     try {
-      //mocked userID returned from Firestore
-      if (email == 'test') {
-        resultID = '123456';
-      }
-      else {
-        debugPrint(errorSignIn);
-        return false;
-      }
+      //get authUser
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      User? authUser = result.user;
 
-      //mocking getUserData from DatabaseService
+      // getUserData from DatabaseService
+      var userData = await _databaseService.getUserData(authUser!.uid);
 
-      var userData = await _databaseService.getUserData(resultID);
-      //mocking createUser from UserService
+      // createUser from UserService
 
       if (userData != null) {
         await _userService.createUser(userData);
@@ -36,14 +52,20 @@ UserService _userService = serviceLocator.get<UserService>();
       }
       return false;
     } catch (e) {
-      debugPrint('AuthService caught ERROR: ${e.toString()}');
+      debugPrint(errorSignIn + e.toString() + '###');
       return false;
     }
   }
 
   Future<bool> signOut() async {
-    await _userService.logOutUser();
-    return true;
+    try {
+      await _auth.signOut();
+      await _userService.logOutUser();
+      return true;
+    } catch (e) {
+      debugPrint('SIGN OUT ERROR: ${e.toString()}');
+      return false;
+    }
   }
 
 

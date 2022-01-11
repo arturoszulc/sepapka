@@ -13,7 +13,11 @@ const Color normalButtonColor = Colors.yellow;
 const Color wrongButtonColor = Colors.redAccent;
 Color rightButtonColor = Colors.green.shade500;
 
-
+//LoggedUser model properties
+const String userQVersion = 'qVersion';
+const String userQListNew = 'qListNew';
+const String userQListPractice = 'qListPractice';
+const String userQListNotShown = 'qListNotShown';
 
 Map<String, Color?> labelColors = {
   label1: Colors.blue,
@@ -96,7 +100,7 @@ final Question q6 = Question(
 const String errorQVersion = '### Nie udało się pobrać wersji pytań z bazy danych ###';
 
 //AuthService Errors
-const String errorSignIn = '### AuthService.signInEmail() error: No such user found ###';
+const String errorSignIn = '### AuthService.signInEmail() error: ';
 
 //FileManager error
 const String errorWritingFile = '### FileService.saveQuestionListToFile() error: Couldnt write data to file ###';

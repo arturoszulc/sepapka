@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/locator.dart';
@@ -6,7 +7,10 @@ import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); // wymagane do inicjalizacji Firebase
+  await Firebase.initializeApp(); // wymagane do inicjalizacji Firebase
   setupGetIt();
   runApp(const MyApp());
 }
