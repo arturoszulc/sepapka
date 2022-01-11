@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "249525063892",
+    "project_id": "sepapka-516c1",
+    "storage_bucket": "sepapka-516c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249525063892:android:e290b36770d515d6142b41",
+        "android_client_info": {
+          "package_name": "teoriaelektryki.pl.sepapka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249525063892-lhqjuupfhupttijhfrkjgueejh6gtcr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeMTuCxJHS3ObzOIzoR7ZRh2eos1wnMIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249525063892-lhqjuupfhupttijhfrkjgueejh6gtcr0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
