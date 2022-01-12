@@ -27,71 +27,31 @@ class DatabaseService {
 
 
   // //UPDATE USER DATA
-  // Future<void> updateUser(LoggedUser user) async {
-  //   return await usersCollection
-  //       .doc(user.documentId)
-  //       .set({
-  //     'username': user.username,
-  //     'firstName': user.firstName,
-  //     'lastName': user.lastName,
-  //     'isAdmin': user.isAdmin,
-  //     'isDeleted': false,
-  //     'companyRole': user.companyRole,
-  //     'companyId': user.companyId,
-  //   }).then((value) =>
-  //       debugPrint('Technician updated'));
-  // }
+  Future<void> updateUser(LoggedUser user) async {
+    return await usersCollection
+        .doc(user.documentId)
+        .set({
+      userQVersion: user.qVersion,
+      userQListNew: user.qListNew,
+      userQListPractice: user.qListPractice,
+      userQListNotShown: user.qListNotShown,
+    }).then((value) =>
+        print('User updated'));
+  }
 
 
   // GET LOGGED USER DATA
   Future<LoggedUser?> getUserData(String uid) async {
-    // return LoggedUser(
-    //   documentId: uid,
-    //   qVersion: 1,
-    //   qListNew: [
-    //     QMap(id: q1.id, dateModified: '2021-00-00', numberFib: 0),
-    //     QMap(id: q2.id, dateModified: '2021-00-00', numberFib: 0),
-    //   ],
-    //   qListPractice: [
-    //     QMap(id: q3.id, dateModified: '2021-00-00', numberFib: 0),
-    //   ],
-    //   qListNotShown: [
-    //   ],
-    // );
-    //
-    //   ODKOMENTOWAC
     var doc = await usersCollection.doc(uid).get();
     return LoggedUser(
       documentId: doc.id,
       qVersion: doc.get(userQVersion),
-      qListNew: doc.get(userQListNew),
-      qListPractice: doc.get(userQListPractice),
-      qListNotShown: doc.get(userQListNotShown),
+      qListNew: List<QMap>.from(doc.get(userQListNew)),
+      qListPractice: List<QMap>.from(doc.get(userQListPractice)),
+      qListNotShown: List<QMap>.from(doc.get(userQListNotShown)),
     );
   }
-    // }
-    //
-    // //Get Question Version
-    // int getQuestionVersion() {
-    //   int version = questionVersionDB;
-    //   return version;
-    // }
-    //
-    // //Get Question list
-    // List<Question> getQuestionList() {
-    //   List<Question> qList = [q1, q2, q3, q4, q5, q6];
-    //   debugPrint('QuestionList imported from DB');
-    //   return qList;
-    // }
-    //
-    // //Get Question by ID
-    //
-    // Question getQuestionById(String id) {
-    //   Question q;
-    //   List<Question> qList = getQuestionList();
-    //   q = qList.singleWhere((element) => element.id == id);
-    //   return q;
-    // }
+
 
   //Get question version
   Future<int?> getQuestionVersion() async {

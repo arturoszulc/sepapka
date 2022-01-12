@@ -66,6 +66,8 @@ class Menu extends StatelessWidget {
             ),
             const SizedBox(height: 100),
             Text('LoggedUser ID: ${context.read<Manager>().loggedUser!.documentId}'),
+            Text('LoggedUser qNew: ${context.read<Manager>().loggedUser!.qListNew.length}'),
+            Text('LoggedUser qPractice: ${context.read<Manager>().loggedUser!.qListPractice.length}'),
             const SizedBox(height: 100.0),
             const Text(
               'Learning progress:',

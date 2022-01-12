@@ -4,13 +4,28 @@ import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
 
+import '../../locator.dart';
 import '../models/question.dart';
+import 'database_service.dart';
 
 class UserService {
+
+  //Services injection
+  DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
+
+  //Properties
+  bool _loggedUserChanged = false;
+
   //Models
   LoggedUser? _loggedUser;
 
+  bool get loggedUserChanged => _loggedUserChanged;
   LoggedUser? get loggedUser => _loggedUser;
+
+
+  setLoggedUserChanged(bool status) {
+    _loggedUserChanged = status;
+  }
 
   createUser(LoggedUser user) {
     _loggedUser = user;
@@ -26,7 +41,7 @@ class UserService {
         return false;
       }
   }
-  updateQNewList(List<Question> qListGlobal) {
+  Future<void> updateQNewList(List<Question> qListGlobal) async {
     for (var question in qListGlobal) {
     //check if question is on any list
     bool isOnAnyList = isQuestionOnAnyLoggedUserList(question.id);
@@ -35,8 +50,18 @@ class UserService {
       //jeśli nie, stwórz jego mapę i zapisz do qNewList
       QMap qMap = createQMapForNewQuestion(question.id);
       addQuestionToNew(qMap);
+      //set flag, that user object was changed
+      setLoggedUserChanged(true);
     }
     }
+    //if loggedUser changed, update it on DB
+    if (_loggedUserChanged) {
+      await _databaseService.updateUser(_loggedUser!);
+    }
+  }
+
+  updateQVersion(int qVersion) {
+    _loggedUser!.qVersion = qVersion;
   }
 
   bool isQuestionOnAnyLoggedUserList(String questionId) {

@@ -44,7 +44,7 @@ class Manager extends ChangeNotifier {
     // sign in and prepare data
     bool result = await _authService.signInEmail(email, password);
 
-    //if sign in succeeded, prepare question data
+    //if sign in succeeded, prepare and/or update question data
     if (result)
       {
         bool result = await _questionService.prepareGlobalData();

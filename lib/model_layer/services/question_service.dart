@@ -39,31 +39,37 @@ class QuestionService {
     debugPrint('wersja pytań DB: $qVersion');
 
     if (qVersion is int) {
-      //if version is downloaded, compare it with local
+      //after downloading qVersion from DB, compare it with local LoggedUser.qVersion.
       bool compareResult = _userService.compareQVersion(qVersion);
 
+      //if it is identical, take questions from JSON file
       if (compareResult == true) {
         debugPrint('/// wersja pytań jest taka sama ///');
         _qListGlobal = await _fileService.getQuestionListFromFile();
       }
+      //if it is different
       if (compareResult == false) {
         debugPrint('/// wersja pytań jest inna ///');
-        //if local qVersion is different, get new qList from DB
+        //download questions from DB
         _qListGlobal = await _databaseService.getQuestionList();
 
-        //save new qList to new JSON File
+        //save questions to local JSON file
         if (_qListGlobal != null) {
           bool result = await _fileService.saveQuestionListToFile(_qListGlobal!);
           if (result) {
-            //add any new questions to user qNewList
+            //then update user question version
+            _userService.updateQVersion(qVersion);
+
+            //and add any new questions to user qNewList
             await _userService.updateQNewList(_qListGlobal!);
-            _userService.loggedUser!.qVersion = qVersion;
-            debugPrint('wersja pytań usera: ${_userService.loggedUser!.qVersion}');
+            debugPrint('/// USER UPDATED ///');
           }
         }
       }
+        return true;
     } else {
       debugPrint(errorQVersion);
+
     }
     return false;
   }
