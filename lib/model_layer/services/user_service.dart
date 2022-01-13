@@ -27,9 +27,27 @@ class UserService {
     _loggedUserChanged = status;
   }
 
-  createUser(LoggedUser user) {
-    _loggedUser = user;
+  createUserLocal({LoggedUser? user, String? userId}) {
+    //if user data is fetched, update user
+    if (user != null) {
+      _loggedUser = user;
+    }
+    //if only userId is fetched, create basic user
+    else if (userId != null)
+      {
+        _loggedUser = LoggedUser(
+            documentId: userId,
+            qVersion: 0,
+            qListNew: [],
+            qListPractice: [],
+            qListNotShown: []
+        );
+      }
+
+
   }
+
+
   logOutUser() {
     _loggedUser = null;
   }
@@ -54,9 +72,10 @@ class UserService {
       setLoggedUserChanged(true);
     }
     }
-    //if loggedUser changed, update it on DB
+    //if loggedUser changed, update it on DB at the end
     if (_loggedUserChanged) {
       await _databaseService.updateUser(_loggedUser!);
+      setLoggedUserChanged(false);
     }
   }
 

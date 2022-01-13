@@ -7,7 +7,7 @@ class QMap {
 
 
   convertToMap() {
-    return {'id': id, 'dateModified': dateModified, 'int': numberFib};
+    return {'id': id, 'dateModified': dateModified, 'numberFib': numberFib};
   }
   // convertFromMap(dynamic e) {
   // }

@@ -41,7 +41,6 @@ class Manager extends ChangeNotifier {
   signInAndPrepareData({required String email, required String password}) async {
     //start loading app
     setLoading(true);
-    // sign in and prepare data
     bool result = await _authService.signInEmail(email, password);
 
     //if sign in succeeded, prepare and/or update question data
@@ -51,6 +50,21 @@ class Manager extends ChangeNotifier {
       }
     // finish loading app
     setLoading(false);
+  }
+
+  registerAndPrepareData({required String email, required String password}) async {
+    //start loading app
+    setLoading(true);
+    //register user
+    bool result = await _authService.registerWithEmailAndPassword(email, password);
+    //if registration succeeded, prepare user and question data
+    if (result)
+    {
+      bool result = await _questionService.prepareGlobalData();
+    }
+    // finish loading app
+    setLoading(false);
+
   }
 
   signOut() async {

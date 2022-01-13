@@ -12,8 +12,8 @@ class DatabaseService {
   final CollectionReference usersCollection =
   FirebaseFirestore.instance.collection('users');
 
-  //CREATE USER DOCUMENT IN DATABASE
-  Future<void> createUser(String uid) async {
+  //CREATE NEW USER DOCUMENT IN DATABASE
+  Future<void> createUserDB(String uid) async {
     return await usersCollection
         .doc(uid)
         .set({
@@ -71,6 +71,11 @@ class DatabaseService {
           label: doc.label,
           level: doc.level);
     }).toList();
+  }
+
+  //Upload questions to DB ****** method on demand
+  Future<void> uploadQuestions() async {
+
   }
 
 }

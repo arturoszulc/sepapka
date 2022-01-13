@@ -23,8 +23,8 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? authUser = result.user;
 
-      //create user document in DB
-      await _databaseService.createUser(authUser!.uid);
+      //create new Local User
+      await _userService.createUserLocal(userId: authUser!.uid);
 
     }
     catch(e) {
@@ -47,7 +47,7 @@ final FirebaseAuth _auth = FirebaseAuth.instance;
       // createUser from UserService
 
       if (userData != null) {
-        await _userService.createUser(userData);
+        await _userService.createUserLocal(user: userData);
         return true;
       }
       return false;

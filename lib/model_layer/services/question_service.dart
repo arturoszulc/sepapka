@@ -36,7 +36,6 @@ class QuestionService {
   Future<bool> prepareGlobalData() async {
     //Get questionVersion number from DB
     int? qVersion = await _databaseService.getQuestionVersion();
-    debugPrint('wersja pytań DB: $qVersion');
 
     if (qVersion is int) {
       //after downloading qVersion from DB, compare it with local LoggedUser.qVersion.
@@ -44,12 +43,12 @@ class QuestionService {
 
       //if it is identical, take questions from JSON file
       if (compareResult == true) {
-        debugPrint('/// wersja pytań jest taka sama ///');
+        debugPrint('/// Downloading local question data ///');
         _qListGlobal = await _fileService.getQuestionListFromFile();
       }
       //if it is different
       if (compareResult == false) {
-        debugPrint('/// wersja pytań jest inna ///');
+        debugPrint('/// Downloading question data from DB ///');
         //download questions from DB
         _qListGlobal = await _databaseService.getQuestionList();
 
@@ -69,7 +68,6 @@ class QuestionService {
         return true;
     } else {
       debugPrint(errorQVersion);
-
     }
     return false;
   }
