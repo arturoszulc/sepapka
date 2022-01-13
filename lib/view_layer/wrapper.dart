@@ -16,11 +16,11 @@ class Wrapper extends StatelessWidget {
 
     return Selector<Manager, bool>(
       selector: (_, manager) => manager.loading,
-      builder: (_, loading, __) =>
+      builder: (_, loading, __) => loading == true ? const Loading() :
           Selector<Manager, LoggedUser?>(
         selector: (_, manager) => manager.loggedUser,
         builder: (_, loggedUser, __) =>
-            loggedUser != null ? const Menu() : Authenticate(),
+            loggedUser != null ? Menu() : Authenticate(),
       ),
     );
 

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/consts.dart';
+import 'package:sepapka/utils/methods.dart';
 
 import '../models/question.dart';
 
@@ -32,9 +33,9 @@ class DatabaseService {
         .doc(user.documentId)
         .set({
       userQVersion: user.qVersion,
-      userQListNew: user.qListNew,
-      userQListPractice: user.qListPractice,
-      userQListNotShown: user.qListNotShown,
+      userQListNew: user.qListNew.map((e) => e.convertToMap()).toList(),
+      userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
+      userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),
     }).then((value) =>
         print('User updated'));
   }
@@ -46,9 +47,9 @@ class DatabaseService {
     return LoggedUser(
       documentId: doc.id,
       qVersion: doc.get(userQVersion),
-      qListNew: List<QMap>.from(doc.get(userQListNew)),
-      qListPractice: List<QMap>.from(doc.get(userQListPractice)),
-      qListNotShown: List<QMap>.from(doc.get(userQListNotShown)),
+      qListNew: List<QMap>.from(doc.get(userQListNew).map((e) => convertMapToQMap(e))),
+      qListPractice: [],//doc.get(userQListPractice),
+      qListNotShown: [],//doc.get(userQListNotShown),
     );
   }
 
