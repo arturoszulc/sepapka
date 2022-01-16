@@ -12,9 +12,11 @@ class FileService {
 
   Future<bool> saveQuestionListToFile(List<Question> qListGlobal) async {
     print('ENTERED SAVE FILE');
+    print('qListGlobal length: ${qListGlobal.length}');
     //serialize object
     final String jsonFile = jsonEncode(qListGlobal);
-
+    print('JSON FILE JSON FILE');
+    print(jsonFile);
     //save JSON to file
 
     File file = await getFile();
@@ -32,7 +34,6 @@ class FileService {
   }
 
   Future<List<Question>?> getQuestionListFromFile() async {
-    print('ENTERED GET FILE');
 
     //get file
   File file = await getFile();
@@ -40,8 +41,10 @@ class FileService {
   try{
     //read file
     String jsonFile = await file.readAsString();
+
     //decode file
     List<dynamic> dynamicList = jsonDecode(jsonFile);
+
     //convert to correct type
     List<Question> questionList = dynamicList.map((e) => Question.fromJson(e)).toList();
 

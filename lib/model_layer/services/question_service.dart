@@ -36,40 +36,39 @@ class QuestionService {
   Future<bool> prepareGlobalData() async {
     //Get questionVersion number from DB
     int? qVersion = await _databaseService.getQuestionVersion();
+    debugPrint('/// qVersion from DB: $qVersion ///');
+    if (qVersion is! int) {
+      debugPrint(errorQVersion);
+      return false;
+    }
+    //after downloading qVersion from DB, compare it with local LoggedUser.qVersion.
+    bool compareResult = _userService.compareQVersion(qVersion);
 
-    if (qVersion is int) {
-      //after downloading qVersion from DB, compare it with local LoggedUser.qVersion.
-      bool compareResult = _userService.compareQVersion(qVersion);
+    //if it is identical, take questions from JSON file
+    if (compareResult == true) {
+      debugPrint('/// Downloading local question data ///');
+      _qListGlobal = await _fileService.getQuestionListFromFile();
+    }
+    //if it is different
+    if (compareResult == false) {
+      debugPrint('/// Downloading question data from DB ///');
+      //download questions from DB
+      _qListGlobal = await _databaseService.getQuestionList();
 
-      //if it is identical, take questions from JSON file
-      if (compareResult == true) {
-        debugPrint('/// Downloading local question data ///');
-        _qListGlobal = await _fileService.getQuestionListFromFile();
-      }
-      //if it is different
-      if (compareResult == false) {
-        debugPrint('/// Downloading question data from DB ///');
-        //download questions from DB
-        _qListGlobal = await _databaseService.getQuestionList();
+      //save questions to local JSON file
+      if (_qListGlobal != null) {
+        bool result = await _fileService.saveQuestionListToFile(_qListGlobal!);
+        if (result) {
+          //then update user question version
+          _userService.updateQVersion(qVersion);
 
-        //save questions to local JSON file
-        if (_qListGlobal != null) {
-          bool result = await _fileService.saveQuestionListToFile(_qListGlobal!);
-          if (result) {
-            //then update user question version
-            _userService.updateQVersion(qVersion);
-
-            //and add any new questions to user qNewList
-            await _userService.updateQNewList(_qListGlobal!);
-            debugPrint('/// USER UPDATED ///');
-          }
+          //and add any new questions to user qNewList
+          await _userService.updateQNewList(_qListGlobal!);
+          debugPrint('/// USER UPDATED ///');
         }
       }
-        return true;
-    } else {
-      debugPrint(errorQVersion);
     }
-    return false;
+    return true;
   }
 
   Future checkAnswer(String answer) async {

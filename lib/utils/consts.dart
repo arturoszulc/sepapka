@@ -19,6 +19,15 @@ const String userQListNew = 'qListNew';
 const String userQListPractice = 'qListPractice';
 const String userQListNotShown = 'qListNotShown';
 
+//Question model properties
+const String questionQ = 'q';
+const String questionA1 = 'a1';
+const String questionA2 = 'a2';
+const String questionA3 = 'a3';
+const String questionA4 = 'a4';
+const String questionLabels = 'labels';
+const String questionLevel = 'level';
+
 Map<String, Color?> labelColors = {
   label1: Colors.blue,
 };
@@ -26,71 +35,59 @@ Map<String, Color?> labelColors = {
 const int questionVersionDB = 1;
 const int questionVersionLocal = 0;
 
-final questionListDB = [q1, q2, q3, q4, q5, q6];
+final questionListDB = [q5];
 
 final Question q1 = Question(
-  id: '1',
-  q: 'Question 1 Question 1 Question 1 Question 1 Question 1 Question 1',
-  a1: '1answer1 1answer1 1answer1 1answer1',
+  id: '',
+  q: 'Question 1',
+  a1: '1answer1',
   a2: '1answer2',
   a3: '1answer3',
   a4: '1answer4',
-  label: label1,
+  labels: [],
   level: 1,
 );
 
 final Question q2 = Question(
-  id: '2',
-  q: 'Question 2 Question 2 Question 2 Question 2 Question 2 Question 2',
+  id: '',
+  q: 'Question 2',
   a1: '2answer1',
   a2: '2answer2',
   a3: '2answer3',
   a4: '2answer4',
-  label: label1,
+  labels: [],
   level: 1,
 );
 
 final Question q3 = Question(
-  id: '3',
-  q: 'Question 3 Question 3 Question 3 Question 3 Question 3 Question 3',
+  id: '',
+  q: 'Question 3',
   a1: '3answer1',
   a2: '3answer2',
   a3: '3answer3',
   a4: '3answer4',
-  label: label1,
+  labels: [],
   level: 1,
 );
 
 final Question q4 = Question(
-  id: '4',
-  q: 'Question 4 Question 4 Question 4 Question 4 Question 4 Question 4',
+  id: '',
+  q: 'Question 4',
   a1: '4answer1',
   a2: '4answer2',
   a3: '4answer3',
   a4: '4answer4',
-  label: label1,
+  labels: [],
   level: 1,
 );
-
 final Question q5 = Question(
-  id: '5',
-  q: 'Question 5 Question 5 Question 5 Question 5 Question 5 Question 5',
+  id: '',
+  q: 'Question 5',
   a1: '5answer1',
   a2: '5answer2',
   a3: '5answer3',
   a4: '5answer4',
-  label: label1,
-  level: 1,
-);
-
-final Question q6 = Question(
-  id: '6',
-  q: 'Question 6 Question 6 Question 6 Question 6 Question 6 Question 6',
-  a1: '6answer1',
-  a2: '6answer2',
-  a3: '6answer3',
-  a4: '6answer4',
-  label: label1,
+  labels: [],
   level: 1,
 );
 

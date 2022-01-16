@@ -5,7 +5,7 @@ class Question {
   String a2;
   String a3;
   String a4;
-  String label;
+  List<String> labels;
   int level;
 
   Question(
@@ -15,19 +15,19 @@ class Question {
       required this.a2,
       required this.a3,
       required this.a4,
-      required this.label,
+      required this.labels,
       required this.level,});
 
 
 
-  Question.fromJson(Map<String, dynamic> json)
+  Question.fromJson(Map<String,dynamic> json)
       : id = json['id'],
         q = json['q'],
         a1 = json['a1'],
         a2 = json['a2'],
         a3 = json['a3'],
         a4 = json['a4'],
-        label = json['label'],
+        labels = List<String>.from(json['labels']),
         level = json['level'];
 
   Map<String,dynamic> toJson() => {
@@ -37,11 +37,9 @@ class Question {
     'a2' : a2,
     'a3' : a3,
     'a4' : a4,
-    'label' : label,
+    'labels' : labels,
     'level' : level,
 
   };
-
-
 
 }

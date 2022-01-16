@@ -15,6 +15,7 @@ class UserService {
 
   //Properties
   bool _loggedUserChanged = false;
+  int _progressPercent = 0;
 
   //Models
   LoggedUser? _loggedUser;
@@ -22,6 +23,19 @@ class UserService {
   bool get loggedUserChanged => _loggedUserChanged;
   LoggedUser? get loggedUser => _loggedUser;
 
+
+  double getProgressPercent() {
+    int allQuestions =
+        _loggedUser!.qListNew.length +
+        _loggedUser!.qListPractice.length +
+        _loggedUser!.qListNotShown.length;
+
+    int knownQuestions = _loggedUser!.qListPractice.length;
+    double progress = knownQuestions / allQuestions;
+    double number = num.parse(progress.toStringAsFixed(2)).toDouble();
+
+    return number;
+  }
 
   setLoggedUserChanged(bool status) {
     _loggedUserChanged = status;
@@ -83,7 +97,7 @@ class UserService {
     _loggedUser!.qVersion = qVersion;
   }
 
-  bool isQuestionOnAnyLoggedUserList(String questionId) {
+  bool isQuestionOnAnyLoggedUserList(String? questionId) {
     QMap? qMap;
     //check in qNewList
     qMap ??= _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == questionId);
@@ -97,7 +111,7 @@ class UserService {
     return false;
   }
   }
-  QMap createQMapForNewQuestion(String qId) {
+  QMap createQMapForNewQuestion(String? qId) {
     return QMap(
         id: qId,
         dateModified: DateTime.now().toString(),
@@ -134,25 +148,15 @@ class UserService {
       await addQuestionToPractice(qMap);
     }
 
-    //find Question by ID, retrieve it's QMap, and delete it form list
-
-    //Update QMap
-
-    //Add QMap to Practice List
   }
 
-  Future<Object> moveNewQuestionToNew(String questionId) async {
+  moveNewQuestionToNew(String questionId) async {
     //Get QMap by ID and delete from qNewList
     QMap? qMap = getQMapFromNewById(questionId);
     if (qMap != null) {
       var addResult = await addQuestionToNew(qMap);
-      if (addResult is Success) {
-        return Success(object: _loggedUser);
-      } else {
-        return addResult;
-      }
     }
-    return _loggedUser!;
+
   }
 
   QMap? getQMapFromNewById(String questionId) {
@@ -164,17 +168,18 @@ class UserService {
     return qMap;
   }
 
-  addQuestionToPractice(QMap qMap) {
+  addQuestionToPractice(QMap qMap) async {
     if (_loggedUser!.qListPractice.contains(qMap)) {
       debugPrint('addQuestionToPractice() error: Question is already in qListPractice');
     } else {
       _loggedUser!.qListPractice.add(qMap);
+      await _databaseService.updateUser(_loggedUser!);
     }
   }
 
   addQuestionToNew(QMap qMap) {
     if (_loggedUser!.qListNew.contains(qMap)) {
-      return Failure(errorResponse: 'addQuestionToNew() error: Question is already in qListNew');
+      return Failure('addQuestionToNew() error: Question is already in qListNew');
     } else {
       _loggedUser!.qListNew.add(qMap);
       return Success();

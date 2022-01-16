@@ -9,8 +9,14 @@ import '../models/question.dart';
 
 class DatabaseService {
 
+  final CollectionReference dataCollection =
+  FirebaseFirestore.instance.collection('data');
+  final CollectionReference questionsCollection =
+  FirebaseFirestore.instance.collection('questions');
   final CollectionReference usersCollection =
   FirebaseFirestore.instance.collection('users');
+
+
 
   //CREATE NEW USER DOCUMENT IN DATABASE
   Future<void> createUserDB(String uid) async {
@@ -24,7 +30,6 @@ class DatabaseService {
     }).then((value) =>
         print('User created'));
   }
-
 
 
   // //UPDATE USER DATA
@@ -48,34 +53,46 @@ class DatabaseService {
       documentId: doc.id,
       qVersion: doc.get(userQVersion),
       qListNew: List<QMap>.from(doc.get(userQListNew).map((e) => convertMapToQMap(e))),
-      qListPractice: [],//doc.get(userQListPractice),
-      qListNotShown: [],//doc.get(userQListNotShown),
+      qListPractice: List<QMap>.from(doc.get(userQListPractice).map((e) => convertMapToQMap(e))),
+      qListNotShown: List<QMap>.from(doc.get(userQListNotShown).map((e) => convertMapToQMap(e))),
     );
   }
 
 
   //Get question version
   Future<int?> getQuestionVersion() async {
-    return questionVersionDB;
+    var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
+    return doc.get('qVersion');
   }
+
   //Get question list
   Future<List<Question>> getQuestionList() async {
-    return questionListDB.map((doc) {
+    var snapshot = await questionsCollection.get();
+    return snapshot.docs.map((doc) {
       return Question(
           id: doc.id,
-          q: doc.q,
-          a1: doc.a1,
-          a2: doc.a2,
-          a3: doc.a3,
-          a4: doc.a4,
-          label: doc.label,
-          level: doc.level);
+          q: doc.get(questionQ),
+          a1: doc.get(questionA1),
+          a2: doc.get(questionA2),
+          a3: doc.get(questionA3),
+          a4: doc.get(questionA4),
+          labels: List<String>.from(doc.get(questionLabels)),
+          level: doc.get(questionLevel));
     }).toList();
   }
 
   //Upload questions to DB ****** method on demand
-  Future<void> uploadQuestions() async {
-
+  Future<void> uploadQuestions(Question question) async {
+    return questionsCollection
+        .doc().set({
+      'q': question.q,
+      'a1': question.a1,
+      'a2': question.a2,
+      'a3': question.a3,
+      'a4': question.a4,
+      'labels': [],
+      'level': 1,
+    });
   }
 
 }

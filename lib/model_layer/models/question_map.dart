@@ -1,5 +1,5 @@
 class QMap {
-  String id;
+  String? id;
   String dateModified;
   int numberFib;
 
@@ -9,8 +9,6 @@ class QMap {
   convertToMap() {
     return {'id': id, 'dateModified': dateModified, 'numberFib': numberFib};
   }
-  // convertFromMap(dynamic e) {
-  // }
 
   @override
   toString() {
