@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,8 @@ import 'package:sepapka/view_layer/menu_screen.dart';
 import 'package:sepapka/view_layer/question_single_screen.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+
+import 'model_layer/services/auth_service.dart';
 
 
 void main() async {
@@ -27,6 +30,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Manager>(
           create: (context) => Manager(),
         ),
+        StreamProvider<User?>.value(
+          //dzieki temu Wrapper dostaje dostęp do objektu MyUser
+          initialData: null,
+          catchError: (context, err) {
+            debugPrint('StreamProvider<User?> catched Error:');
+            debugPrint(err.toString());
+            return null;
+          },
+          value: serviceLocator.get<AuthService>().user,
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

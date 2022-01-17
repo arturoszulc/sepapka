@@ -16,7 +16,7 @@ class SignInScreen extends StatelessWidget {
         child:
           ElevatedButton(
             onPressed: () {
-              manager.signInAndPrepareData(email: 'test@test.pl', password: '123456');
+              manager.signIn(email: 'test@test.pl', password: '123456');
               // manager.addQuestionsToDb();
             },
             child: const Text('Zaloguj'),

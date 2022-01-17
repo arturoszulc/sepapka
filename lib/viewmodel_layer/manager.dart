@@ -1,4 +1,6 @@
-import 'package:dartz/dartz.dart';
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
@@ -29,16 +31,23 @@ class Manager extends ChangeNotifier {
 
   //External Getters
   LoggedUser? get loggedUser => _userService.loggedUser;
-
   double get progressPercent => _userService.getProgressPercent();
-
   Question? get currentQuestion => _questionService.currentQuestion;
-
   QuestionStatus get qStatus => _questionService.qStatus;
-
   QuestionType get qType => _questionService.qType;
-
   List<BMap> get bMapList => _questionService.bMapList;
+
+  //if user is signed in, prepare data
+  // StreamSubscription<User?> get user =>
+  //     _authService.auth.authStateChanges().listen((User? user) {
+  //       if (user != null) {
+  //         debugPrint('User is logged in');
+  //         prepareData(user.uid);
+  //       } else {
+  //         debugPrint('User is not logged in');
+  //         prepareData(null);
+  //       }
+  //     });
 
   setError(Failure failure) {
     _errorMsg = failure.errorString;
@@ -50,23 +59,33 @@ class Manager extends ChangeNotifier {
     notifyListeners();
   }
 
-  signInAndPrepareData({required String email, required String password}) async {
+  //method deployed by stream automatically
+  prepareData(String? userId) async {
+    if (loading == false) setLoading(true);
+    if (userId == null) {
+      await _userService.logOutUser();
+    }
+    if (userId != null) {
+      LoggedUser? userData = await _databaseService.getUserData(userId);
+      if (userData == null) return;
+      //then create local User instance
+      await _userService.createUserLocal(user: userData);
+      //prepare questions
+      bool qResult = await _questionService.prepareGlobalData();
+    }
+    setLoading(false);
+  }
+
+  signIn({required String email, required String password}) async {
     //start loading app
     setLoading(true);
-
-    //Try to log in and create user
-    Object aResult = await _authService.signInUser(email, password);
-
+    //Try to sign in
+    Object aResult = await _authService.signInEmail(email, password);
     if (aResult is Failure) {
       setError(aResult);
       setLoading(false);
       return true;
     }
-    debugPrint('PASSED FAILURE');
-    bool qResult = await _questionService.prepareGlobalData();
-
-    // finish loading app
-
   }
 
   registerAndPrepareData({required String email, required String password}) async {
@@ -85,6 +104,7 @@ class Manager extends ChangeNotifier {
   signOut() async {
     setLoading(true);
     bool result = await _authService.signOut();
+    await _userService.logOutUser();
     setLoading(false);
   }
 

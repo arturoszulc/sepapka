@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
@@ -13,6 +14,12 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint('*** Wrapper built ***');
+
+    final user = Provider.of<User?>(context);
+
+    if (user != null) {
+      context.read<Manager>().prepareData(user.uid);
+    }
 
     return Selector<Manager, bool>(
       selector: (_, manager) => manager.loading,
