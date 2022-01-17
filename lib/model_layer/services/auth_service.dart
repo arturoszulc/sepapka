@@ -14,34 +14,10 @@ class AuthService {
 
   //Other
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // User? _user;
+
 
   //Getters
   FirebaseAuth get auth => _auth;
-  // User? get user => _user;
-  // Stream
-  Stream<User?> get user => _auth.authStateChanges();
-
-  someMethod(String? uid) {
-    debugPrint('someMethod deployed');
-  }
-
-  // sign-in, get data from DB and create local User model
-  // Future<Object> signInAndCreateLocalUser(String email, String password) async {
-  //   //try to signIn
-  //   Object result = await signInEmail(email, password);
-  //
-  //   if (result is Failure) {
-  //     return result;
-  //   }
-  //   // then get user data by ID from DB
-  //   if (result is String) {
-  //     var userData = await _databaseService.getUserData(result);
-  //     if (userData == null) return Failure(errorGetUserDataFromDb);
-  //
-  //   }
-  //   return Success();
-  // }
 
   // register with e-mail and password
 

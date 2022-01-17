@@ -23,7 +23,6 @@ class Manager extends ChangeNotifier {
   //Manager properties
   bool _loading = false;
   String? _errorMsg;
-
   //Manager getters
   bool get loading => _loading;
 
@@ -37,17 +36,27 @@ class Manager extends ChangeNotifier {
   QuestionType get qType => _questionService.qType;
   List<BMap> get bMapList => _questionService.bMapList;
 
-  //if user is signed in, prepare data
-  // StreamSubscription<User?> get user =>
-  //     _authService.auth.authStateChanges().listen((User? user) {
-  //       if (user != null) {
-  //         debugPrint('User is logged in');
-  //         prepareData(user.uid);
-  //       } else {
-  //         debugPrint('User is not logged in');
-  //         prepareData(null);
-  //       }
-  //     });
+  Stream<User?> get authUser => _authService.auth.authStateChanges();
+
+  Manager() {
+    //on initialize, subscribe to stream that checks wether user is logged in or not
+    checkIfUserSignedIn();
+  }
+
+  checkIfUserSignedIn() {
+    authUser.listen((User? user) {
+      if (user != null) {
+        debugPrint('User is NOT null');
+        prepareData(user.uid);
+      }
+      if (user == null) {
+        debugPrint('User is null');
+        _userService.logOutUser();
+        notifyListeners();
+      }
+
+    });
+    }
 
   setError(Failure failure) {
     _errorMsg = failure.errorString;
@@ -102,10 +111,7 @@ class Manager extends ChangeNotifier {
   }
 
   signOut() async {
-    setLoading(true);
     bool result = await _authService.signOut();
-    await _userService.logOutUser();
-    setLoading(false);
   }
 
   checkAnswer(String answer) async {

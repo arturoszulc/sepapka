@@ -30,16 +30,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Manager>(
           create: (context) => Manager(),
         ),
-        StreamProvider<User?>.value(
-          //dzieki temu Wrapper dostaje dostęp do objektu MyUser
-          initialData: null,
-          catchError: (context, err) {
-            debugPrint('StreamProvider<User?> catched Error:');
-            debugPrint(err.toString());
-            return null;
-          },
-          value: serviceLocator.get<AuthService>().user,
-        )
+
+        // StreamProvider<User?>.value(
+        //   initialData: null,
+        //   catchError: (context, err) {
+        //     debugPrint('StreamProvider<User?> catched Error:');
+        //     debugPrint(err.toString());
+        //     return null;
+        //   },
+        //   value: serviceLocator.get<AuthService>().user,
+        // )
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

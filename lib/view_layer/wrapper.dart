@@ -15,11 +15,11 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Wrapper built ***');
 
-    final user = Provider.of<User?>(context);
+    // final user = context.read<Manager>().user;
 
-    if (user != null) {
-      context.read<Manager>().prepareData(user.uid);
-    }
+    // if (user != null) {
+    //   context.read<Manager>().prepareData(user.uid);
+    // }
 
     return Selector<Manager, bool>(
       selector: (_, manager) => manager.loading,
