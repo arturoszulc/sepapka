@@ -18,6 +18,7 @@ class QuestionService {
   FileService _fileService = serviceLocator.get<FileService>();
 
   //Properties
+  DateTime _today = DateTime.now();
   List<Question>? _qListGlobal;
   Question? _currentQuestion;
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
@@ -34,6 +35,17 @@ class QuestionService {
   List<BMap> get bMapList => _bMapList;
 
   //Methods
+
+  getDateDifferenceInDays() {
+    DateTime today = _today.add(const Duration(hours: 2));
+    DateTime tomorrow = _today.add(const Duration(days: 1));
+    DateTime yesterday = _today.subtract(const Duration(days: 1));
+    debugPrint('difference in days');
+    debugPrint(today.difference(_today).inDays.toString());
+    debugPrint(tomorrow.difference(_today).inDays.toString());
+    debugPrint(yesterday.difference(_today).inDays.toString());
+  }
+
 
   Future<Object> prepareGlobalData() async {
     //Get questionVersion number from DB
