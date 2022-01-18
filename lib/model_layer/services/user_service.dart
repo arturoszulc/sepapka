@@ -185,4 +185,10 @@ class UserService {
       return Success();
     }
   }
+
+  cleanQuestionLists() {
+    _loggedUser!.qListNew.clear();
+    _loggedUser!.qListPractice.clear();
+    _loggedUser!.qListNotShown.clear();
+  }
 }

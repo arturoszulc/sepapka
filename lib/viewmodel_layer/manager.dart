@@ -21,11 +21,12 @@ class Manager extends ChangeNotifier {
   DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
 
   //Manager properties
+  DateTime dateNow = DateTime.now();
   bool _loading = false;
   String? _errorMsg;
+
   //Manager getters
   bool get loading => _loading;
-
   String? get errorMsg => _errorMsg;
 
   //External Getters
@@ -39,6 +40,8 @@ class Manager extends ChangeNotifier {
   Stream<User?> get authUser => _authService.auth.authStateChanges();
 
   Manager() {
+    //initialize methods
+    getCurrentDate();
     //on initialize, subscribe to stream that checks if user is logged in or not
     watchAuthUser();
   }
@@ -55,7 +58,14 @@ class Manager extends ChangeNotifier {
     notifyListeners();
   }
 
+  getCurrentDate() {
+    String convertedDateTime = "${dateNow.year.toString()}-${dateNow.month.toString().padLeft(2,'0')}-${dateNow.day.toString().padLeft(2,'0')}";
+    debugPrint('CONVERTED DATE');
+    debugPrint(convertedDateTime);
+    dateNow = dateFormat.parse(convertedDateTime); // CHANGE THIS
 
+
+  }
   // methods deployed automatically after user signs in or signs out //
   watchAuthUser() {
     authUser.listen((User? user) {
@@ -107,9 +117,8 @@ class Manager extends ChangeNotifier {
     setLoading(true);
     //register user
     Object registerResult = await _authService.registerWithEmailAndPassword(email, password);
-    if (registerResult is Failure) {
-      setError(registerResult);
-    }
+    if (registerResult is Failure) setError(registerResult);
+
   }
 
   signOut() async {
@@ -118,6 +127,10 @@ class Manager extends ChangeNotifier {
 
   resetUserProgress() async {
     debugPrint('ResetUserProgress deployed');
+
+    Object resetResult = _questionService.resetUserProgress();
+    if (resetResult is Failure) setError(resetResult);
+
   }
 
   checkAnswer(String answer) async {

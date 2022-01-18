@@ -16,8 +16,7 @@ class AuthService {
 
   Future<Object> registerWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential result =
-          await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
       return Success();
     } on FirebaseAuthException catch (e) {
       debugPrint('CODE');
@@ -29,8 +28,7 @@ class AuthService {
   Future<Object> signInEmail(String email, String password) async {
     try {
       //get authUser
-      UserCredential result =
-          await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
       return Success();
     } on FirebaseAuthException catch (e) {
       debugPrint('CODE');
@@ -72,13 +70,8 @@ class AuthService {
       case "operation-not-allowed":
         return "Tymczasowo zablokowano dostęp ze względu na zbyt częste próby logownia. Spróbuj później";
         break;
-      case "ERROR_TOO_MANY_REQUESTS":
       case "too-many-requests":
         return "Tymczasowo zablokowano dostęp ze względu na zbyt częste próby logownia. Spróbuj później";
-        break;
-      case "ERROR_OPERATION_NOT_ALLOWED":
-      case "operation-not-allowed":
-        return "Błąd serwera, spróbuj później";
         break;
       case "ERROR_INVALID_EMAIL":
       case "invalid-email":

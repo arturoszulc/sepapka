@@ -10,7 +10,15 @@ class Settings extends StatelessWidget {
     debugPrint('*** Settings built ***');
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings Screen'),),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+              '/wrapper', (Route<dynamic> route) => false),
+        ),
+        title: const Text('Settings Screen'),
+
+      ),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -33,6 +41,11 @@ class Settings extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                '/wrapper', (Route<dynamic> route) => false);
+          }, label: const Text('Zapisz')),
     );
   }
 }

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sepapka/model_layer/models/question.dart';
+import 'package:intl/intl.dart';
 
 //Enums
 enum QuestionStatus{noAnswer, rightAnswer, wrongAnswer }
 enum QuestionType{newQuestion, practiceQuestion}
+
+//Date related props
+final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
 
 //Question labels - to be rebuilt
 const label1 = 'nowy';

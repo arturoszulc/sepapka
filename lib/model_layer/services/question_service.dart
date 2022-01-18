@@ -59,20 +59,19 @@ class QuestionService {
   }
 
   Future<Object> getQuestionList(bool compareResult) async {
-    // if User has qVersion up to date, take questions from JSON file
+    // if User has qVersion up to date, try to take questions from JSON file
     if (compareResult == true) {
       Object getLocalQuestionResult = await _fileService.getQuestionListFromFile();
-      return getLocalQuestionResult;
+      if (getLocalQuestionResult is List<Question>) return getLocalQuestionResult;
     }
-    //if user has outdated qVersion, download new from DB
-    else {
-      List<Question>? questionListFromDB = await _databaseService.getQuestionList();
-      if (questionListFromDB == null) return Failure(errorGetQListFromDB);
-      //save questions to local JSON file
-      Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(questionListFromDB);
-      if (saveQuestionToFileResult is Failure) return saveQuestionToFileResult;
-      return questionListFromDB;
-    }
+
+    //if user has outdated qVersion, or couldn't read file, download questions from DB
+    List<Question>? questionListFromDB = await _databaseService.getQuestionList();
+    if (questionListFromDB == null) return Failure(errorGetQListFromDB);
+    //save questions to local JSON file
+    Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(questionListFromDB);
+    if (saveQuestionToFileResult is Failure) return saveQuestionToFileResult;
+    return questionListFromDB;
   }
 
   Future checkAnswer(String answer) async {
@@ -147,5 +146,14 @@ class QuestionService {
       //if question does not exist, set it to null
       _currentQuestion = null;
     }
+  }
+
+  Future<Object> resetUserProgress() async {
+    //clear user lists
+    await _userService.cleanQuestionLists();
+    //update qNewList
+    await _userService.updateQNewList(_qListGlobal!);
+
+    return Success();
   }
 }
