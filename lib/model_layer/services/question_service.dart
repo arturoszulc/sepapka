@@ -5,6 +5,7 @@ import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/file_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
+import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
 
 import '../../locator.dart';
@@ -23,56 +24,58 @@ class QuestionService {
   QuestionType _qType = QuestionType.newQuestion;
   List<BMap> _bMapList = []; //shuffled list of answers & colors for butotns
 
-
   //Getters
   Question? get currentQuestion => _currentQuestion;
-  QuestionStatus get qStatus => _qStatus;
-  QuestionType get qType => _qType;
-  List<BMap> get bMapList => _bMapList;
 
+  QuestionStatus get qStatus => _qStatus;
+
+  QuestionType get qType => _qType;
+
+  List<BMap> get bMapList => _bMapList;
 
   //Methods
 
-  Future<bool> prepareGlobalData() async {
+  Future<Object> prepareGlobalData() async {
     //Get questionVersion number from DB
     int? qVersion = await _databaseService.getQuestionVersion();
-    debugPrint('/// qVersion from DB: $qVersion ///');
-    if (qVersion is! int) {
-      debugPrint(errorQVersion);
-      return false;
-    }
+    if (qVersion is! int) return Failure(errorGetQVersionFromDB);
+
     //after downloading qVersion from DB, compare it with local LoggedUser.qVersion.
     bool compareResult = _userService.compareQVersion(qVersion);
 
-    //if it is identical, take questions from JSON file
+    //get Question List based on compareResult
+    Object getQuestionResult = await getQuestionList(compareResult);
+    if (getQuestionResult is Failure) return getQuestionResult;
+
+    //update qListGlobal variable
+    _qListGlobal = getQuestionResult as List<Question>;
+
+    //update local user question version and qNewList (if there any any new questions
+    _userService.updateQVersion(qVersion);
+    await _userService.updateQNewList(_qListGlobal!);
+
+    debugPrint('/// SUCCESS: FINISHED PREPARING DATA ///');
+    return Success();
+  }
+
+  Future<Object> getQuestionList(bool compareResult) async {
+    // if User has qVersion up to date, take questions from JSON file
     if (compareResult == true) {
-      debugPrint('/// Downloading local question data ///');
-      _qListGlobal = await _fileService.getQuestionListFromFile();
+      Object getLocalQuestionResult = await _fileService.getQuestionListFromFile();
+      return getLocalQuestionResult;
     }
-    //if it is different
-    if (compareResult == false) {
-      debugPrint('/// Downloading question data from DB ///');
-      //download questions from DB
-      _qListGlobal = await _databaseService.getQuestionList();
-
+    //if user has outdated qVersion, download new from DB
+    else {
+      List<Question>? questionListFromDB = await _databaseService.getQuestionList();
+      if (questionListFromDB == null) return Failure(errorGetQListFromDB);
       //save questions to local JSON file
-      if (_qListGlobal != null) {
-        bool result = await _fileService.saveQuestionListToFile(_qListGlobal!);
-        if (result) {
-          //then update user question version
-          _userService.updateQVersion(qVersion);
-
-          //and add any new questions to user qNewList
-          await _userService.updateQNewList(_qListGlobal!);
-          debugPrint('/// USER UPDATED ///');
-        }
-      }
+      Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(questionListFromDB);
+      if (saveQuestionToFileResult is Failure) return saveQuestionToFileResult;
+      return questionListFromDB;
     }
-    return true;
   }
 
   Future checkAnswer(String answer) async {
-
     //If right answer
     if (answer == _currentQuestion!.a1) {
       //set QuestionStatus
@@ -103,14 +106,12 @@ class QuestionService {
     _qStatus = QuestionStatus.noAnswer;
 
     //get question based on type
-    if (qType == QuestionType.newQuestion){
+    if (qType == QuestionType.newQuestion) {
       _currentQuestion = getNewQuestion();
       _qType = QuestionType.newQuestion;
-  }
-    else {
+    } else {
       _currentQuestion = getPracticeQuestion();
       _qType = QuestionType.practiceQuestion;
-
     }
     //if question exists, prepare button map
     if (_currentQuestion != null) {
@@ -130,21 +131,19 @@ class QuestionService {
     if (qMap != null) {
       //if question exists, prepare it and set AMap
       return _qListGlobal!.firstWhereOrNull((element) => element.id == qMap.id);
-
-    }
-    else {
+    } else {
       //if question does not exist, set it to null
       _currentQuestion = null;
     }
   }
+
   Question? getPracticeQuestion() {
     //get QMap of first NewQuestion from user qNewList
     QMap? qMap = _userService.getPracticeQuestionQMap();
     if (qMap != null) {
       //if question exists, prepare it and set AMap
       return _qListGlobal!.firstWhereOrNull((element) => element.id == qMap.id);
-    }
-    else {
+    } else {
       //if question does not exist, set it to null
       _currentQuestion = null;
     }

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
 
 import '../models/question.dart';
@@ -10,31 +11,28 @@ import '../models/question.dart';
 class FileService {
 
 
-  Future<bool> saveQuestionListToFile(List<Question> qListGlobal) async {
-    print('ENTERED SAVE FILE');
-    print('qListGlobal length: ${qListGlobal.length}');
+  Future<Object> saveQuestionListToFile(List<Question> qListGlobal) async {
+    debugPrint('/// SAVING QUESTION LIST TO FILE ///');
+
     //serialize object
     final String jsonFile = jsonEncode(qListGlobal);
-    print('JSON FILE JSON FILE');
-    print(jsonFile);
-    //save JSON to file
 
+    //get File
     File file = await getFile();
+
+    //save JSON to file
     try {
       await file.writeAsString(jsonFile);
-      return true;
+      return Success();
     }
     catch(e) {
-      debugPrint(errorWritingFile);
-      return false;
+      debugPrint(e.toString());
+      return Failure(errorWritingFile);
     }
-    // print('FILE SAVED');
-    // getQuestionListFromFile(file);
-
   }
 
-  Future<List<Question>?> getQuestionListFromFile() async {
-
+  Future<Object> getQuestionListFromFile() async {
+    debugPrint('/// Downloading local question data ///');
     //get file
   File file = await getFile();
 
@@ -51,9 +49,8 @@ class FileService {
     return questionList;
   }
   catch(e) {
-    //if read failed, return null
-    debugPrint(errorReadingFile);
-    return null;
+    debugPrint(e.toString());
+    return Failure(errorReadingFile);
   }
 
 

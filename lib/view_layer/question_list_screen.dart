@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 
 
 class QuestionListScreen extends StatelessWidget {

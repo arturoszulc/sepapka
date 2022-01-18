@@ -1,20 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:sepapka/model_layer/services/database_service.dart';
-import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
-import 'package:sepapka/utils/consts.dart';
-
-import '../../locator.dart';
 
 class AuthService {
-  //Services injection
-  // DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
-  // UserService _userService = serviceLocator.get<UserService>();
+  //Properties
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
-  //Other
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  //Constructor - default
+  AuthService();
 
   //Getters
   FirebaseAuth get auth => _auth;
@@ -31,9 +24,7 @@ class AuthService {
       debugPrint(e.code);
       return Failure(getMessageFromErrorCode(e.code));
     }
-
   }
-
 
   Future<Object> signInEmail(String email, String password) async {
     try {
@@ -97,5 +88,10 @@ class AuthService {
         return "Błąd logowania, spróbuj ponownie";
         break;
     }
+  }
+
+  // Constructor - only for test
+  AuthService.mocked(arg) {
+    _auth = arg;
   }
 }

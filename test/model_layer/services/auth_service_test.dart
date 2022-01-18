@@ -19,7 +19,7 @@ void main() {
 
 
   final MockFirebaseAuth mockAuth = MockFirebaseAuth();
-  final AuthService auth = AuthService();
+  final AuthService auth = AuthService.mocked(mockAuth);
   setupGetIt();
   tearDown(() {});
 

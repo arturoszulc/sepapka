@@ -124,7 +124,7 @@ class UserService {
       qMap = _loggedUser!.qListNew.first;
     }
     if (qMap == null) {
-      debugPrint('getNewQuestionQMap error: No new questions');
+      debugPrint('/// No new questions available ///');
     }
     return qMap;
   }

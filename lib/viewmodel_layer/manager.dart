@@ -84,7 +84,8 @@ class Manager extends ChangeNotifier {
       await _userService.createUserLocal(user: userData);
 
       //prepare questions
-      bool qResult = await _questionService.prepareGlobalData();
+      Object prepareDataResult = await _questionService.prepareGlobalData();
+      if (prepareDataResult is Failure) setError(prepareDataResult);
     setLoading(false);
   }
 

@@ -42,7 +42,7 @@ class QuestionSingleScreen extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: Card(
                       child: Text(
-                        manager.bMapList.toString(),
+                        question.q,
                         // maxLines: 3,
                       ),
                     ),

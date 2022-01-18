@@ -94,8 +94,9 @@ final Question q5 = Question(
 //////Errors
 
 //DB Errors
-const String errorQVersion = '### Nie udało się pobrać wersji pytań z bazy danych ###';
-const String errorGetUserDataFromDb = 'Błąd pobierania danych użytkownika. Sprawdź połączenie z internetem';
+const String errorGetQVersionFromDB = '### Nie udało się pobrać wersji pytań z bazy danych ###';
+const String errorGetQListFromDB = '### Nie można pobrać listy pytań. Sprawdź połączenie z internetem ###';
+const String errorGetUserDataFromDB = 'Błąd pobierania danych użytkownika. Sprawdź połączenie z internetem';
 //AuthService Errors
 const String errorSignIn = '### AuthService.signInEmail() error: ';
 
