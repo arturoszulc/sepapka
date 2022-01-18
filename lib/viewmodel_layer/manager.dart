@@ -39,28 +39,15 @@ class Manager extends ChangeNotifier {
   Stream<User?> get authUser => _authService.auth.authStateChanges();
 
   Manager() {
-    //on initialize, subscribe to stream that checks wether user is logged in or not
-    checkIfUserSignedIn();
+    //on initialize, subscribe to stream that checks if user is logged in or not
+    watchAuthUser();
   }
 
-  checkIfUserSignedIn() {
-    authUser.listen((User? user) {
-      if (user != null) {
-        debugPrint('User is NOT null');
-        prepareData(user.uid);
-      }
-      if (user == null) {
-        debugPrint('User is null');
-        _userService.logOutUser();
-        notifyListeners();
-      }
-
-    });
-    }
-
+  // internal Manager methods affecting UI
   setError(Failure failure) {
     _errorMsg = failure.errorString;
     debugPrint(_errorMsg);
+    if (loading == false) setLoading(true);
   }
 
   setLoading(bool loading) async {
@@ -68,50 +55,68 @@ class Manager extends ChangeNotifier {
     notifyListeners();
   }
 
-  //method deployed by stream automatically
-  prepareData(String? userId) async {
-    if (loading == false) setLoading(true);
-    if (userId == null) {
-      await _userService.logOutUser();
+
+  // methods deployed automatically after user signs in or signs out //
+  watchAuthUser() {
+    authUser.listen((User? user) {
+      if (user != null) {
+        debugPrint('/// User signed in ///');
+        prepareData(user.uid);
+      }
+      if (user == null) {
+        debugPrint('/// User signed out ///');
+        _userService.logOutUser();
+        notifyListeners();
+      }
+
+    });
     }
-    if (userId != null) {
-      LoggedUser? userData = await _databaseService.getUserData(userId);
+
+  prepareData(String? userId) async {
+    // keep the app in loading state
+    if (loading == false) setLoading(true);
+
+      LoggedUser? userData = await _databaseService.getUserData(userId!);
+      //if no data, break
       if (userData == null) return;
-      //then create local User instance
+
+      //if data, create local User instance
       await _userService.createUserLocal(user: userData);
+
       //prepare questions
       bool qResult = await _questionService.prepareGlobalData();
-    }
     setLoading(false);
   }
+
+
+  // methods deployed ON DEMAND
 
   signIn({required String email, required String password}) async {
     //start loading app
     setLoading(true);
     //Try to sign in
-    Object aResult = await _authService.signInEmail(email, password);
-    if (aResult is Failure) {
-      setError(aResult);
-      setLoading(false);
-      return true;
+    Object signInResult = await _authService.signInEmail(email, password);
+    if (signInResult is Failure) {
+      setError(signInResult);
     }
   }
 
-  registerAndPrepareData({required String email, required String password}) async {
+  register({required String email, required String password}) async {
     //start loading app
     setLoading(true);
     //register user
-    bool result = await _authService.registerWithEmailAndPassword(email, password);
-    //if registration succeeded, prepare user and question data
-    if (result) {
-      bool result = await _questionService.prepareGlobalData();
+    Object registerResult = await _authService.registerWithEmailAndPassword(email, password);
+    if (registerResult is Failure) {
+      setError(registerResult);
     }
-    // finish loading app
-    setLoading(false);
   }
 
   signOut() async {
     bool result = await _authService.signOut();
+  }
+
+  resetUserProgress() async {
+    debugPrint('ResetUserProgress deployed');
   }
 
   checkAnswer(String answer) async {

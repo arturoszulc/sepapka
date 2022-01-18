@@ -3,7 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/locator.dart';
-import 'package:sepapka/view_layer/menu_screen.dart';
+import 'package:sepapka/view_layer/menu/menu_screen.dart';
+import 'package:sepapka/view_layer/menu/settings_screen.dart';
 import 'package:sepapka/view_layer/question_single_screen.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/wrapper': (context) => const Wrapper(),
           '/menu-screen': (context) => Menu(),
+          '/settings-screen': (context) => Settings(),
           '/question-single': (context) => QuestionSingleScreen(),
 
         },

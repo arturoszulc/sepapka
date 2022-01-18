@@ -21,17 +21,19 @@ class AuthService {
 
   // register with e-mail and password
 
-  Future<bool> registerWithEmailAndPassword(String email, String password) async {
+  Future<Object> registerWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential result =
           await _auth.createUserWithEmailAndPassword(email: email, password: password);
-    } catch (e) {
-      return false;
+      return Success();
+    } on FirebaseAuthException catch (e) {
+      debugPrint('CODE');
+      debugPrint(e.code);
+      return Failure(getMessageFromErrorCode(e.code));
     }
-    return true;
+
   }
 
-  // sign in with e-mail and password
 
   Future<Object> signInEmail(String email, String password) async {
     try {

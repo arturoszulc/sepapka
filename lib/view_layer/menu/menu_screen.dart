@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
+import '../custom_widgets/progress_bar.dart';
+
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
 
@@ -17,7 +19,7 @@ class Menu extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                context.read<Manager>().signOut();
+                Navigator.pushNamed(context, '/settings-screen');
               },
               icon: const Icon(Icons.account_circle)),
         ],
@@ -69,25 +71,8 @@ class Menu extends StatelessWidget {
             Text('LoggedUser qNew: ${context.read<Manager>().loggedUser!.qListNew.length}'),
             Text('LoggedUser qPractice: ${context.read<Manager>().loggedUser!.qListPractice.length}'),
             const SizedBox(height: 100.0),
-            const Text(
-              'Learning progress:',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: LinearPercentIndicator(
-                width: MediaQuery.of(context).size.width - 50,
-                animation: true,
-                lineHeight: 20.0,
-                animationDuration: 2000,
-                percent: context.read<Manager>().progressPercent,
-                center: Text('${(context.read<Manager>().progressPercent*100).toString()} %'),
-                linearStrokeCap: LinearStrokeCap.roundAll,
-                progressColor: Colors.green,
-              ),
-            ),
+            buildProgressBar(context),
             const SizedBox(height: 20),
-
           ],
         ),
       ),

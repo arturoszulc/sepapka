@@ -6,7 +6,7 @@ import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import 'authenticate/authenticate.dart';
-import 'menu_screen.dart';
+import 'menu/menu_screen.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
