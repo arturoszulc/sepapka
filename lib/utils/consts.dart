@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sepapka/model_layer/models/question.dart';
-import 'package:intl/intl.dart';
 
 //Enums
 enum QuestionStatus{noAnswer, rightAnswer, wrongAnswer }
@@ -9,8 +8,7 @@ enum QuestionType{newQuestion, practiceQuestion}
 //Fibonacci series
 const List<int> fibSeries = [0,1,2,3,5,8,13,21];
 
-//Date related props
-// final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+
 
 //Question labels - to be rebuilt
 const label1 = 'nowy';
@@ -39,8 +37,6 @@ Map<String, Color?> labelColors = {
   label1: Colors.blue,
 };
 
-// const int questionVersionDB = 1;
-// const int questionVersionLocal = 0;
 
 final questionListDB = [q5];
 
@@ -104,6 +100,7 @@ final Question q5 = Question(
 const String errorGetQVersionFromDB = '### Nie udało się pobrać wersji pytań z bazy danych ###';
 const String errorGetQListFromDB = '### Nie można pobrać listy pytań. Sprawdź połączenie z internetem ###';
 const String errorGetUserDataFromDB = 'Błąd pobierania danych użytkownika. Sprawdź połączenie z internetem';
+
 //AuthService Errors
 const String errorSignIn = '### AuthService.signInEmail() error: ';
 

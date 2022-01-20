@@ -16,7 +16,7 @@ class AnswerButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 10.0,
-        horizontal: 20.0,
+        horizontal: 30.0,
       ),
       child: MaterialButton(
         onPressed: () {
@@ -25,7 +25,7 @@ class AnswerButton extends StatelessWidget {
           }
         },
         minWidth: 300,
-        height: 45.0,
+        height: 70.0,
         color: color,
         child: Text(answer!),
       ),

@@ -21,9 +21,9 @@ class QuestionSingleScreen extends StatelessWidget {
           ? Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('Brak nowych pytań'),
-                  const SizedBox(height: 20.0),
+                children: const [
+                  Text('Brak nowych pytań'),
+                  SizedBox(height: 20.0),
                   // ElevatedButton(
                   //     onPressed: () {
                   //       Navigator.pop(context);
@@ -38,52 +38,59 @@ class QuestionSingleScreen extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Container(
-                    padding: const EdgeInsets.all(15.0),
+                    // color: Colors.pink, //remove later
+                    padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.bottomLeft,
                     child: Card(
-                      child: Text(
-                        question.id,
-                        // maxLines: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 25.0),
+                        child: Text(
+                          question.q, style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                          // maxLines: 3,
+                        ),
                       ),
                     ),
                   ),
                 ),
                 Expanded(
                   flex: 6,
-                  child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    AnswerButton(
-                      qStatus: manager.qStatus,
-                      answer: aMapList[0].answer,
-                      color: aMapList[0].color,
-                      onSelected: () {
-                        manager.checkAnswer(aMapList[0].answer);
-                      },
-                    ),
-                    AnswerButton(
-                      qStatus: manager.qStatus,
-                      answer: aMapList[1].answer,
-                      color: aMapList[1].color,
-                      onSelected: () {
-                        manager.checkAnswer(aMapList[1].answer);
-                      },
-                    ),
-                    AnswerButton(
-                      qStatus: manager.qStatus,
-                      answer: aMapList[2].answer,
-                      color: aMapList[2].color,
-                      onSelected: () {
-                        manager.checkAnswer(aMapList[2].answer);
-                      },
-                    ),
-                    AnswerButton(
-                      qStatus: manager.qStatus,
-                      answer: aMapList[3].answer,
-                      color: aMapList[3].color,
-                      onSelected: () {
-                        manager.checkAnswer(aMapList[3].answer);
-                      },
-                    ),
-                  ]),
+                  child: Container( //remove later
+                    // color: Colors.green,
+                    child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      AnswerButton(
+                        qStatus: manager.qStatus,
+                        answer: aMapList[0].answer,
+                        color: aMapList[0].color,
+                        onSelected: () {
+                          manager.checkAnswer(aMapList[0].answer);
+                        },
+                      ),
+                      AnswerButton(
+                        qStatus: manager.qStatus,
+                        answer: aMapList[1].answer,
+                        color: aMapList[1].color,
+                        onSelected: () {
+                          manager.checkAnswer(aMapList[1].answer);
+                        },
+                      ),
+                      AnswerButton(
+                        qStatus: manager.qStatus,
+                        answer: aMapList[2].answer,
+                        color: aMapList[2].color,
+                        onSelected: () {
+                          manager.checkAnswer(aMapList[2].answer);
+                        },
+                      ),
+                      AnswerButton(
+                        qStatus: manager.qStatus,
+                        answer: aMapList[3].answer,
+                        color: aMapList[3].color,
+                        onSelected: () {
+                          manager.checkAnswer(aMapList[3].answer);
+                        },
+                      ),
+                    ]),
+                  ),
                 ),
               ]),
             ),

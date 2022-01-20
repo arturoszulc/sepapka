@@ -1,11 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import '../models/mocked_objects.dart';
 
 void main() {
-
-  // MockDataBaseService mockDataBaseService = MockDataBaseService();
-  UserService userService = UserService.mock();
+  mockSetupGetIt();
+  UserService userService = UserService();
 
   setUp(() {});
   tearDown(() {});

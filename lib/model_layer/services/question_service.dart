@@ -99,6 +99,9 @@ class QuestionService {
     //if wrong answer
     else {
       debugPrint('not right answer');
+      //get question back to current list
+      _qListCurrent.add(_currentQuestion!);
+
       _qStatus = QuestionStatus.wrongAnswer;
       //set wrong button
       _bMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;

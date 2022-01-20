@@ -11,21 +11,17 @@ import 'database_service.dart';
 
 class UserService {
   //Services injection
-  DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
+  final DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
 
   //Properties
   bool _loggedUserChanged = false;
 
-  final DateTime _today = DateTime.now();
+  //parsing subString to get rid of time
+  final DateTime _today = DateTime.parse(DateTime.now().toString().substring(0,10));
 
   //Models
   LoggedUser? _loggedUser;
 
-  UserService();
-  UserService.mock() {
-    _databaseService = DatabaseService();
-    _loggedUserChanged = false;
-  }
 
   bool get loggedUserChanged => _loggedUserChanged;
 
@@ -67,7 +63,7 @@ class UserService {
     _loggedUser = null;
   }
 
-  compareQVersion(int qVersion) {
+  bool compareQVersion(int qVersion) {
     if (qVersion == loggedUser!.qVersion) {
       return true;
     } else {
@@ -136,7 +132,7 @@ class UserService {
   }
 
   QMap createQMapForNewQuestion(String? qId) {
-    return QMap(id: qId, dateModified: DateTime.now().toString(), fibNum: 0);
+    return QMap(id: qId, dateModified: DateTime.now().toString().substring(0, 10), fibNum: 0);
   }
 
   QMap? getNewQMapById(String questionId) {
@@ -149,7 +145,7 @@ class UserService {
     if (_loggedUser!.qListPractice.isNotEmpty) {
       for (var qMap in _loggedUser!.qListPractice) {
         debugPrint('Checking practice question');
-        if (getDateDifferenceInDays(qMap) == 0) {
+        if (getDateDifferenceInDays(qMap) < 1) {
           todayPracticeList.add(qMap);
         }
       }
@@ -172,7 +168,7 @@ class UserService {
 
     //updateQMap with new Date and FibNum
     if (qMap != null) {
-      qMap.dateModified = _today.toString().substring(0, 9);
+      qMap.dateModified = _today.toString().substring(0, 10);
       qMap.fibNum = getNextFibNum(qMap.fibNum);
 
       //add question QMap to Practice list
@@ -185,10 +181,11 @@ class UserService {
     QMap? qMap = getQMapFromPracticeById(questionId);
 
     if (qMap != null) {
-      //updateQMap with new Date and FibNum
-      qMap.dateModified = _today.toString().substring(0, 9);
-      qMap.fibNum = getNextFibNum(qMap.fibNum);
-
+      if (update){
+        //updateQMap with new Date and FibNum
+        qMap.dateModified = _today.toString().substring(0, 10);
+        qMap.fibNum = getNextFibNum(qMap.fibNum);
+      }
       //add question QMap to Practice list
       await addQuestionToPractice(qMap);
     }
