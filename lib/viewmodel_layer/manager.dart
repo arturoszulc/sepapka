@@ -131,9 +131,20 @@ class Manager extends ChangeNotifier {
     notifyListeners();
   }
 
-  prepareQuestion(QuestionType qType) async {
-    await _questionService.prepareQuestion(qType);
+  startNew({required int qLevel}) async {
+    await _questionService.prepareCurrentSessionData(qType: QuestionType.newQuestion, qLevel: qLevel);
+    await getNextQuestion();
   }
+
+  startPractice() async {
+    await _questionService.prepareCurrentSessionData(qType: QuestionType.practiceQuestion, qLevel: 0);
+    await getNextQuestion();
+  }
+
+  getNextQuestion() async {
+    await _questionService.getNextQuestion();
+  }
+
 
   moveQuestionToNew() {}
 

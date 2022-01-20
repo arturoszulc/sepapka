@@ -6,8 +6,11 @@ import 'package:intl/intl.dart';
 enum QuestionStatus{noAnswer, rightAnswer, wrongAnswer }
 enum QuestionType{newQuestion, practiceQuestion}
 
+//Fibonacci series
+const List<int> fibSeries = [0,1,2,3,5,8,13,21];
+
 //Date related props
-final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+// final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
 
 //Question labels - to be rebuilt
 const label1 = 'nowy';
@@ -36,8 +39,8 @@ Map<String, Color?> labelColors = {
   label1: Colors.blue,
 };
 
-const int questionVersionDB = 1;
-const int questionVersionLocal = 0;
+// const int questionVersionDB = 1;
+// const int questionVersionLocal = 0;
 
 final questionListDB = [q5];
 

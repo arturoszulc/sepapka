@@ -20,17 +20,17 @@ class DatabaseService {
 
 
   //CREATE NEW USER DOCUMENT IN DATABASE
-  Future<void> createUserDB(String uid) async {
-    return await usersCollection
-        .doc(uid)
-        .set({
-      'qVersion': 0,
-      'qListNew': [],
-      'qListPractice': [],
-      'qListNotShown': [],
-    }).then((value) =>
-        print('User created'));
-  }
+  // Future<void> createUserDB(String uid) async {
+  //   return await usersCollection
+  //       .doc(uid)
+  //       .set({
+  //     'qVersion': 0,
+  //     'qListNew': [],
+  //     'qListPractice': [],
+  //     'qListNotShown': [],
+  //   }).then((value) =>
+  //       print('User created'));
+  // }
 
 
   // //UPDATE USER DATA
@@ -43,7 +43,7 @@ class DatabaseService {
       userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
       userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),
     }).then((value) =>
-        print('User updated'));
+        debugPrint('User updated'));
   }
 
 
@@ -93,7 +93,7 @@ class DatabaseService {
       'a3': question.a3,
       'a4': question.a4,
       'labels': [],
-      'level': 1,
+      'level': question.level,
     });
   }
 

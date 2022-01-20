@@ -42,7 +42,7 @@ class QuestionSingleScreen extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: Card(
                       child: Text(
-                        question.q,
+                        question.id,
                         // maxLines: 3,
                       ),
                     ),
@@ -106,7 +106,7 @@ class QuestionSingleScreen extends StatelessWidget {
             child: FloatingActionButton.extended(
               heroTag: 'next',
               onPressed: () async {
-                await context.read<Manager>().prepareQuestion(manager.qType);
+                await context.read<Manager>().getNextQuestion();
                 Navigator.pushReplacementNamed(context, '/question-single');
               },
               label: const Text('Dalej >'),

@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sepapka/utils/consts.dart';
+import 'package:provider/src/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
-import '../custom_widgets/progress_bar.dart';
 
-class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+class MenuChooseLevel extends StatelessWidget {
+  const MenuChooseLevel({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('*** Menu built ***');
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('SEPapka'),
@@ -41,23 +37,24 @@ class Menu extends StatelessWidget {
                       children: [
                         ElevatedButton(
                           onPressed: () async {
-                            await context.read<Manager>().prepareQuestion(QuestionType.newQuestion);
+                            await context.read<Manager>().startNew(qLevel: 1);
                             Navigator.pushNamed(context, '/question-single');
                           },
-                          child: const Text('Nauka'),
+                          child: const Text('Poziom 1'),
                         ),
                         ElevatedButton(
                           onPressed: () async {
-                            await context.read<Manager>().prepareQuestion(QuestionType.practiceQuestion);
+                            await context.read<Manager>().startNew(qLevel: 2);
                             Navigator.pushNamed(context, '/question-single');
                           },
-                          child: const Text('Powtórka materiału'),
+                          child: const Text('Poziom 2'),
                         ),
                         ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/question-list');
+                          onPressed: () async {
+                            await context.read<Manager>().startNew(qLevel: 3);
+                            Navigator.pushNamed(context, '/question-single');
                           },
-                          child: Text('Lista pytań'),
+                          child: const Text('Poziom 3'),
                         ),
                       ],
                     ),
@@ -65,12 +62,6 @@ class Menu extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 100),
-            Text('LoggedUser ID: ${context.read<Manager>().loggedUser!.documentId}'),
-            Text('LoggedUser qNew: ${context.read<Manager>().loggedUser!.qListNew.length}'),
-            Text('LoggedUser qPractice: ${context.read<Manager>().loggedUser!.qListPractice.length}'),
-            const SizedBox(height: 100.0),
-            buildProgressBar(context),
             const SizedBox(height: 20),
           ],
         ),

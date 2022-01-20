@@ -3,30 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
+import 'package:sepapka/utils/consts.dart';
 
 import '../../locator.dart';
 import '../models/question.dart';
 import 'database_service.dart';
 
 class UserService {
-
   //Services injection
   DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
 
   //Properties
   bool _loggedUserChanged = false;
-  int _progressPercent = 0;
+
+  final DateTime _today = DateTime.now();
 
   //Models
   LoggedUser? _loggedUser;
 
   bool get loggedUserChanged => _loggedUserChanged;
+
   LoggedUser? get loggedUser => _loggedUser;
 
-
   double getProgressPercent() {
-    int allQuestions =
-        _loggedUser!.qListNew.length +
+    int allQuestions = _loggedUser!.qListNew.length +
         _loggedUser!.qListPractice.length +
         _loggedUser!.qListNotShown.length;
 
@@ -47,44 +47,36 @@ class UserService {
       _loggedUser = user;
     }
     //if only userId is fetched, create basic user
-    else if (userId != null)
-      {
-        _loggedUser = LoggedUser(
-            documentId: userId,
-            qVersion: 0,
-            qListNew: [],
-            qListPractice: [],
-            qListNotShown: []
-        );
-      }
-
-
+    else if (userId != null) {
+      _loggedUser = LoggedUser(
+          documentId: userId, qVersion: 0, qListNew: [], qListPractice: [], qListNotShown: []);
+    }
   }
-
 
   logOutUser() {
     _loggedUser = null;
   }
 
   compareQVersion(int qVersion) {
-      if (qVersion == loggedUser!.qVersion) {
-        return true;
-      } else {
-        return false;
-      }
+    if (qVersion == loggedUser!.qVersion) {
+      return true;
+    } else {
+      return false;
+    }
   }
+
   Future<void> updateQNewList(List<Question> qListGlobal) async {
     for (var question in qListGlobal) {
-    //check if question is on any list
-    bool isOnAnyList = isQuestionOnAnyLoggedUserList(question.id);
+      //check if question is on any list
+      bool isOnAnyList = isQuestionInAnyList(question.id);
 
-    if (!isOnAnyList) {
-      //jeśli nie, stwórz jego mapę i zapisz do qNewList
-      QMap qMap = createQMapForNewQuestion(question.id);
-      addQuestionToNew(qMap);
-      //set flag, that user object was changed
-      setLoggedUserChanged(true);
-    }
+      if (!isOnAnyList) {
+        //jeśli nie, stwórz jego mapę i zapisz do qNewList
+        QMap qMap = createQMapForNewQuestion(question.id);
+        addQuestionToNew(qMap);
+        //set flag, that user object was changed
+        setLoggedUserChanged(true);
+      }
     }
     //if loggedUser changed, update it on DB at the end
     if (_loggedUserChanged) {
@@ -97,47 +89,60 @@ class UserService {
     _loggedUser!.qVersion = qVersion;
   }
 
-  bool isQuestionOnAnyLoggedUserList(String? questionId) {
-    QMap? qMap;
-    //check in qNewList
-    qMap ??= _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == questionId);
-    qMap ??= _loggedUser!.qListPractice.firstWhereOrNull((element) => element.id == questionId);
-    qMap ??= _loggedUser!.qListNotShown.firstWhereOrNull((element) => element.id == questionId);
+  bool isQuestionInAnyList(String questionId) {
+    return isQuestionInNewList(questionId) != null ||
+        isQuestionInPracticeList(questionId) != null ||
+        isQuestionInNotShownList(questionId) != null;
+  }
 
-    if (qMap != null) {
-      return true;
-    }
-    else {
-    return false;
+  QMap? isQuestionInNewList(String questionId) {
+    return _loggedUser!.qListNew.firstWhereOrNull((qMap) => qMap.id == questionId);
   }
+
+  QMap? isQuestionInPracticeList(String questionId) {
+    return _loggedUser!.qListPractice.firstWhereOrNull((qMap) => qMap.id == questionId);
   }
+
+  QMap? isQuestionInNotShownList(String questionId) {
+    return _loggedUser!.qListNotShown.firstWhereOrNull((qMap) => qMap.id == questionId);
+  }
+
+  removeQuestionFromAnyMap(String questionId) {
+    _loggedUser!.qListNew.removeWhere((e) => e.id == questionId);
+    _loggedUser!.qListPractice.removeWhere((e) => e.id == questionId);
+    _loggedUser!.qListNotShown.removeWhere((e) => e.id == questionId);
+  }
+
   QMap createQMapForNewQuestion(String? qId) {
-    return QMap(
-        id: qId,
-        dateModified: DateTime.now().toString(),
-        numberFib: 0);
+    return QMap(id: qId, dateModified: DateTime.now().toString(), fibNum: 0);
   }
 
-  QMap? getNewQuestionQMap() {
-    QMap? qMap;
-    if (_loggedUser!.qListNew.isNotEmpty) {
-      qMap = _loggedUser!.qListNew.first;
-    }
-    if (qMap == null) {
-      debugPrint('/// No new questions available ///');
-    }
-    return qMap;
+  QMap? getNewQMapById(String questionId) {
+    return _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == questionId);
+    // QMap? qMap;
+    // if (_loggedUser!.qListNew.isEmpty) return null;
+    // try
+    //   qMap = _loggedUser!.qListNew.first;
+    //
+    // if (qMap == null) {
+    //   debugPrint('/// No new questions available ///');
+    // }
+    // return qMap;
   }
 
-  QMap? getPracticeQuestionQMap() {
-    QMap? qMap;
+  List<QMap> getTodayPracticeQMapList() {
+
+    List<QMap> todayPracticeList = [];
+
     if (_loggedUser!.qListPractice.isNotEmpty) {
-      qMap = _loggedUser!.qListPractice.first;
+      for (var qMap in _loggedUser!.qListPractice) {
+        debugPrint('Checking practice question');
+        if (getDateDifferenceInDays(qMap) == 0) {
+          todayPracticeList.add(qMap);
+        }
+      }
     }
-    if (qMap == null) {
-      debugPrint('getPracticeQuestionQMap error: No practice questions');
-    }
-    return qMap;
+    return todayPracticeList;
   }
 
   moveNewQuestionToPractice(String questionId) async {
@@ -148,9 +153,10 @@ class UserService {
 
     //add question QMap to Practice list
     if (qMap != null) {
+      qMap.dateModified = _today.toString();
+      qMap.fibNum = getNextFibNum(qMap.fibNum);
       await addQuestionToPractice(qMap);
     }
-
   }
 
   moveNewQuestionToNew(String questionId) async {
@@ -159,7 +165,6 @@ class UserService {
     if (qMap != null) {
       var addResult = await addQuestionToNew(qMap);
     }
-
   }
 
   QMap? getQMapFromNewById(String questionId) {
@@ -189,9 +194,23 @@ class UserService {
     }
   }
 
-  cleanQuestionLists() {
+  cleanUserQLists() {
     _loggedUser!.qListNew.clear();
     _loggedUser!.qListPractice.clear();
     _loggedUser!.qListNotShown.clear();
+  }
+
+  getDateDifferenceInDays(QMap question) {
+    DateTime parsedDate = DateTime.parse(question.dateModified);
+    DateTime whenToPractice = parsedDate.add(Duration(days: question.fibNum));
+    //delete this var temp and just return it
+    var temp = whenToPractice.difference(_today).inDays;
+    debugPrint(temp.toString());
+    return temp;
+  }
+
+  getNextFibNum(int currentFibNum) {
+    int currentFibNumIndex = fibSeries.indexOf(currentFibNum);
+    return fibSeries[currentFibNumIndex + 1];
   }
 }

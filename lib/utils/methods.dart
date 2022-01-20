@@ -4,7 +4,7 @@ import 'package:sepapka/model_layer/models/question_map.dart';
 import 'consts.dart';
 
 convertMapToQMap(Map e) {
-  return QMap(id: e['id'], dateModified: e['dateModified'], numberFib: e['numberFib']);
+  return QMap(id: e['id'], dateModified: e['dateModified'], fibNum: e['fibNum']);
 }
 
 

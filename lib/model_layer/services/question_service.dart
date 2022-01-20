@@ -1,4 +1,3 @@
-import 'package:collection/src/iterable_extensions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
@@ -18,12 +17,13 @@ class QuestionService {
   FileService _fileService = serviceLocator.get<FileService>();
 
   //Properties
-  DateTime _today = DateTime.now();
   List<Question>? _qListGlobal;
+  List<Question> _qListCurrent = [];
   Question? _currentQuestion;
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
   QuestionType _qType = QuestionType.newQuestion;
-  List<BMap> _bMapList = []; //shuffled list of answers & colors for butotns
+  int _qLevel = 0;
+  List<BMap> _bMapList = []; //shuffled list of answers & colors for buttons
 
   //Getters
   Question? get currentQuestion => _currentQuestion;
@@ -32,20 +32,11 @@ class QuestionService {
 
   QuestionType get qType => _qType;
 
+  int get qLevel => _qLevel;
+
   List<BMap> get bMapList => _bMapList;
 
   //Methods
-
-  getDateDifferenceInDays() {
-    DateTime today = _today.add(const Duration(hours: 2));
-    DateTime tomorrow = _today.add(const Duration(days: 1));
-    DateTime yesterday = _today.subtract(const Duration(days: 1));
-    debugPrint('difference in days');
-    debugPrint(today.difference(_today).inDays.toString());
-    debugPrint(tomorrow.difference(_today).inDays.toString());
-    debugPrint(yesterday.difference(_today).inDays.toString());
-  }
-
 
   Future<Object> prepareGlobalData() async {
     //Get questionVersion number from DB
@@ -87,6 +78,10 @@ class QuestionService {
   }
 
   Future checkAnswer(String answer) async {
+
+    //remove question from _qListCurrent
+    _qListCurrent.removeAt(0);
+
     //If right answer
     if (answer == _currentQuestion!.a1) {
       //set QuestionStatus
@@ -94,7 +89,14 @@ class QuestionService {
       //set button color
       _bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
       //move question to Practice List
-      ///TODO: check if question is New or Practice and deicde where to put it
+      if (_qType == QuestionType.newQuestion) {
+        //remove question from user qListNew
+        //add question to end of user qListNew
+      }
+      if (_qType == QuestionType.practiceQuestion) {
+        //remove question from user qListPractice
+        //add question to end of user qListPractice
+      }
 
       await _userService.moveNewQuestionToPractice(_currentQuestion!.id);
     }
@@ -112,19 +114,54 @@ class QuestionService {
     }
   }
 
-  Future prepareQuestion(QuestionType qType) async {
+
+  prepareCurrentSessionData({required QuestionType qType, required int qLevel}) async {
+    //set question type
+    _qType = qType;
+    //set question level
+    _qLevel = qLevel;
+    await prepareCurrentQuestionsBasedOnProps();
+  }
+
+  prepareCurrentQuestionsBasedOnProps() {
+    //clear the old list
+    _qListCurrent.clear();
+    if (_qType == QuestionType.newQuestion) {
+      //if user chose learning based on level
+      if (_qLevel > 0) {
+        for (Question question in _qListGlobal!) {
+          if (question.level == _qLevel) {
+            if (_userService.isQuestionInNewList(question.id) != null) {
+              _qListCurrent.add(question);
+            }
+          }
+        }
+      }
+    }
+    if (_qType == QuestionType.practiceQuestion) {
+      List<QMap> todayList = _userService.getTodayPracticeQMapList();
+      for (QMap qMap in todayList) {
+        _qListCurrent.add(_qListGlobal!.firstWhere((question) => question.id == qMap.id));
+      }
+    }
+  }
+
+  getNextQuestion() {
+
     //reset QuestionStatus
     _qStatus = QuestionStatus.noAnswer;
 
-    //get question based on type
-    if (qType == QuestionType.newQuestion) {
-      _currentQuestion = getNewQuestion();
-      _qType = QuestionType.newQuestion;
+    if (_qListCurrent.isNotEmpty) {
+      //prepare question
+      _currentQuestion = _qListCurrent.first;
+      //create new BMap
+      createBMap();
     } else {
-      _currentQuestion = getPracticeQuestion();
-      _qType = QuestionType.practiceQuestion;
+      _currentQuestion = null;
     }
-    //if question exists, prepare button map
+  }
+
+  createBMap() {
     if (_currentQuestion != null) {
       _bMapList = [
         BMap(answer: _currentQuestion!.a1, color: normalButtonColor),
@@ -132,40 +169,19 @@ class QuestionService {
         BMap(answer: _currentQuestion!.a3, color: normalButtonColor),
         BMap(answer: _currentQuestion!.a4, color: normalButtonColor),
       ];
+      //shuffle buttons
       _bMapList.shuffle();
-    }
-  }
-
-  Question? getNewQuestion() {
-    //get QMap of first NewQuestion from user qNewList
-    QMap? qMap = _userService.getNewQuestionQMap();
-    if (qMap != null) {
-      //if question exists, prepare it and set AMap
-      return _qListGlobal!.firstWhereOrNull((element) => element.id == qMap.id);
     } else {
-      //if question does not exist, set it to null
-      _currentQuestion = null;
-    }
-  }
-
-  Question? getPracticeQuestion() {
-    //get QMap of first NewQuestion from user qNewList
-    QMap? qMap = _userService.getPracticeQuestionQMap();
-    if (qMap != null) {
-      //if question exists, prepare it and set AMap
-      return _qListGlobal!.firstWhereOrNull((element) => element.id == qMap.id);
-    } else {
-      //if question does not exist, set it to null
-      _currentQuestion = null;
+      //reset QuestionStatus
+      _qStatus = QuestionStatus.noAnswer;
     }
   }
 
   Future<Object> resetUserProgress() async {
     //clear user lists
-    await _userService.cleanQuestionLists();
+    await _userService.cleanUserQLists();
     //update qNewList
     await _userService.updateQNewList(_qListGlobal!);
-
     return Success();
   }
 }
