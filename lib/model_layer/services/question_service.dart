@@ -90,15 +90,11 @@ class QuestionService {
       _bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
       //move question to Practice List
       if (_qType == QuestionType.newQuestion) {
-        //remove question from user qListNew
-        //add question to end of user qListNew
+        _userService.moveNewQuestionToPractice(_currentQuestion!.id);
       }
       if (_qType == QuestionType.practiceQuestion) {
-        //remove question from user qListPractice
-        //add question to end of user qListPractice
+        _userService.movePracticeQuestionToPractice(questionId: _currentQuestion!.id, update: true);
       }
-
-      await _userService.moveNewQuestionToPractice(_currentQuestion!.id);
     }
     //if wrong answer
     else {
@@ -109,8 +105,13 @@ class QuestionService {
       //set right button
       _bMapList.firstWhere((element) => element.answer == _currentQuestion!.a1).color =
           rightButtonColor;
-      //move question to the end of New List
-      _userService.moveNewQuestionToNew(_currentQuestion!.id);
+      //move question to the end of it's list, to try again
+      if (_qType == QuestionType.newQuestion) {
+        _userService.moveNewQuestionToNew(_currentQuestion!.id);
+      }
+      if (_qType == QuestionType.practiceQuestion) {
+        _userService.movePracticeQuestionToPractice(questionId: _currentQuestion!.id, update: false);
+      }
     }
   }
 

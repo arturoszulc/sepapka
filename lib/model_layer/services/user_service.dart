@@ -21,6 +21,12 @@ class UserService {
   //Models
   LoggedUser? _loggedUser;
 
+  UserService();
+  UserService.mock() {
+    _databaseService = DatabaseService();
+    _loggedUserChanged = false;
+  }
+
   bool get loggedUserChanged => _loggedUserChanged;
 
   LoggedUser? get loggedUser => _loggedUser;
@@ -49,7 +55,11 @@ class UserService {
     //if only userId is fetched, create basic user
     else if (userId != null) {
       _loggedUser = LoggedUser(
-          documentId: userId, qVersion: 0, qListNew: [], qListPractice: [], qListNotShown: []);
+          documentId: userId,
+          qVersion: 0,
+          qListNew: [],
+          qListPractice: [],
+          qListNotShown: []);
     }
   }
 
@@ -107,6 +117,18 @@ class UserService {
     return _loggedUser!.qListNotShown.firstWhereOrNull((qMap) => qMap.id == questionId);
   }
 
+  // removeQuestionFromList({required QuestionType qType, required String questionId}) {
+  //   if (qType == QuestionType.newQuestion) {
+  //     int index = _loggedUser!.qListNew.indexWhere((qMap) => qMap.id == questionId);
+  //     if (index >= 0) _loggedUser!.qListNew.removeAt(index);
+  //   }
+  //   if (qType == QuestionType.practiceQuestion) {
+  //     int index = _loggedUser!.qListPractice.indexWhere((qMap) => qMap.id == questionId);
+  //     if (index >= 0) _loggedUser!.qListPractice.removeAt(index);
+  //   }
+  // }
+
+
   removeQuestionFromAnyMap(String questionId) {
     _loggedUser!.qListNew.removeWhere((e) => e.id == questionId);
     _loggedUser!.qListPractice.removeWhere((e) => e.id == questionId);
@@ -119,19 +141,9 @@ class UserService {
 
   QMap? getNewQMapById(String questionId) {
     return _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == questionId);
-    // QMap? qMap;
-    // if (_loggedUser!.qListNew.isEmpty) return null;
-    // try
-    //   qMap = _loggedUser!.qListNew.first;
-    //
-    // if (qMap == null) {
-    //   debugPrint('/// No new questions available ///');
-    // }
-    // return qMap;
   }
 
   List<QMap> getTodayPracticeQMapList() {
-
     List<QMap> todayPracticeList = [];
 
     if (_loggedUser!.qListPractice.isNotEmpty) {
@@ -145,19 +157,6 @@ class UserService {
     return todayPracticeList;
   }
 
-  moveNewQuestionToPractice(String questionId) async {
-    //Get QMap by ID from qNewList
-    QMap? qMap = getQMapFromNewById(questionId);
-
-    //updateQMap with new Date and FibNum
-
-    //add question QMap to Practice list
-    if (qMap != null) {
-      qMap.dateModified = _today.toString();
-      qMap.fibNum = getNextFibNum(qMap.fibNum);
-      await addQuestionToPractice(qMap);
-    }
-  }
 
   moveNewQuestionToNew(String questionId) async {
     //Get QMap by ID and delete from qNewList
@@ -167,11 +166,49 @@ class UserService {
     }
   }
 
+  moveNewQuestionToPractice(String questionId) async {
+    //Get QMap by ID from qNewList
+    QMap? qMap = getQMapFromNewById(questionId);
+
+    //updateQMap with new Date and FibNum
+    if (qMap != null) {
+      qMap.dateModified = _today.toString().substring(0, 9);
+      qMap.fibNum = getNextFibNum(qMap.fibNum);
+
+      //add question QMap to Practice list
+      await addQuestionToPractice(qMap);
+    }
+  }
+
+  movePracticeQuestionToPractice({required String questionId, required bool update}) async {
+    //Get QMap by ID from qPracticeList
+    QMap? qMap = getQMapFromPracticeById(questionId);
+
+    if (qMap != null) {
+      //updateQMap with new Date and FibNum
+      qMap.dateModified = _today.toString().substring(0, 9);
+      qMap.fibNum = getNextFibNum(qMap.fibNum);
+
+      //add question QMap to Practice list
+      await addQuestionToPractice(qMap);
+    }
+  }
+
+
   QMap? getQMapFromNewById(String questionId) {
     //Look it up
     QMap? qMap = _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == questionId);
     if (qMap != null) {
       _loggedUser!.qListNew.remove(qMap);
+    }
+    return qMap;
+  }
+
+  QMap? getQMapFromPracticeById(String questionId) {
+    //Look it up
+    QMap? qMap = _loggedUser!.qListPractice.firstWhereOrNull((element) => element.id == questionId);
+    if (qMap != null) {
+      _loggedUser!.qListPractice.remove(qMap);
     }
     return qMap;
   }
@@ -200,11 +237,14 @@ class UserService {
     _loggedUser!.qListNotShown.clear();
   }
 
+
   getDateDifferenceInDays(QMap question) {
     DateTime parsedDate = DateTime.parse(question.dateModified);
     DateTime whenToPractice = parsedDate.add(Duration(days: question.fibNum));
     //delete this var temp and just return it
-    var temp = whenToPractice.difference(_today).inDays;
+    var temp = whenToPractice
+        .difference(_today)
+        .inDays;
     debugPrint(temp.toString());
     return temp;
   }
