@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sepapka/utils/api_status.dart';
+import 'package:sepapka/utils/methods.dart';
 
 class AuthService {
   //Properties
@@ -15,6 +16,8 @@ class AuthService {
   // register with e-mail and password
 
   Future<Object> registerWithEmailAndPassword(String email, String password) async {
+    Object validateResult = validateEmailAndPassword(email, password);
+    if (validateResult is Failure) return validateResult;
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
       return Success();
@@ -45,6 +48,17 @@ class AuthService {
       debugPrint('SIGN OUT ERROR: ${e.toString()}');
       return false;
     }
+  }
+
+  Object validateEmailAndPassword(String email, String password) {
+    //validate e-mail
+    if (email.isEmpty || !email.contains('@')) return Failure('Nieprawidłowy adres e-mail');
+
+    //validate password
+    bool validated = validatePassword(password);
+    if (!validated) return Failure('Hasło musi zawierać: \n - co najmniej 8 znaków \n - co najmniej 1 cyfrę \n - co najmniej 1 znak specjalny');
+
+    return Success();
   }
 
   String getMessageFromErrorCode(String code) {

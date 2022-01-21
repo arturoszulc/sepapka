@@ -43,20 +43,31 @@ class UserService {
     _loggedUserChanged = status;
   }
 
-  createUserLocal({LoggedUser? user, String? userId}) {
+  Future<Object> createUserLocal(String userId) async {
+
+    try {
+      LoggedUser? userData = await _databaseService.getUserData(userId);
+      if (userData != null) {
+        _loggedUser = userData;
+      }
+      return Success();
+    }
+    catch(e) {
+      debugPrint(e.toString());
+      return Failure(errorGetUserDataFromDB);
+
+    }
     //if user data is fetched, update user
-    if (user != null) {
-      _loggedUser = user;
-    }
-    //if only userId is fetched, create basic user
-    else if (userId != null) {
-      _loggedUser = LoggedUser(
-          documentId: userId,
-          qVersion: 0,
-          qListNew: [],
-          qListPractice: [],
-          qListNotShown: []);
-    }
+
+    // //if only userId is fetched, create basic user
+    // else if (userId != null) {
+    //   _loggedUser = LoggedUser(
+    //       documentId: userId,
+    //       qVersion: 0,
+    //       qListNew: [],
+    //       qListPractice: [],
+    //       qListNotShown: []);
+    // }
   }
 
   logOutUser() {

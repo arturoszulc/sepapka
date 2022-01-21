@@ -26,14 +26,20 @@ class Manager extends ChangeNotifier {
 
   //Manager getters
   bool get loading => _loading;
+
   String? get errorMsg => _errorMsg;
 
   //External Getters
   LoggedUser? get loggedUser => _userService.loggedUser;
+
   double get progressPercent => _userService.getProgressPercent();
+
   Question? get currentQuestion => _questionService.currentQuestion;
+
   QuestionStatus get qStatus => _questionService.qStatus;
+
   QuestionType get qType => _questionService.qType;
+
   List<BMap> get bMapList => _questionService.bMapList;
 
   Stream<User?> get authUser => _authService.auth.authStateChanges();
@@ -44,19 +50,20 @@ class Manager extends ChangeNotifier {
   }
 
   // internal Manager methods affecting UI
-  setError(Failure failure) {
+  setError(Failure? failure) {
+    if (failure == null) {
+      _errorMsg = null;
+      return;
+    }
     _errorMsg = failure.errorString;
     debugPrint(_errorMsg);
-    if (loading == false) setLoading(true);
+    // if (loading == false) setLoading(true);
   }
 
   setLoading(bool loading) async {
     _loading = loading;
     notifyListeners();
   }
-
-
-
 
   // methods deployed automatically after user signs in or signs out //
   watchAuthUser() {
@@ -70,27 +77,25 @@ class Manager extends ChangeNotifier {
         _userService.logOutUser();
         notifyListeners();
       }
-
     });
-    }
+  }
 
-  prepareData(String? userId) async {
+  prepareData(String userId) async {
     // keep the app in loading state
     if (loading == false) setLoading(true);
 
-      LoggedUser? userData = await _databaseService.getUserData(userId!);
-      //if no data, break
-      if (userData == null) return;
-
-      //if data, create local User instance
-      await _userService.createUserLocal(user: userData);
-
-      //prepare questions
-      Object prepareDataResult = await _questionService.prepareGlobalData();
-      if (prepareDataResult is Failure) setError(prepareDataResult);
+    // download user data and create local user object
+    Object createUserResult = await _userService.createUserLocal(userId);
+    if (createUserResult is Failure) {
+      setError(createUserResult);
+      setLoading(false);
+      return;
+    }
+    //prepare questions
+    Object prepareDataResult = await _questionService.prepareGlobalData();
+    if (prepareDataResult is Failure) setError(prepareDataResult);
     setLoading(false);
   }
-
 
   // methods deployed ON DEMAND
 
@@ -99,9 +104,9 @@ class Manager extends ChangeNotifier {
     setLoading(true);
     //Try to sign in
     Object signInResult = await _authService.signInEmail(email, password);
-    if (signInResult is Failure) {
-      setError(signInResult);
-    }
+    if (signInResult is Failure) setError(signInResult);
+    if (signInResult is Success) setError(null);
+    setLoading(false);
   }
 
   register({required String email, required String password}) async {
@@ -110,7 +115,6 @@ class Manager extends ChangeNotifier {
     //register user
     Object registerResult = await _authService.registerWithEmailAndPassword(email, password);
     if (registerResult is Failure) setError(registerResult);
-
   }
 
   signOut() async {
@@ -122,7 +126,6 @@ class Manager extends ChangeNotifier {
 
     Object resetResult = _questionService.resetUserProgress();
     if (resetResult is Failure) setError(resetResult);
-
   }
 
   checkAnswer(String answer) async {
@@ -132,19 +135,20 @@ class Manager extends ChangeNotifier {
   }
 
   startNew({required int qLevel}) async {
-    await _questionService.prepareCurrentSessionData(qType: QuestionType.newQuestion, qLevel: qLevel);
+    await _questionService.prepareCurrentSessionData(
+        qType: QuestionType.newQuestion, qLevel: qLevel);
     await getNextQuestion();
   }
 
   startPractice() async {
-    await _questionService.prepareCurrentSessionData(qType: QuestionType.practiceQuestion, qLevel: 0);
+    await _questionService.prepareCurrentSessionData(
+        qType: QuestionType.practiceQuestion, qLevel: 0);
     await getNextQuestion();
   }
 
   getNextQuestion() async {
     await _questionService.getNextQuestion();
   }
-
 
   moveQuestionToNew() {}
 
