@@ -53,12 +53,24 @@ class SignInScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                manager.signIn(email: email, password: password);
-                // manager.addQuestionsToDb();
-              },
-              child: const Text('Zaloguj'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    manager.signIn(email: email, password: password);
+                    // manager.addQuestionsToDb();
+                  },
+                  child: const Text('Zaloguj się'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    manager.register(email: email, password: password);
+                    // manager.addQuestionsToDb();
+                  },
+                  child: const Text('Utwórz konto'),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
@@ -68,12 +80,13 @@ class SignInScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(
-              height: 50.0,
-            ),
-            TextButton(
-              onPressed: () {},
-              child: const Text('Stwórz konto', style: TextStyle(color: Colors.black),),
+            const SizedBox(height: 10.0),
+            const Text('lub'),
+            const SizedBox(height: 10.0),
+            ElevatedButton(
+              onPressed: () {
+              },
+              child: const Text('Sign In with Google'),
             ),
           ],
         ),

@@ -43,12 +43,12 @@ class DatabaseService {
       userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
       userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),
     }).then((value) =>
-        debugPrint('User updated'));
+        debugPrint('/// DB: User updated ///'));
   }
 
 
   // GET LOGGED USER DATA
-  Future<LoggedUser?> getUserData(String uid) async {
+  Future<LoggedUser> getUserData(String uid) async {
     var doc = await usersCollection.doc(uid).get();
     return LoggedUser(
       documentId: doc.id,

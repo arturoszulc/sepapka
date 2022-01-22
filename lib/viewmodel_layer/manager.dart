@@ -22,11 +22,12 @@ class Manager extends ChangeNotifier {
 
   //Manager properties
   bool _loading = false;
+  // bool _newUser = false;
   String? _errorMsg;
 
   //Manager getters
   bool get loading => _loading;
-
+  // bool get newUser => _newUser;
   String? get errorMsg => _errorMsg;
 
   //External Getters
@@ -57,8 +58,9 @@ class Manager extends ChangeNotifier {
     }
     _errorMsg = failure.errorString;
     debugPrint(_errorMsg);
-    // if (loading == false) setLoading(true);
+    if (loading == true) setLoading(false);
   }
+
 
   setLoading(bool loading) async {
     _loading = loading;
@@ -67,16 +69,16 @@ class Manager extends ChangeNotifier {
 
   // methods deployed automatically after user signs in or signs out //
   watchAuthUser() {
-    authUser.listen((User? user) {
+    authUser.listen((User? user) async {
       if (user != null) {
         debugPrint('/// User signed in ///');
-        prepareData(user.uid);
+        await prepareData(user.uid);
       }
       if (user == null) {
         debugPrint('/// User signed out ///');
-        _userService.logOutUser();
-        notifyListeners();
+        await _userService.logOutUser();
       }
+      setLoading(false);
     });
   }
 
@@ -88,13 +90,12 @@ class Manager extends ChangeNotifier {
     Object createUserResult = await _userService.createUserLocal(userId);
     if (createUserResult is Failure) {
       setError(createUserResult);
-      setLoading(false);
       return;
     }
-    //prepare questions
+
+    //next prepare questions
     Object prepareDataResult = await _questionService.prepareGlobalData();
     if (prepareDataResult is Failure) setError(prepareDataResult);
-    setLoading(false);
   }
 
   // methods deployed ON DEMAND
@@ -106,7 +107,6 @@ class Manager extends ChangeNotifier {
     Object signInResult = await _authService.signInEmail(email, password);
     if (signInResult is Failure) setError(signInResult);
     if (signInResult is Success) setError(null);
-    setLoading(false);
   }
 
   register({required String email, required String password}) async {
@@ -115,7 +115,10 @@ class Manager extends ChangeNotifier {
     //register user
     Object registerResult = await _authService.registerWithEmailAndPassword(email, password);
     if (registerResult is Failure) setError(registerResult);
-  }
+    if (registerResult is Success) setError(null);
+
+    }
+
 
   signOut() async {
     bool result = await _authService.signOut();
@@ -152,7 +155,7 @@ class Manager extends ChangeNotifier {
 
   moveQuestionToNew() {}
 
-  //METHODS ON DEMAND ********
+  // ******* METHODS ON DEMAND ********
   addQuestionsToDb() async {
     for (var question in questionListDB) {
       await _databaseService.uploadQuestions(question);
