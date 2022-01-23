@@ -155,6 +155,14 @@ class Manager extends ChangeNotifier {
 
   moveQuestionToNew() {}
 
+  doNotShowThisQuestionAnymore() {
+    debugPrint('/// Pytanie oznaczone jako notShown ///');
+  }
+
+  sendQuestionRemarks() {
+    debugPrint('/// Przesłano uwagę na temat pytania ///');
+  }
+
   // ******* METHODS ON DEMAND ********
   addQuestionsToDb() async {
     for (var question in questionListDB) {

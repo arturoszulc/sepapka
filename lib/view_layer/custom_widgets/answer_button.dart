@@ -25,7 +25,7 @@ class AnswerButton extends StatelessWidget {
           }
         },
         minWidth: 300,
-        height: 70.0,
+        height: 50.0,
         color: color,
         child: Text(answer!),
       ),

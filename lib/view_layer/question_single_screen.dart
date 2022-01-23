@@ -6,6 +6,7 @@ import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import 'custom_widgets/answer_button.dart';
+import 'custom_widgets/settings_popupmenu.dart';
 
 class QuestionSingleScreen extends StatelessWidget {
   const QuestionSingleScreen({Key? key}) : super(key: key);
@@ -16,25 +17,25 @@ class QuestionSingleScreen extends StatelessWidget {
     final manager = Provider.of<Manager>(context);
     Question? question = manager.currentQuestion;
     List<BMap> aMapList = manager.bMapList;
-    return Scaffold(
-      body: question == null
-          ? Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Text('Brak nowych pytań'),
-                  SizedBox(height: 20.0),
-                  // ElevatedButton(
-                  //     onPressed: () {
-                  //       Navigator.pop(context);
-                  //     },
-                  //     child: const Text('Powrót'))
-                ],
-              ),
-            )
-          : Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
+    return SafeArea(
+      child: Scaffold(
+        body: question == null
+            ? Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Text('Brak nowych pytań'),
+                    SizedBox(height: 20.0),
+                    // ElevatedButton(
+                    //     onPressed: () {
+                    //       Navigator.pop(context);
+                    //     },
+                    //     child: const Text('Powrót'))
+                  ],
+                ),
+              )
+            : Column(mainAxisSize: MainAxisSize.min, children: [
+              buildSettingsMenu(),
                 Expanded(
                   flex: 3,
                   child: Container(
@@ -45,7 +46,8 @@ class QuestionSingleScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 25.0),
                         child: Text(
-                          question.q, style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                          question.q,
+                          style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                           // maxLines: 3,
                         ),
                       ),
@@ -54,7 +56,8 @@ class QuestionSingleScreen extends StatelessWidget {
                 ),
                 Expanded(
                   flex: 6,
-                  child: Container( //remove later
+                  child: Container(
+                    //remove later
                     // color: Colors.green,
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                       AnswerButton(
@@ -93,33 +96,30 @@ class QuestionSingleScreen extends StatelessWidget {
                   ),
                 ),
               ]),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            FloatingActionButton(
+                heroTag: 'exit',
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
+                },
+                child: const Icon(Icons.exit_to_app)),
+            Visibility(
+              visible: manager.qStatus == QuestionStatus.noAnswer ? false : true,
+              child: FloatingActionButton.extended(
+                heroTag: 'next',
+                onPressed: () async {
+                  await context.read<Manager>().getNextQuestion();
+                  Navigator.pushReplacementNamed(context, '/question-single');
+                },
+                label: const Text('Dalej >'),
+              ),
             ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.8,
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-          FloatingActionButton(
-            heroTag: 'exit',
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/wrapper', (Route<dynamic> route) => false);
-              },
-              child: const Icon(Icons.exit_to_app)),
-
-          Visibility(
-            visible: manager.qStatus == QuestionStatus.noAnswer ? false : true,
-            child: FloatingActionButton.extended(
-              heroTag: 'next',
-              onPressed: () async {
-                await context.read<Manager>().getNextQuestion();
-                Navigator.pushReplacementNamed(context, '/question-single');
-              },
-              label: const Text('Dalej >'),
-            ),
-          ),
-        ]),
+          ]),
+        ),
       ),
     );
   }
