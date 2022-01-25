@@ -34,6 +34,11 @@ class Manager extends ChangeNotifier {
   LoggedUser? get loggedUser => _userService.loggedUser;
 
   double get progressPercent => _userService.getProgressPercent();
+  int get qNewLeftLevel1 => _userService.loggedUser!.qListNew1.length;
+  int get qNewLeftLevel2 => _userService.loggedUser!.qListNew2.length;
+  int get qNewLeftLevel3 => _userService.loggedUser!.qListNew3.length;
+
+  int get howManyToPracticeToday => _questionService.howManyToPracticeToday;
 
   Question? get currentQuestion => _questionService.currentQuestion;
 

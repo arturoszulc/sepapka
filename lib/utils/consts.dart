@@ -20,7 +20,10 @@ Color rightButtonColor = Colors.green.shade500;
 
 //LoggedUser model properties
 const String userQVersion = 'qVersion';
-const String userQListNew = 'qListNew';
+const String userIsPro = 'isPro';
+const String userQListNew1 = 'qListNew1';
+const String userQListNew2 = 'qListNew2';
+const String userQListNew3 = 'qListNew3';
 const String userQListPractice = 'qListPractice';
 const String userQListNotShown = 'qListNotShown';
 

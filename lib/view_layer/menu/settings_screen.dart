@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class Settings extends StatelessWidget {
@@ -12,7 +12,7 @@ class Settings extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
               '/wrapper', (Route<dynamic> route) => false),
         ),

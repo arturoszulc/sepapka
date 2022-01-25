@@ -19,6 +19,8 @@ class QuestionService {
   //Properties
   List<Question>? _qListGlobal;
   List<Question> _qListCurrent = [];
+  List<QMap> _todaysPracticeList = [];
+  int _howManyToPracticeToday = 0;
   Question? _currentQuestion;
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
   QuestionType _qType = QuestionType.newQuestion;
@@ -28,6 +30,10 @@ class QuestionService {
   //Getters
   Question? get currentQuestion => _currentQuestion;
 
+  int get howManyToPracticeToday {
+    _todaysPracticeList = _userService.getTodayPracticeQMapList();
+    return _howManyToPracticeToday = _todaysPracticeList.length;
+  }
   QuestionStatus get qStatus => _qStatus;
 
   QuestionType get qType => _qType;
@@ -53,9 +59,9 @@ class QuestionService {
     //update qListGlobal variable
     _qListGlobal = getQuestionResult as List<Question>;
 
-    //update local user question version and qNewList (if there any any new questions
+    //update local user question version and qNewList (if there any any new questions)
     _userService.updateQVersion(qVersion);
-    await _userService.updateQNewList(_qListGlobal!);
+    await _userService.updateQNewLists(_qListGlobal!);
 
     debugPrint('/// SUCCESS: FINISHED PREPARING DATA ///');
     return Success();
@@ -78,7 +84,6 @@ class QuestionService {
   }
 
   Future checkAnswer(String answer) async {
-
     //remove question from _qListCurrent
     _qListCurrent.removeAt(0);
 
@@ -89,12 +94,7 @@ class QuestionService {
       //set button color
       _bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
       //move question to Practice List
-      if (_qType == QuestionType.newQuestion) {
-        _userService.moveNewQuestionToPractice(_currentQuestion!.id);
-      }
-      if (_qType == QuestionType.practiceQuestion) {
-        _userService.movePracticeQuestionToPractice(questionId: _currentQuestion!.id, update: true);
-      }
+      _userService.moveQuestionToPractice(_currentQuestion!.id, qType, qLevel, true);
     }
     //if wrong answer
     else {
@@ -110,14 +110,14 @@ class QuestionService {
           rightButtonColor;
       //move question to the end of it's list, to try again
       if (_qType == QuestionType.newQuestion) {
-        _userService.moveNewQuestionToNew(_currentQuestion!.id);
+        _userService.moveQuestionToNew(_currentQuestion!.id, qType, qLevel);
       }
       if (_qType == QuestionType.practiceQuestion) {
-        _userService.movePracticeQuestionToPractice(questionId: _currentQuestion!.id, update: false);
+        //move but do not update date or fibNum
+        _userService.moveQuestionToPractice(_currentQuestion!.id, qType, qLevel, false);
       }
     }
   }
-
 
   prepareCurrentSessionData({required QuestionType qType, required int qLevel}) async {
     //set question type
@@ -130,28 +130,23 @@ class QuestionService {
   prepareCurrentQuestionsBasedOnProps() {
     //clear the old list
     _qListCurrent.clear();
+
+    List<QMap> qMapList = [];
+
     if (_qType == QuestionType.newQuestion) {
-      //if user chose learning based on level
-      if (_qLevel > 0) {
-        for (Question question in _qListGlobal!) {
-          if (question.level == _qLevel) {
-            if (_userService.isQuestionInNewList(question.id) != null) {
-              _qListCurrent.add(question);
-            }
-          }
-        }
-      }
+      //if user chose learning based on level, get QMaps from NewList
+      qMapList = _userService.getQMapNewList(_qLevel);
     }
     if (_qType == QuestionType.practiceQuestion) {
-      List<QMap> todayList = _userService.getTodayPracticeQMapList();
-      for (QMap qMap in todayList) {
-        _qListCurrent.add(_qListGlobal!.firstWhere((question) => question.id == qMap.id));
-      }
+      //if user chose Practice, get today's practice
+      qMapList = _todaysPracticeList;
+    }
+    for (QMap qMap in qMapList) {
+      _qListCurrent.add(_qListGlobal!.firstWhere((question) => question.id == qMap.id));
     }
   }
 
   getNextQuestion() {
-
     //reset QuestionStatus
     _qStatus = QuestionStatus.noAnswer;
 
@@ -185,7 +180,7 @@ class QuestionService {
     //clear user lists
     await _userService.cleanUserQLists();
     //update qNewList
-    await _userService.updateQNewList(_qListGlobal!);
+    await _userService.updateQNewLists(_qListGlobal!);
     return Success();
   }
 }

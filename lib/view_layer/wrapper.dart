@@ -25,16 +25,16 @@ class Wrapper extends StatelessWidget {
       ),
     );
 
-    final manager = Provider.of<Manager>(context);
-
-    if (manager.loading == true) {
-      return const Loading();
-    } else {
-      if (manager.loggedUser == null) {
-        return Authenticate();
-      } else {
-        return Menu();
-      }
-    }
+    // final manager = Provider.of<Manager>(context);
+    //
+    // if (manager.loading == true) {
+    //   return const Loading();
+    // } else {
+    //   if (manager.loggedUser == null) {
+    //     return Authenticate();
+    //   } else {
+    //     return Menu();
+    //   }
+    // }
   }
 }

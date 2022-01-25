@@ -12,6 +12,8 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Menu built ***');
 
+    int howManyToPractice = context.read<Manager>().howManyToPracticeToday;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('SEPapka'),
@@ -50,7 +52,7 @@ class Menu extends StatelessWidget {
                             await context.read<Manager>().startPractice();
                             Navigator.pushNamed(context, '/question-single');
                           },
-                          child: const Text('Powtórka materiału'),
+                          child: Text('Powtórka materiału ($howManyToPractice)'),
                         ),
                         ElevatedButton(
                           onPressed: () {
@@ -66,8 +68,11 @@ class Menu extends StatelessWidget {
             ),
             const SizedBox(height: 100),
             Text('LoggedUser ID: ${context.read<Manager>().loggedUser!.documentId}'),
-            Text('LoggedUser qNew: ${context.read<Manager>().loggedUser!.qListNew.length}'),
+            Text('LoggedUser qNew1: ${context.read<Manager>().loggedUser!.qListNew1.length}'),
+            Text('LoggedUser qNew2: ${context.read<Manager>().loggedUser!.qListNew2.length}'),
+            Text('LoggedUser qNew3: ${context.read<Manager>().loggedUser!.qListNew3.length}'),
             Text('LoggedUser qPractice: ${context.read<Manager>().loggedUser!.qListPractice.length}'),
+            Text('LoggedUser qNotShown: ${context.read<Manager>().loggedUser!.qListNotShown.length}'),
             const SizedBox(height: 100.0),
             buildProgressBar(context),
             const SizedBox(height: 20),

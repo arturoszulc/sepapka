@@ -67,33 +67,25 @@ class AuthService {
       case "account-exists-with-different-credential":
       case "email-already-in-use":
         return "Ten adres e-mail jest już zajęty. Spróbuj się zalogować";
-        break;
       case "ERROR_WRONG_PASSWORD":
       case "wrong-password":
         return "Hasło nieprawidłowe";
-        break;
       case "ERROR_USER_NOT_FOUND":
       case "user-not-found":
         return "Nie znaleziono konta z podanym adresem e-mail";
-        break;
       case "ERROR_USER_DISABLED":
       case "user-disabled":
         return "Użytkownik jest zablokowany";
-        break;
       case "ERROR_TOO_MANY_REQUESTS":
       case "operation-not-allowed":
         return "Tymczasowo zablokowano dostęp ze względu na zbyt częste próby logownia. Spróbuj później";
-        break;
       case "too-many-requests":
         return "Tymczasowo zablokowano dostęp ze względu na zbyt częste próby logownia. Spróbuj później";
-        break;
       case "ERROR_INVALID_EMAIL":
       case "invalid-email":
         return "Nieprawidłowy adres e-mail";
-        break;
       default:
         return "Błąd logowania, spróbuj ponownie";
-        break;
     }
   }
 
