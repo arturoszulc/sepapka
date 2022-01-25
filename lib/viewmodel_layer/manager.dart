@@ -169,19 +169,11 @@ class Manager extends ChangeNotifier {
   }
 
   // ******* METHODS ON DEMAND ********
-  addQuestionsToDb() async {
+
+  //Questions for Users
+  addQuestionsToDb(bool isPro) async {
     for (var question in questionListDB) {
-      await _databaseService.uploadQuestions(question);
+      await _databaseService.uploadQuestions(question: question, isPro: isPro);
     }
   }
-
-//   moveNewQuestionToPractice(String questionId) async {
-//     var result = await _questionService.moveNewQuestionToPractice(questionId);
-//     if (result is Success) {
-//       debugPrint('moveNewQuestionToPractice done');
-//     }
-//     if (result is Failure) {
-//       debugPrint(result.errorResponse);
-//     }
-// }
 }

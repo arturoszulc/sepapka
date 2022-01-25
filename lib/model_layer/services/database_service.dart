@@ -14,6 +14,8 @@ class DatabaseService {
   FirebaseFirestore.instance.collection('data');
   final CollectionReference questionsCollection =
   FirebaseFirestore.instance.collection('questions');
+  final CollectionReference questionsFreeCollection =
+  FirebaseFirestore.instance.collection('questionsFree');
   final CollectionReference usersCollection =
   FirebaseFirestore.instance.collection('users');
 
@@ -67,15 +69,15 @@ class DatabaseService {
 
 
   //Get question version
-  Future<int?> getQuestionVersion() async {
+  Future<int?> getQuestionVersion({required bool isPro}) async {
     var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
-    return doc.get('qVersion');
+    return isPro ? doc.get('qVersionPro') : doc.get('qVersionFree');
   }
 
-  //Get question list
-  Future<List<Question>?> getQuestionList() async {
+  //Get question list (either Free or Pro user based on parameter)
+  Future<List<Question>?> getQuestionList({required bool isPro}) async {
     debugPrint('/// Downloading question data from DB ///');
-    var snapshot = await questionsCollection.get();
+    var snapshot = isPro ? await questionsCollection.get() : await questionsFreeCollection.get();
     return snapshot.docs.map((doc) {
       return Question(
           id: doc.id,
@@ -89,10 +91,11 @@ class DatabaseService {
     }).toList();
   }
 
-  //Upload questions to DB ****** method on demand
-  Future<void> uploadQuestions(Question question) async {
-    return questionsCollection
-        .doc().set({
+
+  //Upload questions to DB ****** method on demand *******
+  Future<void> uploadQuestions({required Question question, required bool isPro}) async {
+    DocumentReference doc = isPro ? questionsCollection.doc() : questionsFreeCollection.doc();
+    return doc.set({
       'q': question.q,
       'a1': question.a1,
       'a2': question.a2,

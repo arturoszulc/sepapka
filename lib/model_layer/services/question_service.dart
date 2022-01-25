@@ -34,6 +34,7 @@ class QuestionService {
     _todaysPracticeList = _userService.getTodayPracticeQMapList();
     return _howManyToPracticeToday = _todaysPracticeList.length;
   }
+
   QuestionStatus get qStatus => _qStatus;
 
   QuestionType get qType => _qType;
@@ -46,7 +47,7 @@ class QuestionService {
 
   Future<Object> prepareGlobalData() async {
     //Get questionVersion number from DB
-    int? qVersion = await _databaseService.getQuestionVersion();
+    int? qVersion = await _databaseService.getQuestionVersion(isPro: _userService.loggedUser!.isPro);
     if (qVersion is! int) return Failure(errorGetQVersionFromDB);
 
     //after downloading qVersion from DB, compare it with local LoggedUser.qVersion.
@@ -75,7 +76,8 @@ class QuestionService {
     }
 
     //if user has outdated qVersion, or couldn't read file, download questions from DB
-    List<Question>? questionListFromDB = await _databaseService.getQuestionList();
+    List<Question>? questionListFromDB =
+        await _databaseService.getQuestionList(isPro: _userService.loggedUser!.isPro);
     if (questionListFromDB == null) return Failure(errorGetQListFromDB);
     //save questions to local JSON file
     Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(questionListFromDB);
