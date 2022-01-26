@@ -26,7 +26,6 @@ class Settings extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 context.read<Manager>().resetUserProgress();
-                // manager.addQuestionsToDb();
               },
               child: const Text('Reset User Data'),
             ),
@@ -34,7 +33,7 @@ class Settings extends StatelessWidget {
               onPressed: () async {
                 await context.read<Manager>().signOut();
                 Navigator.pop(context);
-                // manager.addQuestionsToDb();
+                // context.read<Manager>().addQuestionsToDb(isPro: false);
               },
               child: const Text('Sign Out'),
             ),

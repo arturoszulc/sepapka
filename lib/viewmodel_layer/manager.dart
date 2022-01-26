@@ -12,6 +12,7 @@ import 'package:sepapka/model_layer/services/question_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
+import 'package:sepapka/utils/question_list.dart';
 
 class Manager extends ChangeNotifier {
   //Services Injection
@@ -22,11 +23,13 @@ class Manager extends ChangeNotifier {
 
   //Manager properties
   bool _loading = false;
+
   // bool _newUser = false;
   String? _errorMsg;
 
   //Manager getters
   bool get loading => _loading;
+
   // bool get newUser => _newUser;
   String? get errorMsg => _errorMsg;
 
@@ -34,8 +37,11 @@ class Manager extends ChangeNotifier {
   LoggedUser? get loggedUser => _userService.loggedUser;
 
   double get progressPercent => _userService.getProgressPercent();
+
   int get qNewLeftLevel1 => _userService.loggedUser!.qListNew1.length;
+
   int get qNewLeftLevel2 => _userService.loggedUser!.qListNew2.length;
+
   int get qNewLeftLevel3 => _userService.loggedUser!.qListNew3.length;
 
   int get howManyToPracticeToday => _questionService.howManyToPracticeToday;
@@ -121,8 +127,7 @@ class Manager extends ChangeNotifier {
     Object registerResult = await _authService.registerWithEmailAndPassword(email, password);
     if (registerResult is Failure) setError(registerResult);
     if (registerResult is Success) setError(null);
-
-    }
+  }
 
 
   signOut() async {
@@ -171,9 +176,20 @@ class Manager extends ChangeNotifier {
   // ******* METHODS ON DEMAND ********
 
   //Questions for Users
-  addQuestionsToDb(bool isPro) async {
-    for (var question in questionListDB) {
-      await _databaseService.uploadQuestions(question: question, isPro: isPro);
+  addQuestionsToDb({required bool isPro}) async {
+    debugPrint('/// addQuestionsToDb deployed ///');
+    if (!isPro) {
+      for (var question in questionListDB) {
+        if (question.level == 1) {
+          await _databaseService.uploadQuestions(
+            question: question, isPro: isPro);
+        }
+      }
+    }
+    else {
+      for (var question in questionListDB) {
+        await _databaseService.uploadQuestions(question: question, isPro: isPro);
+      }
     }
   }
 }

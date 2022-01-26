@@ -112,7 +112,9 @@ class QuestionService {
           rightButtonColor;
       //move question to the end of it's list, to try again
       if (_qType == QuestionType.newQuestion) {
-        _userService.moveQuestionToNew(_currentQuestion!.id, qType, qLevel);
+        //if question was new, there's no point in updateing database
+        // if i'm correct, delete this if statement
+        // _userService.moveQuestionToNew(_currentQuestion!.id, qType, qLevel);
       }
       if (_qType == QuestionType.practiceQuestion) {
         //move but do not update date or fibNum

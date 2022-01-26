@@ -7,20 +7,21 @@ class Question {
   String a4;
   List<String> labels;
   int level;
+  String assetPath;
 
-  Question(
-      {required this.id,
-      required this.q,
-      required this.a1,
-      required this.a2,
-      required this.a3,
-      required this.a4,
-      required this.labels,
-      required this.level,});
+  Question({
+    required this.id,
+    required this.q,
+    required this.a1,
+    required this.a2,
+    required this.a3,
+    required this.a4,
+    required this.labels,
+    required this.level,
+    required this.assetPath,
+  });
 
-
-
-  Question.fromJson(Map<String,dynamic> json)
+  Question.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         q = json['q'],
         a1 = json['a1'],
@@ -28,18 +29,18 @@ class Question {
         a3 = json['a3'],
         a4 = json['a4'],
         labels = List<String>.from(json['labels']),
-        level = json['level'];
+        level = json['level'],
+        assetPath = json['assetPath'];
 
-  Map<String,dynamic> toJson() => {
-    'id' : id,
-    'q' : q,
-    'a1' : a1,
-    'a2' : a2,
-    'a3' : a3,
-    'a4' : a4,
-    'labels' : labels,
-    'level' : level,
-
-  };
-
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'q': q,
+        'a1': a1,
+        'a2': a2,
+        'a3': a3,
+        'a4': a4,
+        'labels': labels,
+        'level': level,
+        'assetPath': assetPath,
+      };
 }

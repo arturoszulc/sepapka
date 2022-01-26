@@ -1,25 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/utils/methods.dart';
-import 'package:flutter/foundation.dart';
 
 import '../models/question.dart';
 
-
 class DatabaseService {
-
-  final CollectionReference dataCollection =
-  FirebaseFirestore.instance.collection('data');
-  final CollectionReference questionsCollection =
-  FirebaseFirestore.instance.collection('questions');
+  final CollectionReference dataCollection = FirebaseFirestore.instance.collection('data');
+  final CollectionReference questionsProCollection =
+      FirebaseFirestore.instance.collection('questionsPro');
   final CollectionReference questionsFreeCollection =
-  FirebaseFirestore.instance.collection('questionsFree');
-  final CollectionReference usersCollection =
-  FirebaseFirestore.instance.collection('users');
-
-
+      FirebaseFirestore.instance.collection('questionsFree');
+  final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
 
   //CREATE NEW USER DOCUMENT IN DATABASE
   // Future<void> createUserDB(String uid) async {
@@ -34,12 +28,9 @@ class DatabaseService {
   //       print('User created'));
   // }
 
-
   // //UPDATE USER DATA
   Future<void> updateUser(LoggedUser user) async {
-    return await usersCollection
-        .doc(user.documentId)
-        .set({
+    return await usersCollection.doc(user.documentId).set({
       userQVersion: user.qVersion,
       userIsPro: user.isPro,
       userQListNew1: user.qListNew1.map((e) => e.convertToMap()).toList(),
@@ -47,10 +38,8 @@ class DatabaseService {
       userQListNew3: user.qListNew3.map((e) => e.convertToMap()).toList(),
       userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
       userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),
-    }).then((value) =>
-        debugPrint('/// DB: User updated ///'));
+    }).then((value) => debugPrint('/// DB: User updated ///'));
   }
-
 
   // GET LOGGED USER DATA
   Future<LoggedUser> getUserData(String uid) async {
@@ -67,7 +56,6 @@ class DatabaseService {
     );
   }
 
-
   //Get question version
   Future<int?> getQuestionVersion({required bool isPro}) async {
     var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
@@ -77,7 +65,7 @@ class DatabaseService {
   //Get question list (either Free or Pro user based on parameter)
   Future<List<Question>?> getQuestionList({required bool isPro}) async {
     debugPrint('/// Downloading question data from DB ///');
-    var snapshot = isPro ? await questionsCollection.get() : await questionsFreeCollection.get();
+    var snapshot = isPro ? await questionsProCollection.get() : await questionsFreeCollection.get();
     return snapshot.docs.map((doc) {
       return Question(
           id: doc.id,
@@ -87,15 +75,17 @@ class DatabaseService {
           a3: doc.get(questionA3),
           a4: doc.get(questionA4),
           labels: List<String>.from(doc.get(questionLabels)),
-          level: doc.get(questionLevel));
+          level: doc.get(questionLevel),
+          assetPath: doc.get(questionAssetPath));
     }).toList();
   }
 
-
   //Upload questions to DB ****** method on demand *******
   Future<void> uploadQuestions({required Question question, required bool isPro}) async {
-    DocumentReference doc = isPro ? questionsCollection.doc() : questionsFreeCollection.doc();
-    return doc.set({
+    debugPrint('### ID IS ${question.id} ###');
+    DocumentReference doc =
+        isPro ? questionsProCollection.doc(question.id) : questionsFreeCollection.doc(question.id);
+    return await doc.set({
       'q': question.q,
       'a1': question.a1,
       'a2': question.a2,
@@ -103,7 +93,7 @@ class DatabaseService {
       'a4': question.a4,
       'labels': [],
       'level': question.level,
+      'assetPath': question.assetPath,
     });
   }
-
 }
