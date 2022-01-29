@@ -36,7 +36,7 @@ class Manager extends ChangeNotifier {
   //External Getters
   LoggedUser? get loggedUser => _userService.loggedUser;
 
-  double get progressPercent => _userService.getProgressPercent();
+  double get progressPercentGlobal => _userService.getProgressPercentGlobal();
 
   int get qNewLeftLevel1 => _userService.loggedUser!.qListNew1.length;
 
@@ -44,7 +44,9 @@ class Manager extends ChangeNotifier {
 
   int get qNewLeftLevel3 => _userService.loggedUser!.qListNew3.length;
 
-  int get howManyToPracticeToday => _questionService.howManyToPracticeToday;
+  int get howManyToPracticeToday => _questionService.howManyToPracticeToday();
+
+  double get progressPercentSession => _questionService.getProgressPercentSession();
 
   Question? get currentQuestion => _questionService.currentQuestion;
 
@@ -161,6 +163,7 @@ class Manager extends ChangeNotifier {
 
   getNextQuestion() async {
     await _questionService.getNextQuestion();
+    notifyListeners();
   }
 
   moveQuestionToNew() {}

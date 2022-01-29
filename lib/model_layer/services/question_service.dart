@@ -19,6 +19,7 @@ class QuestionService {
   //Properties
   List<Question>? _qListGlobal;
   List<Question> _qListCurrent = [];
+  double _qListCurrentStartLength = 0;
   List<QMap> _todaysPracticeList = [];
   int _howManyToPracticeToday = 0;
   Question? _currentQuestion;
@@ -30,10 +31,6 @@ class QuestionService {
   //Getters
   Question? get currentQuestion => _currentQuestion;
 
-  int get howManyToPracticeToday {
-    _todaysPracticeList = _userService.getTodayPracticeQMapList();
-    return _howManyToPracticeToday = _todaysPracticeList.length;
-  }
 
   QuestionStatus get qStatus => _qStatus;
 
@@ -45,9 +42,21 @@ class QuestionService {
 
   //Methods
 
+  double getProgressPercentSession() {
+    debugPrint('Start length: $_qListCurrentStartLength');
+    debugPrint('Current length: ${_qListCurrent.length}');
+    return (_qListCurrentStartLength - _qListCurrent.length)/_qListCurrentStartLength;
+  }
+
+  int howManyToPracticeToday() {
+    _todaysPracticeList = _userService.getTodayPracticeQMapList();
+    return _howManyToPracticeToday = _todaysPracticeList.length;
+  }
+
   Future<Object> prepareGlobalData() async {
     //Get questionVersion number from DB
-    int? qVersion = await _databaseService.getQuestionVersion(isPro: _userService.loggedUser!.isPro);
+    int? qVersion =
+        await _databaseService.getQuestionVersion(isPro: _userService.loggedUser!.isPro);
     if (qVersion is! int) return Failure(errorGetQVersionFromDB);
 
     //after downloading qVersion from DB, compare it with local LoggedUser.qVersion.
@@ -148,6 +157,8 @@ class QuestionService {
     for (QMap qMap in qMapList) {
       _qListCurrent.add(_qListGlobal!.firstWhere((question) => question.id == qMap.id));
     }
+    //set starting length of _qListCurrent for session progress bar
+    _qListCurrentStartLength = _qListCurrent.length.toDouble();
   }
 
   getNextQuestion() {

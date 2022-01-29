@@ -6,7 +6,7 @@ import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import 'custom_widgets/answer_button.dart';
-import 'custom_widgets/settings_popupmenu.dart';
+import 'custom_widgets/single_question_top_bar.dart';
 
 class QuestionSingleScreen extends StatelessWidget {
   const QuestionSingleScreen({Key? key}) : super(key: key);
@@ -17,6 +17,10 @@ class QuestionSingleScreen extends StatelessWidget {
     final manager = Provider.of<Manager>(context);
     Question? question = manager.currentQuestion;
     List<BMap> aMapList = manager.bMapList;
+
+    //question single screen is made of:
+    // - top bar with progress indicator and other things
+    // - main area with questions and aswers
     return SafeArea(
       child: Scaffold(
         body: question == null
@@ -35,7 +39,8 @@ class QuestionSingleScreen extends StatelessWidget {
                 ),
               )
             : Column(mainAxisSize: MainAxisSize.min, children: [
-              buildSettingsMenu(),
+              //build topBar
+                singleQuestionTopBar(context),
                 Expanded(
                   flex: 3,
                   child: Container(
@@ -95,21 +100,21 @@ class QuestionSingleScreen extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: SizedBox(
           width: MediaQuery.of(context).size.width * 0.8,
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            FloatingActionButton(
-                heroTag: 'exit',
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
-                },
-                child: const Icon(Icons.exit_to_app)),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            // FloatingActionButton(
+            //     heroTag: 'exit',
+            //     onPressed: () {
+            //       Navigator.of(context)
+            //           .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
+            //     },
+            //     child: const Icon(Icons.exit_to_app)),
             Visibility(
               visible: manager.qStatus == QuestionStatus.noAnswer ? false : true,
               child: FloatingActionButton.extended(
                 heroTag: 'next',
                 onPressed: () async {
                   await context.read<Manager>().getNextQuestion();
-                  Navigator.pushReplacementNamed(context, '/question-single');
+                  // Navigator.pushReplacementNamed(context, '/question-single');
                 },
                 label: const Text('Dalej >'),
               ),

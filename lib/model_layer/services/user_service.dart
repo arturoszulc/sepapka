@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
+import 'package:sepapka/utils/methods.dart';
 
 import '../../locator.dart';
 import '../models/question.dart';
@@ -26,7 +29,7 @@ class UserService {
 
   LoggedUser? get loggedUser => _loggedUser;
 
-  double getProgressPercent() {
+  double getProgressPercentGlobal() {
     int allQuestions = _loggedUser!.qListNew1.length +
         _loggedUser!.qListNew2.length +
         _loggedUser!.qListNew3.length +
@@ -145,13 +148,16 @@ class UserService {
   }
 
   List<QMap> getQMapNewList(int qLevel) {
+    //return only first 10 elements
     switch (qLevel) {
       case 1:
-        return _loggedUser!.qListNew1;
+        return _loggedUser!.qListNew1.slice(0, min(9, _loggedUser!.qListNew1.length));
       case 2:
-        return _loggedUser!.qListNew2;
+        return _loggedUser!.qListNew2.slice(0, min(9, _loggedUser!.qListNew2.length));
+
       case 3:
-        return _loggedUser!.qListNew3;
+        return _loggedUser!.qListNew3.slice(0, min(9, _loggedUser!.qListNew2.length));
+
     }
     return [];
   }

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
-import '../custom_widgets/progress_bar.dart';
+import '../custom_widgets/progress_bar_global.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
