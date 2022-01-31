@@ -38,11 +38,12 @@ class DatabaseService {
       userQListNew3: user.qListNew3.map((e) => e.convertToMap()).toList(),
       userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
       userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),
-    }).then((value) => debugPrint('/// DB: User updated ///'));
+    }).then((value) => debugPrint('/// DB: User successfully updated ///'));
   }
 
   // GET LOGGED USER DATA
   Future<LoggedUser> getUserData(String uid) async {
+    debugPrint('/// Downloading UserData from DB ///');
     var doc = await usersCollection.doc(uid).get();
     return LoggedUser(
       documentId: doc.id,

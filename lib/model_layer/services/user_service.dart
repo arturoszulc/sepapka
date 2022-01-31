@@ -169,7 +169,7 @@ class UserService {
         return _loggedUser!.qListNew2.slice(0, min(9, _loggedUser!.qListNew2.length));
 
       case 3:
-        return _loggedUser!.qListNew3.slice(0, min(9, _loggedUser!.qListNew2.length));
+        return _loggedUser!.qListNew3.slice(0, min(9, _loggedUser!.qListNew3.length));
 
     }
     return [];

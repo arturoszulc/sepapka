@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sepapka/view_layer/custom_widgets/settings_popupmenu.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+
+import 'dialog_leave_session.dart';
 
 Widget singleQuestionTopBar(BuildContext context) {
   debugPrint('*** singleQuestionTopBar build ***');
   return Row(
     // mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
+      //Exit session bttuon
       Expanded(
         // flex: 2,
         child: IconButton(
-          onPressed: () {
-            Navigator.of(context)
-                .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
+          onPressed: () async {
+            bool result = await leaveSessionDialog(context);
+            if (result) {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
+            }
           },
           icon: const Icon(Icons.clear),
         ),
       ),
+
+      //Session progress bar
       Expanded(
         flex: 6,
         child: LinearPercentIndicator(
@@ -29,11 +37,12 @@ Widget singleQuestionTopBar(BuildContext context) {
           animationDuration: 800,
           animateFromLastPercent: true,
           percent: context.read<Manager>().progressPercentSession,
-          // center: Text('${(context.read<Manager>().progressPercent*100).toString()} %'),
           linearStrokeCap: LinearStrokeCap.roundAll,
           progressColor: Colors.yellow,
         ),
       ),
+
+      //Options button
       Expanded(
           // flex: 2,
           child: buildSettingsMenu()),
