@@ -56,6 +56,7 @@ class UserService {
   }
 
   setLoggedUserChanged(bool status) {
+    //some flag to keep track if user has changed (helpful in some loops)
     _loggedUserChanged = status;
   }
 
@@ -70,6 +71,18 @@ class UserService {
       return Success();
     }
   }
+
+  Future<Object> updateLoggedUserInDb() async {
+    try {
+      await _databaseService.updateUser(_loggedUser!);
+      return Success();
+    }
+    catch(e) {
+      debugPrint(errorUpdateUserInDb);
+      return Failure(errorUpdateUserInDb);
+    }
+  }
+
 
   logOutUser() {
     _loggedUser = null;
@@ -135,7 +148,7 @@ class UserService {
     return _loggedUser!.qListNotShown.firstWhereOrNull((qMap) => qMap.id == questionId);
   }
 
-  removeQuestionFromAnyMap(String questionId) {
+  removeQuestionFromAnyQList(String questionId) {
     _loggedUser!.qListNew1.removeWhere((e) => e.id == questionId);
     _loggedUser!.qListNew2.removeWhere((e) => e.id == questionId);
     _loggedUser!.qListNew3.removeWhere((e) => e.id == questionId);
@@ -147,7 +160,7 @@ class UserService {
     return QMap(id: qId, dateModified: DateTime.now().toString().substring(0, 10), fibNum: 0);
   }
 
-  List<QMap> getQMapNewList(int qLevel) {
+  List<QMap> getQMapsFromNewList(int qLevel) {
     //return only first 10 elements
     switch (qLevel) {
       case 1:
@@ -176,17 +189,17 @@ class UserService {
     return todayPracticeList;
   }
 
-  moveQuestionToNew(String qId, QuestionType qType, int qLevel) async {
-    //Get QMap
-    QMap? qMap = getQMapAndRemove(qId, qType, qLevel);
-    if (qMap != null) {
-      await addQuestionToNew(qMap, qLevel);
-    }
-    if (_loggedUserChanged) {
-      await _databaseService.updateUser(_loggedUser!);
-      setLoggedUserChanged(false);
-    }
-  }
+  // moveQuestionToNew(String qId, QuestionType qType, int qLevel) async {
+  //   //Get QMap
+  //   QMap? qMap = getQMapAndRemove(qId, qType, qLevel);
+  //   if (qMap != null) {
+  //     await addQuestionToNew(qMap, qLevel);
+  //   }
+  //   if (_loggedUserChanged) {
+  //     await _databaseService.updateUser(_loggedUser!);
+  //     setLoggedUserChanged(false);
+  //   }
+  // }
 
   moveQuestionToPractice(String qId, QuestionType qType, int qLevel, bool update) async {
     debugPrint('/// moveQuestionToPractice deployed ///');
@@ -198,32 +211,13 @@ class UserService {
       if (update) {
         qMap.dateModified = _today.toString().substring(0, 10);
         qMap.fibNum = getNextFibNum(qMap.fibNum);
-        setLoggedUserChanged(true);
+        // setLoggedUserChanged(true);
       }
       //add question QMap to Practice list
       await addQuestionToPractice(qMap);
-
-      if (_loggedUserChanged) {
-        await _databaseService.updateUser(_loggedUser!);
-        setLoggedUserChanged(false);
-      }
     }
   }
 
-  // movePracticeQuestionToPractice({required String questionId, required bool update}) async {
-  //   //Get QMap by ID from qPracticeList
-  //   QMap? qMap = getQMapFromPracticeById(questionId);
-  //
-  //   if (qMap != null) {
-  //     if (update) {
-  //       //updateQMap with new Date and FibNum
-  //       qMap.dateModified = _today.toString().substring(0, 10);
-  //       qMap.fibNum = getNextFibNum(qMap.fibNum);
-  //     }
-  //     //add question QMap to Practice list
-  //     await addQuestionToPractice(qMap);
-  //   }
-  // }
 
   QMap? getQMapAndRemove(String qId, QuestionType qType, int qLevel) {
     QMap? qMap;

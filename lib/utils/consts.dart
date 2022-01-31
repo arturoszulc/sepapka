@@ -48,6 +48,7 @@ const String errorGetQListFromDB =
     '### Nie można pobrać listy pytań. Sprawdź połączenie z internetem ###';
 const String errorGetUserDataFromDB =
     '### Błąd pobierania danych użytkownika. Spróbuje utworzyć nowego... ### ';
+const String errorUpdateUserInDb = '### Nie udało się zaktualizować danych użytkownika ###';
 
 //AuthService Errors
 const String errorSignIn = '### AuthService.signInEmail() error: ';

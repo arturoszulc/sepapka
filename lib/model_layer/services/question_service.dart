@@ -17,11 +17,12 @@ class QuestionService {
   FileService _fileService = serviceLocator.get<FileService>();
 
   //Properties
+  bool _isSessionFinished = false;
   List<Question>? _qListGlobal;
   List<Question> _qListCurrent = [];
   double _qListCurrentStartLength = 0;
   List<QMap> _todaysPracticeList = [];
-  int _howManyToPracticeToday = 0;
+  // int _howManyToPracticeToday = 0;
   Question? _currentQuestion;
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
   QuestionType _qType = QuestionType.newQuestion;
@@ -29,8 +30,8 @@ class QuestionService {
   List<BMap> _bMapList = []; //shuffled list of answers & colors for buttons
 
   //Getters
+  bool get isSessionFinished => _isSessionFinished;
   Question? get currentQuestion => _currentQuestion;
-
 
   QuestionStatus get qStatus => _qStatus;
 
@@ -50,7 +51,7 @@ class QuestionService {
 
   int howManyToPracticeToday() {
     _todaysPracticeList = _userService.getTodayPracticeQMapList();
-    return _howManyToPracticeToday = _todaysPracticeList.length;
+    return _todaysPracticeList.length;
   }
 
   Future<Object> prepareGlobalData() async {
@@ -63,7 +64,7 @@ class QuestionService {
     bool compareResult = _userService.compareQVersion(qVersion);
 
     //get Question List based on compareResult
-    Object getQuestionResult = await getQuestionList(compareResult);
+    Object getQuestionResult = await getGlobalQuestionList(compareResult);
     if (getQuestionResult is Failure) return getQuestionResult;
 
     //update qListGlobal variable
@@ -77,7 +78,7 @@ class QuestionService {
     return Success();
   }
 
-  Future<Object> getQuestionList(bool compareResult) async {
+  Future<Object> getGlobalQuestionList(bool compareResult) async {
     // if User has qVersion up to date, try to take questions from JSON file
     if (compareResult == true) {
       Object getLocalQuestionResult = await _fileService.getQuestionListFromFile();
@@ -137,6 +138,8 @@ class QuestionService {
     _qType = qType;
     //set question level
     _qLevel = qLevel;
+    //reset isSessionFinished flag
+    _isSessionFinished = false;
     await prepareCurrentQuestionsBasedOnProps();
   }
 
@@ -148,7 +151,7 @@ class QuestionService {
 
     if (_qType == QuestionType.newQuestion) {
       //if user chose learning based on level, get QMaps from NewList
-      qMapList = _userService.getQMapNewList(_qLevel);
+      qMapList = _userService.getQMapsFromNewList(_qLevel);
     }
     if (_qType == QuestionType.practiceQuestion) {
       //if user chose Practice, get today's practice
@@ -161,10 +164,11 @@ class QuestionService {
     _qListCurrentStartLength = _qListCurrent.length.toDouble();
   }
 
-  getNextQuestion() {
+  getNextQuestion() async {
     //reset QuestionStatus
     _qStatus = QuestionStatus.noAnswer;
 
+    //if there is a question on the list
     if (_qListCurrent.isNotEmpty) {
       //prepare question
       _currentQuestion = _qListCurrent.first;
@@ -172,6 +176,8 @@ class QuestionService {
       createBMap();
     } else {
       _currentQuestion = null;
+      _isSessionFinished = true;
+      await _userService.updateLoggedUserInDb();
     }
   }
 

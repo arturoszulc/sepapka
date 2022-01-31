@@ -44,6 +44,8 @@ class Manager extends ChangeNotifier {
 
   int get qNewLeftLevel3 => _userService.loggedUser!.qListNew3.length;
 
+  bool get isSessionFinished => _questionService.isSessionFinished;
+
   int get howManyToPracticeToday => _questionService.howManyToPracticeToday();
 
   double get progressPercentSession => _questionService.getProgressPercentSession();

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/utils/consts.dart';
+import 'package:sepapka/view_layer/session_finished_screen.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import 'custom_widgets/answer_button.dart';
@@ -18,27 +19,17 @@ class QuestionSingleScreen extends StatelessWidget {
     Question? question = manager.currentQuestion;
     List<BMap> aMapList = manager.bMapList;
 
-    //question single screen is made of:
-    // - top bar with progress indicator and other things
-    // - main area with questions and aswers
+
+    //if current session is finished, show this widget
+    if (manager.isSessionFinished) return const SessionFinished();
+    //else show question
     return SafeArea(
+
+      //question single screen is made of:
+      // - top bar with progress indicator and other things
+      // - main area with questions and aswers
       child: Scaffold(
-        body: question == null
-            ? Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Text('Brak nowych pytań'),
-                    SizedBox(height: 20.0),
-                    // ElevatedButton(
-                    //     onPressed: () {
-                    //       Navigator.pop(context);
-                    //     },
-                    //     child: const Text('Powrót'))
-                  ],
-                ),
-              )
-            : Column(mainAxisSize: MainAxisSize.min, children: [
+        body: Column(mainAxisSize: MainAxisSize.min, children: [
               //build topBar
                 singleQuestionTopBar(context),
                 Expanded(
@@ -51,7 +42,7 @@ class QuestionSingleScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 25.0),
                         child: Text(
-                          question.q,
+                          question!.q,
                           style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                           // maxLines: 3,
                         ),
