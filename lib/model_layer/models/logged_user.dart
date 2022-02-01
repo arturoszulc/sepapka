@@ -10,6 +10,8 @@ class LoggedUser {
   List<QMap> qListNew3;
   List<QMap> qListPractice;
   List<QMap> qListNotShown;
+  int rankTotalPoints;
+  String rankName;
 
   LoggedUser(
       {
@@ -20,6 +22,8 @@ class LoggedUser {
         required this.qListNew2,
         required this.qListNew3,
         required this.qListPractice,
-        required this.qListNotShown
+        required this.qListNotShown,
+        required this.rankTotalPoints,
+        required this.rankName,
       });
 }

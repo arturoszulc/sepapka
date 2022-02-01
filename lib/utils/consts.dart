@@ -19,6 +19,8 @@ Color rightButtonColor = Colors.green.shade500;
 //LoggedUser model properties
 const String userQVersion = 'qVersion';
 const String userIsPro = 'isPro';
+const String userRankTotalPoints = 'rankTotalPoints';
+const String userRankName = 'rankName';
 const String userQListNew1 = 'qListNew1';
 const String userQListNew2 = 'qListNew2';
 const String userQListNew3 = 'qListNew3';

@@ -6,7 +6,6 @@ import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
-import 'package:sepapka/utils/methods.dart';
 
 import '../../locator.dart';
 import '../models/question.dart';
@@ -47,6 +46,8 @@ class UserService {
     _loggedUser = LoggedUser(
         documentId: userId,
         isPro: false,
+        rankTotalPoints: 0,
+        rankName: 'Uczeń',
         qVersion: 0,
         qListNew1: [],
         qListNew2: [],

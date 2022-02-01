@@ -33,6 +33,8 @@ class DatabaseService {
     return await usersCollection.doc(user.documentId).set({
       userQVersion: user.qVersion,
       userIsPro: user.isPro,
+      userRankTotalPoints: user.rankTotalPoints,
+      userRankName: user.rankName,
       userQListNew1: user.qListNew1.map((e) => e.convertToMap()).toList(),
       userQListNew2: user.qListNew2.map((e) => e.convertToMap()).toList(),
       userQListNew3: user.qListNew3.map((e) => e.convertToMap()).toList(),
@@ -48,6 +50,8 @@ class DatabaseService {
     return LoggedUser(
       documentId: doc.id,
       isPro: doc.get(userIsPro),
+      rankTotalPoints: doc.get(userRankTotalPoints),
+      rankName: doc.get(userRankName),
       qVersion: doc.get(userQVersion),
       qListNew1: List<QMap>.from(doc.get(userQListNew1).map((e) => convertMapToQMap(e))),
       qListNew2: List<QMap>.from(doc.get(userQListNew2).map((e) => convertMapToQMap(e))),
