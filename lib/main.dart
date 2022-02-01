@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/utils/theme_data.dart';
+import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/view_layer/menu/menu_choose_level.dart';
 import 'package:sepapka/view_layer/menu/menu_main_screen.dart';
 import 'package:sepapka/view_layer/menu/settings_screen.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         home: const Wrapper(),
         routes: {
           '/wrapper': (context) => const Wrapper(),
+          '/reset-password': (context) => ResetPasswordScreen(),
           '/menu-main-screen': (context) => Menu(),
           '/menu-choose-level': (context) => MenuChooseLevel(),
           '/settings-screen': (context) => Settings(),

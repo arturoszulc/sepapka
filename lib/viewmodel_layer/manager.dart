@@ -138,9 +138,15 @@ class Manager extends ChangeNotifier {
     bool result = await _authService.signOut();
   }
 
-  resetUserProgress() async {
-    debugPrint('ResetUserProgress deployed');
+  resetPassword(String email) async {
+    debugPrint('/// manager ResetPassword deployed');
+    setLoading(true);
+    Object resetPassResult = await _authService.resetPassword(email);
+    if (resetPassResult is Failure) setError(resetPassResult);
+    if (resetPassResult is Success) setError(null);
+  }
 
+  resetUserProgress() async {
     Object resetResult = _questionService.resetUserProgress();
     if (resetResult is Failure) setError(resetResult);
   }

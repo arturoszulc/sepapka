@@ -4,7 +4,6 @@ import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
-
   final _authFormKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
@@ -13,8 +12,12 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint('*** SignInScreen built ***');
+
+
+
     final manager = Provider.of<Manager>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Sign In Screen'),
       ),
@@ -84,9 +87,23 @@ class SignInScreen extends StatelessWidget {
             const Text('lub'),
             const SizedBox(height: 10.0),
             ElevatedButton(
-              onPressed: () {
-              },
+              onPressed: () {},
               child: const Text('Sign In with Google'),
+            ),
+            const SizedBox(height: 100),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('Nie pamiętasz hasła?'),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/reset-password');
+                    },
+                    child: const Text(
+                      'Zresetuj hasło',
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    ))
+              ],
             ),
           ],
         ),

@@ -16,7 +16,7 @@ class AuthService {
   // register with e-mail and password
 
   Future<Object> registerWithEmailAndPassword(String email, String password) async {
-    Object validateResult = validateEmailAndPassword(email, password);
+    Object validateResult = validateEmailAndPassword(email: email, password: password);
     if (validateResult is Failure) return validateResult;
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
@@ -50,14 +50,52 @@ class AuthService {
     }
   }
 
-  Object validateEmailAndPassword(String email, String password) {
+  Future<Object> resetPassword(String email) async {
+    Object validateResult = validateEmailAndPassword(email: email);
+    if (validateResult is Failure) {
+      debugPrint(validateResult.errorString);
+      return validateResult;
+    }
+      try {
+        await _auth.sendPasswordResetEmail(email: email);
+        return Success();
+
+      } on FirebaseAuthException catch (e) {
+        debugPrint('CODE');
+        debugPrint(e.code);
+        return Failure(getMessageFromErrorCode(e.code));
+      }
+    }
+
+
+  // void _changePassword(String currentPassword, String newPassword) async {
+  //   final user = await FirebaseAuth.instance.currentUser;
+  //   final cred = EmailAuthProvider.credential(
+  //       email: user.email, password: currentPassword);
+  //
+  //   user.reauthenticateWithCredential(cred).then((value) {
+  //     user.updatePassword(newPassword).then((_) {
+  //       //Success, do something
+  //     }).catchError((error) {
+  //       //Error, show something
+  //     });
+  //   }).catchError((err) {
+  //
+  //   });}
+
+  Object validateEmailAndPassword({String? email, String? password}) {
     //validate e-mail
-    if (email.isEmpty || !email.contains('@')) return Failure('Nieprawidłowy adres e-mail');
-
+    if (email != null) {
+      if (email.isEmpty || !email.contains('@')) return Failure('Nieprawidłowy adres e-mail');
+    }
     //validate password
-    bool validated = validatePassword(password);
-    if (!validated) return Failure('Hasło musi zawierać: \n - co najmniej 8 znaków \n - co najmniej 1 cyfrę \n - co najmniej 1 znak specjalny');
-
+    if (password != null) {
+      bool validated = validatePassword(password);
+      if (!validated) {
+        return Failure(
+            'Hasło musi zawierać: \n - co najmniej 8 znaków \n - co najmniej 1 cyfrę \n - co najmniej 1 znak specjalny');
+      }
+    }
     return Success();
   }
 
