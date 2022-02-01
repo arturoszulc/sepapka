@@ -15,13 +15,22 @@ class Menu extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SEPapka'),
+        elevation: 0,
+        // backgroundColor: Colors.transparent,
         actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/settings-screen');
-              },
-              icon: const Icon(Icons.account_circle)),
+          Row(
+            children: [
+              Text(
+                'Witaj, ${context.read<Manager>().loggedUser!.userName}',
+                style: const TextStyle(fontSize: 16),
+              ),
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/settings-screen');
+                  },
+                  icon: const Icon(Icons.account_circle)),
+            ],
+          ),
         ],
       ),
       body: Center(
@@ -47,10 +56,12 @@ class Menu extends StatelessWidget {
                           child: const Text('Nauka'),
                         ),
                         ElevatedButton(
-                          onPressed: () async {
-                            await context.read<Manager>().startPractice();
-                            Navigator.pushNamed(context, '/question-single');
-                          },
+                          onPressed: howManyToPractice == 0
+                              ? null
+                              : () async {
+                                  await context.read<Manager>().startPractice();
+                                  Navigator.pushNamed(context, '/question-single');
+                                },
                           child: Text('Powtórka materiału ($howManyToPractice)'),
                         ),
                         ElevatedButton(
@@ -70,8 +81,10 @@ class Menu extends StatelessWidget {
             Text('LoggedUser qNew1: ${context.read<Manager>().loggedUser!.qListNew1.length}'),
             Text('LoggedUser qNew2: ${context.read<Manager>().loggedUser!.qListNew2.length}'),
             Text('LoggedUser qNew3: ${context.read<Manager>().loggedUser!.qListNew3.length}'),
-            Text('LoggedUser qPractice: ${context.read<Manager>().loggedUser!.qListPractice.length}'),
-            Text('LoggedUser qNotShown: ${context.read<Manager>().loggedUser!.qListNotShown.length}'),
+            Text(
+                'LoggedUser qPractice: ${context.read<Manager>().loggedUser!.qListPractice.length}'),
+            Text(
+                'LoggedUser qNotShown: ${context.read<Manager>().loggedUser!.qListNotShown.length}'),
             const SizedBox(height: 100.0),
             buildProgressBar(context),
             const SizedBox(height: 20),

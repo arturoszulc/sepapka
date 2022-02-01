@@ -32,6 +32,7 @@ class DatabaseService {
   Future<void> updateUser(LoggedUser user) async {
     return await usersCollection.doc(user.documentId).set({
       userQVersion: user.qVersion,
+      userUserName: user.userName,
       userIsPro: user.isPro,
       userRankTotalPoints: user.rankTotalPoints,
       userRankName: user.rankName,
@@ -49,6 +50,7 @@ class DatabaseService {
     var doc = await usersCollection.doc(uid).get();
     return LoggedUser(
       documentId: doc.id,
+      userName: doc.get(userUserName),
       isPro: doc.get(userIsPro),
       rankTotalPoints: doc.get(userRankTotalPoints),
       rankName: doc.get(userRankName),
