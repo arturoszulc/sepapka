@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sepapka/view_layer/custom_widgets/custom_snackbar.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -7,15 +8,13 @@ class SignInScreen extends StatelessWidget {
   final _authFormKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
-  String? error;
 
   @override
   Widget build(BuildContext context) {
     debugPrint('*** SignInScreen built ***');
 
-
-
     final manager = Provider.of<Manager>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -90,7 +89,7 @@ class SignInScreen extends StatelessWidget {
               onPressed: () {},
               child: const Text('Sign In with Google'),
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 10),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -102,9 +101,12 @@ class SignInScreen extends StatelessWidget {
                     child: const Text(
                       'Zresetuj hasło',
                       style: TextStyle(decoration: TextDecoration.underline),
-                    ))
+                    ),),
               ],
             ),
+            //if error, show snackBar
+            if (manager.errorMsg != null) CustomSnackBar(errorMsg: manager.errorMsg.toString()),
+
           ],
         ),
       ),
