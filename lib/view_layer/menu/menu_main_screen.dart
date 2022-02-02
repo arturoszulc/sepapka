@@ -19,7 +19,7 @@ class Menu extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Witaj, ${context.read<Manager>().loggedUser!.userName}',
+                'Witaj, ${context.read<Manager>().loggedUser!.username}',
                 style: const TextStyle(fontSize: 16),
               ),
               IconButton(

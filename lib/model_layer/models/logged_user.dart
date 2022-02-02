@@ -3,7 +3,7 @@ import 'package:sepapka/model_layer/models/question_map.dart';
 
 class LoggedUser {
   String documentId;
-  String userName;
+  String username;
   bool isPro;
   int qVersion;
   List<QMap> qListNew1;
@@ -17,7 +17,7 @@ class LoggedUser {
   LoggedUser(
       {
         required this.documentId,
-        required this.userName,
+        required this.username,
         required this.isPro,
         required this.qVersion,
         required this.qListNew1,

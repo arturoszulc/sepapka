@@ -162,6 +162,20 @@ class Manager extends ChangeNotifier {
     if (resetResult is Failure) setError(resetResult);
   }
 
+  updateUserData(String username) {
+    //check if username is valid character-wise
+    if (errorMsg.isEmpty) {
+      setError(Failure('random error'));
+    } else {
+      setError(null);
+    }
+    notifyListeners();
+    //check if username is not taken by other user
+
+    //save changes
+
+  }
+
   checkAnswer(String answer) async {
     ///TODO: LOCK POSSIBILITY OF PUSHING ANOTHER BUTTON BEFORE ANSWER IS CHECKED
     await _questionService.checkAnswer(answer);

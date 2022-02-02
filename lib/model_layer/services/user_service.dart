@@ -46,7 +46,7 @@ class UserService {
   createDefaultLoggedUser(String userId) async {
     _loggedUser = LoggedUser(
         documentId: userId,
-        userName: 'uczeń-' + getRandomString(5),
+        username: 'uczeń-' + getRandomString(5),
         isPro: false,
         rankTotalPoints: 0,
         rankName: 'Uczeń',

@@ -6,8 +6,9 @@ import 'package:sepapka/utils/theme_data.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/view_layer/menu/menu_choose_level.dart';
 import 'package:sepapka/view_layer/menu/menu_main_screen.dart';
-import 'package:sepapka/view_layer/menu/settings_screen.dart';
 import 'package:sepapka/view_layer/question_single_screen.dart';
+import 'package:sepapka/view_layer/user_settings/change_user_data_screen.dart';
+import 'package:sepapka/view_layer/user_settings/settings_main_screen.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
           '/menu-main-screen': (context) => Menu(),
           '/menu-choose-level': (context) => MenuChooseLevel(),
           '/settings-screen': (context) => Settings(),
+          '/settings-change-user-data': (context) => ChangeUserData(),
           '/question-single': (context) => QuestionSingleScreen(),
 
         },
