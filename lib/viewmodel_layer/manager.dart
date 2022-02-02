@@ -25,13 +25,15 @@ class Manager extends ChangeNotifier {
   bool _loading = false;
 
   // bool _newUser = false;
-  String? _errorMsg;
+  String _errorMsg = '';
+  String _infoMsg = '';
 
   //Manager getters
   bool get loading => _loading;
 
   // bool get newUser => _newUser;
-  String? get errorMsg => _errorMsg;
+  String get errorMsg => _errorMsg;
+  String get infoMsg => _infoMsg;
 
   //External Getters
   LoggedUser? get loggedUser => _userService.loggedUser;
@@ -68,12 +70,16 @@ class Manager extends ChangeNotifier {
   // internal Manager methods affecting UI
   setError(Failure? failure) {
     if (failure == null) {
-      _errorMsg = null;
+      _errorMsg = '';
       return;
     }
-    _errorMsg = failure.errorString;
+    _errorMsg = failure.errorString!;
     debugPrint(_errorMsg);
     if (loading == true) setLoading(false);
+  }
+
+  setMessage(String msg) {
+    _infoMsg = msg;
   }
 
 
@@ -140,11 +146,16 @@ class Manager extends ChangeNotifier {
 
   resetPassword(String email) async {
     debugPrint('/// manager ResetPassword deployed');
-    setLoading(true);
-    Object resetPassResult = await _authService.resetPassword(email);
+    // setLoading(true);
+    Object resetPassResult = Success(); //await _authService.resetPassword(email);
     if (resetPassResult is Failure) setError(resetPassResult);
-    if (resetPassResult is Success) setError(null);
-  }
+    if (resetPassResult is Success) {
+      setError(null);
+      // setLoading(true);
+      setMessage('Link do zresetowania hasła został wysłany na podany adres e-mail');
+      return true;
+    }
+      }
 
   resetUserProgress() async {
     Object resetResult = _questionService.resetUserProgress();

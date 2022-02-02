@@ -9,15 +9,29 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Settings built ***');
 
+    //TODO: Consider how to handle going back from this screen - when to save, when to discard, when to rebuild main screen
+
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
-              '/wrapper', (Route<dynamic> route) => false),
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back, color: Colors.black),
+        //   onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+        //       '/wrapper', (Route<dynamic> route) => false),
+        // ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
+            },
+            child: const Text(
+              'Zapisz',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
         title: const Text('Settings Screen'),
-
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -40,11 +54,13 @@ class Settings extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                '/wrapper', (Route<dynamic> route) => false);
-          }, label: const Text('Zapisz')),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () {
+      //     Navigator.of(context)
+      //         .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
+      //   },
+      //   label: const Text('Zapisz'),
+      // ),
     );
   }
 }

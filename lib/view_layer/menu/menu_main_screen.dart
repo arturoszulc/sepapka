@@ -15,8 +15,6 @@ class Menu extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        // backgroundColor: Colors.transparent,
         actions: [
           Row(
             children: [

@@ -7,6 +7,7 @@ ThemeData defaultTheme() {
 
     //appBar Theme
     appBarTheme: const AppBarTheme(
+      elevation: 0,
       color: Colors.transparent,
     ),
 

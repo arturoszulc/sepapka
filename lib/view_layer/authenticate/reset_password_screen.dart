@@ -7,18 +7,18 @@ import 'package:sepapka/viewmodel_layer/manager.dart';
 class ResetPasswordScreen extends StatelessWidget {
   ResetPasswordScreen({Key? key}) : super(key: key);
 
-  TextEditingController emailFieldController = TextEditingController();
+  // final TextEditingController emailFieldController = TextEditingController();
   final _resetForm = GlobalKey<FormState>();
-  String email = '';
-  String? error;
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('*** ResetPasswordScreen build');
+    debugPrint('*** ResetPasswordScreen build ***');
+    String email = '';
 
     //clear field on rebuild
-    emailFieldController.clear();
-    final manager = Provider.of<Manager>(context);
+    // emailFieldController.clear();
+
+    final error = context.read<Manager>().errorMsg;
     return Scaffold(
       appBar: AppBar(
         // title: const Text('Sign In Screen'),
@@ -35,7 +35,7 @@ class ResetPasswordScreen extends StatelessWidget {
 
                   //pole EMAIL
                   TextFormField(
-                    controller: emailFieldController,
+                    // controller: emailFieldController,
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
                       labelText: 'Adres e-mail',
@@ -52,15 +52,19 @@ class ResetPasswordScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
-                manager.errorMsg != null ? manager.errorMsg.toString() : '',
+                error,
                 style: const TextStyle(color: Colors.red),
                 textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: 10.0),
             ElevatedButton(
-              onPressed: () {
-                manager.resetPassword(email);
+              onPressed: () async {
+                var result = await context.read<Manager>().resetPassword(email);
+                if (result != null) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/wrapper', (Route<dynamic> route) => false);
+                }
               },
               child: const Text('Resetuj hasło'),
             ),

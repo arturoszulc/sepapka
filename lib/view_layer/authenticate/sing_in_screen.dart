@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/view_layer/custom_widgets/custom_snackbar.dart';
+import 'package:sepapka/view_layer/custom_widgets/dialog_message.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -95,18 +95,19 @@ class SignInScreen extends StatelessWidget {
               children: [
                 const Text('Nie pamiętasz hasła?'),
                 TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/reset-password');
-                    },
-                    child: const Text(
-                      'Zresetuj hasło',
-                      style: TextStyle(decoration: TextDecoration.underline),
-                    ),),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/reset-password');
+                  },
+                  child: const Text(
+                    'Zresetuj hasło',
+                    style: TextStyle(decoration: TextDecoration.underline),
+                  ),
+                ),
               ],
             ),
-            //if error, show snackBar
-            if (manager.errorMsg != null) CustomSnackBar(errorMsg: manager.errorMsg.toString()),
 
+          //if there's message in manager, show dialog
+          if (manager.infoMsg.isNotEmpty) MessageDialog(msg: manager.infoMsg),
           ],
         ),
       ),
