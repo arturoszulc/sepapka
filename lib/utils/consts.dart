@@ -18,7 +18,7 @@ Color rightButtonColor = Colors.green.shade500;
 
 //LoggedUser model properties
 const String userQVersion = 'qVersion';
-const String userUserName = 'userName';
+const String userUsername = 'username';
 const String userIsPro = 'isPro';
 const String userRankTotalPoints = 'rankTotalPoints';
 const String userRankName = 'rankName';
@@ -45,7 +45,14 @@ Map<String, Color?> labelColors = {
 
 //////Errors
 
+//UserService Errors
+const String usernameCharValidationError = 'Nazwa użytkownika może zawierać tylko litery i cyfry';
+const String usernameLengthError = 'Nazwa użytkownika musi zawierać od 3 do 16 znaków';
+const String usernameTakenError = 'Ta nazwa użytkownika jest już zajęta';
+
 //DB Errors
+const String errorDbGeneric = 'Operacja się nie powiodła. Spróbuj później';
+const String errorDbConnection = '### Brak połączenia z bazą danych ###';
 const String errorGetQVersionFromDB = '### Nie udało się pobrać wersji pytań z bazy danych ###';
 const String errorGetQListFromDB =
     '### Nie można pobrać listy pytań. Sprawdź połączenie z internetem ###';
@@ -56,7 +63,7 @@ const String errorUpdateUserInDb = '### Nie udało się zaktualizować danych u�
 //AuthService Errors
 const String errorSignIn = '### AuthService.signInEmail() error: ';
 
-//FileManager error
+//FileService error
 const String errorWritingFile =
     '### FileService.saveQuestionListToFile() error: Couldnt write data to file ###';
 const String errorReadingFile =

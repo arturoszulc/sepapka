@@ -73,9 +73,13 @@ class Manager extends ChangeNotifier {
       _errorMsg = '';
       return;
     }
+    else {
     _errorMsg = failure.errorString!;
     debugPrint(_errorMsg);
+
+  }
     if (loading == true) setLoading(false);
+    notifyListeners();
   }
 
   setMessage(String msg) {
@@ -147,6 +151,7 @@ class Manager extends ChangeNotifier {
   resetPassword(String email) async {
     debugPrint('/// manager ResetPassword deployed');
     // setLoading(true);
+    //TODO: uncomment the _authService method
     Object resetPassResult = Success(); //await _authService.resetPassword(email);
     if (resetPassResult is Failure) setError(resetPassResult);
     if (resetPassResult is Success) {
@@ -162,14 +167,25 @@ class Manager extends ChangeNotifier {
     if (resetResult is Failure) setError(resetResult);
   }
 
-  updateUserData(String username) {
-    //check if username is valid character-wise
-    if (errorMsg.isEmpty) {
-      setError(Failure('random error'));
-    } else {
-      setError(null);
+  updateUserData(String username) async {
+    Object changeUsernameResult = await _userService.changeUserName(username);
+    if (changeUsernameResult is Failure) {
+      setError(changeUsernameResult);
+      return null;
     }
-    notifyListeners();
+    if (changeUsernameResult is Success)
+      {
+        setError(null);
+        return true;
+      }
+    //check if username is valid character-wise
+    // if (errorMsg.isEmpty) {
+    //   setError(Failure('random error'));
+    //   return null;
+    // } else {
+    //   setError(null);
+    // }
+
     //check if username is not taken by other user
 
     //save changes

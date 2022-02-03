@@ -3,7 +3,8 @@ import 'package:provider/src/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class ChangeUserData extends StatelessWidget {
-  const ChangeUserData({Key? key}) : super(key: key);
+  ChangeUserData({Key? key}) : super(key: key);
+  final GlobalKey<FormState> _usernameKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -18,42 +19,50 @@ class ChangeUserData extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Form(child:
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TextFormField(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              initialValue: username,
-              textInputAction: TextInputAction.next,
-              decoration: const InputDecoration(
-                labelText: 'Nazwa użytkownika',
-                border: OutlineInputBorder(),
+          Form(
+            key: _usernameKey,
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextFormField(
+                // autovalidateMode: AutovalidateMode.onUserInteraction,
+                initialValue: username,
+                // textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(
+                  labelText: 'Nazwa użytkownika',
+                  border: OutlineInputBorder(),
+                ),
+                // onTap: () => usernameChanged = true,
+                onChanged: (val) {
+                  username = val;
+                },
+                // validator: (val) {
+                //   if (val!.isEmpty || val.length < 3 || val.length > 16) {return 'Nazwa użytkownika musi składać się z 3-16 znaków';}
+                //   return null;
+                // },
               ),
-              // onTap: () => usernameChanged = true,
-              onChanged: (val) {
-                username = val;
-              },
-              // validator: (val) {
-              //   if (val!.isEmpty || val.length < 3 || val.length > 16) {return 'Nazwa użytkownika musi składać się z 3-16 znaków';}
-              //   return null;
-              // },
             ),
           ),
-
-
+          const SizedBox(
+            height: 10,
           ),
-          const SizedBox(height: 10,),
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.fromLTRB(30.0, 0, 30.0, 20.0),
             child: Text(
               errorMsg.isNotEmpty ? errorMsg : '',
               style: const TextStyle(color: Colors.red),
               textAlign: TextAlign.center,
             ),
           ),
-          ElevatedButton(onPressed: () {
-            context.read<Manager>().updateUserData(username);
-          }, child: const Text('Zapisz'),),
+          ElevatedButton(
+            onPressed: () async {
+              var result = await context.read<Manager>().updateUserData(username);
+              if (result != null) {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/settings-screen', (Route<dynamic> route) => false);
+              }
+            },
+            child: const Text('Zapisz'),
+          ),
         ],
       ),
     );

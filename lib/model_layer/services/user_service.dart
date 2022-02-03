@@ -79,13 +79,11 @@ class UserService {
     try {
       await _databaseService.updateUser(_loggedUser!);
       return Success();
-    }
-    catch(e) {
+    } catch (e) {
       debugPrint(errorUpdateUserInDb);
       return Failure(errorUpdateUserInDb);
     }
   }
-
 
   logOutUser() {
     _loggedUser = null;
@@ -173,7 +171,6 @@ class UserService {
 
       case 3:
         return _loggedUser!.qListNew3.slice(0, min(9, _loggedUser!.qListNew3.length));
-
     }
     return [];
   }
@@ -221,7 +218,6 @@ class UserService {
     }
   }
 
-
   QMap? getQMapAndRemove(String qId, QuestionType qType, int qLevel) {
     QMap? qMap;
     //method cuts out qMap from it's list and returns it
@@ -268,7 +264,6 @@ class UserService {
   }
 
   addQuestionToPractice(QMap qMap) {
-
     _loggedUser!.qListPractice.add(qMap);
   }
 
@@ -291,5 +286,30 @@ class UserService {
   getNextFibNum(int currentFibNum) {
     int currentFibNumIndex = fibSeries.indexOf(currentFibNum);
     return fibSeries[currentFibNumIndex + 1];
+  }
+
+  Future<Object> changeUserName(String username) async {
+    //check if name was even changed
+    if (username == _loggedUser!.username) return Success();
+
+    //validate characters
+    Object validateResult = validateUsername(username);
+    if (validateResult is Failure) return validateResult;
+
+    //check if username is not taken
+    try {
+      bool isUsernameAvailableResult =
+          await _databaseService.checkIfUsernameIsAvailable(_loggedUser!.documentId, username);
+      if (!isUsernameAvailableResult) return Failure(usernameTakenError);
+      //if TRUE, update user on DB
+      _loggedUser!.username = username;
+      await _databaseService.updateUser(_loggedUser!);
+
+      //return Success
+      return Success();
+    } catch (e) {
+      debugPrint(e.toString());
+      return Failure(errorDbGeneric);
+    }
   }
 }

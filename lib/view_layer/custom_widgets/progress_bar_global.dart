@@ -13,7 +13,7 @@ Widget buildProgressBar(BuildContext context) {
       padding: const EdgeInsets.all(15.0),
       child: LinearPercentIndicator(
         alignment: MainAxisAlignment.center,
-        width: MediaQuery.of(context).size.width - 80,
+        // width: MediaQuery.of(context).size.width - 80,
         animation: true,
         lineHeight: 20.0,
         animationDuration: 2000,

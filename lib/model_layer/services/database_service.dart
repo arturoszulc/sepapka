@@ -15,24 +15,12 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('questionsFree');
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
 
-  //CREATE NEW USER DOCUMENT IN DATABASE
-  // Future<void> createUserDB(String uid) async {
-  //   return await usersCollection
-  //       .doc(uid)
-  //       .set({
-  //     'qVersion': 0,
-  //     'qListNew': [],
-  //     'qListPractice': [],
-  //     'qListNotShown': [],
-  //   }).then((value) =>
-  //       print('User created'));
-  // }
 
   // //UPDATE USER DATA
   Future<void> updateUser(LoggedUser user) async {
     return await usersCollection.doc(user.documentId).set({
       userQVersion: user.qVersion,
-      userUserName: user.username,
+      userUsername: user.username,
       userIsPro: user.isPro,
       userRankTotalPoints: user.rankTotalPoints,
       userRankName: user.rankName,
@@ -50,7 +38,7 @@ class DatabaseService {
     var doc = await usersCollection.doc(uid).get();
     return LoggedUser(
       documentId: doc.id,
-      username: doc.get(userUserName),
+      username: doc.get(userUsername),
       isPro: doc.get(userIsPro),
       rankTotalPoints: doc.get(userRankTotalPoints),
       rankName: doc.get(userRankName),
@@ -61,6 +49,20 @@ class DatabaseService {
       qListPractice: List<QMap>.from(doc.get(userQListPractice).map((e) => convertMapToQMap(e))),
       qListNotShown: List<QMap>.from(doc.get(userQListNotShown).map((e) => convertMapToQMap(e))),
     );
+  }
+
+  // VERIFY if theres user with the same Username
+  Future<bool> checkIfUsernameIsAvailable(String userId, String username) async {
+    debugPrint('/// DB: checking if username is taken... ///');
+    var snapshot = await usersCollection.get();
+    if (snapshot.metadata.isFromCache) throw Exception(errorDbConnection);
+    for (var doc in snapshot.docs) {
+      if (doc.id != userId) //avoid comparing currentUser - it's username will always match
+      {
+        if (doc.get('username') == username) return false;
+      }
+    }
+    return true;
   }
 
   //Get question version

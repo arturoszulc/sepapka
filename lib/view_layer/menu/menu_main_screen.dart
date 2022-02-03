@@ -38,8 +38,8 @@ class Menu extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             const SizedBox(height: 100),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

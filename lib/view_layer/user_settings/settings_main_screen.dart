@@ -13,7 +13,7 @@ class Settings extends StatelessWidget {
     debugPrint('*** Settings Screen built ***');
 
     //TODO: Consider how to handle going back from this screen - when to save, when to discard, when to rebuild main screen
-
+    // final manager = Provider.of<Manager>(context);
     return Scaffold(
       appBar: AppBar(
         actions: [
