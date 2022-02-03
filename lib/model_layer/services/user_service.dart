@@ -30,17 +30,23 @@ class UserService {
   LoggedUser? get loggedUser => _loggedUser;
 
   double getProgressPercentGlobal() {
-    int allQuestions = _loggedUser!.qListNew1.length +
-        _loggedUser!.qListNew2.length +
-        _loggedUser!.qListNew3.length +
-        _loggedUser!.qListPractice.length +
-        _loggedUser!.qListNotShown.length;
+    // int allQuestions = _loggedUser!.qListNew1.length +
+    //     _loggedUser!.qListNew2.length +
+    //     _loggedUser!.qListNew3.length +
+    //     _loggedUser!.qListPractice.length +
+    //     _loggedUser!.qListNotShown.length;
 
-    int knownQuestions = _loggedUser!.qListPractice.length;
-    double progress = knownQuestions / allQuestions;
-    double number = num.parse(progress.toStringAsFixed(2)).toDouble();
+    int currentTreshold = rankUpgradeThresholds[_loggedUser!.rankLevel];
 
-    return number;
+    // int knownQuestions = _loggedUser!.qListPractice.length;
+    double progressInt = _loggedUser!.rankTotalPoints / currentTreshold;
+    double progressDouble = num.parse(progressInt.toStringAsFixed(3)).toDouble();
+
+    return progressDouble;
+  }
+
+  addPoints(int points) {
+    _loggedUser!.rankTotalPoints += points;
   }
 
   createDefaultLoggedUser(String userId) async {
@@ -48,8 +54,8 @@ class UserService {
         documentId: userId,
         username: 'uczeń-' + getRandomString(5),
         isPro: false,
+        rankLevel: 1,
         rankTotalPoints: 0,
-        rankName: 'Uczeń',
         qVersion: 0,
         qListNew1: [],
         qListNew2: [],

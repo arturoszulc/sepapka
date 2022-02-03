@@ -83,6 +83,9 @@ class Menu extends StatelessWidget {
                 'LoggedUser qPractice: ${context.read<Manager>().loggedUser!.qListPractice.length}'),
             Text(
                 'LoggedUser qNotShown: ${context.read<Manager>().loggedUser!.qListNotShown.length}'),
+            Text(
+                'LoggedUser is Pro: ${context.read<Manager>().loggedUser!.isPro.toString()}'),
+
             const SizedBox(height: 100.0),
             buildProgressBar(context),
             const SizedBox(height: 20),

@@ -17,7 +17,8 @@ class MenuChooseLevel extends StatelessWidget {
     bool isUserPro = context.read<Manager>().loggedUser!.isPro;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SEPapka'),
+        title: const Text('Wybierz poziom trudności'),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(

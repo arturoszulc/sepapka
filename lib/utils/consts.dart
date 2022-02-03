@@ -8,6 +8,9 @@ enum QuestionType { newQuestion, practiceQuestion }
 //Fibonacci series
 const List<int> fibSeries = [0, 1, 2, 3, 5, 8, 13, 21];
 
+const List<String> rankNames = ['uczeń','praktykant','elektryk'];
+const List<int> rankUpgradeThresholds = [10,30,50];
+
 //Question labels - to be rebuilt
 const label1 = 'nowy';
 
@@ -20,8 +23,8 @@ Color rightButtonColor = Colors.green.shade500;
 const String userQVersion = 'qVersion';
 const String userUsername = 'username';
 const String userIsPro = 'isPro';
+const String userRankLevel = 'rankLevel';
 const String userRankTotalPoints = 'rankTotalPoints';
-const String userRankName = 'rankName';
 const String userQListNew1 = 'qListNew1';
 const String userQListNew2 = 'qListNew2';
 const String userQListNew3 = 'qListNew3';

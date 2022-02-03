@@ -20,7 +20,7 @@ class QuestionService {
   bool _isSessionFinished = false;
   List<Question>? _qListGlobal;
   List<Question> _qListCurrent = [];
-  double _qListCurrentStartLength = 0;
+  int _qListCurrentStartLength = 0;
   List<QMap> _todaysPracticeList = [];
   // int _howManyToPracticeToday = 0;
   Question? _currentQuestion;
@@ -161,7 +161,7 @@ class QuestionService {
       _qListCurrent.add(_qListGlobal!.firstWhere((question) => question.id == qMap.id));
     }
     //set starting length of _qListCurrent for session progress bar
-    _qListCurrentStartLength = _qListCurrent.length.toDouble();
+    _qListCurrentStartLength = _qListCurrent.length;
   }
 
   getNextQuestion() async {
@@ -177,6 +177,9 @@ class QuestionService {
     } else {
       _currentQuestion = null;
       _isSessionFinished = true;
+      //give user points
+      _userService.addPoints(_qListCurrentStartLength);
+      //update user
       await _userService.updateLoggedUserInDb();
     }
   }
