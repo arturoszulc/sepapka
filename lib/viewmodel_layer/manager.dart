@@ -48,6 +48,8 @@ class Manager extends ChangeNotifier {
 
   bool get isSessionFinished => _questionService.isSessionFinished;
 
+  bool get isUserPromoted => _userService.isUserPromoted;
+
   int get howManyToPracticeToday => _questionService.howManyToPracticeToday();
 
   double get progressPercentSession => _questionService.getProgressPercentSession();
@@ -166,6 +168,9 @@ class Manager extends ChangeNotifier {
     Object resetResult = _questionService.resetUserProgress();
     if (resetResult is Failure) setError(resetResult);
   }
+  resetIsUserPromotedFLag() {
+    _userService.setIsUserPromoted(false);
+  }
 
   updateUserData(String username) async {
     Object changeUsernameResult = await _userService.changeUserName(username);
@@ -178,18 +183,6 @@ class Manager extends ChangeNotifier {
         setError(null);
         return true;
       }
-    //check if username is valid character-wise
-    // if (errorMsg.isEmpty) {
-    //   setError(Failure('random error'));
-    //   return null;
-    // } else {
-    //   setError(null);
-    // }
-
-    //check if username is not taken by other user
-
-    //save changes
-
   }
 
   checkAnswer(String answer) async {

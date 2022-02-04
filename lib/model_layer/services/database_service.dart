@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:sepapka/model_layer/models/global_data.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/consts.dart';
@@ -65,6 +66,17 @@ class DatabaseService {
     return true;
   }
 
+  //Get GlobalData document
+  Future<GlobalData> getGlobalData() async {
+    var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
+    return GlobalData(
+      qVersionFree: doc.get(globalDataQVersionFree),
+      qVersionPro: doc.get(globalDataQVersionPro),
+      rankNames: doc.get(globalDataRankNames),
+      rankThresholds: doc.get(globalDataRankThresholds),
+    );
+  }
+  
   //Get question version
   Future<int?> getQuestionVersion({required bool isPro}) async {
     var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();

@@ -18,6 +18,9 @@ class UserService {
 
   //Properties
   bool _loggedUserChanged = false;
+  bool _isUserPromoted = false;
+  List<String> rankNames = [];
+  List<int> rankThresholds = [];
 
   //parsing subString to get rid of time
   final DateTime _today = DateTime.parse(DateTime.now().toString().substring(0, 10));
@@ -27,26 +30,34 @@ class UserService {
 
   bool get loggedUserChanged => _loggedUserChanged;
 
+  bool get isUserPromoted => _isUserPromoted;
+
+  setIsUserPromoted(bool flag) {
+    _isUserPromoted = flag;
+  }
+
   LoggedUser? get loggedUser => _loggedUser;
 
   double getProgressPercentGlobal() {
-    // int allQuestions = _loggedUser!.qListNew1.length +
-    //     _loggedUser!.qListNew2.length +
-    //     _loggedUser!.qListNew3.length +
-    //     _loggedUser!.qListPractice.length +
-    //     _loggedUser!.qListNotShown.length;
-
-    int currentTreshold = rankUpgradeThresholds[_loggedUser!.rankLevel];
-
-    // int knownQuestions = _loggedUser!.qListPractice.length;
-    double progressInt = _loggedUser!.rankTotalPoints / currentTreshold;
+    int previousThreshold = 0;
+    int currentThreshold = rankUpgradeThresholds[_loggedUser!.rankLevel];
+    if (_loggedUser!.rankLevel > 0) {
+      previousThreshold = rankUpgradeThresholds[_loggedUser!.rankLevel - 1];
+    }
+    double progressInt = (_loggedUser!.rankTotalPoints - previousThreshold) / currentThreshold;
     double progressDouble = num.parse(progressInt.toStringAsFixed(3)).toDouble();
 
     return progressDouble;
   }
 
   addPoints(int points) {
+    //add points
     _loggedUser!.rankTotalPoints += points;
+    //calculate rank
+    if (_loggedUser!.rankTotalPoints >= rankUpgradeThresholds[_loggedUser!.rankLevel]) {
+      _loggedUser!.rankLevel += 1;
+      setIsUserPromoted(true);
+    }
   }
 
   createDefaultLoggedUser(String userId) async {
@@ -275,7 +286,9 @@ class UserService {
 
   addQuestionToNotShown(QMap qMap) {}
 
-  cleanUserQLists() {
+  wipeUser() {
+    _loggedUser!.rankLevel = 0;
+    _loggedUser!.rankTotalPoints = 0;
     _loggedUser!.qListNew1.clear();
     _loggedUser!.qListNew2.clear();
     _loggedUser!.qListNew3.clear();

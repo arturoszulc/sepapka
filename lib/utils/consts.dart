@@ -9,7 +9,7 @@ enum QuestionType { newQuestion, practiceQuestion }
 const List<int> fibSeries = [0, 1, 2, 3, 5, 8, 13, 21];
 
 const List<String> rankNames = ['uczeń','praktykant','elektryk'];
-const List<int> rankUpgradeThresholds = [10,30,50];
+const List<int> rankUpgradeThresholds = [4,8,50];
 
 //Question labels - to be rebuilt
 const label1 = 'nowy';
@@ -41,6 +41,13 @@ const String questionLabels = 'labels';
 const String questionLevel = 'level';
 const String questionAssetPath = 'assetPath';
 
+//GlobalData model properties
+const String globalDataQVersionFree = 'qVersionFree';
+const String globalDataQVersionPro = 'qVersionPro';
+const String globalDataRankNames = 'rankNames';
+const String globalDataRankThresholds = 'rankThresholds';
+
+
 Map<String, Color?> labelColors = {
   label1: Colors.blue,
 };
@@ -56,7 +63,7 @@ const String usernameTakenError = 'Ta nazwa użytkownika jest już zajęta';
 //DB Errors
 const String errorDbGeneric = 'Operacja się nie powiodła. Spróbuj później';
 const String errorDbConnection = '### Brak połączenia z bazą danych ###';
-const String errorGetQVersionFromDB = '### Nie udało się pobrać wersji pytań z bazy danych ###';
+const String errorGetGlobalData = '### Nie udało się pobrać danych z serwera ###';
 const String errorGetQListFromDB =
     '### Nie można pobrać listy pytań. Sprawdź połączenie z internetem ###';
 const String errorGetUserDataFromDB =

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
+import 'package:sepapka/model_layer/models/global_data.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/file_service.dart';
@@ -18,11 +19,11 @@ class QuestionService {
 
   //Properties
   bool _isSessionFinished = false;
+  GlobalData? globalData;
   List<Question>? _qListGlobal;
   List<Question> _qListCurrent = [];
   int _qListCurrentStartLength = 0;
   List<QMap> _todaysPracticeList = [];
-  // int _howManyToPracticeToday = 0;
   Question? _currentQuestion;
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
   QuestionType _qType = QuestionType.newQuestion;
@@ -44,8 +45,6 @@ class QuestionService {
   //Methods
 
   double getProgressPercentSession() {
-    debugPrint('Start length: $_qListCurrentStartLength');
-    debugPrint('Current length: ${_qListCurrent.length}');
     return (_qListCurrentStartLength - _qListCurrent.length)/_qListCurrentStartLength;
   }
 
@@ -55,10 +54,19 @@ class QuestionService {
   }
 
   Future<Object> prepareGlobalData() async {
-    //Get questionVersion number from DB
-    int? qVersion =
-        await _databaseService.getQuestionVersion(isPro: _userService.loggedUser!.isPro);
-    if (qVersion is! int) return Failure(errorGetQVersionFromDB);
+    //Get GlobalData from DB
+    try {
+      globalData = await _databaseService.getGlobalData();
+    }
+    catch(e) {
+      debugPrint(e.toString());
+      return Failure(errorGetGlobalData);
+    }
+
+    //TODO: Finish preparing global data - push rankLevel and rankNames to UserService
+    //Set questionVersion
+    int? qVersion = _userService.loggedUser!.isPro ? globalData!.qVersionPro : globalData!.qVersionFree;
+    // if (qVersion is! int) return Failure(errorGetQVersionFromDB);
 
     //after downloading qVersion from DB, compare it with local LoggedUser.qVersion.
     bool compareResult = _userService.compareQVersion(qVersion);
@@ -110,8 +118,7 @@ class QuestionService {
     }
     //if wrong answer
     else {
-      debugPrint('not right answer');
-      //get question back to current list
+      //get question back, at the end of the current list
       _qListCurrent.add(_currentQuestion!);
 
       _qStatus = QuestionStatus.wrongAnswer;
@@ -202,7 +209,8 @@ class QuestionService {
 
   Future<Object> resetUserProgress() async {
     //clear user lists
-    await _userService.cleanUserQLists();
+    await _userService.wipeUser();
+
     //update qNewList
     await _userService.updateQNewLists(_qListGlobal!);
     return Success();
