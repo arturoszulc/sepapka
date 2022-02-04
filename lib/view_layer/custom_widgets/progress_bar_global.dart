@@ -5,6 +5,9 @@ import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 Widget buildProgressBar(BuildContext context) {
+
+  String progress = context.read<Manager>().progressPercentGlobal;
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.center,
     // color: Colors.grey,
@@ -17,8 +20,8 @@ Widget buildProgressBar(BuildContext context) {
         animation: true,
         lineHeight: 20.0,
         animationDuration: 2000,
-        percent: context.read<Manager>().progressPercentGlobal,
-        center: Text('${(context.read<Manager>().progressPercentGlobal*100).toString()} %'),
+        percent: double.parse(progress)/100,
+        center: Text('$progress %'),
         linearStrokeCap: LinearStrokeCap.roundAll,
         progressColor: Colors.green,
       ),

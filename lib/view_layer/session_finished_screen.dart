@@ -16,7 +16,7 @@ class SessionFinished extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'Sesja zakończona!!',
+                'Sesja zakończona!',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
               ),
               const SizedBox(height: 30.0),
@@ -36,7 +36,7 @@ class SessionFinished extends StatelessWidget {
                       .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
                 },
                 icon: const Icon(Icons.exit_to_app),
-                label: const Text('Powrót'),
+                label: const Text('Wyjście'),
               ),
             ],
           ),

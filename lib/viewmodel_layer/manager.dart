@@ -38,7 +38,7 @@ class Manager extends ChangeNotifier {
   //External Getters
   LoggedUser? get loggedUser => _userService.loggedUser;
 
-  double get progressPercentGlobal => _userService.getProgressPercentGlobal();
+  String get progressPercentGlobal => _userService.getProgressPercentGlobal();
 
   int get qNewLeftLevel1 => _userService.loggedUser!.qListNew1.length;
 
@@ -126,8 +126,11 @@ class Manager extends ChangeNotifier {
     Object prepareDataResult = await _questionService.prepareGlobalData();
     if (prepareDataResult is Failure) setError(prepareDataResult);
   }
+  ///////////////////////
+  // METHODS ON DEMAND
+  ///////////////////////
 
-  // methods deployed ON DEMAND
+  // AUTH
 
   signIn({required String email, required String password}) async {
     //start loading app
@@ -166,12 +169,19 @@ class Manager extends ChangeNotifier {
     }
       }
 
+
+  // USER
+
   resetUserProgress() async {
     Object resetResult = _questionService.resetUserProgress();
     if (resetResult is Failure) setError(resetResult);
   }
   resetIsUserPromotedFLag() {
     _userService.setIsUserPromoted(false);
+  }
+
+  goPro() {
+
   }
 
   updateUserData(String username) async {
@@ -186,6 +196,8 @@ class Manager extends ChangeNotifier {
         return true;
       }
   }
+
+  // QUESTIONS
 
   checkAnswer(String answer) async {
     ///TODO: LOCK POSSIBILITY OF PUSHING ANOTHER BUTTON BEFORE ANSWER IS CHECKED

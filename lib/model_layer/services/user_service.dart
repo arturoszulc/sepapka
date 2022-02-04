@@ -40,14 +40,14 @@ class UserService {
 
   LoggedUser? get loggedUser => _loggedUser;
 
-  double getProgressPercentGlobal() {
+  String getProgressPercentGlobal() {
     int previousThreshold = 0;
     int currentThreshold = _rankThresholds[_loggedUser!.rankLevel];
     if (_loggedUser!.rankLevel > 0) {
       previousThreshold = _rankThresholds[_loggedUser!.rankLevel - 1];
     }
-    double progressInt = (_loggedUser!.rankTotalPoints - previousThreshold) / currentThreshold;
-    double progressDouble = num.parse(progressInt.toStringAsFixed(3)).toDouble();
+    double progressInt = (_loggedUser!.rankTotalPoints - previousThreshold)*100 / currentThreshold;
+    String progressDouble = progressInt.toStringAsFixed(1);
 
     return progressDouble;
   }
@@ -200,7 +200,7 @@ class UserService {
   }
 
   List<QMap> getTodayPracticeQMapList() {
-    debugPrint('/// getTodayPracticeQMapList deployed ///');
+    debugPrint('/// UserService: Getting TodayPracticeQMapList... ///');
     List<QMap> todayPracticeList = [];
 
     if (_loggedUser!.qListPractice.isNotEmpty) {
@@ -226,7 +226,7 @@ class UserService {
   // }
 
   moveQuestionToPractice(String qId, QuestionType qType, int qLevel, bool update) async {
-    debugPrint('/// moveQuestionToPractice deployed ///');
+    debugPrint('/// Moving QMap to practice list... ///');
     //Get QMap by ID from qNewList
     QMap? qMap = getQMapAndRemove(qId, qType, qLevel);
 

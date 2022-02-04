@@ -77,6 +77,13 @@ class Settings extends StatelessWidget {
           const SizedBox(height: 20.0),
           ElevatedButton(
             onPressed: () {
+              context.read<Manager>().goPro();
+            },
+            child: const Text('Go PRO'),
+          ),
+          const SizedBox(height: 20.0),
+          ElevatedButton(
+            onPressed: () {
               context.read<Manager>().resetUserProgress();
             },
             child: const Text('Reset User Data'),

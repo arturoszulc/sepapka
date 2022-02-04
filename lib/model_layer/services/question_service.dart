@@ -19,11 +19,12 @@ class QuestionService {
 
   //Properties
   bool _isSessionFinished = false;
+  bool _hasTodayPracticeListChanged = true; //flag controlling whether to get new TodayPracticeList
   GlobalData? globalData;
   List<Question>? _qListGlobal;
   List<Question> _qListCurrent = [];
   int _qListCurrentStartLength = 0;
-  List<QMap> _todaysPracticeList = [];
+  List<QMap> _todayPracticeList = [];
   Question? _currentQuestion;
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
   QuestionType _qType = QuestionType.newQuestion;
@@ -49,8 +50,11 @@ class QuestionService {
   }
 
   int howManyToPracticeToday() {
-    _todaysPracticeList = _userService.getTodayPracticeQMapList();
-    return _todaysPracticeList.length;
+    if (_hasTodayPracticeListChanged) {
+      _todayPracticeList = _userService.getTodayPracticeQMapList();
+      _hasTodayPracticeListChanged = false;
+    }
+    return _todayPracticeList.length;
   }
 
   Future<Object> prepareGlobalData() async {
@@ -165,7 +169,7 @@ class QuestionService {
     }
     if (_qType == QuestionType.practiceQuestion) {
       //if user chose Practice, get today's practice
-      qMapList = _todaysPracticeList;
+      qMapList = _todayPracticeList;
     }
     for (QMap qMap in qMapList) {
       _qListCurrent.add(_qListGlobal!.firstWhere((question) => question.id == qMap.id));
@@ -186,6 +190,7 @@ class QuestionService {
       createBMap();
     } else {
     //if not
+      if (qType == QuestionType.practiceQuestion) _hasTodayPracticeListChanged = true;
       _currentQuestion = null;
       _isSessionFinished = true;
       //give user points
