@@ -8,8 +8,8 @@ enum QuestionType { newQuestion, practiceQuestion }
 //Fibonacci series
 const List<int> fibSeries = [0, 1, 2, 3, 5, 8, 13, 21];
 
-const List<String> rankNames = ['uczeń','praktykant','elektryk'];
-const List<int> rankUpgradeThresholds = [4,8,50];
+// const List<String> rankNames = ['uczeń','praktykant','elektryk'];
+// const List<int> rankUpgradeThresholds = [4,8,50];
 
 //Question labels - to be rebuilt
 const label1 = 'nowy';

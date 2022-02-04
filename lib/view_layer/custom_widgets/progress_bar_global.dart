@@ -9,7 +9,7 @@ Widget buildProgressBar(BuildContext context) {
     crossAxisAlignment: CrossAxisAlignment.center,
     // color: Colors.grey,
     children: [
-      Text('Poziom: ${rankNames[context.read<Manager>().loggedUser!.rankLevel]}', style: TextStyle(fontWeight: FontWeight.bold)),
+      Text('Poziom: ${context.read<Manager>().userRankName}', style: const TextStyle(fontWeight: FontWeight.bold)),
       Padding(
       padding: const EdgeInsets.all(15.0),
       child: LinearPercentIndicator(

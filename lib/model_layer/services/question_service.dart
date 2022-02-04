@@ -62,8 +62,11 @@ class QuestionService {
       debugPrint(e.toString());
       return Failure(errorGetGlobalData);
     }
+    //if GlobalData is retrieved, proceed
 
-    //TODO: Finish preparing global data - push rankLevel and rankNames to UserService
+    //send current rank names and thresholds to userService
+    _userService.prepareRanks(globalData!.rankNames, globalData!.rankThresholds);
+
     //Set questionVersion
     int? qVersion = _userService.loggedUser!.isPro ? globalData!.qVersionPro : globalData!.qVersionFree;
     // if (qVersion is! int) return Failure(errorGetQVersionFromDB);
@@ -82,7 +85,7 @@ class QuestionService {
     _userService.updateQVersion(qVersion);
     await _userService.updateQNewLists(_qListGlobal!);
 
-    debugPrint('/// SUCCESS: FINISHED PREPARING DATA ///');
+    debugPrint('/// QuestionService: Finished preparing GlobalData ///');
     return Success();
   }
 
@@ -182,6 +185,7 @@ class QuestionService {
       //create new BMap
       createBMap();
     } else {
+    //if not
       _currentQuestion = null;
       _isSessionFinished = true;
       //give user points

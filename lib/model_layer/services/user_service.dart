@@ -19,8 +19,8 @@ class UserService {
   //Properties
   bool _loggedUserChanged = false;
   bool _isUserPromoted = false;
-  List<String> rankNames = [];
-  List<int> rankThresholds = [];
+  List<String> _rankNames = [];
+  List<int> _rankThresholds = [];
 
   //parsing subString to get rid of time
   final DateTime _today = DateTime.parse(DateTime.now().toString().substring(0, 10));
@@ -32,6 +32,8 @@ class UserService {
 
   bool get isUserPromoted => _isUserPromoted;
 
+  String get userRankName => _rankNames[_loggedUser!.rankLevel];
+
   setIsUserPromoted(bool flag) {
     _isUserPromoted = flag;
   }
@@ -40,9 +42,9 @@ class UserService {
 
   double getProgressPercentGlobal() {
     int previousThreshold = 0;
-    int currentThreshold = rankUpgradeThresholds[_loggedUser!.rankLevel];
+    int currentThreshold = _rankThresholds[_loggedUser!.rankLevel];
     if (_loggedUser!.rankLevel > 0) {
-      previousThreshold = rankUpgradeThresholds[_loggedUser!.rankLevel - 1];
+      previousThreshold = _rankThresholds[_loggedUser!.rankLevel - 1];
     }
     double progressInt = (_loggedUser!.rankTotalPoints - previousThreshold) / currentThreshold;
     double progressDouble = num.parse(progressInt.toStringAsFixed(3)).toDouble();
@@ -54,7 +56,7 @@ class UserService {
     //add points
     _loggedUser!.rankTotalPoints += points;
     //calculate rank
-    if (_loggedUser!.rankTotalPoints >= rankUpgradeThresholds[_loggedUser!.rankLevel]) {
+    if (_loggedUser!.rankTotalPoints >= _rankThresholds[_loggedUser!.rankLevel]) {
       _loggedUser!.rankLevel += 1;
       setIsUserPromoted(true);
     }
@@ -133,7 +135,12 @@ class UserService {
       setLoggedUserChanged(false);
     }
   }
+  prepareRanks(List<String> rankNames, List<int> rankThresholds) {
+    debugPrint('/// Preparing ranks data... ///');
+    _rankNames = rankNames;
+    _rankThresholds = rankThresholds;
 
+  }
   updateQVersion(int qVersion) {
     _loggedUser!.qVersion = qVersion;
   }

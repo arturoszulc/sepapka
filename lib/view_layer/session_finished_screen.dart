@@ -24,7 +24,7 @@ class SessionFinished extends StatelessWidget {
               if (context.read<Manager>().isUserPromoted) Column(
                 children: [
                   const Text('Gratulacje!'),
-                  Text('Awansowałeś do rangi: ${rankNames[context.read<Manager>().loggedUser!.rankLevel]}'),
+                  Text('Awansowałeś do rangi: ${context.read<Manager>().userRankName}'),
                 ],
               ),
 

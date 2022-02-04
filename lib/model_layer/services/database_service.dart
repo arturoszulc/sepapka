@@ -72,16 +72,16 @@ class DatabaseService {
     return GlobalData(
       qVersionFree: doc.get(globalDataQVersionFree),
       qVersionPro: doc.get(globalDataQVersionPro),
-      rankNames: doc.get(globalDataRankNames),
-      rankThresholds: doc.get(globalDataRankThresholds),
+      rankNames: List<String>.from(doc.get(globalDataRankNames)),
+      rankThresholds: List<int>.from(doc.get(globalDataRankThresholds)),
     );
   }
   
-  //Get question version
-  Future<int?> getQuestionVersion({required bool isPro}) async {
-    var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
-    return isPro ? doc.get('qVersionPro') : doc.get('qVersionFree');
-  }
+  // //Get question version
+  // Future<int?> getQuestionVersion({required bool isPro}) async {
+  //   var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
+  //   return isPro ? doc.get('qVersionPro') : doc.get('qVersionFree');
+  // }
 
   //Get question list (either Free or Pro user based on parameter)
   Future<List<Question>?> getQuestionList({required bool isPro}) async {

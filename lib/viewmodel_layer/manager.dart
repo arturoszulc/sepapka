@@ -50,6 +50,8 @@ class Manager extends ChangeNotifier {
 
   bool get isUserPromoted => _userService.isUserPromoted;
 
+  String get userRankName => _userService.userRankName;
+
   int get howManyToPracticeToday => _questionService.howManyToPracticeToday();
 
   double get progressPercentSession => _questionService.getProgressPercentSession();
