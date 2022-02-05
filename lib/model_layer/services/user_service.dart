@@ -303,6 +303,22 @@ class UserService {
     _loggedUser!.qListNotShown.clear();
   }
 
+
+  //bool property of this method is to be deleted - it will only allow to go PRO
+  Future<Object> goPro(bool bool) async {
+    if (!bool) wipeUser(); //if go FREE, wipe user
+    _loggedUser!.isPro = bool;
+    _loggedUser!.qVersion = 1;
+    try {
+      await _databaseService.updateUser(_loggedUser!);
+      return Success();
+    }
+    catch(e) {
+      debugPrint(e.toString());
+      return Failure(errorUpdateUserInDb);
+    }
+  }
+
   getDateDifferenceInDays(QMap question) {
     DateTime parsedDate = DateTime.parse(question.dateModified);
     DateTime whenToPractice = parsedDate.add(Duration(days: question.fibNum));

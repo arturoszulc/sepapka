@@ -79,7 +79,7 @@ class Manager extends ChangeNotifier {
     }
     else {
     _errorMsg = failure.errorString!;
-    debugPrint(_errorMsg);
+    debugPrint('setError debugPrint: $_errorMsg');
 
   }
     if (loading == true) setLoading(false);
@@ -92,6 +92,7 @@ class Manager extends ChangeNotifier {
 
 
   setLoading(bool loading) async {
+    debugPrint('/// setLoading deployed ///');
     _loading = loading;
     notifyListeners();
   }
@@ -180,9 +181,25 @@ class Manager extends ChangeNotifier {
     _userService.setIsUserPromoted(false);
   }
 
-  goPro() {
-
+  goPro(bool bool) async {
+    setLoading(true);
+    //change user property and reset qVersion (in order to re-download questions from DB
+    Object goProResult = await _userService.goPro(bool);
+    if (goProResult is Failure) {
+      setError(goProResult);
+      setLoading(false);
+      return;
+    }
+    //prepare new global data
+    Object prepareDataResult = await _questionService.prepareGlobalData();
+    if (prepareDataResult is Failure) {
+      setError(prepareDataResult);
+      setLoading(false);
+      return;
+    }
   }
+
+
 
   updateUserData(String username) async {
     Object changeUsernameResult = await _userService.changeUserName(username);

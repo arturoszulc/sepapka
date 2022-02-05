@@ -76,10 +76,12 @@ class Settings extends StatelessWidget {
           Text('Liczba punktów: ${context.read<Manager>().loggedUser!.rankTotalPoints}'),
           const SizedBox(height: 20.0),
           ElevatedButton(
-            onPressed: () {
-              context.read<Manager>().goPro();
+            onPressed: () async {
+              var result = await goProDialog(context);
+              if (result) await context.read<Manager>().goPro(!context.read<Manager>().loggedUser!.isPro);
+              Navigator.pop(context);
             },
-            child: const Text('Go PRO'),
+            child: context.read<Manager>().loggedUser!.isPro ? const Text('Go FREE') : const Text('Go PRO'),
           ),
           const SizedBox(height: 20.0),
           ElevatedButton(
@@ -98,13 +100,32 @@ class Settings extends StatelessWidget {
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () {
-      //     Navigator.of(context)
-      //         .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
-      //   },
-      //   label: const Text('Zapisz'),
-      // ),
+    );
+  }
+
+  // DELETE THIS WIDGET RIGHT AFTER DELETING GO PRO/FREE BUTTON
+
+  Future goProDialog(BuildContext context) {
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text('Czy na pewno chcesz to zrobić?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop(false);
+            },
+            child: const Text('Nie'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context, rootNavigator: true).pop(true);
+            },
+            child: const Text('Tak'),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -18,9 +18,11 @@ class DatabaseService {
 
 
   // //UPDATE USER DATA
-  Future<void> updateUser(LoggedUser user) async {
+  // DO NOT USE ASYNC/AWAIT on SET function, because when device is offline, it won't return
+  // anything and app will freeze
+  Future<void> updateUser(LoggedUser user) {
     debugPrint('/// DB: writing USER doc... ///');
-    return await usersCollection.doc(user.documentId).set({
+    return usersCollection.doc(user.documentId).set({
       userQVersion: user.qVersion,
       userUsername: user.username,
       userIsPro: user.isPro,
@@ -31,7 +33,11 @@ class DatabaseService {
       userQListNew3: user.qListNew3.map((e) => e.convertToMap()).toList(),
       userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
       userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),
-    }).then((value) => debugPrint('/// DB: User successfully updated ///'));
+    }).then((value) => debugPrint('/// DB: User updated ///'))
+        .catchError((error) => debugPrint("DB: Failed to update user: $error"));
+
+
+
   }
 
   // GET LOGGED USER DATA
