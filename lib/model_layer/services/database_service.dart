@@ -19,6 +19,7 @@ class DatabaseService {
 
   // //UPDATE USER DATA
   Future<void> updateUser(LoggedUser user) async {
+    debugPrint('/// DB: writing USER doc... ///');
     return await usersCollection.doc(user.documentId).set({
       userQVersion: user.qVersion,
       userUsername: user.username,
@@ -35,7 +36,7 @@ class DatabaseService {
 
   // GET LOGGED USER DATA
   Future<LoggedUser> getUserData(String uid) async {
-    debugPrint('/// Downloading UserData from DB ///');
+    debugPrint('/// DB: reading USER doc... ///');
     var doc = await usersCollection.doc(uid).get();
     return LoggedUser(
       documentId: doc.id,
@@ -54,7 +55,7 @@ class DatabaseService {
 
   // VERIFY if theres user with the same Username
   Future<bool> checkIfUsernameIsAvailable(String userId, String username) async {
-    debugPrint('/// DB: checking if username is taken... ///');
+    debugPrint('/// DB: reading all USER docs... ///');
     var snapshot = await usersCollection.get();
     if (snapshot.metadata.isFromCache) throw Exception(errorDbConnection);
     for (var doc in snapshot.docs) {
@@ -68,6 +69,7 @@ class DatabaseService {
 
   //Get GlobalData document
   Future<GlobalData> getGlobalData() async {
+    debugPrint('/// DB: reading DATA doc... ///');
     var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
     return GlobalData(
       qVersionFree: doc.get(globalDataQVersionFree),
@@ -85,7 +87,7 @@ class DatabaseService {
 
   //Get question list (either Free or Pro user based on parameter)
   Future<List<Question>?> getQuestionList({required bool isPro}) async {
-    debugPrint('/// Downloading question data from DB ///');
+    debugPrint('/// DB: reading all QUESTION docs... ///');
     var snapshot = isPro ? await questionsProCollection.get() : await questionsFreeCollection.get();
     return snapshot.docs.map((doc) {
       return Question(
