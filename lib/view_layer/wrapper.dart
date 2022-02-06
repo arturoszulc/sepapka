@@ -20,33 +20,37 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Wrapper built ***');
 
-    return PageTransitionSwitcher(
-      transitionBuilder: (Widget child, Animation<double> primaryAnimation, Animation<double> secondaryAnimation) {
-        return FadeThroughTransition(animation: animation, secondaryAnimation: secondaryAnimation);
-      },
-      child: Selector<NavManager, Screen>(
+    return Selector<NavManager, Screen>(
           selector: (_, navManager) => navManager.currentScreen,
-        builder: (_, currentScreen, __) {
-            switch (currentScreen) {
+        builder: (_, currentScreen, __) => AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          transitionBuilder: (
+          Widget child,
+              Animation<double> animation) => ScaleTransition(child: child, scale: animation),
+          child: getWidget(currentScreen),
+        ),
 
-              case Screen.loading:
-                return const LoadingScreen();
-                break;
-              case Screen.signIn:
-                return SignInScreen();
-                break;
-              case Screen.menu:
-                return MenuScreen();
-                break;
+        // {
+        //     switch (currentScreen) {
+        //
+        //       case Screen.loading:
+        //         return const LoadingScreen();
+        //         break;
+        //       case Screen.signIn:
+        //         return SignInScreen();
+        //         break;
+        //       case Screen.menu:
+        //         return MenuScreen();
+        //         break;
+        //
+        //       case Screen.resetPassword:
+        //         return ResetPasswordScreen();
+        //         break;
+        //     }
+        // },
 
-              case Screen.resetPassword:
-                return ResetPasswordScreen();
-                break;
-            }
-        },
+      );
 
-      ),
-    );
     // return Selector<Manager, bool>(
     //   selector: (_, manager) => manager.loading,
     //   builder: (_, loading, __) => loading == true ? const Loading() :
@@ -57,5 +61,24 @@ class Wrapper extends StatelessWidget {
     //   ),
     // );
 
+  }
+
+  Widget getWidget(Screen currentScreen) {
+    switch (currentScreen) {
+
+      case Screen.loading:
+        return const LoadingScreen();
+        break;
+      case Screen.signIn:
+        return SignInScreen();
+        break;
+      case Screen.menu:
+        return MenuScreen();
+        break;
+
+      case Screen.resetPassword:
+        return ResetPasswordScreen();
+        break;
+    };
   }
 }
