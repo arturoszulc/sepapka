@@ -4,8 +4,8 @@ import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import '../custom_widgets/progress_bar_global.dart';
 
-class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+class MenuScreen extends StatelessWidget {
+  const MenuScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

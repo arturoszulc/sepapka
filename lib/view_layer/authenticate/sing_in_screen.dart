@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/view_layer/custom_widgets/dialog_message.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/viewmodel_layer/nav_manager.dart';
+import 'package:sepapka/utils/consts/nav.dart';
+
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
@@ -96,7 +99,8 @@ class SignInScreen extends StatelessWidget {
                 const Text('Nie pamiętasz hasła?'),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/reset-password');
+                    context.read<NavManager>().navigate(Screen.resetPassword);
+                    // Navigator.pushNamed(context, '/reset-password');
                   },
                   child: const Text(
                     'Zresetuj hasło',
