@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
-
+import 'package:sepapka/viewmodel_layer/nav_manager.dart';
+import 'package:sepapka/utils/consts/nav.dart';
 import '../custom_widgets/progress_bar_global.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -24,7 +25,8 @@ class MenuScreen extends StatelessWidget {
               ),
               IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/settings-screen');
+                    context.read<NavManager>().navigate(Screen.settings);
+                    // Navigator.pushNamed(context, '/settings-screen');
                   },
                   icon: const Icon(Icons.account_circle)),
             ],

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
+import 'package:sepapka/view_layer/user_settings/settings_main_screen.dart';
 import 'package:sepapka/viewmodel_layer/nav_manager.dart';
 
 import 'authenticate/sing_in_screen.dart';
@@ -32,25 +33,6 @@ class Wrapper extends StatelessWidget {
         ),
         child: getWidget(currentScreen),
       ),
-
-      // {
-      //     switch (currentScreen) {
-      //
-      //       case Screen.loading:
-      //         return const LoadingScreen();
-      //         break;
-      //       case Screen.signIn:
-      //         return SignInScreen();
-      //         break;
-      //       case Screen.menu:
-      //         return MenuScreen();
-      //         break;
-      //
-      //       case Screen.resetPassword:
-      //         return ResetPasswordScreen();
-      //         break;
-      //     }
-      // },
     );
 
     // return Selector<Manager, bool>(
@@ -78,6 +60,9 @@ class Wrapper extends StatelessWidget {
 
       case Screen.resetPassword:
         return ResetPasswordScreen();
+        break;
+      case Screen.settings:
+        return const SettingsScreen();
         break;
     }
     ;

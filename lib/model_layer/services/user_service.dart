@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
@@ -28,17 +29,23 @@ class UserService {
   //Models
   LoggedUser? _loggedUser;
 
+  //Getters
+  LoggedUser? get loggedUser => _loggedUser;
+
   bool get loggedUserChanged => _loggedUserChanged;
 
   bool get isUserPromoted => _isUserPromoted;
 
   String get userRankName => _rankNames[_loggedUser!.rankLevel];
 
+  StreamController<LoggedUser?> loggedUserStreamController = StreamController();
+  //Streams
+  Stream<LoggedUser?> get loggedUserStream => loggedUserStreamController.stream;
+
   setIsUserPromoted(bool flag) {
     _isUserPromoted = flag;
   }
 
-  LoggedUser? get loggedUser => _loggedUser;
 
   String getProgressPercentGlobal() {
     int previousThreshold = 0;
@@ -85,11 +92,13 @@ class UserService {
   Future<Object> createUserLocal(String userId) async {
     try {
       _loggedUser = await _databaseService.getUserData(userId);
+      loggedUserStreamController.add(_loggedUser);
       return Success();
     } catch (e) {
       debugPrint(errorGetUserDataFromDB);
       //if there's an error, assume that user was not yet created
       createDefaultLoggedUser(userId);
+      loggedUserStreamController.add(_loggedUser);
       return Success();
     }
   }
@@ -106,6 +115,7 @@ class UserService {
 
   logOutUser() {
     _loggedUser = null;
+    loggedUserStreamController.add(_loggedUser);
   }
 
   bool compareQVersion(int qVersion) {

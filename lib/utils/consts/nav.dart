@@ -7,7 +7,7 @@ enum Screen {
   resetPassword,
   menu,
   // chooseLevel,
-  // settings,
+  settings,
   // changeUserName,
   // singleQuestion,
   // listQuestion,

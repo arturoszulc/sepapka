@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/viewmodel_layer/nav_manager.dart';
+import 'package:sepapka/utils/consts/nav.dart';
 
-class Settings extends StatelessWidget {
-  Settings({Key? key}) : super(key: key);
+
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
   // final _userDataForm = GlobalKey<FormState>();
 
   // bool usernameChanged = false;
@@ -16,6 +19,10 @@ class Settings extends StatelessWidget {
     // final manager = Provider.of<Manager>(context);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => context.read<NavManager>().navigate(Screen.menu),
+        ),
         actions: [
           TextButton(
             onPressed: () {
@@ -93,7 +100,7 @@ class Settings extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               await context.read<Manager>().signOut();
-              Navigator.pop(context);
+              // Navigator.pop(context);
               // context.read<Manager>().addQuestionsToDb(isPro: false);
             },
             child: const Text('Sign Out'),

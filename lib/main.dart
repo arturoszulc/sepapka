@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           '/reset-password': (context) => ResetPasswordScreen(),
           '/menu-main-screen': (context) => MenuScreen(),
           '/menu-choose-level': (context) => MenuChooseLevel(),
-          '/settings-screen': (context) => Settings(),
+          '/settings-screen': (context) => SettingsScreen(),
           '/settings-change-user-data': (context) => ChangeUserData(),
           '/question-single': (context) => QuestionSingleScreen(),
 
