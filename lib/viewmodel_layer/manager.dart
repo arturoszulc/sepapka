@@ -188,7 +188,7 @@ class Manager extends ChangeNotifier {
     debugPrint('/// manager ResetPassword deployed');
     navigate(Screen.loading);
     //TODO: uncomment the _authService method
-    Object resetPassResult = Success(); //await _authService.resetPassword(email);
+    Object resetPassResult = Failure('Cos poszlo nie tak'); //await _authService.resetPassword(email);
     if (resetPassResult is Failure) {
       await setError(resetPassResult);
       navigate(Screen.resetPassword);
@@ -213,34 +213,38 @@ class Manager extends ChangeNotifier {
   }
 
   goPro(bool bool) async {
-    setLoading(true);
+    navigate(Screen.loading);
     //change user property and reset qVersion (in order to re-download questions from DB
     Object goProResult = await _userService.goPro(bool);
     if (goProResult is Failure) {
       setError(goProResult);
-      setLoading(false);
+      navigate(Screen.settings);
       return;
     }
     //prepare new global data
     Object prepareDataResult = await _questionService.prepareGlobalData();
     if (prepareDataResult is Failure) {
       setError(prepareDataResult);
-      setLoading(false);
+      navigate(Screen.settings);
       return;
     }
+    navigate(Screen.menu);
   }
 
 
 
   updateUserData(String username) async {
+    navigate(Screen.loading);
     Object changeUsernameResult = await _userService.changeUserName(username);
     if (changeUsernameResult is Failure) {
       setError(changeUsernameResult);
+      navigate(Screen.changeUserName);
       return null;
     }
     if (changeUsernameResult is Success)
       {
         setError(null);
+        navigate(Screen.settings);
         return true;
       }
   }

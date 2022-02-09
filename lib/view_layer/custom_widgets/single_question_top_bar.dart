@@ -3,6 +3,8 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/view_layer/custom_widgets/settings_popupmenu.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/utils/consts/nav.dart';
+
 
 import 'dialog_leave_session.dart';
 
@@ -18,8 +20,9 @@ Widget singleQuestionTopBar(BuildContext context) {
           onPressed: () async {
             bool result = await leaveSessionDialog(context);
             if (result) {
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
+              context.read<Manager>().navigate(Screen.menu);
+              // Navigator.of(context)
+              //     .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
             }
           },
           icon: const Icon(Icons.clear),

@@ -32,8 +32,8 @@ class SessionFinished extends StatelessWidget {
               ElevatedButton.icon(
                 onPressed: () {
                   context.read<Manager>().resetIsUserPromotedFLag();
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
+                  // Navigator.of(context)
+                  //     .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
                 },
                 icon: const Icon(Icons.exit_to_app),
                 label: const Text('Wyjście'),

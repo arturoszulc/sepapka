@@ -16,7 +16,7 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** SignInScreen built ***');
 
-    final manager = Provider.of<Manager>(context, listen: false);
+    final manager = Provider.of<Manager>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

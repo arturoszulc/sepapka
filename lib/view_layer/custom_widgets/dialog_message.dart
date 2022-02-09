@@ -3,25 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
-class MessageDialog extends StatelessWidget {
-  final String msg;
-
-  const MessageDialog({Key? key, required this.msg}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () async {
-      var result = await buildMessageDialog(context, msg);
-      if (result) {
-        //clear msg when dialog button is pressed
-        context.read<Manager>().setMessage('');
-        // Navigator.of(context)
-        //     .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
-      }
-    });
-    return Container();
-  }
-}
 
 Future buildMessageDialog(BuildContext context, String message) {
   return showDialog(
@@ -55,7 +36,8 @@ Future buildMessageDialog(BuildContext context, String message) {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop(true);
+            context.read<Manager>().setMessage('');
+            Navigator.of(context).pop();
           },
           child: const Text('OK'),
         ),

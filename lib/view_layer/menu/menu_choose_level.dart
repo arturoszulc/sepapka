@@ -39,21 +39,21 @@ class MenuChooseLevel extends StatelessWidget {
                         ElevatedButton(
                           onPressed: countLevel1 < 1 ? null : () async {
                             await context.read<Manager>().startNew(qLevel: 1);
-                            Navigator.pushNamed(context, '/question-single');
+                            // Navigator.pushNamed(context, '/question-single');
                           },
                           child: Text('Poziom 1 ($countLevel1)'),
                         ),
                         ElevatedButton(
                           onPressed: !isUserPro || countLevel2 < 1 ? null : () async {
                             await context.read<Manager>().startNew(qLevel: 2);
-                            Navigator.pushNamed(context, '/question-single');
+                            // Navigator.pushNamed(context, '/question-single');
                           },
                           child: Text('Poziom 2 ($countLevel2)'),
                         ),
                         ElevatedButton(
                           onPressed: !isUserPro || countLevel3 < 1 ? null : () async {
                             await context.read<Manager>().startNew(qLevel: 3);
-                            Navigator.pushNamed(context, '/question-single');
+                            // Navigator.pushNamed(context, '/question-single');
                           },
                           child: Text('Poziom 3 ($countLevel3)'),
                         ),

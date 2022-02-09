@@ -51,7 +51,7 @@ class MenuScreen extends StatelessWidget {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/menu-choose-level');
+                            // Navigator.pushNamed(context, '/menu-choose-level');
                           },
                           child: const Text('Nauka'),
                         ),
@@ -60,13 +60,13 @@ class MenuScreen extends StatelessWidget {
                               ? null
                               : () async {
                                   await context.read<Manager>().startPractice();
-                                  Navigator.pushNamed(context, '/question-single');
+                                  // Navigator.pushNamed(context, '/question-single');
                                 },
                           child: Text('Powtórka materiału ($howManyToPractice)'),
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, '/question-list');
+                            // Navigator.pushNamed(context, '/question-list');
                           },
                           child: Text('Lista pytań'),
                         ),

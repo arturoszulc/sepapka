@@ -15,26 +15,12 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Settings Screen built ***');
 
-    //TODO: Consider how to handle going back from this screen - when to save, when to discard, when to rebuild main screen
-    // final manager = Provider.of<Manager>(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () => context.read<Manager>().navigate(Screen.menu),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              // Navigator.of(context)
-              //     .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
-            },
-            child: const Text(
-              'Zapisz',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
         title: const Text('Profil użytkownika'),
         centerTitle: true,
       ),
@@ -62,7 +48,8 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/settings-change-user-data');
+                    context.read<Manager>().navigate(Screen.changeUserName);
+                    // Navigator.pushNamed(context, '/settings-change-user-data');
                   },
                   icon: const Icon(Icons.edit),
                 )
@@ -86,7 +73,7 @@ class SettingsScreen extends StatelessWidget {
             onPressed: () async {
               var result = await goProDialog(context);
               if (result) await context.read<Manager>().goPro(!context.read<Manager>().loggedUser!.isPro);
-              Navigator.pop(context);
+              // Navigator.pop(context);
             },
             child: context.read<Manager>().loggedUser!.isPro ? const Text('Go FREE') : const Text('Go PRO'),
           ),

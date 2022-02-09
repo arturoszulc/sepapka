@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
+import 'package:sepapka/view_layer/user_settings/change_user_data_screen.dart';
 import 'package:sepapka/view_layer/user_settings/settings_main_screen.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/nav_manager.dart';
@@ -17,9 +18,10 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint('*** Wrapper built ***');
+
     //if there's message in manager, show dialog
-    String msg = context.read<Manager>().infoMsg;
-    if (msg.isNotEmpty) WidgetsBinding.instance!.addPostFrameCallback((_)  => showMyDialog(context, msg));
+
+
 
     return Selector<Manager, Screen>(
       selector: (_, Manager) => Manager.currentScreen,
@@ -37,7 +39,7 @@ class Wrapper extends StatelessWidget {
 
           //animation.drive(Tween(begin: const Offset(0.0, 1.0), end: Offset.zero).chain(CurveTween(curve: Curves.ease))),
         ),
-        child: getWidget(currentScreen),
+        child: getWidget(currentScreen, context),
       ),
     );
 
@@ -52,49 +54,55 @@ class Wrapper extends StatelessWidget {
     // );
   }
 
-  void showMyDialog(BuildContext context, String msg) {
-    debugPrint('theres message');
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        contentPadding: EdgeInsets.zero,
-        content: Padding(
-          padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            // mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.info,
-                color: Colors.blueAccent,
-              ),
-              Expanded(child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(msg),
-              )),
-            ],
-          ),
-        ),
-        // title: Row(
-        //   children: [
-        //     const Icon(Icons.info, color: Colors.blueAccent,),
-        //     Text(message),
-        //   ],
-        // ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
+  // void showMyDialog(BuildContext context, String msg) {
+  //   debugPrint('theres message');
+  //   showDialog(
+  //     barrierDismissible: false,
+  //     context: context,
+  //     builder: (BuildContext context) => AlertDialog(
+  //       contentPadding: EdgeInsets.zero,
+  //       content: Padding(
+  //         padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
+  //         child: Row(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           // mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             Icon(
+  //               Icons.info,
+  //               color: Colors.blueAccent,
+  //             ),
+  //             Expanded(child: Padding(
+  //               padding: const EdgeInsets.only(left: 8.0),
+  //               child: Text(msg),
+  //             )),
+  //           ],
+  //         ),
+  //       ),
+  //       // title: Row(
+  //       //   children: [
+  //       //     const Icon(Icons.info, color: Colors.blueAccent,),
+  //       //     Text(message),
+  //       //   ],
+  //       // ),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () {
+  //             context.read<Manager>().setMessage('');
+  //             Navigator.of(context).pop();
+  //           },
+  //           child: const Text('OK'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget getWidget(Screen currentScreen) {
+  Widget getWidget(Screen currentScreen, BuildContext context) {
+
+    //if there's a message to show, do it
+    String msg = context.read<Manager>().infoMsg;
+    if (msg.isNotEmpty) WidgetsBinding.instance!.addPostFrameCallback((_)  => buildMessageDialog(context, msg));
+
     switch (currentScreen) {
       case Screen.loading:
         return const LoadingScreen();
@@ -111,6 +119,9 @@ class Wrapper extends StatelessWidget {
         break;
       case Screen.settings:
         return const SettingsScreen();
+        break;
+      case Screen.changeUserName:
+        return ChangeUserData();
         break;
     }
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/utils/consts/nav.dart';
 
 class ChangeUserData extends StatelessWidget {
   ChangeUserData({Key? key}) : super(key: key);
@@ -14,6 +15,10 @@ class ChangeUserData extends StatelessWidget {
     String username = Provider.of<Manager>(context).loggedUser!.username;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => context.read<Manager>().navigate(Screen.settings),
+        ),
         centerTitle: true,
         title: const Text('Zmień dane użytkownika'),
       ),
@@ -56,10 +61,9 @@ class ChangeUserData extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               var result = await context.read<Manager>().updateUserData(username);
-              if (result != null) {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/settings-screen', (Route<dynamic> route) => false);
-              }
+                // Navigator.of(context)
+                //     .pushNamedAndRemoveUntil('/settings-screen', (Route<dynamic> route) => false);
+
             },
             child: const Text('Zapisz'),
           ),
