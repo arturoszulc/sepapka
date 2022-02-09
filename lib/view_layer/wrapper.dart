@@ -8,6 +8,7 @@ import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/nav_manager.dart';
 
 import 'authenticate/sing_in_screen.dart';
+import 'custom_widgets/dialog_message.dart';
 import 'menu/menu_main_screen.dart';
 
 class Wrapper extends StatelessWidget {
@@ -16,6 +17,9 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint('*** Wrapper built ***');
+    //if there's message in manager, show dialog
+    String msg = context.read<Manager>().infoMsg;
+    if (msg.isNotEmpty) WidgetsBinding.instance!.addPostFrameCallback((_)  => showMyDialog(context, msg));
 
     return Selector<Manager, Screen>(
       selector: (_, Manager) => Manager.currentScreen,
@@ -23,12 +27,13 @@ class Wrapper extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
           switchOutCurve: const Threshold(0),
         // switchInCurve: Curves.easeIn,
-        transitionBuilder: (Widget child, Animation<double> animation) => SlideTransition(
+        transitionBuilder: (Widget child, Animation<double> animation) => FadeTransition(
           child: child,
-          position: Tween<Offset>(
-            begin: const Offset(1, 0),
-            end: Offset.zero,
-          ).animate(animation),
+          opacity: animation,
+          // position: Tween<Offset>(
+          //   begin: const Offset(1, 0),
+          //   end: Offset.zero,
+          //.animate(animation),
 
           //animation.drive(Tween(begin: const Offset(0.0, 1.0), end: Offset.zero).chain(CurveTween(curve: Curves.ease))),
         ),
@@ -45,6 +50,48 @@ class Wrapper extends StatelessWidget {
     //         loggedUser != null ? Menu() : Authenticate(),
     //   ),
     // );
+  }
+
+  void showMyDialog(BuildContext context, String msg) {
+    debugPrint('theres message');
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        contentPadding: EdgeInsets.zero,
+        content: Padding(
+          padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.info,
+                color: Colors.blueAccent,
+              ),
+              Expanded(child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(msg),
+              )),
+            ],
+          ),
+        ),
+        // title: Row(
+        //   children: [
+        //     const Icon(Icons.info, color: Colors.blueAccent,),
+        //     Text(message),
+        //   ],
+        // ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget getWidget(Screen currentScreen) {

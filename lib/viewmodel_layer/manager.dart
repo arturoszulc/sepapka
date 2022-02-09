@@ -194,9 +194,9 @@ class Manager extends ChangeNotifier {
       navigate(Screen.resetPassword);
     }
     if (resetPassResult is Success) {
-      setError(null);
+      await setError(null);
       // setLoading(true);
-      setMessage('Link do zresetowania hasła został wysłany na podany adres e-mail');
+      await setMessage('Link do zresetowania hasła został wysłany na podany adres e-mail');
       navigate(Screen.signIn);
     }
       }

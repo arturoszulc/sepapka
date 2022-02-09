@@ -109,8 +109,8 @@ class SignInScreen extends StatelessWidget {
               ],
             ),
 
-          //if there's message in manager, show dialog
-          if (manager.infoMsg.isNotEmpty) MessageDialog(msg: manager.infoMsg),
+          // //if there's message in manager, show dialog
+          // if (manager.infoMsg.isNotEmpty) MessageDialog(msg: manager.infoMsg),
           ],
         ),
       ),
