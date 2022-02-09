@@ -40,7 +40,7 @@ class UserService {
 
   StreamController<LoggedUser?> loggedUserStreamController = StreamController();
   //Streams
-  Stream<LoggedUser?> get loggedUserStream => loggedUserStreamController.stream;
+  // Stream<LoggedUser?> get loggedUserStream => loggedUserStreamController.stream;
 
   setIsUserPromoted(bool flag) {
     _isUserPromoted = flag;

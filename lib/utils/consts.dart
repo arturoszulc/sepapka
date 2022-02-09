@@ -72,6 +72,7 @@ const String errorUpdateUserInDb = '### Nie udało się zaktualizować danych u�
 
 //AuthService Errors
 const String errorSignIn = '### AuthService.signInEmail() error: ';
+const String errorSignOut = '### AuthService.signOut() error: ';
 
 //FileService error
 const String errorWritingFile =

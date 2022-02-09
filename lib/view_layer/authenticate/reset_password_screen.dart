@@ -20,13 +20,13 @@ class ResetPasswordScreen extends StatelessWidget {
 
     //clear field on rebuild
     // emailFieldController.clear();
-
-    final error = context.read<Manager>().errorMsg;
+    final error = Provider.of<Manager>(context).errorMsg;
+    // final error = context.read<Manager>().errorMsg;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => context.read<NavManager>().navigate(Screen.signIn),
+          onPressed: () => context.read<Manager>().navigate(Screen.signIn),
         ),
         title: Text('Zresetuj hasło'),
         centerTitle: true,
@@ -69,11 +69,11 @@ class ResetPasswordScreen extends StatelessWidget {
             const SizedBox(height: 10.0),
             ElevatedButton(
               onPressed: () async {
-                var result = await context.read<Manager>().resetPassword(email);
-                if (result != null) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/wrapper', (Route<dynamic> route) => false);
-                }
+                await context.read<Manager>().resetPassword(email);
+                // if (result != null) {
+                //   Navigator.of(context).pushNamedAndRemoveUntil(
+                //     '/wrapper', (Route<dynamic> route) => false);
+                // }
               },
               child: const Text('Resetuj hasło'),
             ),

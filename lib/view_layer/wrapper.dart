@@ -4,6 +4,7 @@ import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
 import 'package:sepapka/view_layer/user_settings/settings_main_screen.dart';
+import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/nav_manager.dart';
 
 import 'authenticate/sing_in_screen.dart';
@@ -16,8 +17,8 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Wrapper built ***');
 
-    return Selector<NavManager, Screen>(
-      selector: (_, navManager) => navManager.currentScreen,
+    return Selector<Manager, Screen>(
+      selector: (_, Manager) => Manager.currentScreen,
       builder: (_, currentScreen, __) => AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
           switchOutCurve: const Threshold(0),
@@ -65,6 +66,5 @@ class Wrapper extends StatelessWidget {
         return const SettingsScreen();
         break;
     }
-    ;
   }
 }

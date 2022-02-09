@@ -40,13 +40,14 @@ class AuthService {
     }
   }
 
-  Future<bool> signOut() async {
+  Future<Object> signOut() async {
     try {
       await _auth.signOut();
-      return true;
-    } catch (e) {
-      debugPrint('SIGN OUT ERROR: ${e.toString()}');
-      return false;
+      return Success();
+    }  on FirebaseAuthException catch (e) {
+      debugPrint('CODE');
+      debugPrint(e.code);
+      return Failure(getMessageFromErrorCode(e.code));
     }
   }
 

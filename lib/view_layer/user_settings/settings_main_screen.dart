@@ -21,7 +21,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => context.read<NavManager>().navigate(Screen.menu),
+          onPressed: () => context.read<Manager>().navigate(Screen.menu),
         ),
         actions: [
           TextButton(

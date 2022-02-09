@@ -33,9 +33,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Manager>(
           create: (context) => Manager(),
         ),
-        ChangeNotifierProvider<NavManager>(
-          create: (context) => NavManager(),
-        ),
+        // ChangeNotifierProvider<NavManager>(
+        //   create: (context) => NavManager(),
+        // ),
       ],
       child: MaterialApp(
         title: 'SEPapka',

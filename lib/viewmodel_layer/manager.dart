@@ -13,6 +13,8 @@ import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/utils/question_list.dart';
+import 'package:sepapka/utils/consts/nav.dart';
+
 
 class Manager extends ChangeNotifier {
   //Services Injection
@@ -24,12 +26,15 @@ class Manager extends ChangeNotifier {
   //Manager properties
   bool _loading = false;
 
-  // bool _newUser = false;
   String _errorMsg = '';
   String _infoMsg = '';
 
+  Screen _currentScreen = Screen.loading;
+
+
   //Manager getters
   bool get loading => _loading;
+  Screen get currentScreen => _currentScreen;
 
   // bool get newUser => _newUser;
   String get errorMsg => _errorMsg;
@@ -72,6 +77,14 @@ class Manager extends ChangeNotifier {
   }
 
   // internal Manager methods affecting UI
+
+  navigate(Screen screen) {
+    debugPrint('NAVIGATING to: $screen');
+    _currentScreen = screen;
+    // if (errorMsg.isNotEmpty) setError(null);
+    notifyListeners();
+  }
+
   setError(Failure? failure) {
     if (failure == null) {
       _errorMsg = '';
@@ -80,10 +93,8 @@ class Manager extends ChangeNotifier {
     else {
     _errorMsg = failure.errorString!;
     debugPrint('setError debugPrint: $_errorMsg');
-
-  }
-    if (loading == true) setLoading(false);
     notifyListeners();
+  }
   }
 
   setMessage(String msg) {
@@ -107,40 +118,52 @@ class Manager extends ChangeNotifier {
       if (user == null) {
         debugPrint('/// User signed out ///');
         await _userService.logOutUser();
+        if (_currentScreen != Screen.signIn) navigate(Screen.signIn);
       }
-      setLoading(false);
+
     });
   }
 
   prepareData(String userId) async {
     // keep the app in loading state
-    if (loading == false) setLoading(true);
+    if (_currentScreen != Screen.loading) navigate(Screen.loading);
 
     // download user data and create local user object
     Object createUserResult = await _userService.createUserLocal(userId);
     if (createUserResult is Failure) {
       setError(createUserResult);
+      navigate(Screen.signIn);
       return;
     }
 
     //next prepare questions
     Object prepareDataResult = await _questionService.prepareGlobalData();
-    if (prepareDataResult is Failure) setError(prepareDataResult);
+    if (prepareDataResult is Failure){
+      setError(prepareDataResult);
+      navigate(Screen.signIn);
+      return;
+    }
+    navigate(Screen.menu);
   }
-  ///////////////////////
-  // METHODS ON DEMAND
-  ///////////////////////
+  ////////////////////////
+  // METHODS ON DEMAND  //
+  ////////////////////////
 
   // AUTH
 
   signIn({required String email, required String password}) async {
     //start loading app
-    setLoading(true);
+    navigate(Screen.loading);
+    // setLoading(true);
     //Try to sign in
     Object signInResult = await _authService.signInEmail(email, password);
-    if (signInResult is Failure) setError(signInResult);
-    if (signInResult is Success) setError(null);
-  }
+    if (signInResult is Failure) {
+      setError(signInResult);
+      navigate(Screen.signIn);
+    }
+      if (signInResult is Success) setError(null);
+    }
+
 
   register({required String email, required String password}) async {
     //start loading app
@@ -153,20 +176,28 @@ class Manager extends ChangeNotifier {
 
 
   signOut() async {
-    bool result = await _authService.signOut();
+    Object signOutResult = await _authService.signOut();
+    if (signOutResult is Failure) {
+      setError(signOutResult);
+      navigate(Screen.settings);
+    }
+    navigate(Screen.signIn);
   }
 
   resetPassword(String email) async {
     debugPrint('/// manager ResetPassword deployed');
-    // setLoading(true);
+    navigate(Screen.loading);
     //TODO: uncomment the _authService method
     Object resetPassResult = Success(); //await _authService.resetPassword(email);
-    if (resetPassResult is Failure) setError(resetPassResult);
+    if (resetPassResult is Failure) {
+      await setError(resetPassResult);
+      navigate(Screen.resetPassword);
+    }
     if (resetPassResult is Success) {
       setError(null);
       // setLoading(true);
       setMessage('Link do zresetowania hasła został wysłany na podany adres e-mail');
-      return true;
+      navigate(Screen.signIn);
     }
       }
 

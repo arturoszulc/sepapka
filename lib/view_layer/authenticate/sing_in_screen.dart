@@ -16,7 +16,7 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** SignInScreen built ***');
 
-    final manager = Provider.of<Manager>(context);
+    final manager = Provider.of<Manager>(context, listen: false);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -99,8 +99,7 @@ class SignInScreen extends StatelessWidget {
                 const Text('Nie pamiętasz hasła?'),
                 TextButton(
                   onPressed: () {
-                    context.read<NavManager>().navigate(Screen.resetPassword);
-                    // Navigator.pushNamed(context, '/reset-password');
+                    context.read<Manager>().navigate(Screen.resetPassword);
                   },
                   child: const Text(
                     'Zresetuj hasło',
