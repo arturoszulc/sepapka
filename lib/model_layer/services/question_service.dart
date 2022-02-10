@@ -178,7 +178,7 @@ class QuestionService {
     _qListCurrentStartLength = _qListCurrent.length;
   }
 
-  getNextQuestion() async {
+  Future<Object> getNextQuestion() async {
     //reset QuestionStatus
     _qStatus = QuestionStatus.noAnswer;
 
@@ -188,8 +188,10 @@ class QuestionService {
       _currentQuestion = _qListCurrent.first;
       //create new BMap
       createBMap();
+      return Success();
     } else {
     //if not
+      //if it was practice session, note the change
       if (qType == QuestionType.practiceQuestion) _hasTodayPracticeListChanged = true;
       _currentQuestion = null;
       _isSessionFinished = true;
@@ -197,6 +199,7 @@ class QuestionService {
       _userService.addPoints(_qListCurrentStartLength);
       //update user
       await _userService.updateLoggedUserInDb();
+      return Failure();
     }
   }
 

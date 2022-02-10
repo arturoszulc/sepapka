@@ -13,7 +13,7 @@ Widget singleQuestionTopBar(BuildContext context) {
   return Row(
     // mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: [
-      //Exit session bttuon
+      //Exit session button
       Expanded(
         // flex: 2,
         child: IconButton(

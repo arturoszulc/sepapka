@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/utils/consts/nav.dart';
+
 
 
 class MenuChooseLevel extends StatelessWidget {
@@ -17,6 +19,10 @@ class MenuChooseLevel extends StatelessWidget {
     bool isUserPro = context.read<Manager>().loggedUser!.isPro;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => context.read<Manager>().navigate(Screen.menu),
+        ),
         title: const Text('Wybierz poziom trudności'),
         centerTitle: true,
       ),

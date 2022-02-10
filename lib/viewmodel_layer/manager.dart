@@ -167,10 +167,13 @@ class Manager extends ChangeNotifier {
 
   register({required String email, required String password}) async {
     //start loading app
-    setLoading(true);
+    navigate(Screen.loading);
     //register user
     Object registerResult = await _authService.registerWithEmailAndPassword(email, password);
-    if (registerResult is Failure) setError(registerResult);
+    if (registerResult is Failure) {
+      setError(registerResult);
+      navigate(Screen.signIn);
+    }
     if (registerResult is Success) setError(null);
   }
 
@@ -205,8 +208,14 @@ class Manager extends ChangeNotifier {
   // USER
 
   resetUserProgress() async {
-    Object resetResult = _questionService.resetUserProgress();
-    if (resetResult is Failure) setError(resetResult);
+    // navigate(Screen.loading);
+    Object resetResult = await _questionService.resetUserProgress();
+    if (resetResult is Failure) {
+      setError(resetResult);
+      return;
+    }
+    setMessage('Wszelkie postępy zostały skasowane');
+    navigate(Screen.menu);
   }
   resetIsUserPromotedFLag() {
     _userService.setIsUserPromoted(false);
@@ -239,13 +248,13 @@ class Manager extends ChangeNotifier {
     if (changeUsernameResult is Failure) {
       setError(changeUsernameResult);
       navigate(Screen.changeUserName);
-      return null;
+      return;
     }
     if (changeUsernameResult is Success)
       {
         setError(null);
         navigate(Screen.settings);
-        return true;
+        return;
       }
   }
 
@@ -261,17 +270,20 @@ class Manager extends ChangeNotifier {
     await _questionService.prepareCurrentSessionData(
         qType: QuestionType.newQuestion, qLevel: qLevel);
     await getNextQuestion();
+    navigate(Screen.singleQuestion);
   }
 
   startPractice() async {
     await _questionService.prepareCurrentSessionData(
         qType: QuestionType.practiceQuestion, qLevel: 0);
     await getNextQuestion();
+    navigate(Screen.singleQuestion);
   }
 
   getNextQuestion() async {
-    await _questionService.getNextQuestion();
-    notifyListeners();
+  Object nextQuestionResult = await _questionService.getNextQuestion();
+    if (nextQuestionResult is Failure) navigate(Screen.sessionFinished);
+  if (nextQuestionResult is Success) notifyListeners();
   }
 
   moveQuestionToNew() {}

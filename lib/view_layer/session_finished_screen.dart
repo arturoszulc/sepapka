@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:provider/provider.dart';
+import 'package:sepapka/utils/consts/nav.dart';
+
 
 
 class SessionFinished extends StatelessWidget {
@@ -32,6 +34,7 @@ class SessionFinished extends StatelessWidget {
               ElevatedButton.icon(
                 onPressed: () {
                   context.read<Manager>().resetIsUserPromotedFLag();
+                  context.read<Manager>().navigate(Screen.menu);
                   // Navigator.of(context)
                   //     .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
                 },

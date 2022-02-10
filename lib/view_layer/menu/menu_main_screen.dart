@@ -51,6 +51,7 @@ class MenuScreen extends StatelessWidget {
                       children: [
                         ElevatedButton(
                           onPressed: () {
+                            context.read<Manager>().navigate(Screen.chooseLevel);
                             // Navigator.pushNamed(context, '/menu-choose-level');
                           },
                           child: const Text('Nauka'),

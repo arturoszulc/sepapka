@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
+import 'package:sepapka/view_layer/menu/menu_choose_level.dart';
+import 'package:sepapka/view_layer/question_single_screen.dart';
+import 'package:sepapka/view_layer/session_finished_screen.dart';
 import 'package:sepapka/view_layer/user_settings/change_user_data_screen.dart';
 import 'package:sepapka/view_layer/user_settings/settings_main_screen.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
@@ -24,7 +27,7 @@ class Wrapper extends StatelessWidget {
 
 
     return Selector<Manager, Screen>(
-      selector: (_, Manager) => Manager.currentScreen,
+      selector: (_, manager) => manager.currentScreen,
       builder: (_, currentScreen, __) => AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
           switchOutCurve: const Threshold(0),
@@ -122,6 +125,15 @@ class Wrapper extends StatelessWidget {
         break;
       case Screen.changeUserName:
         return ChangeUserData();
+        break;
+      case Screen.chooseLevel:
+        return MenuChooseLevel();
+        break;
+      case Screen.singleQuestion:
+        return QuestionSingleScreen();
+        break;
+      case Screen.sessionFinished:
+        return SessionFinished();
         break;
     }
   }

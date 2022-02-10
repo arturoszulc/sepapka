@@ -6,10 +6,11 @@ enum Screen {
   signIn,
   resetPassword,
   menu,
-  // chooseLevel,
+  chooseLevel,
   settings,
   changeUserName,
-  // singleQuestion,
+  singleQuestion,
   // listQuestion,
+  sessionFinished,
 
 }

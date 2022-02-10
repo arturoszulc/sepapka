@@ -123,6 +123,8 @@ class AuthService {
       case "ERROR_INVALID_EMAIL":
       case "invalid-email":
         return "Nieprawidłowy adres e-mail";
+      case "network-request-failed":
+        return "Brak połączenia z internetem, spróbuj ponownie";
       default:
         return "Błąd logowania, spróbuj ponownie";
     }
