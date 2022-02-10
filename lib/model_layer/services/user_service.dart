@@ -134,7 +134,7 @@ class UserService {
       if (!isOnAnyList) {
         //jeśli nie, stwórz jego mapę i zapisz do qNewList
         QMap qMap = createDefaultQMap(question.id);
-        addQuestionToNew(qMap, question.level);
+        addQMapToNew(qMap, question.level);
         //set flag, that user object was changed
 
       }
@@ -235,7 +235,7 @@ class UserService {
   //   }
   // }
 
-  moveQuestionToPractice(String qId, QuestionType qType, int qLevel, bool update) async {
+  moveQMapToPractice(String qId, QuestionType qType, int qLevel, bool update) async {
     debugPrint('/// Moving QMap to practice list... ///');
     //Get QMap by ID from qNewList
     QMap? qMap = getQMapAndRemove(qId, qType, qLevel);
@@ -248,11 +248,20 @@ class UserService {
         // setLoggedUserChanged(true);
       }
       //add question QMap to Practice list
-      await addQuestionToPractice(qMap);
+      await addQMapToPractice(qMap);
     }
   }
 
-  QMap? getQMapAndRemove(String qId, QuestionType qType, int qLevel) {
+  moveQMapToNotShown(String qId, QuestionType qType, int qLevel) async {
+    //Get QMap by ID from qNewList
+    QMap? qMap = getQMapAndRemove(qId, qType, qLevel);
+    if (qMap != null) {
+      await addQMapToNotShown(qMap);
+      debugPrint('/// US: Moved QMap to NotShow list ///');
+    }
+    }
+
+    QMap? getQMapAndRemove(String qId, QuestionType qType, int qLevel) {
     QMap? qMap;
     //method cuts out qMap from it's list and returns it
     switch (qType) {
@@ -280,7 +289,7 @@ class UserService {
     }
   }
 
-  addQuestionToNew(QMap qMap, int qLevel) {
+  addQMapToNew(QMap qMap, int qLevel) {
     //Before this method, it is checked if qMap is on any map.
     //So there's no need to check it again
     setLoggedUserChanged(true);
@@ -297,11 +306,13 @@ class UserService {
     }
   }
 
-  addQuestionToPractice(QMap qMap) {
+  addQMapToPractice(QMap qMap) {
     _loggedUser!.qListPractice.add(qMap);
   }
 
-  addQuestionToNotShown(QMap qMap) {}
+  addQMapToNotShown(QMap qMap) {
+    _loggedUser!.qListNotShown.add(qMap);
+  }
 
   wipeUser() {
     _loggedUser!.rankLevel = 0;

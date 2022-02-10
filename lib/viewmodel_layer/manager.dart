@@ -288,8 +288,10 @@ class Manager extends ChangeNotifier {
 
   moveQuestionToNew() {}
 
-  doNotShowThisQuestionAnymore() {
-    debugPrint('/// Pytanie oznaczone jako notShown ///');
+  doNotShowThisQuestionAnymore() async {
+    await _questionService.doNotShowThisQuestionAnymore();
+    await getNextQuestion();
+    notifyListeners();
   }
 
   sendQuestionRemarks() {

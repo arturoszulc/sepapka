@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
+import 'package:sepapka/utils/consts/nav.dart';
+import 'package:sepapka/viewmodel_layer/manager.dart';
+
 
 
 class QuestionListScreen extends StatelessWidget {
@@ -10,6 +14,10 @@ class QuestionListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => context.read<Manager>().navigate(Screen.menu),
+        ),
         title: const Text('Lista pytań'),
         elevation: 0.0,
       ),

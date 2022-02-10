@@ -67,6 +67,7 @@ class MenuScreen extends StatelessWidget {
                         ),
                         ElevatedButton(
                           onPressed: () {
+                            context.read<Manager>().navigate(Screen.listQuestion);
                             // Navigator.pushNamed(context, '/question-list');
                           },
                           child: Text('Lista pytań'),

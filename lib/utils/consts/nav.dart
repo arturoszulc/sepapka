@@ -10,7 +10,7 @@ enum Screen {
   settings,
   changeUserName,
   singleQuestion,
-  // listQuestion,
+  listQuestion,
   sessionFinished,
 
 }

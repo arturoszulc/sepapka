@@ -121,7 +121,7 @@ class QuestionService {
       //set button color
       _bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
       //move question to Practice List
-      _userService.moveQuestionToPractice(_currentQuestion!.id, qType, qLevel, true);
+      _userService.moveQMapToPractice(_currentQuestion!.id, qType, qLevel, true);
     }
     //if wrong answer
     else {
@@ -142,7 +142,7 @@ class QuestionService {
       }
       if (_qType == QuestionType.practiceQuestion) {
         //move but do not update date or fibNum
-        _userService.moveQuestionToPractice(_currentQuestion!.id, qType, qLevel, false);
+        _userService.moveQMapToPractice(_currentQuestion!.id, qType, qLevel, false);
       }
     }
   }
@@ -217,6 +217,16 @@ class QuestionService {
       //reset QuestionStatus
       _qStatus = QuestionStatus.noAnswer;
     }
+  }
+
+  doNotShowThisQuestionAnymore() async {
+    //remove question from _qListCurrent
+    if (_qStatus == QuestionStatus.noAnswer) {
+     //if question wasnt answered, remove if from current list
+      _qListCurrent.removeAt(0);
+      //else it means question was already removed, so dont do it
+    }
+    await _userService.moveQMapToNotShown(_currentQuestion!.id, qType, qLevel);
   }
 
   Future<Object> resetUserProgress() async {

@@ -21,7 +21,7 @@ class QuestionSingleScreen extends StatelessWidget {
 
 
     //if current session is finished, show this widget
-    if (manager.isSessionFinished) return const SessionFinished();
+    // if (manager.isSessionFinished) return const SessionFinished();
     //else show question
     return SafeArea(
 
@@ -42,7 +42,7 @@ class QuestionSingleScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 25.0),
                         child: Text(
-                          question!.q,
+                          question != null ? question.q : '',
                           style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                           // maxLines: 3,
                         ),
