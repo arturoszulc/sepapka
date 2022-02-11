@@ -74,7 +74,7 @@ class Manager extends ChangeNotifier {
 
   List<BMap> get bMapList => _questionService.bMapList;
 
-  List<Question>? get qListGlobalFiltered => _questionService.qListGlobalFiltered;
+  List<Question> get qListGlobalFiltered => _questionService.qListGlobalFiltered;
 
   //AuthService
 
@@ -325,5 +325,13 @@ class Manager extends ChangeNotifier {
         await _databaseService.uploadQuestions(question: question, isPro: isPro);
       }
     }
+  }
+
+  getFilteredQuestionList({QuestionFilter? filter}) {
+    navigate(Screen.loading);
+    filter ??= QuestionFilter.alphabetical;
+    debugPrint('Filter $filter');
+    _questionService.getFilteredQuestionList(filter);
+    navigate(Screen.listQuestion);
   }
 }

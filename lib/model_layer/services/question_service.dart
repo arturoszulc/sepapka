@@ -23,6 +23,7 @@ class QuestionService {
   bool _hasTodayPracticeListChanged = true; //flag controlling whether to get new TodayPracticeList
   GlobalData? globalData;
   List<Question>? _qListGlobal;
+  List<Question> _qListGlobalFiltered = [];
   List<Question> _qListCurrent = [];
   int _qListCurrentStartLength = 0;
   List<QMap> _todayPracticeList = [];
@@ -34,8 +35,10 @@ class QuestionService {
 
   //Getters
   bool get isSessionFinished => _isSessionFinished;
+
   Question? get currentQuestion => _currentQuestion;
-  List<Question>? get qListGlobalFiltered => _qListGlobal;
+
+  List<Question> get qListGlobalFiltered => _qListGlobalFiltered;
 
   QuestionStatus get qStatus => _qStatus;
 
@@ -48,7 +51,8 @@ class QuestionService {
   //Methods
 
   double getProgressPercentSession() {
-    return (_qListCurrentStartLength - _qListCurrent.length)/_qListCurrentStartLength;
+    return (_qListCurrentStartLength - _qListCurrent.length) /
+        _qListCurrentStartLength;
   }
 
   int howManyToPracticeToday() {
@@ -64,17 +68,20 @@ class QuestionService {
     try {
       globalData = await _databaseService.getGlobalData();
     }
-    catch(e) {
+    catch (e) {
       debugPrint(e.toString());
       return Failure(errorGetGlobalData);
     }
     //if GlobalData is retrieved, proceed
 
     //send current rank names and thresholds to userService
-    _userService.prepareRanks(globalData!.rankNames, globalData!.rankThresholds);
+    _userService.prepareRanks(
+        globalData!.rankNames, globalData!.rankThresholds);
 
     //Set questionVersion
-    int? qVersion = _userService.loggedUser!.isPro ? globalData!.qVersionPro : globalData!.qVersionFree;
+    int? qVersion = _userService.loggedUser!.isPro
+        ? globalData!.qVersionPro
+        : globalData!.qVersionFree;
     // if (qVersion is! int) return Failure(errorGetQVersionFromDB);
 
     //after downloading qVersion from DB, compare it with local LoggedUser.qVersion.
@@ -98,16 +105,20 @@ class QuestionService {
   Future<Object> getGlobalQuestionList(bool compareResult) async {
     // if User has qVersion up to date, try to take questions from JSON file
     if (compareResult == true) {
-      Object getLocalQuestionResult = await _fileService.getQuestionListFromFile();
-      if (getLocalQuestionResult is List<Question>) return getLocalQuestionResult;
+      Object getLocalQuestionResult = await _fileService
+          .getQuestionListFromFile();
+      if (getLocalQuestionResult is List<Question>)
+        return getLocalQuestionResult;
     }
 
     //if user has outdated qVersion, or couldn't read file, download questions from DB
     List<Question>? questionListFromDB =
-        await _databaseService.getQuestionList(isPro: _userService.loggedUser!.isPro);
+    await _databaseService.getQuestionList(
+        isPro: _userService.loggedUser!.isPro);
     if (questionListFromDB == null) return Failure(errorGetQListFromDB);
     //save questions to local JSON file
-    Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(questionListFromDB);
+    Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(
+        questionListFromDB);
     if (saveQuestionToFileResult is Failure) return saveQuestionToFileResult;
     return questionListFromDB;
   }
@@ -121,9 +132,12 @@ class QuestionService {
       //set QuestionStatus
       _qStatus = QuestionStatus.rightAnswer;
       //set button color
-      _bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
+      _bMapList
+          .firstWhere((element) => element.answer == answer)
+          .color = rightButtonColor;
       //move question to Practice List
-      _userService.moveQMapToPractice(_currentQuestion!.id, qType, qLevel, true);
+      _userService.moveQMapToPractice(
+          _currentQuestion!.id, qType, qLevel, true);
     }
     //if wrong answer
     else {
@@ -132,9 +146,13 @@ class QuestionService {
 
       _qStatus = QuestionStatus.wrongAnswer;
       //set wrong button
-      _bMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
+      _bMapList
+          .firstWhere((element) => element.answer == answer)
+          .color = wrongButtonColor;
       //set right button
-      _bMapList.firstWhere((element) => element.answer == _currentQuestion!.a1).color =
+      _bMapList
+          .firstWhere((element) => element.answer == _currentQuestion!.a1)
+          .color =
           rightButtonColor;
       //move question to the end of it's list, to try again
       if (_qType == QuestionType.newQuestion) {
@@ -144,12 +162,14 @@ class QuestionService {
       }
       if (_qType == QuestionType.practiceQuestion) {
         //move but do not update date or fibNum
-        _userService.moveQMapToPractice(_currentQuestion!.id, qType, qLevel, false);
+        _userService.moveQMapToPractice(
+            _currentQuestion!.id, qType, qLevel, false);
       }
     }
   }
 
-  prepareCurrentSessionData({required QuestionType qType, required int qLevel}) async {
+  prepareCurrentSessionData(
+      {required QuestionType qType, required int qLevel}) async {
     //set question type
     _qType = qType;
     //set question level
@@ -174,7 +194,8 @@ class QuestionService {
       qMapList = _todayPracticeList;
     }
     for (QMap qMap in qMapList) {
-      _qListCurrent.add(_qListGlobal!.firstWhere((question) => question.id == qMap.id));
+      _qListCurrent.add(
+          _qListGlobal!.firstWhere((question) => question.id == qMap.id));
     }
     //set starting length of _qListCurrent for session progress bar
     _qListCurrentStartLength = _qListCurrent.length;
@@ -192,9 +213,10 @@ class QuestionService {
       createBMap();
       return Success();
     } else {
-    //if not
+      //if not
       //if it was practice session, note the change
-      if (qType == QuestionType.practiceQuestion) _hasTodayPracticeListChanged = true;
+      if (qType == QuestionType.practiceQuestion)
+        _hasTodayPracticeListChanged = true;
       _currentQuestion = null;
       _isSessionFinished = true;
       //give user points
@@ -224,7 +246,7 @@ class QuestionService {
   doNotShowThisQuestionAnymore() async {
     //remove question from _qListCurrent
     if (_qStatus == QuestionStatus.noAnswer) {
-     //if question wasnt answered, remove if from current list
+      //if question wasnt answered, remove if from current list
       _qListCurrent.removeAt(0);
       //else it means question was already removed, so dont do it
     }
@@ -238,6 +260,53 @@ class QuestionService {
     //update qNewList
     await _userService.updateQNewLists(_qListGlobal!);
     return Success();
+  }
+
+  getFilteredQuestionList(QuestionFilter filter) {
+    _qListGlobalFiltered.clear();
+    debugPrint('QlistGlobal length: ${_qListGlobal!.length}');
+    switch (filter) {
+      case QuestionFilter.alphabetical:
+        debugPrint('Sorting question alphabetically');
+        _qListGlobalFiltered = _qListGlobal!;
+        _qListGlobalFiltered.sort((a, b) => a.q.compareTo(b.q));
+        break;
+      case QuestionFilter.allNew:
+      // TODO: Handle this case.
+        break;
+      case QuestionFilter.allPractice:
+      // TODO: Handle this case.
+        break;
+      case QuestionFilter.allNotShown:
+        debugPrint('Filtering NotShown Questions');
+        _qListGlobal!.map((e) {
+          if (_userService.isQuestionInNotShownList(e.id) != null) {
+            _qListGlobalFiltered.add(e);
+          }
+        });
+        break;
+      case QuestionFilter.level1:
+      // TODO: Handle this case.
+        break;
+      case QuestionFilter.level2:
+      // TODO: Handle this case.
+        break;
+      case QuestionFilter.level3:
+      // TODO: Handle this case.
+        break;
+      case QuestionFilter.label1:
+      // TODO: Handle this case.
+        break;
+      case QuestionFilter.label2:
+      // TODO: Handle this case.
+        break;
+      case QuestionFilter.label3:
+      // TODO: Handle this case.
+        break;
+      case QuestionFilter.label4:
+      // TODO: Handle this case.
+        break;
+    }
   }
 
 }

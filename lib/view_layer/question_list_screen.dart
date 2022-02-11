@@ -5,14 +5,18 @@ import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
+import 'custom_widgets/question_list_filter_menu.dart';
+
 class QuestionListScreen extends StatelessWidget {
   const QuestionListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final manager = Provider.of<Manager>(context);
-    final List<Question>? qListGlobal = manager.qListGlobalFiltered;
+    debugPrint('*** QuestionListScreen built');
 
+    final manager = Provider.of<Manager>(context);
+    final List<Question> qListGlobalFiltered = manager.qListGlobalFiltered;
+    debugPrint('Dlugosc listy: ${qListGlobalFiltered.length.toString()}');
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -20,22 +24,22 @@ class QuestionListScreen extends StatelessWidget {
           onPressed: () => context.read<Manager>().navigate(Screen.menu),
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.filter_list),),
+          buildFilterMenu(),
         ],
         title: const Text('Lista pytań'),
         elevation: 0.0,
       ),
       body: ListView.builder(
-          itemCount: qListGlobal!.length,
+          itemCount: qListGlobalFiltered.length,
           itemBuilder: (BuildContext context, int index) {
             return Card(
               child: ListTile(
                 contentPadding: const EdgeInsets.all(10.0),
                 title: Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Text(qListGlobal[index].q, style: const TextStyle()),
+                  child: Text(qListGlobalFiltered[index].q, style: const TextStyle()),
                 ),
-                subtitle: buildSubtitle(qListGlobal[index]),
+                subtitle: buildSubtitle(qListGlobalFiltered[index]),
                 // Row(
                 //   children: //[Text('111'),Text('111'),]
                 //   createSubtitle(qList[index], labelColors)

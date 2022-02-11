@@ -67,7 +67,7 @@ class MenuScreen extends StatelessWidget {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            context.read<Manager>().navigate(Screen.listQuestion);
+                            context.read<Manager>().getFilteredQuestionList();
                             // Navigator.pushNamed(context, '/question-list');
                           },
                           child: Text('Lista pytań'),
@@ -89,7 +89,8 @@ class MenuScreen extends StatelessWidget {
                 'LoggedUser qNotShown: ${context.read<Manager>().loggedUser!.qListNotShown.length}'),
             Text(
                 'LoggedUser is Pro: ${context.read<Manager>().loggedUser!.isPro.toString()}'),
-
+            Text(
+                'qListFiltered length: ${context.read<Manager>().qListGlobalFiltered.length.toString()}'),
             const SizedBox(height: 100.0),
             buildProgressBar(context),
             const SizedBox(height: 20),
