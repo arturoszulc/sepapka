@@ -1,9 +1,12 @@
 import 'package:sepapka/model_layer/models/question.dart';
 
+
+//przycisk dodający pytania to SIGN OUT
+
 final questionListDB = [
   Question(
       id: "epoDl89w4G4cRcNFrG7Y",
-      q: "Uziemiony przewód instalacji, przez który w warunkach normalnych nie płynie prąd roboczy to przewód:",
+      q: "Przez który z wymienionych przewodów, w warunkach normalnych, nie płynie prąd:",
       a1: "ochronny PE",
       a2: "neutralny N",
       a3: "fazowy L",
@@ -58,7 +61,7 @@ final questionListDB = [
       a2: "brązową, czarną, czerwoną",
       a3: "czarną, szarą, białą",
       a4: "żółtą, zieloną, białą",
-      labels: [""],
+      labels: ["sieci niskiego napięcia"],
       level: 1,
       assetPath: ""),
   Question(

@@ -7,6 +7,7 @@ import 'package:sepapka/model_layer/services/file_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
+import 'package:sepapka/utils/consts/question.dart';
 
 import '../../locator.dart';
 import '../models/question.dart';
@@ -34,6 +35,7 @@ class QuestionService {
   //Getters
   bool get isSessionFinished => _isSessionFinished;
   Question? get currentQuestion => _currentQuestion;
+  List<Question>? get qListGlobalFiltered => _qListGlobal;
 
   QuestionStatus get qStatus => _qStatus;
 

@@ -12,6 +12,7 @@ import 'package:sepapka/model_layer/services/question_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
+import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/utils/question_list.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 
@@ -41,6 +42,8 @@ class Manager extends ChangeNotifier {
   String get infoMsg => _infoMsg;
 
   //External Getters
+
+  //UserService
   LoggedUser? get loggedUser => _userService.loggedUser;
 
   String get progressPercentGlobal => _userService.getProgressPercentGlobal();
@@ -57,6 +60,8 @@ class Manager extends ChangeNotifier {
 
   String get userRankName => _userService.userRankName;
 
+  //Question Service
+
   int get howManyToPracticeToday => _questionService.howManyToPracticeToday();
 
   double get progressPercentSession => _questionService.getProgressPercentSession();
@@ -68,6 +73,10 @@ class Manager extends ChangeNotifier {
   QuestionType get qType => _questionService.qType;
 
   List<BMap> get bMapList => _questionService.bMapList;
+
+  List<Question>? get qListGlobalFiltered => _questionService.qListGlobalFiltered;
+
+  //AuthService
 
   Stream<User?> get authUser => _authService.auth.authStateChanges();
 

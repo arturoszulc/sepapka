@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 
-//Enums
-enum QuestionStatus { noAnswer, rightAnswer, wrongAnswer }
-enum QuestionType { newQuestion, practiceQuestion }
 
-//Fibonacci series
-const List<int> fibSeries = [0, 1, 2, 3, 5, 8, 13, 21];
 
 // const List<String> rankNames = ['uczeń','praktykant','elektryk'];
 // const List<int> rankUpgradeThresholds = [4,8,50];
 
-//Question labels - to be rebuilt
-const label1 = 'nowy';
+
 
 //Button colors
 const Color normalButtonColor = Colors.yellow;
@@ -48,9 +42,7 @@ const String globalDataRankNames = 'rankNames';
 const String globalDataRankThresholds = 'rankThresholds';
 
 
-Map<String, Color?> labelColors = {
-  label1: Colors.blue,
-};
+
 
 
 //////Errors

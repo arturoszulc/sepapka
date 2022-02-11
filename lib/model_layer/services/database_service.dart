@@ -120,7 +120,7 @@ class DatabaseService {
       'a2': question.a2,
       'a3': question.a3,
       'a4': question.a4,
-      'labels': [],
+      'labels': question.labels,
       'level': question.level,
       'assetPath': question.assetPath,
     });
