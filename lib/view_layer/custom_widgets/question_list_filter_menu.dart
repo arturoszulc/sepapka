@@ -11,11 +11,47 @@ Widget buildFilterMenu() {
     itemBuilder: (context) => [
       PopupMenuItem(
         onTap: () => context.read<Manager>().getFilteredQuestionList(filter: QuestionFilter.alphabetical),
-        child: const Text('brak'),
+        child: const Text('wszystkie'),
+      ),
+      PopupMenuItem(
+        onTap: () => context.read<Manager>().getFilteredQuestionList(filter: QuestionFilter.allNew),
+        child: const Text('tylko nowe'),
+      ),
+      PopupMenuItem(
+        onTap: () => context.read<Manager>().getFilteredQuestionList(filter: QuestionFilter.allPractice),
+        child: const Text('tylko powtórki'),
       ),
       PopupMenuItem(
       onTap: () => context.read<Manager>().getFilteredQuestionList(filter: QuestionFilter.allNotShown),
         child: const Text('tylko ukryte'),
+      ),
+      PopupMenuItem(
+        onTap: () => context.read<Manager>().getFilteredQuestionList(filter: QuestionFilter.level1),
+        child: const Text('tylko lvl 1'),
+      ),
+      PopupMenuItem(
+        onTap: () => context.read<Manager>().getFilteredQuestionList(filter: QuestionFilter.level2),
+        child: const Text('tylko lvl 2'),
+      ),
+      PopupMenuItem(
+        onTap: () => context.read<Manager>().getFilteredQuestionList(filter: QuestionFilter.level3),
+        child: const Text('tylko lvl 3'),
+      ),
+      PopupMenuItem(
+        onTap: () => context.read<Manager>().getFilteredQuestionList(filter: QuestionFilter.labelName1),
+        child: const Text('kat. $labelName1'),
+      ),
+      PopupMenuItem(
+        onTap: () => context.read<Manager>().getFilteredQuestionList(filter: QuestionFilter.labelName2),
+        child: const Text('kat. $labelName2'),
+      ),
+      PopupMenuItem(
+        onTap: () => context.read<Manager>().getFilteredQuestionList(filter: QuestionFilter.labelName3),
+        child: const Text('kat. $labelName3'),
+      ),
+      PopupMenuItem(
+        onTap: () => context.read<Manager>().getFilteredQuestionList(filter: QuestionFilter.labelName4),
+        child: const Text('kat. $labelName4'),
       ),
     ],
   );

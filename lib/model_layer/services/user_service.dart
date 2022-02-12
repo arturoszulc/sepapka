@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+// import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
@@ -374,6 +376,17 @@ class UserService {
     } catch (e) {
       debugPrint(e.toString());
       return Failure(errorDbGeneric);
+    }
+  }
+  Widget getQListIcon(String qId) {
+    if (isQuestionInPracticeList(qId) != null) {
+      return qListIcons['practice']!;
+    }
+    if (isQuestionInNotShownList(qId) != null) {
+      return qListIcons['notShown']!;
+    }
+    else {
+      return qListIcons['new']!;
     }
   }
 }

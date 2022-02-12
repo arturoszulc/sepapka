@@ -1,5 +1,6 @@
 import 'dart:async';
-
+// import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart'; //iconData is from here
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sepapka/locator.dart';
@@ -71,6 +72,8 @@ class Manager extends ChangeNotifier {
   QuestionStatus get qStatus => _questionService.qStatus;
 
   QuestionType get qType => _questionService.qType;
+
+  QuestionFilter get qFilter => _questionService.qFilter;
 
   List<BMap> get bMapList => _questionService.bMapList;
 
@@ -328,10 +331,14 @@ class Manager extends ChangeNotifier {
   }
 
   getFilteredQuestionList({QuestionFilter? filter}) {
+    if (filter == qFilter) return;
     navigate(Screen.loading);
     filter ??= QuestionFilter.alphabetical;
     debugPrint('Filter $filter');
     _questionService.getFilteredQuestionList(filter);
     navigate(Screen.listQuestion);
+  }
+  Widget getQuestionIcon(String qId) {
+    return _userService.getQListIcon(qId);
   }
 }

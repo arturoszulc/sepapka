@@ -20,7 +20,8 @@ class QuestionService {
 
   //Properties
   bool _isSessionFinished = false;
-  bool _hasTodayPracticeListChanged = true; //flag controlling whether to get new TodayPracticeList
+  bool _hasTodayPracticeListChanged =
+      true; //flag controlling whether to get new TodayPracticeList
   GlobalData? globalData;
   List<Question>? _qListGlobal;
   List<Question> _qListGlobalFiltered = [];
@@ -30,6 +31,7 @@ class QuestionService {
   Question? _currentQuestion;
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
   QuestionType _qType = QuestionType.newQuestion;
+  QuestionFilter _qFilter = QuestionFilter.alphabetical;
   int _qLevel = 0;
   List<BMap> _bMapList = []; //shuffled list of answers & colors for buttons
 
@@ -43,6 +45,8 @@ class QuestionService {
   QuestionStatus get qStatus => _qStatus;
 
   QuestionType get qType => _qType;
+
+  QuestionFilter get qFilter => _qFilter;
 
   int get qLevel => _qLevel;
 
@@ -67,8 +71,7 @@ class QuestionService {
     //Get GlobalData from DB
     try {
       globalData = await _databaseService.getGlobalData();
-    }
-    catch (e) {
+    } catch (e) {
       debugPrint(e.toString());
       return Failure(errorGetGlobalData);
     }
@@ -105,20 +108,19 @@ class QuestionService {
   Future<Object> getGlobalQuestionList(bool compareResult) async {
     // if User has qVersion up to date, try to take questions from JSON file
     if (compareResult == true) {
-      Object getLocalQuestionResult = await _fileService
-          .getQuestionListFromFile();
+      Object getLocalQuestionResult =
+          await _fileService.getQuestionListFromFile();
       if (getLocalQuestionResult is List<Question>)
         return getLocalQuestionResult;
     }
 
     //if user has outdated qVersion, or couldn't read file, download questions from DB
-    List<Question>? questionListFromDB =
-    await _databaseService.getQuestionList(
+    List<Question>? questionListFromDB = await _databaseService.getQuestionList(
         isPro: _userService.loggedUser!.isPro);
     if (questionListFromDB == null) return Failure(errorGetQListFromDB);
     //save questions to local JSON file
-    Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(
-        questionListFromDB);
+    Object saveQuestionToFileResult =
+        await _fileService.saveQuestionListToFile(questionListFromDB);
     if (saveQuestionToFileResult is Failure) return saveQuestionToFileResult;
     return questionListFromDB;
   }
@@ -132,9 +134,8 @@ class QuestionService {
       //set QuestionStatus
       _qStatus = QuestionStatus.rightAnswer;
       //set button color
-      _bMapList
-          .firstWhere((element) => element.answer == answer)
-          .color = rightButtonColor;
+      _bMapList.firstWhere((element) => element.answer == answer).color =
+          rightButtonColor;
       //move question to Practice List
       _userService.moveQMapToPractice(
           _currentQuestion!.id, qType, qLevel, true);
@@ -146,14 +147,12 @@ class QuestionService {
 
       _qStatus = QuestionStatus.wrongAnswer;
       //set wrong button
-      _bMapList
-          .firstWhere((element) => element.answer == answer)
-          .color = wrongButtonColor;
+      _bMapList.firstWhere((element) => element.answer == answer).color =
+          wrongButtonColor;
       //set right button
       _bMapList
           .firstWhere((element) => element.answer == _currentQuestion!.a1)
-          .color =
-          rightButtonColor;
+          .color = rightButtonColor;
       //move question to the end of it's list, to try again
       if (_qType == QuestionType.newQuestion) {
         //if question was new, there's no point in updateing database
@@ -194,8 +193,8 @@ class QuestionService {
       qMapList = _todayPracticeList;
     }
     for (QMap qMap in qMapList) {
-      _qListCurrent.add(
-          _qListGlobal!.firstWhere((question) => question.id == qMap.id));
+      _qListCurrent
+          .add(_qListGlobal!.firstWhere((question) => question.id == qMap.id));
     }
     //set starting length of _qListCurrent for session progress bar
     _qListCurrentStartLength = _qListCurrent.length;
@@ -263,50 +262,87 @@ class QuestionService {
   }
 
   getFilteredQuestionList(QuestionFilter filter) {
+    _qFilter = filter;
     _qListGlobalFiltered.clear();
     debugPrint('QlistGlobal length: ${_qListGlobal!.length}');
     switch (filter) {
       case QuestionFilter.alphabetical:
         debugPrint('Sorting question alphabetically');
-        _qListGlobalFiltered = _qListGlobal!;
+        _qListGlobalFiltered = List.from(_qListGlobal!);
         _qListGlobalFiltered.sort((a, b) => a.q.compareTo(b.q));
         break;
       case QuestionFilter.allNew:
-      // TODO: Handle this case.
+        _qListGlobal!.map((e) {
+          if (_userService.isQuestionInNew1(e.id) != null ||
+              _userService.isQuestionInNew2(e.id) != null ||
+              _userService.isQuestionInNew3(e.id) != null) {
+            _qListGlobalFiltered.add(e);
+          }
+        }).toList();
         break;
       case QuestionFilter.allPractice:
-      // TODO: Handle this case.
+        _qListGlobal!.map((e) {
+          if (_userService.isQuestionInPracticeList(e.id) != null) {
+            _qListGlobalFiltered.add(e);
+          }
+        }).toList();
         break;
       case QuestionFilter.allNotShown:
-        debugPrint('Filtering NotShown Questions');
         _qListGlobal!.map((e) {
           if (_userService.isQuestionInNotShownList(e.id) != null) {
             _qListGlobalFiltered.add(e);
           }
-        });
+        }).toList();
         break;
       case QuestionFilter.level1:
-      // TODO: Handle this case.
+        _qListGlobal!.map((e) {
+          if (e.level == 1) {
+            _qListGlobalFiltered.add(e);
+          }
+        }).toList();
         break;
       case QuestionFilter.level2:
-      // TODO: Handle this case.
+        _qListGlobal!.map((e) {
+          if (e.level == 2) {
+            _qListGlobalFiltered.add(e);
+          }
+        }).toList();
         break;
       case QuestionFilter.level3:
-      // TODO: Handle this case.
+        _qListGlobal!.map((e) {
+          if (e.level == 3) {
+            _qListGlobalFiltered.add(e);
+          }
+        }).toList();
         break;
-      case QuestionFilter.label1:
-      // TODO: Handle this case.
+      case QuestionFilter.labelName1:
+        _qListGlobal!.map((e) {
+          if (e.labels[0] == labelName1) {
+            _qListGlobalFiltered.add(e);
+          }
+        }).toList();
         break;
-      case QuestionFilter.label2:
-      // TODO: Handle this case.
+      case QuestionFilter.labelName2:
+        _qListGlobal!.map((e) {
+          if (e.labels[0] == labelName2) {
+            _qListGlobalFiltered.add(e);
+          }
+        }).toList();
         break;
-      case QuestionFilter.label3:
-      // TODO: Handle this case.
+      case QuestionFilter.labelName3:
+        _qListGlobal!.map((e) {
+          if (e.labels[0] == labelName3) {
+            _qListGlobalFiltered.add(e);
+          }
+        }).toList();
         break;
-      case QuestionFilter.label4:
-      // TODO: Handle this case.
+      case QuestionFilter.labelName4:
+        _qListGlobal!.map((e) {
+          if (e.labels[0] == labelName4) {
+            _qListGlobalFiltered.add(e);
+          }
+        }).toList();
         break;
     }
   }
-
 }

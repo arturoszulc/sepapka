@@ -35,11 +35,8 @@ class QuestionListScreen extends StatelessWidget {
             return Card(
               child: ListTile(
                 contentPadding: const EdgeInsets.all(10.0),
-                title: Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Text(qListGlobalFiltered[index].q, style: const TextStyle()),
-                ),
-                subtitle: buildSubtitle(qListGlobalFiltered[index]),
+                title: buildTitle(qListGlobalFiltered[index]),
+                subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
                 // Row(
                 //   children: //[Text('111'),Text('111'),]
                 //   createSubtitle(qList[index], labelColors)
@@ -54,7 +51,28 @@ class QuestionListScreen extends StatelessWidget {
   }
 }
 
-Widget buildSubtitle(Question q) {
+Widget buildTitle(Question q) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 8.0),
+    child: Row(
+      // mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+            flex: 7,
+            child: Text(q.q, style: const TextStyle())),
+        Expanded(
+          child: Text('lvl ${q.level.toString()}',
+            textAlign: TextAlign.right,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget buildSubtitle(BuildContext context, Question q) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -71,10 +89,8 @@ Widget buildSubtitle(Question q) {
             ),
           ),
           color: labelColors[q.labels[0]]),
-      const Icon(
-        Icons.check,
-        color: Colors.green,
-      ),
+      context.read<Manager>().getQuestionIcon(q.id),
+
       // SizedBox(width: 15.0),
       // Icon(Icons.new_releases, color: Colors.grey),
     ],
