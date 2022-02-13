@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:sepapka/model_layer/models/global_data.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
+import 'package:sepapka/model_layer/models/rank_user.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/utils/methods.dart';
 
@@ -15,29 +16,30 @@ class DatabaseService {
   final CollectionReference questionsFreeCollection =
       FirebaseFirestore.instance.collection('questionsFree');
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
-
+  final Query usersRankQuery =
+      FirebaseFirestore.instance.collection('users').orderBy('rankTotalPoints', descending: true).limit(10);
 
   // //UPDATE USER DATA
   // DO NOT USE ASYNC/AWAIT on SET function, because when device is offline, it won't return
   // anything and app will freeze
   Future<void> updateUser(LoggedUser user) {
     debugPrint('/// DB: writing USER doc... ///');
-    return usersCollection.doc(user.documentId).set({
-      userQVersion: user.qVersion,
-      userUsername: user.username,
-      userIsPro: user.isPro,
-      userRankLevel: user.rankLevel,
-      userRankTotalPoints: user.rankTotalPoints,
-      userQListNew1: user.qListNew1.map((e) => e.convertToMap()).toList(),
-      userQListNew2: user.qListNew2.map((e) => e.convertToMap()).toList(),
-      userQListNew3: user.qListNew3.map((e) => e.convertToMap()).toList(),
-      userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
-      userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),
-    }).then((value) => debugPrint('/// DB: User updated ///'))
+    return usersCollection
+        .doc(user.documentId)
+        .set({
+          userQVersion: user.qVersion,
+          userUsername: user.username,
+          userIsPro: user.isPro,
+          userRankLevel: user.rankLevel,
+          userRankTotalPoints: user.rankTotalPoints,
+          userQListNew1: user.qListNew1.map((e) => e.convertToMap()).toList(),
+          userQListNew2: user.qListNew2.map((e) => e.convertToMap()).toList(),
+          userQListNew3: user.qListNew3.map((e) => e.convertToMap()).toList(),
+          userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
+          userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),
+        })
+        .then((value) => debugPrint('/// DB: User updated ///'))
         .catchError((error) => debugPrint("DB: Failed to update user: $error"));
-
-
-
   }
 
   // GET LOGGED USER DATA
@@ -84,7 +86,7 @@ class DatabaseService {
       rankThresholds: List<int>.from(doc.get(globalDataRankThresholds)),
     );
   }
-  
+
   // //Get question version
   // Future<int?> getQuestionVersion({required bool isPro}) async {
   //   var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
@@ -125,4 +127,17 @@ class DatabaseService {
       'assetPath': question.assetPath,
     });
   }
+
+  List<RankUser> _usersRankTop(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return RankUser(
+          documentId: doc.id,
+          username: doc.get(userUsername),
+          rankLevel: doc.get(userRankLevel),
+          rankTotalPoints: doc.get(userRankTotalPoints));
+    }).toList();
+  }
+
+Stream<List<RankUser>> get usersRankTop => usersRankQuery.snapshots().map(_usersRankTop);
+
 }

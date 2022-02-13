@@ -6,6 +6,7 @@ import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
 import 'package:sepapka/view_layer/menu/menu_choose_level.dart';
 import 'package:sepapka/view_layer/question_list_screen.dart';
 import 'package:sepapka/view_layer/question_single_screen.dart';
+import 'package:sepapka/view_layer/ranking/user_ranking_screen.dart';
 import 'package:sepapka/view_layer/session_finished_screen.dart';
 import 'package:sepapka/view_layer/user_settings/change_user_data_screen.dart';
 import 'package:sepapka/view_layer/user_settings/settings_main_screen.dart';
@@ -138,6 +139,9 @@ class Wrapper extends StatelessWidget {
         break;
       case Screen.listQuestion:
         return QuestionListScreen();
+        break;
+      case Screen.userRank:
+        return UserRankScreen();
         break;
     }
   }

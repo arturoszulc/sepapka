@@ -37,12 +37,7 @@ class QuestionListScreen extends StatelessWidget {
                 contentPadding: const EdgeInsets.all(10.0),
                 title: buildTitle(qListGlobalFiltered[index]),
                 subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
-                // Row(
-                //   children: //[Text('111'),Text('111'),]
-                //   createSubtitle(qList[index], labelColors)
-                // ),
                 onTap: () {
-                  // Navigator.pushNamed(context, '/question-single', arguments: {'id': qList[index].id});
                 },
               ),
             );

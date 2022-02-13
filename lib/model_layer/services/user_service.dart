@@ -77,7 +77,7 @@ class UserService {
         documentId: userId,
         username: 'uczeń-' + getRandomString(5),
         isPro: false,
-        rankLevel: 1,
+        rankLevel: 0,
         rankTotalPoints: 0,
         qVersion: 0,
         qListNew1: [],

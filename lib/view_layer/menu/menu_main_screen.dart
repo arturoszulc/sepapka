@@ -67,7 +67,9 @@ class MenuScreen extends StatelessWidget {
                             onPressed: () {
                               context.read<Manager>().getFilteredQuestionList();
                             }),
-                        MenuButton(label: 'Ranking', onPressed: () {})
+                        MenuButton(label: 'Ranking', onPressed: () {
+                          context.read<Manager>().navigate(Screen.userRank);
+                        })
                       ],
                     ),
                   ),

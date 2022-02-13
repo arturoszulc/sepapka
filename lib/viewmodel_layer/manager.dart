@@ -7,6 +7,7 @@ import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question.dart';
+import 'package:sepapka/model_layer/models/rank_user.dart';
 import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/question_service.dart';
@@ -82,6 +83,10 @@ class Manager extends ChangeNotifier {
   //AuthService
 
   Stream<User?> get authUser => _authService.auth.authStateChanges();
+
+
+  //DatabaseService
+  Stream<List<RankUser>> get userRankTop => _databaseService.usersRankTop;
 
   Manager() {
     //on initialize, subscribe to stream that checks if user is logged in or not
