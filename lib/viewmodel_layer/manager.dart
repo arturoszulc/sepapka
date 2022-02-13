@@ -87,6 +87,7 @@ class Manager extends ChangeNotifier {
 
   //DatabaseService
   Stream<List<RankUser>> get userRankTop => _databaseService.usersRankTop;
+  Stream<List<RankUser>?> get userRankUser => _databaseService.userRankUser;
 
   Manager() {
     //on initialize, subscribe to stream that checks if user is logged in or not

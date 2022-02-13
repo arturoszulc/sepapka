@@ -9,9 +9,6 @@ class UserRankScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<RankUser>?>(
-        stream: context.read<Manager>().userRankTop,
-        builder: (context, snapshot) {
           return DefaultTabController(
             length: 2,
             child: Scaffold(
@@ -31,68 +28,120 @@ class UserRankScreen extends StatelessWidget {
               ),
               body: TabBarView(
                   children: [
-                    buildRank(snapshot),
-                    buildRankUser(),
-                    const Text('your position'),
+                    buildRankTop(context),
+                    buildRankUser(context),
               ]
               ),//buildRank(snapshot),
             ),
           );
-        }
-
-    );
+;
   }
 }
 
-Widget buildRankTop() {
-  return
-}
+Widget buildRankTop(BuildContext context) {
+  return StreamBuilder<List<RankUser>?>(
+      stream: context.read<Manager>().userRankTop,
+      builder: (context, snapshot) {
+        return !snapshot.hasData ?
+        const Center(
+          child: Text('rank empty'),
+        )
+            : Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView.builder(
+            itemCount: snapshot.data!.length,
+            padding: const EdgeInsets.only(bottom: 70),
+            itemBuilder: (BuildContext context, int index) {
+              List<RankUser> userList = snapshot.data!;
+              return Card(
+                child: ListTile(
+                  leading: Text((index+1).toString()),
+                  title: Text(userList[index].username),
+                  subtitle: Text('${userList[index].rankLevel} - ${userList[index].rankTotalPoints}'),
+                ),
+              );
+            },
 
-
-Widget buildRank(AsyncSnapshot snapshot) {
-  return !snapshot.hasData ?
-  const Center(
-    child: Text('rank empty'),
-  )
-      : Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: ListView(
-      padding: const EdgeInsets.only(bottom: 70),
-      children: snapshot.data.map<Widget>((user) {
-        return Card(
-          child: ListTile(
-            title: Text(user.username),
-            subtitle: Text('${user.rankLevel} - ${user.rankTotalPoints}'),
           ),
         );
-      }).toList(),
-    ),
+      }
+
   );
 }
 
-class BuildRank extends StatelessWidget {
-  const BuildRank({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    final users = Provider.of<List<RankUser>?>(context);
-    return users == null
-        ? const Center(
-            child: Text('rank empty'),
-          )
-        : Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView(
-              padding: const EdgeInsets.only(bottom: 70),
-              children: users.map((user) {
-                return Card(
-                  child: ListTile(
-                    title: Text(user.username),
-                    subtitle: Text('${user.rankLevel} - ${user.rankTotalPoints}'),
-                  ),
-                );
-              }).toList(),
-            ),
-          );
-  }
+Widget buildRankUser(BuildContext context) {
+  return StreamBuilder<List<RankUser>?>(
+      stream: context.read<Manager>().userRankUser,
+      builder: (context, snapshot) {
+        return !snapshot.hasData ?
+        const Center(
+          child: Text('rank empty'),
+        )
+            : Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            padding: const EdgeInsets.only(bottom: 70),
+            children: snapshot.data!.map<Widget>((user) {
+              return Card(
+                child: ListTile(
+                  title: Text(user.username),
+                  subtitle: Text('${user.rankLevel} - ${user.rankTotalPoints}'),
+                ),
+              );
+            }).toList(),
+          ),
+        );
+      }
+
+  );
 }
+
+
+// Widget buildRank(AsyncSnapshot snapshot) {
+//   return !snapshot.hasData ?
+//   const Center(
+//     child: Text('rank empty'),
+//   )
+//       : Padding(
+//     padding: const EdgeInsets.all(8.0),
+//     child: ListView(
+//       padding: const EdgeInsets.only(bottom: 70),
+//       children: snapshot.data.map<Widget>((user) {
+//         return Card(
+//           child: ListTile(
+//             title: Text(user.username),
+//             subtitle: Text('${user.rankLevel} - ${user.rankTotalPoints}'),
+//           ),
+//         );
+//       }).toList(),
+//     ),
+//   );
+// }
+//
+// class BuildRank extends StatelessWidget {
+//   const BuildRank({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final users = Provider.of<List<RankUser>?>(context);
+//     return users == null
+//         ? const Center(
+//             child: Text('rank empty'),
+//           )
+//         : Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: ListView(
+//               padding: const EdgeInsets.only(bottom: 70),
+//               children: users.map((user) {
+//                 return Card(
+//                   child: ListTile(
+//                     title: Text(user.username),
+//                     subtitle: Text('${user.rankLevel} - ${user.rankTotalPoints}'),
+//                   ),
+//                 );
+//               }).toList(),
+//             ),
+//           );
+//   }
+// }

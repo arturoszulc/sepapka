@@ -10,6 +10,8 @@ import 'package:sepapka/utils/methods.dart';
 import '../models/question.dart';
 
 class DatabaseService {
+
+
   final CollectionReference dataCollection = FirebaseFirestore.instance.collection('data');
   final CollectionReference questionsProCollection =
       FirebaseFirestore.instance.collection('questionsPro');
@@ -18,6 +20,7 @@ class DatabaseService {
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
   final Query usersRankQuery =
       FirebaseFirestore.instance.collection('users').orderBy('rankTotalPoints', descending: true).limit(10);
+
 
   // //UPDATE USER DATA
   // DO NOT USE ASYNC/AWAIT on SET function, because when device is offline, it won't return
@@ -137,7 +140,18 @@ class DatabaseService {
           rankTotalPoints: doc.get(userRankTotalPoints));
     }).toList();
   }
+  List<RankUser>? _usersRankUser(QuerySnapshot snapshot) {
+    return null;
+    // return snapshot.docs.map((doc) {
+    //   return RankUser(
+    //       documentId: doc.id,
+    //       username: doc.get(userUsername),
+    //       rankLevel: doc.get(userRankLevel),
+    //       rankTotalPoints: doc.get(userRankTotalPoints));
+    // }).toList();
+  }
+
 
 Stream<List<RankUser>> get usersRankTop => usersRankQuery.snapshots().map(_usersRankTop);
-
+Stream<List<RankUser>?> get userRankUser => usersRankQuery.snapshots().map(_usersRankUser);
 }
