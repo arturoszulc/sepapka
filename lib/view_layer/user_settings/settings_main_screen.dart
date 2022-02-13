@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sepapka/model_layer/models/global_data.dart';
+import 'package:sepapka/utils/consts.dart';
+import 'package:sepapka/view_layer/custom_widgets/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/nav_manager.dart';
 import 'package:sepapka/utils/consts/nav.dart';
@@ -67,31 +70,45 @@ class SettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20.0),
+          Text('Twoja ranga: ${context.read<Manager>().userRankName}'),
           Text('Liczba punktów: ${context.read<Manager>().loggedUser!.rankTotalPoints}'),
           const SizedBox(height: 20.0),
-          ElevatedButton(
-            onPressed: () async {
-              var result = await goProDialog(context);
-              if (result) await context.read<Manager>().goPro(!context.read<Manager>().loggedUser!.isPro);
-              // Navigator.pop(context);
-            },
-            child: context.read<Manager>().loggedUser!.isPro ? const Text('Go FREE') : const Text('Go PRO'),
-          ),
+          MenuButton(
+              label: context.read<Manager>().loggedUser!.isPro ? 'Go FREE' : 'Go PRO',
+              onPressed: () async {
+                var result = await goProDialog(context);
+                if (result) await context.read<Manager>().goPro(!context.read<Manager>().loggedUser!.isPro);
+              },),
           const SizedBox(height: 20.0),
-          ElevatedButton(
-            onPressed: () {
-              context.read<Manager>().resetUserProgress();
-            },
-            child: const Text('Reset User Data'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              await context.read<Manager>().signOut();
-              // Navigator.pop(context);
-              // context.read<Manager>().addQuestionsToDb(isPro: false);
-            },
-            child: const Text('Sign Out'),
-          ),
+          MenuButton(label: 'Reset User Data', onPressed: () {
+            context.read<Manager>().resetUserProgress();
+          },),
+          MenuButton(label: 'Sign Out', onPressed: () async {
+            await context.read<Manager>().signOut();
+            // context.read<Manager>().addQuestionsToDb(isPro: false);
+          },)
+          // ElevatedButton(
+          //   onPressed: () async {
+          //     var result = await goProDialog(context);
+          //     if (result) await context.read<Manager>().goPro(!context.read<Manager>().loggedUser!.isPro);
+          //     // Navigator.pop(context);
+          //   },
+          //   child: context.read<Manager>().loggedUser!.isPro ? const Text('Go FREE') : const Text('Go PRO'),
+          // ),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     context.read<Manager>().resetUserProgress();
+          //   },
+          //   child: const Text('Reset User Data'),
+          // ),
+          // ElevatedButton(
+          //   onPressed: () async {
+          //     await context.read<Manager>().signOut();
+          //     // Navigator.pop(context);
+          //     // context.read<Manager>().addQuestionsToDb(isPro: false);
+          //   },
+          //   child: const Text('Sign Out'),
+          // ),
         ],
       ),
     );

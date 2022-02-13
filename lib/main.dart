@@ -12,7 +12,6 @@ import 'package:sepapka/view_layer/user_settings/change_user_data_screen.dart';
 import 'package:sepapka/view_layer/user_settings/settings_main_screen.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
-import 'package:sepapka/viewmodel_layer/nav_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding

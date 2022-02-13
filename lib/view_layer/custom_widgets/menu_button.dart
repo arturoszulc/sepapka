@@ -18,18 +18,23 @@ class MenuButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Badge(
-      badgeContent: Text(badgeNum.toString(),
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Badge(
+        badgeContent: Text(badgeNum.toString(),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      ),
-      toAnimate: false,
-      badgeColor: Colors.blue,
-      showBadge: hasBadge && badgeNum > 0 ? true : false,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        child: Text(label),
+        toAnimate: false,
+        badgeColor: Colors.blue,
+        showBadge: hasBadge && badgeNum > 0 ? true : false,
+        child: ElevatedButton(
+      style: ElevatedButton.styleFrom(
+      minimumSize: const Size.fromHeight(50)),
+          onPressed: onPressed,
+          child: Text(label),
+        ),
       ),
     );
   }
