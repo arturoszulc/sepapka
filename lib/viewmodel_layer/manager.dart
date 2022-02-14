@@ -194,6 +194,15 @@ class Manager extends ChangeNotifier {
     if (registerResult is Success) setError(null);
   }
 
+  signInWithGoogle() async {
+    Object signInGoogleResunt = await _authService.signInGoogle();
+    if (signInGoogleResunt is Failure) {
+      setError(signInGoogleResunt);
+      navigate(Screen.signIn);
+    }
+    if (signInGoogleResunt is Success) setError(null);
+  }
+
   signOut() async {
     Object signOutResult = await _authService.signOut();
     if (signOutResult is Failure) {

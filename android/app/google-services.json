@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "249525063892-9s7ac232bebl8p6obhth07t09lihic85.apps.googleusercontent.com",
+          "client_id": "249525063892-escjvv0drq9uliq7e6010haq93m5ad7t.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "teoriaelektryki.pl.sepapka",
-            "certificate_hash": "ac302fa59191905d72c7ad8bb86d2bdf6c0f660b"
+            "certificate_hash": "daaf524a0b8b7b4802bbdda6f75ae1720abf71d9"
           }
         },
         {

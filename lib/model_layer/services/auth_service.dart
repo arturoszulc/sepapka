@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/methods.dart';
 
 class AuthService {
   //Properties
   FirebaseAuth _auth = FirebaseAuth.instance;
+  GoogleSignIn _googleSignIn = GoogleSignIn();
 
   //Constructor - default
   AuthService();
@@ -39,6 +41,24 @@ class AuthService {
       return Failure(getMessageFromErrorCode(e.code));
     }
   }
+
+  Future<Object> signInGoogle() async {
+    try {
+      GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      await _auth.signInWithCredential(credential);
+      return Success();
+    }
+    catch(e) {
+      debugPrint('GOOGLE SIGN IN ERROR: $e');
+      return Failure('Błąd logowania przez Google. Spróbuj ponownie');
+    }
+  }
+
 
   Future<Object> signOut() async {
     try {
