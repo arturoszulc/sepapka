@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
-import 'package:sepapka/viewmodel_layer/nav_manager.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 
 
@@ -45,7 +44,7 @@ class ResetPasswordScreen extends StatelessWidget {
                   //pole EMAIL
                   TextFormField(
                     // controller: emailFieldController,
-                    textInputAction: TextInputAction.next,
+                    textInputAction: TextInputAction.done,
                     decoration: const InputDecoration(
                       labelText: 'Adres e-mail',
                     ),

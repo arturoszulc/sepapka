@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/view_layer/custom_widgets/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
-import 'package:sepapka/viewmodel_layer/nav_manager.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import '../custom_widgets/progress_bar_global.dart';
 

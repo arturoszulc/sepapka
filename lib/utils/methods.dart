@@ -33,3 +33,15 @@ Object validateUsername(String username) {
   if (!regExp.hasMatch(username)) return Failure(usernameCharValidationError);
   return Success();
 }
+
+Object validateRemark(String remark) {
+  //check if length is more than 3 chars
+  if (remark.length < 3) return Failure(errorRemarkTooShort);
+
+  //remark should contain only alphanumeric characters
+  String  pattern = r'^[\s.,!?a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9-]+$';
+  RegExp regExp = RegExp(pattern);
+  if (!regExp.hasMatch(remark)) return Failure(errorRemarkChars);
+  return Success();
+
+}

@@ -4,6 +4,7 @@ import 'package:sepapka/model_layer/models/global_data.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/model_layer/models/rank_user.dart';
+import 'package:sepapka/model_layer/models/remark.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/utils/methods.dart';
 
@@ -18,6 +19,7 @@ class DatabaseService {
   final CollectionReference questionsFreeCollection =
       FirebaseFirestore.instance.collection('questionsFree');
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+  final CollectionReference remarksCollection = FirebaseFirestore.instance.collection('remarks');
   final Query usersRankQuery =
       FirebaseFirestore.instance.collection('users').orderBy('rankTotalPoints', descending: true).limit(10);
 
@@ -149,6 +151,19 @@ class DatabaseService {
     //       rankLevel: doc.get(userRankLevel),
     //       rankTotalPoints: doc.get(userRankTotalPoints));
     // }).toList();
+  }
+
+  Future<void> sendQuestionRemark(Remark remark) {
+    debugPrint('/// DB: writing REMARK doc... ///');
+    return remarksCollection
+        .doc()
+        .set({
+      remarkDate: remark.date,
+      remarkQuestion: remark.question,
+      remarkText: remark.text,
+    })
+        .then((value) => debugPrint('/// DB: Remark sent ///'))
+        .catchError((error) => debugPrint("DB: Failed to create remark: $error"));
   }
 
 

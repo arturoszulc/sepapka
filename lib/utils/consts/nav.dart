@@ -13,5 +13,6 @@ enum Screen {
   listQuestion,
   sessionFinished,
   userRank,
+  remark,
 
 }

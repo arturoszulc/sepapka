@@ -5,13 +5,13 @@ import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
 import 'package:sepapka/view_layer/menu/menu_choose_level.dart';
 import 'package:sepapka/view_layer/question_list_screen.dart';
-import 'package:sepapka/view_layer/question_single_screen.dart';
+import 'package:sepapka/view_layer/question_single/question_single_screen.dart';
+import 'package:sepapka/view_layer/question_single/remark_screen.dart';
 import 'package:sepapka/view_layer/ranking/user_ranking_screen.dart';
-import 'package:sepapka/view_layer/session_finished_screen.dart';
+import 'package:sepapka/view_layer/question_single/session_finished_screen.dart';
 import 'package:sepapka/view_layer/user_settings/change_user_data_screen.dart';
 import 'package:sepapka/view_layer/user_settings/settings_main_screen.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
-import 'package:sepapka/viewmodel_layer/nav_manager.dart';
 
 import 'authenticate/sing_in_screen.dart';
 import 'custom_widgets/dialog_message.dart';
@@ -142,6 +142,9 @@ class Wrapper extends StatelessWidget {
         break;
       case Screen.userRank:
         return UserRankScreen();
+        break;
+      case Screen.remark:
+        return RemarkScreen();
         break;
     }
   }

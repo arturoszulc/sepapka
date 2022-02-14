@@ -1,8 +1,11 @@
 import 'dart:async';
-// import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart'; //iconData is from here
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+
+// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart'; //iconData is from here
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
@@ -13,11 +16,9 @@ import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/question_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
-import 'package:sepapka/utils/consts.dart';
+import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/utils/question_list.dart';
-import 'package:sepapka/utils/consts/nav.dart';
-
 
 class Manager extends ChangeNotifier {
   //Services Injection
@@ -34,13 +35,14 @@ class Manager extends ChangeNotifier {
 
   Screen _currentScreen = Screen.loading;
 
-
   //Manager getters
   bool get loading => _loading;
+
   Screen get currentScreen => _currentScreen;
 
   // bool get newUser => _newUser;
   String get errorMsg => _errorMsg;
+
   String get infoMsg => _infoMsg;
 
   //External Getters
@@ -84,9 +86,9 @@ class Manager extends ChangeNotifier {
 
   Stream<User?> get authUser => _authService.auth.authStateChanges();
 
-
   //DatabaseService
   Stream<List<RankUser>> get userRankTop => _databaseService.usersRankTop;
+
   Stream<List<RankUser>?> get userRankUser => _databaseService.userRankUser;
 
   Manager() {
@@ -107,18 +109,16 @@ class Manager extends ChangeNotifier {
     if (failure == null) {
       _errorMsg = '';
       return;
+    } else {
+      _errorMsg = failure.errorString!;
+      debugPrint('setError debugPrint: $_errorMsg');
+      notifyListeners();
     }
-    else {
-    _errorMsg = failure.errorString!;
-    debugPrint('setError debugPrint: $_errorMsg');
-    notifyListeners();
-  }
   }
 
   setMessage(String msg) {
     _infoMsg = msg;
   }
-
 
   setLoading(bool loading) async {
     debugPrint('/// setLoading deployed ///');
@@ -138,7 +138,6 @@ class Manager extends ChangeNotifier {
         await _userService.logOutUser();
         if (_currentScreen != Screen.signIn) navigate(Screen.signIn);
       }
-
     });
   }
 
@@ -156,13 +155,14 @@ class Manager extends ChangeNotifier {
 
     //next prepare questions
     Object prepareDataResult = await _questionService.prepareGlobalData();
-    if (prepareDataResult is Failure){
+    if (prepareDataResult is Failure) {
       setError(prepareDataResult);
       navigate(Screen.signIn);
       return;
     }
     navigate(Screen.menu);
   }
+
   ////////////////////////
   // METHODS ON DEMAND  //
   ////////////////////////
@@ -179,9 +179,8 @@ class Manager extends ChangeNotifier {
       setError(signInResult);
       navigate(Screen.signIn);
     }
-      if (signInResult is Success) setError(null);
-    }
-
+    if (signInResult is Success) setError(null);
+  }
 
   register({required String email, required String password}) async {
     //start loading app
@@ -194,7 +193,6 @@ class Manager extends ChangeNotifier {
     }
     if (registerResult is Success) setError(null);
   }
-
 
   signOut() async {
     Object signOutResult = await _authService.signOut();
@@ -209,7 +207,8 @@ class Manager extends ChangeNotifier {
     debugPrint('/// manager ResetPassword deployed');
     navigate(Screen.loading);
     //TODO: uncomment the _authService method
-    Object resetPassResult = Failure('Cos poszlo nie tak'); //await _authService.resetPassword(email);
+    Object resetPassResult =
+        Failure('Cos poszlo nie tak'); //await _authService.resetPassword(email);
     if (resetPassResult is Failure) {
       await setError(resetPassResult);
       navigate(Screen.resetPassword);
@@ -217,16 +216,15 @@ class Manager extends ChangeNotifier {
     if (resetPassResult is Success) {
       await setError(null);
       // setLoading(true);
-      await setMessage('Link do zresetowania hasła został wysłany na podany adres e-mail');
+      setMessage('Link do zresetowania hasła został wysłany na podany adres e-mail');
       navigate(Screen.signIn);
     }
-      }
-
+  }
 
   // USER
 
   resetUserProgress() async {
-    // navigate(Screen.loading);
+    navigate(Screen.loading);
     Object resetResult = await _questionService.resetUserProgress();
     if (resetResult is Failure) {
       setError(resetResult);
@@ -235,6 +233,7 @@ class Manager extends ChangeNotifier {
     setMessage('Wszelkie postępy zostały skasowane');
     navigate(Screen.menu);
   }
+
   resetIsUserPromotedFLag() {
     _userService.setIsUserPromoted(false);
   }
@@ -258,8 +257,6 @@ class Manager extends ChangeNotifier {
     navigate(Screen.menu);
   }
 
-
-
   updateUserData(String username) async {
     navigate(Screen.loading);
     Object changeUsernameResult = await _userService.changeUserName(username);
@@ -268,12 +265,11 @@ class Manager extends ChangeNotifier {
       navigate(Screen.changeUserName);
       return;
     }
-    if (changeUsernameResult is Success)
-      {
-        setError(null);
-        navigate(Screen.settings);
-        return;
-      }
+    if (changeUsernameResult is Success) {
+      setError(null);
+      navigate(Screen.settings);
+      return;
+    }
   }
 
   // QUESTIONS
@@ -299,21 +295,44 @@ class Manager extends ChangeNotifier {
   }
 
   getNextQuestion() async {
-  Object nextQuestionResult = await _questionService.getNextQuestion();
-    if (nextQuestionResult is Failure) navigate(Screen.sessionFinished);
-  if (nextQuestionResult is Success) notifyListeners();
+    Object nextQuestionResult = await _questionService.getNextQuestion();
+    if (nextQuestionResult is Success) {
+      notifyListeners();
+    };
+    if (nextQuestionResult is Failure) {
+      //if failure, then no more questions left. End session.
+      await endSession();
+    }
+  }
+
+  endSession() async {
+    Object endResult = await _questionService.endSession();
+    if (endResult is Failure) {
+      setMessage(endResult.errorString.toString());
+      return;
+    }
+    navigate(Screen.sessionFinished);
   }
 
   moveQuestionToNew() {}
 
-  doNotShowThisQuestionAnymore() async {
-    await _questionService.doNotShowThisQuestionAnymore();
-    await getNextQuestion();
-    notifyListeners();
+  doNotShowThisQuestionAnymore() {
+    _questionService.doNotShowThisQuestionAnymore();
+    getNextQuestion();
   }
 
-  sendQuestionRemarks() {
-    debugPrint('/// Przesłano uwagę na temat pytania ///');
+  sendQuestionRemark(String remark) async {
+    debugPrint('sendQuestionRemark deployed');
+    Object sendResult = await _questionService.sendQuestionRemark(remark);
+    if (sendResult is Failure) {
+      setError(sendResult);
+      navigate(Screen.remark);
+    } else {
+      setError(null);
+      debugPrint('/// Przesłano uwagę na temat pytania ///');
+      setMessage('Dziękuję za przesłanie uwagi!');
+      navigate(Screen.singleQuestion);
+    }
   }
 
   // ******* METHODS ON DEMAND ********
@@ -324,12 +343,10 @@ class Manager extends ChangeNotifier {
     if (!isPro) {
       for (var question in questionListDB) {
         if (question.level == 1) {
-          await _databaseService.uploadQuestions(
-            question: question, isPro: isPro);
+          await _databaseService.uploadQuestions(question: question, isPro: isPro);
         }
       }
-    }
-    else {
+    } else {
       for (var question in questionListDB) {
         await _databaseService.uploadQuestions(question: question, isPro: isPro);
       }
@@ -344,6 +361,7 @@ class Manager extends ChangeNotifier {
     _questionService.getFilteredQuestionList(filter);
     navigate(Screen.listQuestion);
   }
+
   Widget getQuestionIcon(String qId) {
     return _userService.getQListIcon(qId);
   }

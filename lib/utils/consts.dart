@@ -41,7 +41,10 @@ const String globalDataQVersionPro = 'qVersionPro';
 const String globalDataRankNames = 'rankNames';
 const String globalDataRankThresholds = 'rankThresholds';
 
-
+//Remark model properties
+const String remarkDate = 'date';
+const String remarkQuestion = 'question';
+const String remarkText = 'text';
 
 
 
@@ -51,6 +54,11 @@ const String globalDataRankThresholds = 'rankThresholds';
 const String usernameCharValidationError = 'Nazwa użytkownika może zawierać tylko litery i cyfry';
 const String usernameLengthError = 'Nazwa użytkownika musi zawierać od 3 do 16 znaków';
 const String usernameTakenError = 'Ta nazwa użytkownika jest już zajęta';
+
+//QuestionService Errors
+const String errorRemarkTooShort = 'Wpisz uwagę';
+const String errorRemarkChars = 'Usuń znaki specjalne';
+const String errorSendingRemark = '### Wysyłanie uwagi nie powiodło się ###';
 
 //DB Errors
 const String errorDbGeneric = 'Operacja się nie powiodła. Spróbuj później';

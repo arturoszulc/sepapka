@@ -7,7 +7,7 @@ import 'package:sepapka/viewmodel_layer/manager.dart';
 Widget buildProgressBar(BuildContext context) {
 
   String progress = context.read<Manager>().progressPercentGlobal;
-  debugPrint('Progress: $progress');
+  // debugPrint('Progress: $progress');
   return Padding(
     padding: const EdgeInsets.only(top: 20.0, bottom: 8.0, left: 15.0, right: 15.0),
     child: Column(

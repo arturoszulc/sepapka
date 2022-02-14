@@ -2,12 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/global_data.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
+import 'package:sepapka/model_layer/models/remark.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/file_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/utils/consts/question.dart';
+import 'package:sepapka/utils/methods.dart';
 
 import '../../locator.dart';
 import '../models/question.dart';
@@ -20,13 +22,13 @@ class QuestionService {
 
   //Properties
   bool _isSessionFinished = false;
-  bool _hasTodayPracticeListChanged =
-      true; //flag controlling whether to get new TodayPracticeList
+  bool _hasTodayPracticeListChanged = true; //flag controlling whether to get new TodayPracticeList
   GlobalData? globalData;
   List<Question>? _qListGlobal;
   List<Question> _qListGlobalFiltered = [];
   List<Question> _qListCurrent = [];
   int _qListCurrentStartLength = 0;
+  int _currentSessionUserPoints = 0;
   List<QMap> _todayPracticeList = [];
   Question? _currentQuestion;
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
@@ -55,8 +57,7 @@ class QuestionService {
   //Methods
 
   double getProgressPercentSession() {
-    return (_qListCurrentStartLength - _qListCurrent.length) /
-        _qListCurrentStartLength;
+    return (_qListCurrentStartLength - _qListCurrent.length) / _qListCurrentStartLength;
   }
 
   int howManyToPracticeToday() {
@@ -78,13 +79,11 @@ class QuestionService {
     //if GlobalData is retrieved, proceed
 
     //send current rank names and thresholds to userService
-    _userService.prepareRanks(
-        globalData!.rankNames, globalData!.rankThresholds);
+    _userService.prepareRanks(globalData!.rankNames, globalData!.rankThresholds);
 
     //Set questionVersion
-    int? qVersion = _userService.loggedUser!.isPro
-        ? globalData!.qVersionPro
-        : globalData!.qVersionFree;
+    int? qVersion =
+        _userService.loggedUser!.isPro ? globalData!.qVersionPro : globalData!.qVersionFree;
     // if (qVersion is! int) return Failure(errorGetQVersionFromDB);
 
     //after downloading qVersion from DB, compare it with local LoggedUser.qVersion.
@@ -108,19 +107,16 @@ class QuestionService {
   Future<Object> getGlobalQuestionList(bool compareResult) async {
     // if User has qVersion up to date, try to take questions from JSON file
     if (compareResult == true) {
-      Object getLocalQuestionResult =
-          await _fileService.getQuestionListFromFile();
-      if (getLocalQuestionResult is List<Question>)
-        return getLocalQuestionResult;
+      Object getLocalQuestionResult = await _fileService.getQuestionListFromFile();
+      if (getLocalQuestionResult is List<Question>) return getLocalQuestionResult;
     }
 
     //if user has outdated qVersion, or couldn't read file, download questions from DB
-    List<Question>? questionListFromDB = await _databaseService.getQuestionList(
-        isPro: _userService.loggedUser!.isPro);
+    List<Question>? questionListFromDB =
+        await _databaseService.getQuestionList(isPro: _userService.loggedUser!.isPro);
     if (questionListFromDB == null) return Failure(errorGetQListFromDB);
     //save questions to local JSON file
-    Object saveQuestionToFileResult =
-        await _fileService.saveQuestionListToFile(questionListFromDB);
+    Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(questionListFromDB);
     if (saveQuestionToFileResult is Failure) return saveQuestionToFileResult;
     return questionListFromDB;
   }
@@ -133,12 +129,12 @@ class QuestionService {
     if (answer == _currentQuestion!.a1) {
       //set QuestionStatus
       _qStatus = QuestionStatus.rightAnswer;
+      //Add one point to user
+      _currentSessionUserPoints += 1;
       //set button color
-      _bMapList.firstWhere((element) => element.answer == answer).color =
-          rightButtonColor;
+      _bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
       //move question to Practice List
-      _userService.moveQMapToPractice(
-          _currentQuestion!.id, qType, qLevel, true);
+      _userService.moveQMapToPractice(_currentQuestion!.id, qType, qLevel, true);
     }
     //if wrong answer
     else {
@@ -147,12 +143,10 @@ class QuestionService {
 
       _qStatus = QuestionStatus.wrongAnswer;
       //set wrong button
-      _bMapList.firstWhere((element) => element.answer == answer).color =
-          wrongButtonColor;
+      _bMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
       //set right button
-      _bMapList
-          .firstWhere((element) => element.answer == _currentQuestion!.a1)
-          .color = rightButtonColor;
+      _bMapList.firstWhere((element) => element.answer == _currentQuestion!.a1).color =
+          rightButtonColor;
       //move question to the end of it's list, to try again
       if (_qType == QuestionType.newQuestion) {
         //if question was new, there's no point in updateing database
@@ -161,14 +155,12 @@ class QuestionService {
       }
       if (_qType == QuestionType.practiceQuestion) {
         //move but do not update date or fibNum
-        _userService.moveQMapToPractice(
-            _currentQuestion!.id, qType, qLevel, false);
+        _userService.moveQMapToPractice(_currentQuestion!.id, qType, qLevel, false);
       }
     }
   }
 
-  prepareCurrentSessionData(
-      {required QuestionType qType, required int qLevel}) async {
+  prepareCurrentSessionData({required QuestionType qType, required int qLevel}) async {
     //set question type
     _qType = qType;
     //set question level
@@ -181,6 +173,8 @@ class QuestionService {
   prepareCurrentQuestionsBasedOnProps() {
     //clear the old list
     _qListCurrent.clear();
+    //reset current points counter
+    _currentSessionUserPoints = 0;
 
     List<QMap> qMapList = [];
 
@@ -193,8 +187,7 @@ class QuestionService {
       qMapList = _todayPracticeList;
     }
     for (QMap qMap in qMapList) {
-      _qListCurrent
-          .add(_qListGlobal!.firstWhere((question) => question.id == qMap.id));
+      _qListCurrent.add(_qListGlobal!.firstWhere((question) => question.id == qMap.id));
     }
     //set starting length of _qListCurrent for session progress bar
     _qListCurrentStartLength = _qListCurrent.length;
@@ -206,24 +199,30 @@ class QuestionService {
 
     //if there is a question on the list
     if (_qListCurrent.isNotEmpty) {
+      debugPrint('Question IS on the list');
       //prepare question
       _currentQuestion = _qListCurrent.first;
       //create new BMap
       createBMap();
+      //success means there's question to show
       return Success();
     } else {
-      //if not
-      //if it was practice session, note the change
-      if (qType == QuestionType.practiceQuestion)
-        _hasTodayPracticeListChanged = true;
-      _currentQuestion = null;
-      _isSessionFinished = true;
-      //give user points
-      _userService.addPoints(_qListCurrentStartLength);
-      //update user
-      await _userService.updateLoggedUserInDb();
+      //if theres no questions left on the list
       return Failure();
     }
+  }
+
+  Future<Object> endSession() async {
+    //if it was practice session, note the change
+    if (qType == QuestionType.practiceQuestion) _hasTodayPracticeListChanged = true;
+    _currentQuestion = null;
+    _isSessionFinished = true;
+    //give user points
+    _userService.addPoints(_currentSessionUserPoints);
+    //update user
+    Object updateResult = await _userService.updateLoggedUserInDb();
+    if (updateResult is Failure) return updateResult;
+    return Success();
   }
 
   createBMap() {
@@ -259,6 +258,25 @@ class QuestionService {
     //update qNewList
     await _userService.updateQNewLists(_qListGlobal!);
     return Success();
+  }
+
+  Future<Object> sendQuestionRemark(String remark) async {
+    //validate data
+    Object validateResult = validateRemark(remark);
+    if (validateResult is Failure) return validateResult;
+    try {
+    _databaseService.sendQuestionRemark(Remark(
+      date: DateTime.now(),
+      question: _currentQuestion!.id,
+      text: remark,
+    ));
+    return Success();
+  }
+  catch(e) {
+      debugPrint(e.toString());
+      return Failure(errorSendingRemark);
+  }
+
   }
 
   getFilteredQuestionList(QuestionFilter filter) {

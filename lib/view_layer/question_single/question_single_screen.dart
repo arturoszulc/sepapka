@@ -4,11 +4,11 @@ import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/utils/consts/question.dart';
-import 'package:sepapka/view_layer/session_finished_screen.dart';
+import 'package:sepapka/view_layer/question_single/session_finished_screen.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
-import 'custom_widgets/answer_button.dart';
-import 'custom_widgets/single_question_top_bar.dart';
+import '../custom_widgets/answer_button.dart';
+import '../custom_widgets/single_question_top_bar.dart';
 
 class QuestionSingleScreen extends StatelessWidget {
   const QuestionSingleScreen({Key? key}) : super(key: key);
@@ -33,21 +33,15 @@ class QuestionSingleScreen extends StatelessWidget {
         body: Column(mainAxisSize: MainAxisSize.min, children: [
               //build topBar
                 singleQuestionTopBar(context),
+                const SizedBox(height: 30.0,),
                 Expanded(
                   flex: 3,
-                  child: Container(
-                    // color: Colors.pink, //remove later
-                    padding: const EdgeInsets.all(5.0),
-                    alignment: Alignment.bottomLeft,
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 25.0),
-                        child: Text(
-                          question != null ? question.q : '',
-                          style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                          // maxLines: 3,
-                        ),
-                      ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+                    child: Text(
+                      question != null ? question.q : '',
+                      style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                      // maxLines: 3,
                     ),
                   ),
                 ),
