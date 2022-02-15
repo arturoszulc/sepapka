@@ -41,7 +41,7 @@ class UserService {
 
   String get userRankName => _rankNames[_loggedUser!.rankLevel];
 
-  StreamController<LoggedUser?> loggedUserStreamController = StreamController();
+  // StreamController<LoggedUser?> loggedUserStreamController = StreamController();
   //Streams
   // Stream<LoggedUser?> get loggedUserStream => loggedUserStreamController.stream;
 
@@ -95,13 +95,13 @@ class UserService {
   Future<Object> createUserLocal(String userId) async {
     try {
       _loggedUser = await _databaseService.getUserData(userId);
-      loggedUserStreamController.add(_loggedUser);
+      // loggedUserStreamController.add(_loggedUser);
       return Success();
     } catch (e) {
       debugPrint(errorGetUserDataFromDB);
       //if there's an error, assume that user was not yet created
       createDefaultLoggedUser(userId);
-      loggedUserStreamController.add(_loggedUser);
+      // loggedUserStreamController.add(_loggedUser);
       return Success();
     }
   }
@@ -118,7 +118,7 @@ class UserService {
 
   logOutUser() {
     _loggedUser = null;
-    loggedUserStreamController.add(_loggedUser);
+    // loggedUserStreamController.add(_loggedUser);
   }
 
   bool compareQVersion(int qVersion) {
