@@ -69,6 +69,7 @@ const String errorGetQListFromDB =
 const String errorGetUserDataFromDB =
     '### Błąd pobierania danych użytkownika. Spróbuje utworzyć nowego... ### ';
 const String errorUpdateUserInDb = '### Nie udało się zaktualizować danych użytkownika ###';
+const String errorRollBackUser = 'Coś poszło nie tak. Spróbuj zalogować się ponownie do aplikacji';
 
 //AuthService Errors
 const String errorSignIn = '### AuthService.signInEmail() error: ';

@@ -20,7 +20,7 @@ Widget singleQuestionTopBar(BuildContext context) {
           onPressed: () async {
             bool result = await leaveSessionDialog(context);
             if (result) {
-              context.read<Manager>().endSession();
+              context.read<Manager>().interruptSession();
               // Navigator.of(context)
               //     .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
             }

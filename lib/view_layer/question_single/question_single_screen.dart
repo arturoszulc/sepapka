@@ -25,7 +25,7 @@ class QuestionSingleScreen extends StatelessWidget {
       onWillPop: () async {
       bool result = await leaveSessionDialog(context);
       if (result) {
-        context.read<Manager>().endSession();
+        context.read<Manager>().interruptSession();
         return false;
       }
         return false;

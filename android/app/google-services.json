@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "249525063892-t0qucodoi78ilhr17mkqea0jrkt012m1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "teoriaelektryki.pl.sepapka",
+            "certificate_hash": "eeea4200867633b23fd35d19bfc821b9d2c7da32"
+          }
+        },
+        {
           "client_id": "249525063892-lhqjuupfhupttijhfrkjgueejh6gtcr0.apps.googleusercontent.com",
           "client_type": 3
         }

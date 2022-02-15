@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:collection/collection.dart';
-import 'package:flutter/widgets.dart';
+
 // import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
@@ -49,14 +50,14 @@ class UserService {
     _isUserPromoted = flag;
   }
 
-
   String getProgressPercentGlobal() {
     int previousThreshold = 0;
     int currentThreshold = _rankThresholds[_loggedUser!.rankLevel];
     if (_loggedUser!.rankLevel > 0) {
       previousThreshold = _rankThresholds[_loggedUser!.rankLevel - 1];
     }
-    double progressInt = (_loggedUser!.rankTotalPoints - previousThreshold)*100 / currentThreshold;
+    double progressInt =
+        (_loggedUser!.rankTotalPoints - previousThreshold) * 100 / currentThreshold;
     String progressDouble = progressInt.toStringAsFixed(1);
 
     return progressDouble;
@@ -106,6 +107,16 @@ class UserService {
     }
   }
 
+  Future<Object> rollUserBack() async {
+    try {
+      _loggedUser = await _databaseService.getUserData(_loggedUser!.documentId);
+      return Success();
+    } catch (e) {
+      debugPrint(errorRollBackUser);
+      return Failure(errorRollBackUser);
+    }
+  }
+
   Future<Object> updateLoggedUserInDb() async {
     try {
       await _databaseService.updateUser(_loggedUser!);
@@ -148,12 +159,13 @@ class UserService {
       setLoggedUserChanged(false);
     }
   }
+
   prepareRanks(List<String> rankNames, List<int> rankThresholds) {
     debugPrint('/// Preparing ranks data... ///');
     _rankNames = rankNames;
     _rankThresholds = rankThresholds;
-
   }
+
   updateQVersion(int qVersion) {
     _loggedUser!.qVersion = qVersion;
   }
@@ -262,9 +274,9 @@ class UserService {
       await addQMapToNotShown(qMap);
       debugPrint('/// US: Moved QMap to NotShow list ///');
     }
-    }
+  }
 
-    QMap? getQMapAndRemove(String qId, QuestionType qType, int qLevel) {
+  QMap? getQMapAndRemove(String qId, QuestionType qType, int qLevel) {
     QMap? qMap;
     //method cuts out qMap from it's list and returns it
     switch (qType) {
@@ -327,7 +339,6 @@ class UserService {
     _loggedUser!.qListNotShown.clear();
   }
 
-
   //bool property of this method is to be deleted - it will only allow to go PRO
   Future<Object> goPro(bool bool) async {
     if (!bool) wipeUser(); //if go FREE, wipe user
@@ -336,8 +347,7 @@ class UserService {
     try {
       await _databaseService.updateUser(_loggedUser!);
       return Success();
-    }
-    catch(e) {
+    } catch (e) {
       debugPrint(e.toString());
       return Failure(errorUpdateUserInDb);
     }
@@ -378,14 +388,14 @@ class UserService {
       return Failure(errorDbGeneric);
     }
   }
+
   Widget getQListIcon(String qId) {
     if (isQuestionInPracticeList(qId) != null) {
       return qListIcons['practice']!;
     }
     if (isQuestionInNotShownList(qId) != null) {
       return qListIcons['notShown']!;
-    }
-    else {
+    } else {
       return qListIcons['new']!;
     }
   }

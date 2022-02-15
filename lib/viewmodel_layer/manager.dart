@@ -310,17 +310,22 @@ class Manager extends ChangeNotifier {
     };
     if (nextQuestionResult is Failure) {
       //if failure, then no more questions left. End session.
-      await endSession();
+      Object endResult = await _questionService.endSession();
+      if (endResult is Failure) {
+        setMessage(endResult.errorString.toString());
+        return;
+      }
+      navigate(Screen.sessionFinished);
     }
   }
 
-  endSession() async {
-    Object endResult = await _questionService.endSession();
-    if (endResult is Failure) {
-      setMessage(endResult.errorString.toString());
-      return;
+  interruptSession() async {
+    //if session was interrupted, download user again
+    Object interruptResult = _userService.rollUserBack();
+    if (interruptResult is Failure) {
+      setMessage(interruptResult.errorString.toString());
     }
-    navigate(Screen.sessionFinished);
+    navigate(Screen.menu);
   }
 
   moveQuestionToNew() {}

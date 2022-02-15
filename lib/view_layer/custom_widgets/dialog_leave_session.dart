@@ -6,7 +6,7 @@ Future leaveSessionDialog(BuildContext context) {
     barrierDismissible: false,
     context: context,
     builder: (BuildContext context) => AlertDialog(
-      title: Text('Czy na pewno chcesz przerwać sesję? Postępy zostaną zapisane.'),
+      title: Text('Czy na pewno chcesz przerwać sesję? Postępy nie zostaną zapisane.'),
       actions: [
         TextButton(
           onPressed: () {
