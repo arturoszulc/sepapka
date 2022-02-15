@@ -282,10 +282,9 @@ class QuestionService {
   getFilteredQuestionList(QuestionFilter filter) {
     _qFilter = filter;
     _qListGlobalFiltered.clear();
-    debugPrint('QlistGlobal length: ${_qListGlobal!.length}');
+
     switch (filter) {
       case QuestionFilter.alphabetical:
-        debugPrint('Sorting question alphabetically');
         _qListGlobalFiltered = List.from(_qListGlobal!);
         _qListGlobalFiltered.sort((a, b) => a.q.compareTo(b.q));
         break;

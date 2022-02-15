@@ -366,7 +366,6 @@ class Manager extends ChangeNotifier {
     if (filter == qFilter) return;
     navigate(Screen.loading);
     filter ??= QuestionFilter.alphabetical;
-    debugPrint('Filter $filter');
     _questionService.getFilteredQuestionList(filter);
     navigate(Screen.listQuestion);
   }

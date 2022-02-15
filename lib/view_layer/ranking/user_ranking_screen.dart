@@ -9,29 +9,32 @@ class UserRankScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-          return DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              appBar: AppBar(
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  onPressed: () => context.read<Manager>().navigate(Screen.menu),
-                ),
-                title: const Text('Rank List'),
-                centerTitle: true,
-                bottom: const TabBar(
-                    tabs: [
-                      Tab(text: 'top users'),
-                      Tab(text: 'your position'),
+          return WillPopScope(
+            onWillPop: () => context.read<Manager>().navigate(Screen.menu),
+            child: DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                appBar: AppBar(
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.black),
+                    onPressed: () => context.read<Manager>().navigate(Screen.menu),
+                  ),
+                  title: const Text('Ranking'),
+                  centerTitle: true,
+                  bottom: const TabBar(
+                      tabs: [
+                        Tab(text: 'top users'),
+                        Tab(text: 'your position'),
 
-                    ]),
+                      ]),
+                ),
+                body: TabBarView(
+                    children: [
+                      buildRankTop(context),
+                      buildRankUser(context),
+                ]
+                ),//buildRank(snapshot),
               ),
-              body: TabBarView(
-                  children: [
-                    buildRankTop(context),
-                    buildRankUser(context),
-              ]
-              ),//buildRank(snapshot),
             ),
           );
 ;

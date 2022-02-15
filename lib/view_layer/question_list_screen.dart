@@ -16,32 +16,36 @@ class QuestionListScreen extends StatelessWidget {
 
     final manager = Provider.of<Manager>(context);
     final List<Question> qListGlobalFiltered = manager.qListGlobalFiltered;
-    debugPrint('Dlugosc listy: ${qListGlobalFiltered.length.toString()}');
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => context.read<Manager>().navigate(Screen.menu),
+    return WillPopScope(
+      onWillPop: () => context.read<Manager>().navigate(Screen.menu),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => context.read<Manager>().navigate(Screen.menu),
+          ),
+          actions: [
+            buildFilterMenu(),
+          ],
+          title: const Text('Lista pytań'),
+          elevation: 0.0,
         ),
-        actions: [
-          buildFilterMenu(),
-        ],
-        title: const Text('Lista pytań'),
-        elevation: 0.0,
+        body: qListGlobalFiltered.isEmpty ?
+        const Center(child: Text('Brak pytań'),)
+        : ListView.builder(
+            itemCount: qListGlobalFiltered.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(10.0),
+                  title: buildTitle(qListGlobalFiltered[index]),
+                  subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
+                  onTap: () {
+                  },
+                ),
+              );
+            }),
       ),
-      body: ListView.builder(
-          itemCount: qListGlobalFiltered.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: ListTile(
-                contentPadding: const EdgeInsets.all(10.0),
-                title: buildTitle(qListGlobalFiltered[index]),
-                subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
-                onTap: () {
-                },
-              ),
-            );
-          }),
     );
   }
 }

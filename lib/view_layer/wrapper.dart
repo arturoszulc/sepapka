@@ -19,7 +19,6 @@ import 'menu/menu_main_screen.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     debugPrint('*** Wrapper built ***');
@@ -35,6 +34,7 @@ class Wrapper extends StatelessWidget {
           switchOutCurve: const Threshold(0),
         // switchInCurve: Curves.easeIn,
         transitionBuilder: (Widget child, Animation<double> animation) => FadeTransition(
+          key: key,
           child: child,
           opacity: animation,
           // position: Tween<Offset>(
