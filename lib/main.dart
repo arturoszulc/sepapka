@@ -38,7 +38,9 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'SEPapka',
-        theme: defaultTheme(),
+        theme: lightTheme(),
+        darkTheme: darkTheme(),
+        themeMode: ThemeMode.system,
         home: const Wrapper(),
         routes: {
           '/wrapper': (context) => const Wrapper(),

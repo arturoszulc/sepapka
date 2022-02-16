@@ -16,6 +16,7 @@ import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/question_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
+import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/utils/question_list.dart';
@@ -216,8 +217,7 @@ class Manager extends ChangeNotifier {
     debugPrint('/// manager ResetPassword deployed');
     navigate(Screen.loading);
     //TODO: uncomment the _authService method
-    Object resetPassResult =
-        Failure('Cos poszlo nie tak'); //await _authService.resetPassword(email);
+    Object resetPassResult = await _authService.resetPassword(email);
     if (resetPassResult is Failure) {
       await setError(resetPassResult);
       navigate(Screen.resetPassword);
@@ -225,7 +225,7 @@ class Manager extends ChangeNotifier {
     if (resetPassResult is Success) {
       await setError(null);
       // setLoading(true);
-      setMessage('Link do zresetowania hasła został wysłany na podany adres e-mail');
+      setMessage(msgResetSent);
       navigate(Screen.signIn);
     }
   }
@@ -239,7 +239,7 @@ class Manager extends ChangeNotifier {
       setError(resetResult);
       return;
     }
-    setMessage('Wszelkie postępy zostały skasowane');
+    setMessage(msgProgressReset);
     navigate(Screen.menu);
   }
 
@@ -336,15 +336,13 @@ class Manager extends ChangeNotifier {
   }
 
   sendQuestionRemark(String remark) async {
-    debugPrint('sendQuestionRemark deployed');
     Object sendResult = await _questionService.sendQuestionRemark(remark);
     if (sendResult is Failure) {
       setError(sendResult);
       navigate(Screen.remark);
     } else {
       setError(null);
-      debugPrint('/// Przesłano uwagę na temat pytania ///');
-      setMessage('Dziękuję za przesłanie uwagi!');
+      setMessage(msgThanksForRemark);
       navigate(Screen.singleQuestion);
     }
   }

@@ -87,16 +87,28 @@ class SignInScreen extends StatelessWidget {
             const SizedBox(height: 10.0),
             const Text('lub'),
             const SizedBox(height: 10.0),
-            FloatingActionButton.extended(
-              backgroundColor: Colors.white,
-              icon: Image.asset('assets/general/images/g-logo.png',
-              height: 26,
-              width: 26,),
+            ElevatedButton.icon(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+              ),
+                onPressed: () {
+                  manager.signInWithGoogle();
+                },
+                icon: Image.asset('assets/general/images/g-logo.png',
+                  height: 26,
+                  width: 26,),
               label: const Text('Zaloguj się przez Google'),
-              onPressed: () {
-                manager.signInWithGoogle();
-              },
             ),
+            // FloatingActionButton.extended(
+            //   backgroundColor: Colors.white,
+            //   icon: Image.asset('assets/general/images/g-logo.png',
+            //   height: 26,
+            //   width: 26,),
+            //   label: const Text('Zaloguj się przez Google'),
+            //   onPressed: () {
+            //     manager.signInWithGoogle();
+            //   },
+            // ),
             const SizedBox(height: 10),
             Row(
               mainAxisSize: MainAxisSize.min,
