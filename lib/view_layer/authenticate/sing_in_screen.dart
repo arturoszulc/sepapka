@@ -95,7 +95,7 @@ class SignInScreen extends StatelessWidget {
                 onPressed: () {
                   manager.signInWithGoogle();
                 },
-                icon: Image.asset('assets/general/images/g-logo.png',
+                icon: Image.asset('assets/images/general/g-logo.png',
                   height: 26,
                   width: 26,),
               label: const Text('Zaloguj się przez Google'),
