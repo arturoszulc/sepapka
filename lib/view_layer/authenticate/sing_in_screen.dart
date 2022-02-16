@@ -20,7 +20,7 @@ class SignInScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Sign In Screen'),
+        title: const Text('Logowanie'),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
@@ -45,6 +45,7 @@ class SignInScreen extends StatelessWidget {
 
                   //pole PASSWORD
                   TextFormField(
+                    obscureText: true,
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
                       labelText: 'Hasło',
@@ -56,36 +57,44 @@ class SignInScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0, bottom: 5.0),
+              child: Row(
+                children: [
+                  Text(
+                    manager.errorMsg.toString(),
+                    style: const TextStyle(color: Colors.red),
+                    textAlign: TextAlign.left,
+                  ),
+                ],
+              ),
+            ),
+            // const SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    manager.signIn(email: email, password: password);
-                    // manager.addQuestionsToDb();
-                  },
-                  child: const Text('Zaloguj się'),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      manager.signIn(email: email, password: password);
+                      // manager.addQuestionsToDb();
+                    },
+                    child: const Text('Zaloguj się'),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    manager.register(email: email, password: password);
-                    // manager.addQuestionsToDb();
-                  },
-                  child: const Text('Utwórz konto'),
+                const SizedBox(width: 20),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      manager.register(email: email, password: password);
+                      // manager.addQuestionsToDb();
+                    },
+                    child: const Text('Utwórz konto'),
+                  ),
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: Text(
-                  manager.errorMsg != null ? manager.errorMsg.toString() : '',
-                  style: const TextStyle(color: Colors.red),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
+            const SizedBox(height: 30),
             const Text('lub'),
             const SizedBox(height: 10.0),
             ElevatedButton.icon(
@@ -96,8 +105,8 @@ class SignInScreen extends StatelessWidget {
                   manager.signInWithGoogle();
                 },
                 icon: Image.asset('assets/images/general/g-logo.png',
-                  height: 26,
-                  width: 26,),
+                  height: 22,
+                  width: 22,),
               label: const Text('Zaloguj się przez Google'),
             ),
             const SizedBox(height: 10),

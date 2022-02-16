@@ -18,7 +18,6 @@ ThemeData lightTheme() {
       // onBackground: const Color(0xffffe375),
     ),
 
-
     //primary color
     // primarySwatch: Colors.yellow,
 
@@ -51,7 +50,22 @@ ThemeData lightTheme() {
     //   //   primary: const Color(0xffffe375), //button color
     //   //   onPrimary: const Color(0xff383838), //text button color
     //   // ),
-    // ),
+    // ),,
+
+    //text form input style
+    textSelectionTheme: const TextSelectionThemeData(cursorColor: mySecondary),
+      inputDecorationTheme: const InputDecorationTheme(
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: mySecondary,
+        )
+      ),
+      // focusColor: mySecondary,
+
+      labelStyle: TextStyle(
+        color: mySecondary,
+      ),
+    ),
 
   );
 }

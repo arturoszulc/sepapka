@@ -6,9 +6,8 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: const Center(
+    return const Scaffold(
+      body: Center(
         child: SpinKitCubeGrid(
           color: Colors.yellow,
           size: 50.0,

@@ -28,7 +28,7 @@ const String errorRollBackUser = 'Coś poszło nie tak. Spróbuj zalogować się
 
 //AuthService errors
 const String errorSignInGoogle = 'Błąd logowania przez Google. Spróbuj ponownie';
-const String errorValEmail = 'Nieprawidłowy adres e-mail Nieprawidłowy adres e-mail Nieprawidłowy adres e-mail';
+const String errorValEmail = 'Nieprawidłowy adres e-mail';
 const String errorValPassword = 'Hasło musi zawierać: \n - co najmniej 8 znaków \n - co najmniej 1 cyfrę \n - co najmniej 1 znak specjalny';
 
 
