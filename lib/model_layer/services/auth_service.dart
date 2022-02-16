@@ -2,12 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sepapka/utils/api_status.dart';
+import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/methods.dart';
 
 class AuthService {
   //Properties
   FirebaseAuth _auth = FirebaseAuth.instance;
-  GoogleSignIn _googleSignIn = GoogleSignIn();
+  final _googleSignIn = GoogleSignIn();
 
   //Constructor - default
   AuthService();
@@ -18,8 +19,10 @@ class AuthService {
   // register with e-mail and password
 
   Future<Object> registerWithEmailAndPassword(String email, String password) async {
-    Object validateResult = validateEmailAndPassword(email: email, password: password);
-    if (validateResult is Failure) return validateResult;
+    Object valEmailResult = validateEmail(email);
+    if (valEmailResult is Failure) return valEmailResult;
+    Object valPasswordResult = validatePassword(password);
+    if (valPasswordResult is Failure) return valPasswordResult;
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
       return Success();
@@ -52,19 +55,17 @@ class AuthService {
       );
       await _auth.signInWithCredential(credential);
       return Success();
-    }
-    catch(e) {
+    } catch (e) {
       debugPrint('GOOGLE SIGN IN ERROR: $e');
-      return Failure('Błąd logowania przez Google. Spróbuj ponownie');
+      return Failure(errorSignInGoogle);
     }
   }
-
 
   Future<Object> signOut() async {
     try {
       await _auth.signOut();
       return Success();
-    }  on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException catch (e) {
       debugPrint('CODE');
       debugPrint(e.code);
       return Failure(getMessageFromErrorCode(e.code));
@@ -72,22 +73,17 @@ class AuthService {
   }
 
   Future<Object> resetPassword(String email) async {
-    Object validateResult = validateEmailAndPassword(email: email);
-    if (validateResult is Failure) {
-      debugPrint(validateResult.errorString);
-      return validateResult;
+    Object valEmailResult = validateEmail(email);
+    if (valEmailResult is Failure) return valEmailResult;
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      return Success();
+    } on FirebaseAuthException catch (e) {
+      debugPrint('CODE');
+      debugPrint(e.code);
+      return Failure(getMessageFromErrorCode(e.code));
     }
-      try {
-        await _auth.sendPasswordResetEmail(email: email);
-        return Success();
-
-      } on FirebaseAuthException catch (e) {
-        debugPrint('CODE');
-        debugPrint(e.code);
-        return Failure(getMessageFromErrorCode(e.code));
-      }
-    }
-
+  }
 
   // void _changePassword(String currentPassword, String newPassword) async {
   //   final user = await FirebaseAuth.instance.currentUser;
@@ -104,21 +100,21 @@ class AuthService {
   //
   //   });}
 
-  Object validateEmailAndPassword({String? email, String? password}) {
-    //validate e-mail
-    if (email != null) {
-      if (email.isEmpty || !email.contains('@')) return Failure('Nieprawidłowy adres e-mail');
-    }
-    //validate password
-    if (password != null) {
-      bool validated = validatePassword(password);
-      if (!validated) {
-        return Failure(
-            'Hasło musi zawierać: \n - co najmniej 8 znaków \n - co najmniej 1 cyfrę \n - co najmniej 1 znak specjalny');
-      }
-    }
-    return Success();
-  }
+  // Object validateEmailAndPassword({String? email, String? password}) {
+  //   //validate e-mail
+  //   if (email != null) {
+  //     Object valEmailResult = validateEmail(email);
+  //     // if (email.isEmpty || !email.contains('@')) return Failure(errorValEmail);
+  //   }
+  //   //validate password
+  //   if (password != null) {
+  //     bool validated = validatePassword(password);
+  //     if (!validated) {
+  //       return Failure(errorValPassword);
+  //     }
+  //   }
+  //   return Success();
+  // }
 
   String getMessageFromErrorCode(String code) {
     switch (code) {

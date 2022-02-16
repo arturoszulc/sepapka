@@ -17,9 +17,9 @@ import '../models/question.dart';
 
 class QuestionService {
   //Services Injection
-  UserService _userService = serviceLocator.get<UserService>();
-  DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
-  FileService _fileService = serviceLocator.get<FileService>();
+  final _userService = serviceLocator.get<UserService>();
+  final _databaseService = serviceLocator.get<DatabaseService>();
+  final _fileService = serviceLocator.get<FileService>();
 
   //Properties
   bool _isSessionFinished = false;

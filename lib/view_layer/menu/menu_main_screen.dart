@@ -26,7 +26,6 @@ class MenuScreen extends StatelessWidget {
               IconButton(
                   onPressed: () {
                     context.read<Manager>().navigate(Screen.settings);
-                    // Navigator.pushNamed(context, '/settings-screen');
                   },
                   icon: const Icon(Icons.account_circle)),
             ],

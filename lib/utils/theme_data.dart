@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 ThemeData lightTheme() {
+
+  const Color myPrimary = Color(0xffffe375);
+  const Color mySecondary = Color(0xff383838);
+
   return ThemeData(
     brightness: Brightness.light,
     colorScheme: ColorScheme.fromSwatch().copyWith(
-      primary: const Color(0xffffe375),
+      primary: myPrimary,
       // secondary: const Color(0xff383838),
       // onSurface:  const Color(0xff383838),
       // background:  const Color(0xff383838),
@@ -19,7 +24,7 @@ ThemeData lightTheme() {
 
     //appBar Theme
     appBarTheme: const AppBarTheme(
-      brightness: Brightness.light,
+      foregroundColor: mySecondary,
       elevation: 0,
       color: Colors.transparent,
     ),
@@ -34,19 +39,19 @@ ThemeData lightTheme() {
     //elevatedButton style
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        primary: const Color(0xffffe375), //button color
-        onPrimary: const Color(0xff383838), //text button color
+        primary: myPrimary, //button color
+        onPrimary: mySecondary, //text button color
       ),
     ),
 
     //iconButton style
-    iconTheme: IconThemeData(
-      color: const Color(0xff383838),
-      // style: IconButton.styleFrom(
-      //   primary: const Color(0xffffe375), //button color
-      //   onPrimary: const Color(0xff383838), //text button color
-      // ),
-    ),
+    // iconTheme: IconThemeData(
+    //   color: const Color(0xff383838),
+    //   // style: IconButton.styleFrom(
+    //   //   primary: const Color(0xffffe375), //button color
+    //   //   onPrimary: const Color(0xff383838), //text button color
+    //   // ),
+    // ),
 
   );
 }

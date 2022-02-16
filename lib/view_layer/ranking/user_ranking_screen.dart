@@ -22,6 +22,7 @@ class UserRankScreen extends StatelessWidget {
                   title: const Text('Ranking'),
                   centerTitle: true,
                   bottom: const TabBar(
+                    labelColor: Color(0xff383838),
                       tabs: [
                         Tab(text: 'top users'),
                         Tab(text: 'your position'),

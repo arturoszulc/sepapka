@@ -1,12 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sepapka/model_layer/models/question.dart';
-
-
-
-// const List<String> rankNames = ['uczeń','praktykant','elektryk'];
-// const List<int> rankUpgradeThresholds = [4,8,50];
-
-
 
 //Button colors
 const Color normalButtonColor = Colors.yellow;

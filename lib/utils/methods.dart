@@ -18,10 +18,16 @@ String getRandomString(int length){
       length, (_) => ch.codeUnitAt(r.nextInt(ch.length))));
 }
 
-bool validatePassword(String value){
+Object validateEmail(String email) {
+  if (email.isEmpty || !email.contains('@')) return Failure(errorValEmail);
+  return Success();
+}
+
+Object validatePassword(String password){
   String  pattern = r'^(?=.*?[0-9])(?=.*?[!@#\$&*~+-]).{8,}$';
   RegExp regExp = RegExp(pattern);
-  return regExp.hasMatch(value);
+  if (!regExp.hasMatch(password)) return Failure(errorValPassword);
+  return Success();
 }
 
 Object validateUsername(String username) {
