@@ -10,6 +10,7 @@ import 'package:sepapka/view_layer/question_single/remark_screen.dart';
 import 'package:sepapka/view_layer/ranking/user_ranking_screen.dart';
 import 'package:sepapka/view_layer/question_single/session_finished_screen.dart';
 import 'package:sepapka/view_layer/user_settings/change_user_data_screen.dart';
+import 'package:sepapka/view_layer/user_settings/debug_screen.dart';
 import 'package:sepapka/view_layer/user_settings/settings_main_screen.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
@@ -145,6 +146,9 @@ class Wrapper extends StatelessWidget {
         break;
       case Screen.remark:
         return RemarkScreen();
+        break;
+      case Screen.debug:
+        return DebugScreen();
         break;
     }
   }

@@ -14,5 +14,6 @@ enum Screen {
   sessionFinished,
   userRank,
   remark,
+  debug,
 
 }

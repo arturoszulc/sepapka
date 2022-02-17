@@ -129,13 +129,7 @@ class SettingsScreen extends StatelessWidget {
               // ),
               const SizedBox(height: 20.0),
               const SizedBox(height: 20.0),
-              MenuButton(
-                  label: context.read<Manager>().loggedUser!.isPro ? 'Go FREE' : 'Go PRO',
-                  onPressed: () async {
-                    var result = await goProDialog(context);
-                    if (result) await context.read<Manager>().goPro(!context.read<Manager>().loggedUser!.isPro);
-                  },),
-              const SizedBox(height: 20.0),
+
               MenuButton(label: 'Reset User Data', onPressed: () {
                 context.read<Manager>().resetUserProgress();
               },),
@@ -146,33 +140,14 @@ class SettingsScreen extends StatelessWidget {
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+            child: const Text('Debug'),
+            onPressed: () {
+          context.read<Manager>().navigate(Screen.debug);
+        }),
       ),
     );
   }
 
-  // DELETE THIS WIDGET RIGHT AFTER DELETING GO PRO/FREE BUTTON
 
-  Future goProDialog(BuildContext context) {
-    return showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: Text('Czy na pewno chcesz to zrobić?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context, rootNavigator: true).pop(false);
-            },
-            child: const Text('Nie'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context, rootNavigator: true).pop(true);
-            },
-            child: const Text('Tak'),
-          ),
-        ],
-      ),
-    );
-  }
 }
