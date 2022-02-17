@@ -59,9 +59,10 @@ Widget buildRankTop(BuildContext context) {
               List<RankUser> userList = snapshot.data!;
               return Card(
                 child: ListTile(
-                  leading: Text((index+1).toString()),
+                  leading: Image.asset('assets/images/badges/${userList[index].rankLevel}.png',
+                  height: 40,),
                   title: Text(userList[index].username),
-                  subtitle: Text('${userList[index].rankLevel} - ${userList[index].rankTotalPoints}'),
+                  subtitle: Text('Poziom: ${userList[index].rankLevel} - Liczba punktów: ${userList[index].rankTotalPoints}'),
                 ),
               );
             },

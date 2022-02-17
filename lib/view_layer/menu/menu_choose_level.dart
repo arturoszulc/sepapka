@@ -47,95 +47,30 @@ class MenuChooseLevel extends StatelessWidget {
                             hasBadge: true,
                             badgeNum: countLevel1,
                             label: 'Poziom 1',
-                            onPressed: countLevel1 < 1
-                                ? null
-                                : () async {
+                            onPressed: () async {
                                     await context.read<Manager>().startNew(qLevel: 1);
                                   },
                           ),
                           MenuButton(
                             hasBadge: true,
                             badgeNum: countLevel2,
+                            proOnly: true,
+                            isUserPro: isUserPro,
                             label: 'Poziom 2',
-                            onPressed: !isUserPro || countLevel2 < 1
-                                ? null
-                                : () async {
+                            onPressed: () async {
                                     await context.read<Manager>().startNew(qLevel: 2);
                                   },
                           ),
                           MenuButton(
                             hasBadge: true,
                             badgeNum: countLevel3,
+                            proOnly: true,
+                            isUserPro: isUserPro,
                             label: 'Poziom 3',
-                            onPressed: !isUserPro || countLevel3 < 1
-                                ? null
-                                : () async {
+                            onPressed: () async {
                                     await context.read<Manager>().startNew(qLevel: 3);
                                   },
                           ),
-                          // Badge(
-                          //   badgeContent: Text(
-                          //     countLevel1.toString(),
-                          //     style: const TextStyle(
-                          //       fontWeight: FontWeight.bold,
-                          //     ),
-                          //   ),
-                          //   toAnimate: false,
-                          //   badgeColor: Colors.blue,
-                          //   showBadge: countLevel1 == 0 ? false : true,
-                          //   child: ElevatedButton(
-                          //     onPressed: countLevel1 < 1
-                          //         ? null
-                          //         : () async {
-                          //             await context
-                          //                 .read<Manager>()
-                          //                 .startNew(qLevel: 1);
-                          //           },
-                          //     child: Text('Poziom 1'),
-                          //   ),
-                          // ),
-                          // Badge(
-                          //   badgeContent: Text(
-                          //     countLevel2.toString(),
-                          //     style: const TextStyle(
-                          //       fontWeight: FontWeight.bold,
-                          //     ),
-                          //   ),
-                          //   toAnimate: false,
-                          //   badgeColor: Colors.blue,
-                          //   showBadge: countLevel2 == 0 ? false : true,
-                          //   child: ElevatedButton(
-                          //     onPressed: !isUserPro || countLevel2 < 1
-                          //         ? null
-                          //         : () async {
-                          //             await context
-                          //                 .read<Manager>()
-                          //                 .startNew(qLevel: 2);
-                          //           },
-                          //     child: Text('Poziom 2'),
-                          //   ),
-                          // ),
-                          // Badge(
-                          //   badgeContent: Text(
-                          //     countLevel3.toString(),
-                          //     style: const TextStyle(
-                          //       fontWeight: FontWeight.bold,
-                          //     ),
-                          //   ),
-                          //   toAnimate: false,
-                          //   badgeColor: Colors.blue,
-                          //   showBadge: countLevel3 == 0 ? false : true,
-                          //   child: ElevatedButton(
-                          //     onPressed: !isUserPro || countLevel3 < 1
-                          //         ? null
-                          //         : () async {
-                          //             await context
-                          //                 .read<Manager>()
-                          //                 .startNew(qLevel: 3);
-                          //           },
-                          //     child: Text('Poziom 3'),
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),

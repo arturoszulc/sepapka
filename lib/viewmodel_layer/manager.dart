@@ -381,4 +381,5 @@ class Manager extends ChangeNotifier {
     String badge = loggedUser!.rankLevel.toString();
     return 'assets/images/badges/$badge.png';
   }
+
 }

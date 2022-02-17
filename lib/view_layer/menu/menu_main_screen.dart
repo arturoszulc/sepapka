@@ -57,41 +57,38 @@ class MenuScreen extends StatelessWidget {
             const SizedBox(height: 50),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Column(
-                      // crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        MenuButton(
-                            label: 'Nauka',
-                            onPressed: () {
-                              context.read<Manager>().navigate(Screen.chooseLevel);
-                            }),
-                        MenuButton(
-                            hasBadge: true,
-                            badgeNum: howManyToPractice,
-                            label: 'Powtórka materiału',
-                            onPressed: howManyToPractice == 0
-                                ? null
-                                : () async {
-                                    await context.read<Manager>().startPractice();
-                                  }),
-                        MenuButton(
-                            label: 'Lista pytań',
-                            onPressed: () {
-                              context.read<Manager>().getFilteredQuestionList();
-                            }),
-                        MenuButton(
-                            label: 'Ranking',
-                            onPressed: () {
-                              context.read<Manager>().navigate(Screen.userRank);
-                            })
-                      ],
-                    ),
-                  ),
-                ],
+              child: Expanded(
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    MenuButton(
+                        label: 'Nauka',
+                        onPressed: () {
+                          context.read<Manager>().navigate(Screen.chooseLevel);
+                        }),
+                    MenuButton(
+                        hasBadge: true,
+                        badgeNum: howManyToPractice,
+                        label: 'Powtórka materiału',
+                        onPressed: howManyToPractice == 0
+                            ? null
+                            : () async {
+                                await context.read<Manager>().startPractice();
+                              }),
+                    MenuButton(
+                        label: 'Lista pytań',
+                        onPressed: () {
+                          context.read<Manager>().getFilteredQuestionList();
+                        }),
+                    MenuButton(
+                        proOnly: true,
+                        isUserPro: context.read<Manager>().loggedUser!.isPro,
+                        label: 'Ranking',
+                        onPressed: () {
+                          context.read<Manager>().navigate(Screen.userRank);
+                        })
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20),
