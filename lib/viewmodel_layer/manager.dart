@@ -376,4 +376,9 @@ class Manager extends ChangeNotifier {
   Widget getQuestionIcon(String qId) {
     return _userService.getQListIcon(qId);
   }
+
+  String getBadgePath() {
+    String badge = loggedUser!.rankLevel.toString();
+    return 'assets/images/badges/$badge.png';
+  }
 }

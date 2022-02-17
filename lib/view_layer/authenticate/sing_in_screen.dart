@@ -57,16 +57,15 @@ class SignInScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, bottom: 5.0),
-              child: Row(
-                children: [
-                  Text(
-                    manager.errorMsg.toString(),
-                    style: const TextStyle(color: Colors.red),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10.0, bottom: 5.0),
+                child: Text(
+                  manager.errorMsg.toString(),
+                  style: const TextStyle(color: Colors.red),
+                  textAlign: TextAlign.left,
+                ),
               ),
             ),
             // const SizedBox(height: 10),

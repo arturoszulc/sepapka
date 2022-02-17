@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-//Button colors
-const Color normalButtonColor = Colors.yellow;
-const Color wrongButtonColor = Colors.redAccent;
-Color rightButtonColor = Colors.green.shade500;
+
 
 //LoggedUser model properties
 const String userQVersion = 'qVersion';

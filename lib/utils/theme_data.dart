@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'consts/colors.dart';
+
 ThemeData lightTheme() {
 
-  const Color myPrimary = Color(0xffffe375);
-  const Color mySecondary = Color(0xff383838);
+
 
   return ThemeData(
     brightness: Brightness.light,

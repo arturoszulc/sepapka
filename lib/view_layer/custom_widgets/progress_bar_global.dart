@@ -7,6 +7,7 @@ import 'package:sepapka/viewmodel_layer/manager.dart';
 Widget buildProgressBar(BuildContext context) {
 
   String progress = context.read<Manager>().progressPercentGlobal;
+  String badgePath = context.read<Manager>().getBadgePath();
   // debugPrint('Progress: $progress');
   return Padding(
     padding: const EdgeInsets.only(top: 20.0, bottom: 8.0, left: 15.0, right: 15.0),
@@ -18,15 +19,29 @@ Widget buildProgressBar(BuildContext context) {
         Text('Poziom: ${context.read<Manager>().userRankName}', style: const TextStyle(fontWeight: FontWeight.bold)),
         Padding(
         padding: const EdgeInsets.all(15.0),
-        child: LinearPercentIndicator(
-          alignment: MainAxisAlignment.center,
-          animation: true,
-          lineHeight: 20.0,
-          animationDuration: 2000,
-          percent: double.parse(progress)/100,
-          center: Text('$progress %'),
-          linearStrokeCap: LinearStrokeCap.roundAll,
-          progressColor: Colors.green,
+        child: Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Image.asset(badgePath,
+                height: 40,
+                width: 40,),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              flex: 9,
+              child: LinearPercentIndicator(
+                alignment: MainAxisAlignment.center,
+                animation: true,
+                lineHeight: 20.0,
+                animationDuration: 2000,
+                percent: double.parse(progress)/100,
+                center: Text('$progress %'),
+                linearStrokeCap: LinearStrokeCap.roundAll,
+                progressColor: Colors.green,
+              ),
+            ),
+          ],
         ),
       ),]
     ),
