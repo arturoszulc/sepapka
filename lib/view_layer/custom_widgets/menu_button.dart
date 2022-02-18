@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:sepapka/utils/consts.dart';
 
 class MenuButton extends StatelessWidget {
   const MenuButton({
@@ -36,7 +37,8 @@ class MenuButton extends StatelessWidget {
         child: ElevatedButton(
       style: ElevatedButton.styleFrom(
       minimumSize: const Size.fromHeight(50)),
-          onPressed: !proOnly || (proOnly && isUserPro) || (hasBadge && badgeNum > 0) ? onPressed : null,
+          onPressed:
+          (!proOnly || (proOnly && isUserPro)) && (!hasBadge || (hasBadge && badgeNum > 0)) ? onPressed : null,
           child: Text(label),
         ),
       ),

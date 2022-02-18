@@ -377,8 +377,12 @@ class Manager extends ChangeNotifier {
     return _userService.getQListIcon(qId);
   }
 
-  String getBadgePath() {
-    String badge = loggedUser!.rankLevel.toString();
+  String getBadgePath({int? rankLevel}) {
+    String badge = '0';
+    //if rank level is not given, return loggedUser badge
+    if (rankLevel == null) badge = loggedUser!.rankLevel.toString();
+    //if rankLevel is given, return corresponding badge
+    if (rankLevel != null) badge = rankLevel.toString();
     return 'assets/images/badges/$badge.png';
   }
 

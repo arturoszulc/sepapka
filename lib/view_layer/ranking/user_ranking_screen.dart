@@ -24,8 +24,8 @@ class UserRankScreen extends StatelessWidget {
                   bottom: const TabBar(
                     labelColor: Color(0xff383838),
                       tabs: [
-                        Tab(text: 'top users'),
-                        Tab(text: 'your position'),
+                        Tab(text: 'TOP10'),
+                        Tab(text: 'TY'),
 
                       ]),
                 ),
@@ -48,7 +48,7 @@ Widget buildRankTop(BuildContext context) {
       builder: (context, snapshot) {
         return !snapshot.hasData ?
         const Center(
-          child: Text('rank empty'),
+          child: Text('Błąd pobierania rankingu.\nSpróbuj ponownie za jakiś czas', textAlign: TextAlign.center,),
         )
             : Padding(
           padding: const EdgeInsets.all(8.0),
@@ -59,7 +59,7 @@ Widget buildRankTop(BuildContext context) {
               List<RankUser> userList = snapshot.data!;
               return Card(
                 child: ListTile(
-                  leading: Image.asset('assets/images/badges/${userList[index].rankLevel}.png',
+                  leading: Image.asset(context.read<Manager>().getBadgePath(rankLevel: userList[index].rankLevel),
                   height: 40,),
                   title: Text(userList[index].username),
                   subtitle: Text('Poziom: ${userList[index].rankLevel} - Liczba punktów: ${userList[index].rankTotalPoints}'),
@@ -81,7 +81,7 @@ Widget buildRankUser(BuildContext context) {
       builder: (context, snapshot) {
         return !snapshot.hasData ?
         const Center(
-          child: Text('rank empty'),
+          child: Text('Błąd pobierania rankingu.\nSpróbuj ponownie za jakiś czas', textAlign: TextAlign.center,),
         )
             : Padding(
           padding: const EdgeInsets.all(8.0),
