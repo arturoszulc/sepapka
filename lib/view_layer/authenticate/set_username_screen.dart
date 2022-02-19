@@ -26,30 +26,29 @@ class SetUsernameScreen extends StatelessWidget {
           title: const Text('Podaj nazwę użytkownika'),
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 50.0),
           child: Column(
             children: [
-              // Text('Twoja wygenerowana nazwa użytkownika to:'),
+              const SizedBox(height: 20,),
+              Text('Podaj własną, unikalną nazwę użytkownika. Możesz ją później zmienić w ustawieniach konta.'),
+              const SizedBox(height: 20,),
               Form(
                 key: _setUsernameKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: TextFormField(
-                    textAlign: TextAlign.center,
-                    // initialValue: username,
-                    // textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      labelText: 'Nazwa użytkownika',
-                    ),
-                    // onTap: () => usernameChanged = true,
-                    onChanged: (val) {
-                      username = val;
-                    },
-                    // validator: (val) {
-                    //   if (val!.isEmpty || val.length < 3 || val.length > 16) {return 'Nazwa użytkownika musi składać się z 3-16 znaków';}
-                    //   return null;
-                    // },
+                child: TextFormField(
+                  // textAlign: TextAlign.center,
+                  // initialValue: username,
+                  // textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    labelText: 'Nazwa użytkownika',
                   ),
+                  // onTap: () => usernameChanged = true,
+                  onChanged: (val) {
+                    username = val;
+                  },
+                  // validator: (val) {
+                  //   if (val!.isEmpty || val.length < 3 || val.length > 16) {return 'Nazwa użytkownika musi składać się z 3-16 znaków';}
+                  //   return null;
+                  // },
                 ),
               ),
               const SizedBox(
@@ -66,9 +65,6 @@ class SetUsernameScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   var result = await context.read<Manager>().updateUserData(username);
-                  // Navigator.of(context)
-                  //     .pushNamedAndRemoveUntil('/settings-screen', (Route<dynamic> route) => false);
-
                 },
                 child: const Text('Zapisz'),
               ),
@@ -76,14 +72,11 @@ class SetUsernameScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   var result = await context.read<Manager>().navigate(Screen.menu);
-                  // Navigator.of(context)
-                  //     .pushNamedAndRemoveUntil('/settings-screen', (Route<dynamic> route) => false);
-
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(fadedButtonColor),
                 ),
-                child: const Text('Później'),
+                child: const Text('Zrobię to później...'),
               ),
             ],
           ),

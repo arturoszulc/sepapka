@@ -71,8 +71,10 @@ class DatabaseService {
   Future<bool> checkIfUsernameIsAvailable(String userId, String username) async {
     debugPrint('/// DB: searching for that username... ///');
     QuerySnapshot snapshot = await usersCollection.where('username', isEqualTo: username).get(const GetOptions(source: Source.server));
-    if (snapshot.docs.isEmpty) return false;
-    return true;
+    //if there's no documents with this userName, return True
+    if (snapshot.docs.isEmpty) return true;
+    //else username is taken, return FALSE
+    return false;
   }
 
   //Get GlobalData document

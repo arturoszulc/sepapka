@@ -380,7 +380,6 @@ class UserService {
       //if TRUE, update user on DB
       _loggedUser!.username = username;
       await updateLoggedUserInDb();
-      //return Success
       return Success();
     } catch (e) {
       debugPrint(e.toString());

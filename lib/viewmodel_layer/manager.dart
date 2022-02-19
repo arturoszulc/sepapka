@@ -278,6 +278,21 @@ class Manager extends ChangeNotifier {
     navigate(Screen.menu);
   }
 
+  setUsername(String username) async {
+    navigate(Screen.loading);
+    Object changeUsernameResult = await _userService.changeUserName(username);
+    if (changeUsernameResult is Failure) {
+      setError(changeUsernameResult);
+      navigate(Screen.setUsername);
+      return;
+    }
+    if (changeUsernameResult is Success) {
+      setError(null);
+      navigate(Screen.menu);
+      return;
+    }
+  }
+
   updateUserData(String username) async {
     navigate(Screen.loading);
     Object changeUsernameResult = await _userService.changeUserName(username);
