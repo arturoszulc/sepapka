@@ -11,10 +11,13 @@ const String msgThanksForRemark = 'Dziękuję za przesłanie uwagi!';
 // UI Errors //
 ///////////////
 
+//General Error
+const String errorNotInternetConnection = 'Brak połączenia z internetem';
+
 //UserService Errors
-const String usernameCharValidationError = 'Nazwa użytkownika może zawierać tylko litery i cyfry';
-const String usernameLengthError = 'Nazwa użytkownika musi zawierać od 3 do 16 znaków';
-const String usernameTakenError = 'Ta nazwa użytkownika jest już zajęta';
+const String errorUsernameCharValidation = 'Nazwa użytkownika może zawierać tylko litery i cyfry';
+const String errorUsernameLength = 'Nazwa użytkownika musi zawierać od 3 do 16 znaków';
+const String errorUsernameTaken = 'Ta nazwa użytkownika jest już zajęta';
 
 
 //QuestionService Errors

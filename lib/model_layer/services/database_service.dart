@@ -69,15 +69,9 @@ class DatabaseService {
 
   // VERIFY if theres user with the same Username
   Future<bool> checkIfUsernameIsAvailable(String userId, String username) async {
-    debugPrint('/// DB: reading all USER docs... ///');
-    var snapshot = await usersCollection.get();
-    if (snapshot.metadata.isFromCache) throw Exception(errorDbConnection);
-    for (var doc in snapshot.docs) {
-      if (doc.id != userId) //avoid comparing currentUser - it's username will always match
-      {
-        if (doc.get('username') == username) return false;
-      }
-    }
+    debugPrint('/// DB: searching for that username... ///');
+    QuerySnapshot snapshot = await usersCollection.where('username', isEqualTo: username).get(const GetOptions(source: Source.server));
+    if (snapshot.docs.isEmpty) return false;
     return true;
   }
 

@@ -5,6 +5,7 @@ enum Screen {
   loading,
   signIn,
   resetPassword,
+  setUsername,
   menu,
   chooseLevel,
   settings,

@@ -30,11 +30,14 @@ class Manager extends ChangeNotifier {
 
   //Manager properties
   bool _loading = false;
+  bool _userHasRegistered = false;
+
 
   String _errorMsg = '';
   String _infoMsg = '';
 
   Screen _currentScreen = Screen.loading;
+
 
   //Manager getters
   bool get loading => _loading;
@@ -161,7 +164,13 @@ class Manager extends ChangeNotifier {
       navigate(Screen.signIn);
       return;
     }
-    navigate(Screen.menu);
+    //if user just registered, allow him to set his Username
+    if (_userHasRegistered) {
+      navigate(Screen.setUsername);
+    }
+    else {
+      navigate(Screen.menu);
+    };
   }
 
   ////////////////////////
@@ -192,16 +201,19 @@ class Manager extends ChangeNotifier {
       setError(registerResult);
       navigate(Screen.signIn);
     }
-    if (registerResult is Success) setError(null);
+    if (registerResult is Success) {
+      setError(null);
+      _userHasRegistered = true;
+    }
   }
 
   signInWithGoogle() async {
-    Object signInGoogleResunt = await _authService.signInGoogle();
-    if (signInGoogleResunt is Failure) {
-      setError(signInGoogleResunt);
+    Object signInGoogleResult = await _authService.signInGoogle();
+    if (signInGoogleResult is Failure) {
+      setError(signInGoogleResult);
       navigate(Screen.signIn);
     }
-    if (signInGoogleResunt is Success) setError(null);
+    if (signInGoogleResult is Success) setError(null);
   }
 
   signOut() async {

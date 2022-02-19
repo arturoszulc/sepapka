@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
+import 'package:sepapka/view_layer/authenticate/set_username_screen.dart';
 import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
 import 'package:sepapka/view_layer/menu/menu_choose_level.dart';
 import 'package:sepapka/view_layer/question_list_screen.dart';
@@ -119,9 +120,11 @@ class Wrapper extends StatelessWidget {
       case Screen.menu:
         return MenuScreen();
         break;
-
       case Screen.resetPassword:
         return ResetPasswordScreen();
+        break;
+      case Screen.setUsername:
+        return SetUsernameScreen();
         break;
       case Screen.settings:
         return const SettingsScreen();
@@ -150,6 +153,7 @@ class Wrapper extends StatelessWidget {
       case Screen.debug:
         return DebugScreen();
         break;
+
     }
   }
 }

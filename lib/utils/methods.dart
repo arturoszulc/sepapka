@@ -32,12 +32,12 @@ Object validatePassword(String password){
 
 Object validateUsername(String username) {
   //check if length is between 3-16 chars
-  if (username.length < 3 || username.length > 16) return Failure(usernameLengthError);
+  if (username.length < 3 || username.length > 16) return Failure(errorUsernameLength);
 
   //username should contain only alphanumeric characters
   String  pattern = r'^[a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9-]+$';
   RegExp regExp = RegExp(pattern);
-  if (!regExp.hasMatch(username)) return Failure(usernameCharValidationError);
+  if (!regExp.hasMatch(username)) return Failure(errorUsernameCharValidation);
   return Success();
 }
 

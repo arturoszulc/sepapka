@@ -376,11 +376,10 @@ class UserService {
     try {
       bool isUsernameAvailableResult =
           await _databaseService.checkIfUsernameIsAvailable(_loggedUser!.documentId, username);
-      if (!isUsernameAvailableResult) return Failure(usernameTakenError);
+      if (!isUsernameAvailableResult) return Failure(errorUsernameTaken);
       //if TRUE, update user on DB
       _loggedUser!.username = username;
-      await _databaseService.updateUser(_loggedUser!);
-
+      await updateLoggedUserInDb();
       //return Success
       return Success();
     } catch (e) {

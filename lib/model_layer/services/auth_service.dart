@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -24,24 +26,32 @@ class AuthService {
     Object valPasswordResult = validatePassword(password);
     if (valPasswordResult is Failure) return valPasswordResult;
     try {
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await _auth.createUserWithEmailAndPassword(email: email, password: password).timeout(
+            const Duration(seconds: 5),
+          );
       return Success();
     } on FirebaseAuthException catch (e) {
       debugPrint('CODE');
       debugPrint(e.code);
       return Failure(getMessageFromErrorCode(e.code));
+    } on TimeoutException catch (e) {
+      return Failure(errorNotInternetConnection);
     }
   }
 
   Future<Object> signInEmail(String email, String password) async {
     try {
       //get authUser
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(email: email, password: password).timeout(
+            const Duration(seconds: 5),
+          );
       return Success();
     } on FirebaseAuthException catch (e) {
       debugPrint('CODE');
       debugPrint(e.code);
       return Failure(getMessageFromErrorCode(e.code));
+    } on TimeoutException catch (e) {
+      return Failure(errorNotInternetConnection);
     }
   }
 
