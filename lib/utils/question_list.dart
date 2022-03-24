@@ -15,6 +15,17 @@ final questionListDB = [
       level: 1,
       assetPath: ""),
   Question(
+      id: "AMJEwqpt0BFHrFPBfOa9",
+      q: "Widoczny na poniższym rysunku układ sieci to",
+      a1: "sieć TN-S",
+      a2: "sieć TT",
+      a3: "sieć TN-C",
+      a4: "sieć IT",
+      labels: ["sieci niskiego napięcia"],
+      level: 1,
+      assetPath: "uklad_sieci_tns.png"),
+
+  Question(
       id: "eQgeDoaX37agSq5ki91l",
       q: "Urządzenia III klasy ochronności mogą być zasilanie napięciem:",
       a1: "SELV lub PELV",

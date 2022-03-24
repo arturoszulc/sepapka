@@ -40,18 +40,30 @@ class QuestionSingleScreen extends StatelessWidget {
           body: Column(mainAxisSize: MainAxisSize.min, children: [
                 //build topBar
                   singleQuestionTopBar(context),
-                  const SizedBox(height: 30.0,),
+                  const SizedBox(height: 10.0,),
                   Expanded(
                     flex: 3,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
-                      child: Text(
-                        question != null ? question.q : '',
-                        style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                        // maxLines: 3,
-                      ),
+                    child: question == null ? Container() :
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+                          child: Text(
+                            question != null ? question.q : '',
+                            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                            // maxLines: 3,
+                          ),
+                        ),
+                        Expanded(
+                          child: question.assetPath.isEmpty ? Container() :
+                          Image.asset('assets/images/questions/${question.assetPath}',
+
+                            ),
+                        ),
+                      ],
                     ),
                   ),
+
                   Expanded(
                     flex: 6,
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
