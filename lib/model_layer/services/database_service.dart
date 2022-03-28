@@ -12,24 +12,16 @@ import 'package:sepapka/utils/methods.dart';
 import '../models/question.dart';
 
 class DatabaseService {
-
-
   final CollectionReference dataCollection = FirebaseFirestore.instance.collection('data');
-  final CollectionReference questions1Collection =
-  FirebaseFirestore.instance.collection('questions1');
-  final CollectionReference questions2Collection =
-  FirebaseFirestore.instance.collection('questions2');
-  final CollectionReference questions3Collection =
-  FirebaseFirestore.instance.collection('questions3');
-  final CollectionReference questionsProCollection =
-      FirebaseFirestore.instance.collection('questionsPro');
-  final CollectionReference questionsFreeCollection =
-      FirebaseFirestore.instance.collection('questionsFree');
+  final CollectionReference questions1Collection = FirebaseFirestore.instance.collection('questions1');
+  final CollectionReference questions2Collection = FirebaseFirestore.instance.collection('questions2');
+  final CollectionReference questions3Collection = FirebaseFirestore.instance.collection('questions3');
+  final CollectionReference questionsProCollection = FirebaseFirestore.instance.collection('questionsPro');
+  final CollectionReference questionsFreeCollection = FirebaseFirestore.instance.collection('questionsFree');
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
   final CollectionReference remarksCollection = FirebaseFirestore.instance.collection('remarks');
   final Query usersRankQuery =
       FirebaseFirestore.instance.collection('users').orderBy('rankTotalPoints', descending: true).limit(10);
-
 
   // //UPDATE USER DATA
   // DO NOT USE ASYNC/AWAIT on SET function, because when device is offline, it won't return
@@ -76,7 +68,8 @@ class DatabaseService {
   // VERIFY if theres user with the same Username
   Future<bool> checkIfUsernameIsAvailable(String userId, String username) async {
     debugPrint('/// DB: searching for that username... ///');
-    QuerySnapshot snapshot = await usersCollection.where('username', isEqualTo: username).get(const GetOptions(source: Source.server));
+    QuerySnapshot snapshot =
+        await usersCollection.where('username', isEqualTo: username).get(const GetOptions(source: Source.server));
     //if there's no documents with this userName, return True
     if (snapshot.docs.isEmpty) return true;
     //else username is taken, return FALSE
@@ -121,10 +114,18 @@ class DatabaseService {
   }
 
   //Upload questions to DB ****** method on demand *******
-  Future<void> uploadQuestions({required Question question, required bool isPro}) async {
+  Future<void> uploadQuestions({required Question question}) async {
     debugPrint('### ID IS ${question.id} ###');
-    DocumentReference doc =
-        isPro ? questionsProCollection.doc(question.id) : questionsFreeCollection.doc(question.id);
+
+    DocumentReference doc;
+
+    if (question.level == 1) {
+      doc = questions1Collection.doc(question.id);
+    } else if (question.level == 2) {
+      doc = questions2Collection.doc(question.id);
+    } else {
+      doc = questions3Collection.doc(question.id);
+    }
     return await doc.set({
       'q': question.q,
       'a1': question.a1,
@@ -146,6 +147,7 @@ class DatabaseService {
           rankTotalPoints: doc.get(userRankTotalPoints));
     }).toList();
   }
+
   List<RankUser>? _usersRankUser(QuerySnapshot snapshot) {
     return null;
     // return snapshot.docs.map((doc) {
@@ -162,15 +164,15 @@ class DatabaseService {
     return remarksCollection
         .doc()
         .set({
-      remarkDate: remark.date,
-      remarkQuestion: remark.question,
-      remarkText: remark.text,
-    })
+          remarkDate: remark.date,
+          remarkQuestion: remark.question,
+          remarkText: remark.text,
+        })
         .then((value) => debugPrint('/// DB: Remark sent ///'))
         .catchError((error) => debugPrint("DB: Failed to create remark: $error"));
   }
 
+  Stream<List<RankUser>> get usersRankTop => usersRankQuery.snapshots().map(_usersRankTop);
 
-Stream<List<RankUser>> get usersRankTop => usersRankQuery.snapshots().map(_usersRankTop);
-Stream<List<RankUser>?> get userRankUser => usersRankQuery.snapshots().map(_usersRankUser);
+  Stream<List<RankUser>?> get userRankUser => usersRankQuery.snapshots().map(_usersRankUser);
 }

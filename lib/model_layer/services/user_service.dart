@@ -133,11 +133,11 @@ class UserService {
   }
 
   bool compareQVersion(int questions1Version, int questions2Version, int questions3Version) {
-    if (qVersion == loggedUser!.qVersion) {
+    // if (qVersion == loggedUser!.qVersion) {
       return true;
-    } else {
-      return false;
-    }
+    // } else {
+    //   return false;
+    // }
   }
 
   Future<void> updateQNewLists(List<Question> qListGlobal) async {

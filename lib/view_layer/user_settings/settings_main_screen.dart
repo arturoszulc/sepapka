@@ -130,7 +130,7 @@ class SettingsScreen extends StatelessWidget {
 
               MenuButton(label: 'Wyloguj się', onPressed: () async {
                 // await context.read<Manager>().signOut();
-                context.read<Manager>().addQuestionsToDb(isPro: false);
+                context.read<Manager>().addQuestionsToDb();
               }),
               MenuButton(label: 'Usuń postępy użytkownika', onPressed: () {
                 context.read<Manager>().resetUserProgress();

@@ -377,19 +377,26 @@ class Manager extends ChangeNotifier {
   // ******* METHODS ON DEMAND ********
 
   //Questions for Users
-  addQuestionsToDb({required bool isPro}) async {
+  addQuestionsToDb() async {
     debugPrint('/// addQuestionsToDb deployed ///');
-    if (!isPro) {
-      for (var question in questionListDB) {
-        if (question.level == 1) {
-          await _databaseService.uploadQuestions(question: question, isPro: isPro);
-        }
-      }
-    } else {
-      for (var question in questionListDB) {
-        await _databaseService.uploadQuestions(question: question, isPro: isPro);
-      }
+
+    for (var question in questionListDB) {
+            await _databaseService.uploadQuestions(question: question);
     }
+    debugPrint('/// Added questions successfully');
+
+    //
+    // if (!isPro) {
+    //   for (var question in questionListDB) {
+    //     if (question.level == 1) {
+    //       await _databaseService.uploadQuestions(question: question, isPro: isPro);
+    //     }
+    //   }
+    // } else {
+    //   for (var question in questionListDB) {
+    //     await _databaseService.uploadQuestions(question: question, isPro: isPro);
+    //   }
+    // }
   }
 
   getFilteredQuestionList({QuestionFilter? filter}) {
