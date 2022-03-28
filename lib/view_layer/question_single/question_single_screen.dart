@@ -49,7 +49,7 @@ class QuestionSingleScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
                           child: Text(
-                            question != null ? question.q : '',
+                            question.q,
                             style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                             // maxLines: 3,
                           ),
