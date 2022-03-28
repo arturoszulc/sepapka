@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 //LoggedUser model properties
-const String userQVersion = 'qVersion';
+const String userQVersions = 'qVersions';
 const String userUsername = 'username';
 const String userIsPro = 'isPro';
 const String userRankLevel = 'rankLevel';
@@ -25,9 +25,7 @@ const String questionLevel = 'level';
 const String questionAssetPath = 'assetPath';
 
 //GlobalData model properties
-const String globalDataQuestions1Version = 'questions1Version';
-const String globalDataQuestions2Version = 'questions2Version';
-const String globalDataQuestions3Version = 'questions3Version';
+const String globalDataQVersions = 'qVersions';
 const String globalDataRankNames = 'rankNames';
 const String globalDataRankThresholds = 'rankThresholds';
 

@@ -80,7 +80,7 @@ class UserService {
         isPro: false,
         rankLevel: 0,
         rankTotalPoints: 0,
-        qVersion: 0,
+        qVersions: [1,1,1],
         qListNew1: [],
         qListNew2: [],
         qListNew3: [],
@@ -132,12 +132,28 @@ class UserService {
     // loggedUserStreamController.add(_loggedUser);
   }
 
-  bool compareQVersion(int questions1Version, int questions2Version, int questions3Version) {
-    // if (qVersion == loggedUser!.qVersion) {
-      return true;
-    // } else {
-    //   return false;
-    // }
+  List<int> compareQVersion(List<int> qVersions) {
+    debugPrint('/// Comparing qVersions ///');
+    List<int> downloadQuestion = [];
+
+    //Free user
+    if (qVersions[0] != loggedUser!.qVersions[0]){
+      downloadQuestion.add(1);
+      debugPrint('questions1 outdated');
+    }
+    //Pro user
+    if (loggedUser!.isPro)
+      {
+        if (qVersions[1] != loggedUser!.qVersions[1]){
+          downloadQuestion.add(2);
+          debugPrint('questions2 outdated');
+        }
+        if (qVersions[2] != loggedUser!.qVersions[2]){
+          downloadQuestion.add(3);
+          debugPrint('questions3 outdated');
+        }
+      }
+    return downloadQuestion;
   }
 
   Future<void> updateQNewLists(List<Question> qListGlobal) async {
@@ -166,8 +182,8 @@ class UserService {
     _rankThresholds = rankThresholds;
   }
 
-  updateQVersion(int qVersion) {
-    _loggedUser!.qVersion = qVersion;
+  updateQVersion(List<int> qVersions) {
+    _loggedUser!.qVersions = qVersions;
   }
 
   bool isQuestionInAnyList(String questionId) {
@@ -343,7 +359,7 @@ class UserService {
   Future<Object> goPro(bool bool) async {
     if (!bool) wipeUser(); //if go FREE, wipe user
     _loggedUser!.isPro = bool;
-    _loggedUser!.qVersion = 1;
+    // _loggedUser!.qVersion = 1;
     try {
       await _databaseService.updateUser(_loggedUser!);
       return Success();

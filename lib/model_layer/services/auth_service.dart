@@ -34,7 +34,7 @@ class AuthService {
       debugPrint('CODE');
       debugPrint(e.code);
       return Failure(getMessageFromErrorCode(e.code));
-    } on TimeoutException catch (e) {
+    } on TimeoutException {
       return Failure(errorNotInternetConnection);
     }
   }
@@ -50,7 +50,7 @@ class AuthService {
       debugPrint('CODE');
       debugPrint(e.code);
       return Failure(getMessageFromErrorCode(e.code));
-    } on TimeoutException catch (e) {
+    } on TimeoutException {
       return Failure(errorNotInternetConnection);
     }
   }

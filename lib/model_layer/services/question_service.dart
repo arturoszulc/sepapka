@@ -78,46 +78,50 @@ class QuestionService {
       debugPrint(e.toString());
       return Failure(errorGetGlobalData);
     }
+
     //if GlobalData is retrieved, proceed
 
     //send current rank names and thresholds to userService
     _userService.prepareRanks(globalData!.rankNames, globalData!.rankThresholds);
 
-    //Set questionVersion
-    int? qVersion = 1;
-        // _userService.loggedUser!.isPro ? globalData!.qVersionPro : globalData!.qVersionFree;
-    // if (qVersion is! int) return Failure(errorGetQVersionFromDB);
-
-    //after downloading qVersion from DB, compare it with local LoggedUser versions .
-    bool compareResult = _userService.compareQVersion(globalData!.questions1Version, globalData!.questions2Version, globalData!.questions3Version);
+    //compare questionVersion from DB with those in LoggedUser object
+    List<int> downloadQuestions = _userService.compareQVersion(globalData!.qVersions);
 
     //get Question List based on compareResult
-    Object getQuestionResult = await getGlobalQuestionList(compareResult);
+    Object getQuestionResult = await getGlobalQuestionList(downloadQuestions);
     if (getQuestionResult is Failure) return getQuestionResult;
 
     //update qListGlobal variable
     _qListGlobal = getQuestionResult as List<Question>;
 
     //update local user question version and qNewList (if there any any new questions)
-    _userService.updateQVersion(qVersion);
+    _userService.updateQVersion(globalData!.qVersions);
     await _userService.updateQNewLists(_qListGlobal!);
 
     debugPrint('/// QuestionService: Finished preparing GlobalData ///');
     return Success();
   }
 
-  Future<Object> getGlobalQuestionList(bool compareResult) async {
+  Future<Object> getGlobalQuestionList(List<int> downloadQuestions) async {
     // if User has qVersion up to date, try to take questions from JSON file
-    if (compareResult == true) {
+    if (downloadQuestions.isEmpty) {
       Object getLocalQuestionResult = await _fileService.getQuestionListFromFile();
       if (getLocalQuestionResult is List<Question>) return getLocalQuestionResult;
     }
 
-    //if user has outdated qVersion, or couldn't read file, download questions from DB
-    List<Question>? questionListFromDB =
-        await _databaseService.getQuestionList(isPro: _userService.loggedUser!.isPro);
-    if (questionListFromDB == null) return Failure(errorGetQListFromDB);
-    //save questions to local JSON file
+    //if user has outdated qVersion (so downloadQuestions list is not empty), or couldn't read file, download questions from DB
+    List<Question> questionListFromDB = [];
+
+    for (int listNumber in downloadQuestions)
+      {
+        List<Question>? questionList = await _databaseService.getQuestionList(listNumber: listNumber);
+        //if failed to download, interrupt whole method
+        if (questionList == null) return Failure(errorGetQListFromDB);
+        //if succeeded, add it to main list
+        questionListFromDB += questionList;
+      }
+
+    //after downloading all question lists, save questions to local JSON file
     Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(questionListFromDB);
     if (saveQuestionToFileResult is Failure) return saveQuestionToFileResult;
     return questionListFromDB;

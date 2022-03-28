@@ -31,7 +31,7 @@ class DatabaseService {
     return usersCollection
         .doc(user.documentId)
         .set({
-          userQVersion: user.qVersion,
+          userQVersions: user.qVersions,
           userUsername: user.username,
           userIsPro: user.isPro,
           userRankLevel: user.rankLevel,
@@ -56,7 +56,7 @@ class DatabaseService {
       isPro: doc.get(userIsPro),
       rankLevel: doc.get(userRankLevel),
       rankTotalPoints: doc.get(userRankTotalPoints),
-      qVersion: doc.get(userQVersion),
+      qVersions: List<int>.from(doc.get(userQVersions)),
       qListNew1: List<QMap>.from(doc.get(userQListNew1).map((e) => convertMapToQMap(e))),
       qListNew2: List<QMap>.from(doc.get(userQListNew2).map((e) => convertMapToQMap(e))),
       qListNew3: List<QMap>.from(doc.get(userQListNew3).map((e) => convertMapToQMap(e))),
@@ -81,9 +81,7 @@ class DatabaseService {
     debugPrint('/// DB: reading DATA doc... ///');
     var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
     return GlobalData(
-      questions1Version: doc.get(globalDataQuestions1Version),
-      questions2Version: doc.get(globalDataQuestions2Version),
-      questions3Version: doc.get(globalDataQuestions3Version),
+      qVersions: List<int>.from(doc.get(globalDataQVersions)),
       rankNames: List<String>.from(doc.get(globalDataRankNames)),
       rankThresholds: List<int>.from(doc.get(globalDataRankThresholds)),
     );
@@ -96,9 +94,15 @@ class DatabaseService {
   // }
 
   //Get question list (either Free or Pro user based on parameter)
-  Future<List<Question>?> getQuestionList({required bool isPro}) async {
+  Future<List<Question>?> getQuestionList({required int listNumber}) async {
     debugPrint('/// DB: reading all QUESTION docs... ///');
-    var snapshot = isPro ? await questionsProCollection.get() : await questionsFreeCollection.get();
+    QuerySnapshot? snapshot;
+    switch (listNumber) {
+      case 1: snapshot = await questions1Collection.get(); break;
+      case 2: snapshot = await questions2Collection.get(); break;
+      case 3: snapshot = await questions3Collection.get(); break;
+      default: snapshot = await questions1Collection.get();
+    }
     return snapshot.docs.map((doc) {
       return Question(
           id: doc.id,
@@ -119,12 +123,11 @@ class DatabaseService {
 
     DocumentReference doc;
 
-    if (question.level == 1) {
-      doc = questions1Collection.doc(question.id);
-    } else if (question.level == 2) {
-      doc = questions2Collection.doc(question.id);
-    } else {
-      doc = questions3Collection.doc(question.id);
+    switch (question.level) {
+      case 1: doc = questions1Collection.doc(question.id); break;
+      case 2: doc = questions2Collection.doc(question.id); break;
+      case 3: doc = questions3Collection.doc(question.id); break;
+      default: doc = questions1Collection.doc(question.id);
     }
     return await doc.set({
       'q': question.q,

@@ -5,7 +5,7 @@ class LoggedUser {
   String documentId;
   String username;
   bool isPro;
-  int qVersion;
+  List qVersions;
   List<QMap> qListNew1;
   List<QMap> qListNew2;
   List<QMap> qListNew3;
@@ -19,7 +19,7 @@ class LoggedUser {
         required this.documentId,
         required this.username,
         required this.isPro,
-        required this.qVersion,
+        required this.qVersions,
         required this.qListNew1,
         required this.qListNew2,
         required this.qListNew3,
