@@ -70,7 +70,7 @@ class QuestionService {
     return _todayPracticeList.length;
   }
 
-  Future<Object> prepareGlobalData() async {
+  Future<Object> prepareGlobalData() async { //NOT FINISHED
     //Get GlobalData from DB
     try {
       globalData = await _databaseService.getGlobalData();
@@ -83,13 +83,13 @@ class QuestionService {
     //send current rank names and thresholds to userService
     _userService.prepareRanks(globalData!.rankNames, globalData!.rankThresholds);
 
-    //Set questionVersion
-    int? qVersion =
-        _userService.loggedUser!.isPro ? globalData!.qVersionPro : globalData!.qVersionFree;
-    // if (qVersion is! int) return Failure(errorGetQVersionFromDB);
+    // //Set questionVersion
+    // int? qVersion =
+    //     _userService.loggedUser!.isPro ? globalData!.qVersionPro : globalData!.qVersionFree;
+    // // if (qVersion is! int) return Failure(errorGetQVersionFromDB);
 
-    //after downloading qVersion from DB, compare it with local LoggedUser.qVersion.
-    bool compareResult = _userService.compareQVersion(qVersion);
+    //after downloading qVersion from DB, compare it with local LoggedUser versions .
+    bool compareResult = _userService.compareQVersion(globalData!.questions1Version, globalData!.questions2Version, globalData!.questions3Version);
 
     //get Question List based on compareResult
     Object getQuestionResult = await getGlobalQuestionList(compareResult);

@@ -132,7 +132,7 @@ class UserService {
     // loggedUserStreamController.add(_loggedUser);
   }
 
-  bool compareQVersion(int qVersion) {
+  bool compareQVersion(int questions1Version, int questions2Version, int questions3Version) {
     if (qVersion == loggedUser!.qVersion) {
       return true;
     } else {

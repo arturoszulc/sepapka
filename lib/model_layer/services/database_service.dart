@@ -15,6 +15,12 @@ class DatabaseService {
 
 
   final CollectionReference dataCollection = FirebaseFirestore.instance.collection('data');
+  final CollectionReference questions1Collection =
+  FirebaseFirestore.instance.collection('questions1');
+  final CollectionReference questions2Collection =
+  FirebaseFirestore.instance.collection('questions2');
+  final CollectionReference questions3Collection =
+  FirebaseFirestore.instance.collection('questions3');
   final CollectionReference questionsProCollection =
       FirebaseFirestore.instance.collection('questionsPro');
   final CollectionReference questionsFreeCollection =
@@ -82,8 +88,9 @@ class DatabaseService {
     debugPrint('/// DB: reading DATA doc... ///');
     var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
     return GlobalData(
-      qVersionFree: doc.get(globalDataQVersionFree),
-      qVersionPro: doc.get(globalDataQVersionPro),
+      questions1Version: doc.get(globalDataQuestions1Version),
+      questions2Version: doc.get(globalDataQuestions2Version),
+      questions3Version: doc.get(globalDataQuestions3Version),
       rankNames: List<String>.from(doc.get(globalDataRankNames)),
       rankThresholds: List<int>.from(doc.get(globalDataRankThresholds)),
     );

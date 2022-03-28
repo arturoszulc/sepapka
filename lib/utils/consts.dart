@@ -25,8 +25,9 @@ const String questionLevel = 'level';
 const String questionAssetPath = 'assetPath';
 
 //GlobalData model properties
-const String globalDataQVersionFree = 'qVersionFree';
-const String globalDataQVersionPro = 'qVersionPro';
+const String globalDataQuestions1Version = 'questions1Version';
+const String globalDataQuestions2Version = 'questions2Version';
+const String globalDataQuestions3Version = 'questions3Version';
 const String globalDataRankNames = 'rankNames';
 const String globalDataRankThresholds = 'rankThresholds';
 
