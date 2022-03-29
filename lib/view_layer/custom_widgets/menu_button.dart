@@ -39,7 +39,7 @@ class MenuButton extends StatelessWidget {
       minimumSize: const Size.fromHeight(50)),
           onPressed:
           (!proOnly || (proOnly && isUserPro)) && (!hasBadge || (hasBadge && badgeNum > 0)) ? onPressed : null,
-          child: Text(label),
+          child: Text(label, textAlign: TextAlign.center,),
         ),
       ),
     );

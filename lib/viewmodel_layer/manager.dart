@@ -82,6 +82,8 @@ class Manager extends ChangeNotifier {
 
   List<Question> get qListGlobalFiltered => _questionService.qListGlobalFiltered;
 
+  List<String> get qCategories => _questionService.qCategories;
+
   //AuthService
 
   Stream<User?> get authUser => _authService.auth.authStateChanges();
@@ -163,6 +165,7 @@ class Manager extends ChangeNotifier {
     //if user just registered, allow him to set his Username
     if (_userHasRegistered) {
       navigate(Screen.setUsername);
+      _userHasRegistered = false;
     }
     else {
       navigate(Screen.menu);
@@ -300,7 +303,6 @@ class Manager extends ChangeNotifier {
     if (changeUsernameResult is Success) {
       setError(null);
       navigate(Screen.settings);
-      _userHasRegistered = false;
       return;
     }
   }

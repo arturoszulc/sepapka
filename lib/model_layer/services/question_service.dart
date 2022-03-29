@@ -46,6 +46,8 @@ class QuestionService {
 
   List<Question> get qListGlobalFiltered => _qListGlobalFiltered;
 
+  List<String> get qCategories => globalData!.qCategories;
+
   QuestionStatus get qStatus => _qStatus;
 
   QuestionType get qType => _qType;

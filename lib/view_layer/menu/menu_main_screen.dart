@@ -99,7 +99,7 @@ class MenuScreen extends StatelessWidget {
                 MenuButton(
                     label: 'Nauka',
                     onPressed: () {
-                      context.read<Manager>().navigate(Screen.chooseLevel);
+                      context.read<Manager>().navigate(Screen.chooseCategory);
                     }),
                 MenuButton(
                     // hasBadge: true,
