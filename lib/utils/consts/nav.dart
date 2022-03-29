@@ -8,6 +8,7 @@ enum Screen {
   setUsername,
   menu,
   chooseLevel,
+  chooseCategory,
   settings,
   changeUserName,
   singleQuestion,

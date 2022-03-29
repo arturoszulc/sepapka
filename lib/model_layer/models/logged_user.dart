@@ -6,10 +6,10 @@ class LoggedUser {
   String username;
   bool isPro;
   List qVersions;
-  List<QMap> qListNew1;
-  List<QMap> qListNew2;
-  List<QMap> qListNew3;
-  List<QMap> qListPractice;
+  List<QMap> qListNew;
+  // List<QMap> qListNew2;
+  // List<QMap> qListNew3;
+  List<QMap> qListPractice; //not used
   List<QMap> qListNotShown;
   int rankLevel;
   int rankTotalPoints;
@@ -20,9 +20,9 @@ class LoggedUser {
         required this.username,
         required this.isPro,
         required this.qVersions,
-        required this.qListNew1,
-        required this.qListNew2,
-        required this.qListNew3,
+        required this.qListNew,
+        // required this.qListNew2,
+        // required this.qListNew3,
         required this.qListPractice,
         required this.qListNotShown,
         required this.rankLevel,

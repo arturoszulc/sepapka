@@ -32,9 +32,7 @@ class DebugScreen extends StatelessWidget {
             const SizedBox(height: 50,),
 
             Text('LoggedUser ID: ${context.read<Manager>().loggedUser!.documentId}'),
-            Text('LoggedUser qNew1: ${context.read<Manager>().loggedUser!.qListNew1.length}'),
-            Text('LoggedUser qNew2: ${context.read<Manager>().loggedUser!.qListNew2.length}'),
-            Text('LoggedUser qNew3: ${context.read<Manager>().loggedUser!.qListNew3.length}'),
+            Text('LoggedUser qNew: ${context.read<Manager>().loggedUser!.qListNew.length}'),
             Text(
                 'LoggedUser qPractice: ${context.read<Manager>().loggedUser!.qListPractice.length}'),
             Text(

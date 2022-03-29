@@ -36,9 +36,10 @@ class DatabaseService {
           userIsPro: user.isPro,
           userRankLevel: user.rankLevel,
           userRankTotalPoints: user.rankTotalPoints,
-          userQListNew1: user.qListNew1.map((e) => e.convertToMap()).toList(),
-          userQListNew2: user.qListNew2.map((e) => e.convertToMap()).toList(),
-          userQListNew3: user.qListNew3.map((e) => e.convertToMap()).toList(),
+          userQListNew: user.qListNew.map((e) => e.convertToMap()).toList(),
+          // userQListNew1: user.qListNew1.map((e) => e.convertToMap()).toList(),
+          // userQListNew2: user.qListNew2.map((e) => e.convertToMap()).toList(),
+          // userQListNew3: user.qListNew3.map((e) => e.convertToMap()).toList(),
           userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
           userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),
         })
@@ -57,9 +58,10 @@ class DatabaseService {
       rankLevel: doc.get(userRankLevel),
       rankTotalPoints: doc.get(userRankTotalPoints),
       qVersions: List<int>.from(doc.get(userQVersions)),
-      qListNew1: List<QMap>.from(doc.get(userQListNew1).map((e) => convertMapToQMap(e))),
-      qListNew2: List<QMap>.from(doc.get(userQListNew2).map((e) => convertMapToQMap(e))),
-      qListNew3: List<QMap>.from(doc.get(userQListNew3).map((e) => convertMapToQMap(e))),
+      qListNew: List<QMap>.from(doc.get(userQListNew).map((e) => convertMapToQMap(e))),
+      // qListNew1: List<QMap>.from(doc.get(userQListNew1).map((e) => convertMapToQMap(e))),
+      // qListNew2: List<QMap>.from(doc.get(userQListNew2).map((e) => convertMapToQMap(e))),
+      // qListNew3: List<QMap>.from(doc.get(userQListNew3).map((e) => convertMapToQMap(e))),
       qListPractice: List<QMap>.from(doc.get(userQListPractice).map((e) => convertMapToQMap(e))),
       qListNotShown: List<QMap>.from(doc.get(userQListNotShown).map((e) => convertMapToQMap(e))),
     );
@@ -81,6 +83,7 @@ class DatabaseService {
     debugPrint('/// DB: reading DATA doc... ///');
     var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
     return GlobalData(
+      qCategories: List<String>.from(doc.get(globalDataQCategories)),
       qVersions: List<int>.from(doc.get(globalDataQVersions)),
       rankNames: List<String>.from(doc.get(globalDataRankNames)),
       rankThresholds: List<int>.from(doc.get(globalDataRankThresholds)),
@@ -94,10 +97,10 @@ class DatabaseService {
   // }
 
   //Get question list (either Free or Pro user based on parameter)
-  Future<List<Question>?> getQuestionList({required int listNumber}) async {
-    debugPrint('/// DB: reading all QUESTION docs... ///');
+  Future<List<Question>?> getQuestionList({required int list}) async {
+    debugPrint('/// DB: reading QList number: $list ///');
     QuerySnapshot? snapshot;
-    switch (listNumber) {
+    switch (list) {
       case 1: snapshot = await questions1Collection.get(); break;
       case 2: snapshot = await questions2Collection.get(); break;
       case 3: snapshot = await questions3Collection.get(); break;

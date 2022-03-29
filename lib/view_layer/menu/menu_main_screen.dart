@@ -102,12 +102,12 @@ class MenuScreen extends StatelessWidget {
                       context.read<Manager>().navigate(Screen.chooseLevel);
                     }),
                 MenuButton(
-                    hasBadge: true,
-                    badgeNum: howManyToPractice,
-                    label: 'Powtórka materiału',
-                    onPressed: howManyToPractice == 0
-                        ? null
-                        : () async {
+                    // hasBadge: true,
+                    // badgeNum: howManyToPractice,
+                    label: 'Quiz',
+                    onPressed: //howManyToPractice == 0
+                        // ? null
+                        () async {
                             await context.read<Manager>().startPractice();
                           }),
                 MenuButton(

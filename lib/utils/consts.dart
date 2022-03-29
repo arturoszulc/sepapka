@@ -8,9 +8,10 @@ const String userUsername = 'username';
 const String userIsPro = 'isPro';
 const String userRankLevel = 'rankLevel';
 const String userRankTotalPoints = 'rankTotalPoints';
-const String userQListNew1 = 'qListNew1';
-const String userQListNew2 = 'qListNew2';
-const String userQListNew3 = 'qListNew3';
+const String userQListNew = 'qListNew';
+// const String userQListNew1 = 'qListNew1';
+// const String userQListNew2 = 'qListNew2';
+// const String userQListNew3 = 'qListNew3';
 const String userQListPractice = 'qListPractice';
 const String userQListNotShown = 'qListNotShown';
 
@@ -25,6 +26,7 @@ const String questionLevel = 'level';
 const String questionAssetPath = 'assetPath';
 
 //GlobalData model properties
+const String globalDataQCategories = 'qCategories';
 const String globalDataQVersions = 'qVersions';
 const String globalDataRankNames = 'rankNames';
 const String globalDataRankThresholds = 'rankThresholds';

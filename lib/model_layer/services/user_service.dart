@@ -23,7 +23,7 @@ class UserService {
 
   //Properties
   bool _loggedUserChanged = false;
-  bool _isUserPromoted = false;
+  bool _userLeveledUp = false;
   List<String> _rankNames = [];
   List<int> _rankThresholds = [];
 
@@ -38,7 +38,7 @@ class UserService {
 
   bool get loggedUserChanged => _loggedUserChanged;
 
-  bool get isUserPromoted => _isUserPromoted;
+  bool get userLeveledUp => _userLeveledUp;
 
   String get userRankName => _rankNames[_loggedUser!.rankLevel];
 
@@ -46,8 +46,8 @@ class UserService {
   //Streams
   // Stream<LoggedUser?> get loggedUserStream => loggedUserStreamController.stream;
 
-  setIsUserPromoted(bool flag) {
-    _isUserPromoted = flag;
+  setUserLeveledUp(bool flag) {
+    _userLeveledUp = flag;
   }
 
   String getProgressPercentGlobal() {
@@ -69,7 +69,7 @@ class UserService {
     //calculate rank
     if (_loggedUser!.rankTotalPoints >= _rankThresholds[_loggedUser!.rankLevel]) {
       _loggedUser!.rankLevel += 1;
-      setIsUserPromoted(true);
+      setUserLeveledUp(true);
     }
   }
 
@@ -81,9 +81,10 @@ class UserService {
         rankLevel: 0,
         rankTotalPoints: 0,
         qVersions: [1,1,1],
-        qListNew1: [],
-        qListNew2: [],
-        qListNew3: [],
+        qListNew: [],
+        // qListNew1: [],
+        // qListNew2: [],
+        // qListNew3: [],
         qListPractice: [],
         qListNotShown: []);
   }
@@ -133,27 +134,27 @@ class UserService {
   }
 
   List<int> compareQVersion(List<int> qVersions) {
-    debugPrint('/// Comparing qVersions ///');
-    List<int> downloadQuestion = [];
+    debugPrint('/// Checking if questions are up to date ///');
+    List<int> outdatedQLists = [];
 
-    //Free user
+    //Every user
     if (qVersions[0] != loggedUser!.qVersions[0]){
-      downloadQuestion.add(1);
+      outdatedQLists.add(1);
       debugPrint('questions1 outdated');
     }
     //Pro user
     if (loggedUser!.isPro)
       {
         if (qVersions[1] != loggedUser!.qVersions[1]){
-          downloadQuestion.add(2);
+          outdatedQLists.add(2);
           debugPrint('questions2 outdated');
         }
         if (qVersions[2] != loggedUser!.qVersions[2]){
-          downloadQuestion.add(3);
+          outdatedQLists.add(3);
           debugPrint('questions3 outdated');
         }
       }
-    return downloadQuestion;
+    return outdatedQLists;
   }
 
   Future<void> updateQNewLists(List<Question> qListGlobal) async {
@@ -183,28 +184,32 @@ class UserService {
   }
 
   updateQVersion(List<int> qVersions) {
-    _loggedUser!.qVersions = qVersions;
-  }
+    if (loggedUser!.isPro) {
+      _loggedUser!.qVersions = qVersions;
+    } else {
+      _loggedUser!.qVersions[0] = qVersions[0];
+    }
+    }
 
   bool isQuestionInAnyList(String questionId) {
-    return isQuestionInNew1(questionId) != null ||
-        isQuestionInNew2(questionId) != null ||
-        isQuestionInNew3(questionId) != null ||
+    return isQuestionInQListNew(questionId) != null ||
+        // isQuestionInNew2(questionId) != null ||
+        // isQuestionInNew3(questionId) != null ||
         isQuestionInPracticeList(questionId) != null ||
         isQuestionInNotShownList(questionId) != null;
   }
 
-  QMap? isQuestionInNew1(String questionId) {
-    return _loggedUser!.qListNew1.firstWhereOrNull((qMap) => qMap.id == questionId);
+  QMap? isQuestionInQListNew(String questionId) {
+    return _loggedUser!.qListNew.firstWhereOrNull((qMap) => qMap.id == questionId);
   }
 
-  QMap? isQuestionInNew2(String questionId) {
-    return _loggedUser!.qListNew2.firstWhereOrNull((qMap) => qMap.id == questionId);
-  }
-
-  QMap? isQuestionInNew3(String questionId) {
-    return _loggedUser!.qListNew3.firstWhereOrNull((qMap) => qMap.id == questionId);
-  }
+  // QMap? isQuestionInNew2(String questionId) {
+  //   return _loggedUser!.qListNew2.firstWhereOrNull((qMap) => qMap.id == questionId);
+  // }
+  //
+  // QMap? isQuestionInNew3(String questionId) {
+  //   return _loggedUser!.qListNew3.firstWhereOrNull((qMap) => qMap.id == questionId);
+  // }
 
   QMap? isQuestionInPracticeList(String questionId) {
     return _loggedUser!.qListPractice.firstWhereOrNull((qMap) => qMap.id == questionId);
@@ -215,9 +220,10 @@ class UserService {
   }
 
   removeQuestionFromAnyQList(String questionId) {
-    _loggedUser!.qListNew1.removeWhere((e) => e.id == questionId);
-    _loggedUser!.qListNew2.removeWhere((e) => e.id == questionId);
-    _loggedUser!.qListNew3.removeWhere((e) => e.id == questionId);
+    _loggedUser!.qListNew.removeWhere((e) => e.id == questionId);
+    // _loggedUser!.qListNew1.removeWhere((e) => e.id == questionId);
+    // _loggedUser!.qListNew2.removeWhere((e) => e.id == questionId);
+    // _loggedUser!.qListNew3.removeWhere((e) => e.id == questionId);
     _loggedUser!.qListPractice.removeWhere((e) => e.id == questionId);
     _loggedUser!.qListNotShown.removeWhere((e) => e.id == questionId);
   }
@@ -228,16 +234,18 @@ class UserService {
 
   List<QMap> getQMapsFromNewList(int qLevel) {
     //return only first 10 elements
-    switch (qLevel) {
-      case 1:
-        return _loggedUser!.qListNew1.slice(0, min(9, _loggedUser!.qListNew1.length));
-      case 2:
-        return _loggedUser!.qListNew2.slice(0, min(9, _loggedUser!.qListNew2.length));
+    return _loggedUser!.qListNew.slice(0, min(9, _loggedUser!.qListNew.length));
 
-      case 3:
-        return _loggedUser!.qListNew3.slice(0, min(9, _loggedUser!.qListNew3.length));
-    }
-    return [];
+    // switch (qLevel) {
+    //   case 1:
+    //     return _loggedUser!.qListNew1.slice(0, min(9, _loggedUser!.qListNew1.length));
+    //   case 2:
+    //     return _loggedUser!.qListNew2.slice(0, min(9, _loggedUser!.qListNew2.length));
+    //
+    //   case 3:
+    //     return _loggedUser!.qListNew3.slice(0, min(9, _loggedUser!.qListNew3.length));
+    // }
+    // return [];
   }
 
   List<QMap> getTodayPracticeQMapList() {
@@ -297,21 +305,25 @@ class UserService {
     //method cuts out qMap from it's list and returns it
     switch (qType) {
       case QuestionType.newQuestion:
-        switch (qLevel) {
-          case 1:
-            qMap = _loggedUser!.qListNew1.firstWhereOrNull((element) => element.id == qId);
-            _loggedUser!.qListNew1.remove(qMap);
-            return qMap;
-          case 2:
-            qMap = _loggedUser!.qListNew2.firstWhereOrNull((element) => element.id == qId);
-            _loggedUser!.qListNew2.remove(qMap);
-            return qMap;
+          qMap = _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == qId);
+          _loggedUser!.qListNew.remove(qMap);
+          return qMap;
 
-          case 3:
-            qMap = _loggedUser!.qListNew3.firstWhereOrNull((element) => element.id == qId);
-            _loggedUser!.qListNew3.remove(qMap);
-            return qMap;
-        }
+        // switch (qLevel) {
+        //   case 1:
+        //     qMap = _loggedUser!.qListNew1.firstWhereOrNull((element) => element.id == qId);
+        //     _loggedUser!.qListNew1.remove(qMap);
+        //     return qMap;
+        //   case 2:
+        //     qMap = _loggedUser!.qListNew2.firstWhereOrNull((element) => element.id == qId);
+        //     _loggedUser!.qListNew2.remove(qMap);
+        //     return qMap;
+        //
+        //   case 3:
+        //     qMap = _loggedUser!.qListNew3.firstWhereOrNull((element) => element.id == qId);
+        //     _loggedUser!.qListNew3.remove(qMap);
+        //     return qMap;
+        // }
         break;
       case QuestionType.practiceQuestion:
         qMap = _loggedUser!.qListPractice.firstWhereOrNull((element) => element.id == qId);
@@ -324,17 +336,19 @@ class UserService {
     //Before this method, it is checked if qMap is on any map.
     //So there's no need to check it again
     setLoggedUserChanged(true);
-    switch (qLevel) {
-      case 1:
-        _loggedUser!.qListNew1.add(qMap);
-        break;
-      case 2:
-        _loggedUser!.qListNew2.add(qMap);
-        break;
-      case 3:
-        _loggedUser!.qListNew3.add(qMap);
-        break;
-    }
+    _loggedUser!.qListNew.add(qMap);
+
+    // switch (qLevel) {
+    //   case 1:
+    //     _loggedUser!.qListNew1.add(qMap);
+    //     break;
+    //   case 2:
+    //     _loggedUser!.qListNew2.add(qMap);
+    //     break;
+    //   case 3:
+    //     _loggedUser!.qListNew3.add(qMap);
+    //     break;
+    // }
   }
 
   addQMapToPractice(QMap qMap) {
@@ -348,9 +362,10 @@ class UserService {
   wipeUser() {
     _loggedUser!.rankLevel = 0;
     _loggedUser!.rankTotalPoints = 0;
-    _loggedUser!.qListNew1.clear();
-    _loggedUser!.qListNew2.clear();
-    _loggedUser!.qListNew3.clear();
+    _loggedUser!.qListNew.clear();
+    // _loggedUser!.qListNew1.clear();
+    // _loggedUser!.qListNew2.clear();
+    // _loggedUser!.qListNew3.clear();
     _loggedUser!.qListPractice.clear();
     _loggedUser!.qListNotShown.clear();
   }

@@ -56,15 +56,11 @@ class Manager extends ChangeNotifier {
 
   String get progressPercentGlobal => _userService.getProgressPercentGlobal();
 
-  int get qNewLeftLevel1 => _userService.loggedUser!.qListNew1.length;
-
-  int get qNewLeftLevel2 => _userService.loggedUser!.qListNew2.length;
-
-  int get qNewLeftLevel3 => _userService.loggedUser!.qListNew3.length;
+  int get qNewLeft => _userService.loggedUser!.qListNew.length;
 
   bool get isSessionFinished => _questionService.isSessionFinished;
 
-  bool get isUserPromoted => _userService.isUserPromoted;
+  bool get isUserPromoted => _userService.userLeveledUp;
 
   String get userRankName => _userService.userRankName;
 
@@ -256,7 +252,7 @@ class Manager extends ChangeNotifier {
   }
 
   resetIsUserPromotedFLag() {
-    _userService.setIsUserPromoted(false);
+    _userService.setUserLeveledUp(false);
   }
 
   goPro(bool bool) async {
@@ -304,6 +300,7 @@ class Manager extends ChangeNotifier {
     if (changeUsernameResult is Success) {
       setError(null);
       navigate(Screen.settings);
+      _userHasRegistered = false;
       return;
     }
   }

@@ -85,10 +85,11 @@ class QuestionService {
     _userService.prepareRanks(globalData!.rankNames, globalData!.rankThresholds);
 
     //compare questionVersion from DB with those in LoggedUser object
-    List<int> downloadQuestions = _userService.compareQVersion(globalData!.qVersions);
+    //retreive list of outdated QuestionLists
+    List<int> outdatedQLists = _userService.compareQVersion(globalData!.qVersions);
 
     //get Question List based on compareResult
-    Object getQuestionResult = await getGlobalQuestionList(downloadQuestions);
+    Object getQuestionResult = await getGlobalQuestionList(outdatedQLists);
     if (getQuestionResult is Failure) return getQuestionResult;
 
     //update qListGlobal variable
@@ -102,19 +103,33 @@ class QuestionService {
     return Success();
   }
 
-  Future<Object> getGlobalQuestionList(List<int> downloadQuestions) async {
-    // if User has qVersion up to date, try to take questions from JSON file
-    if (downloadQuestions.isEmpty) {
+  Future<Object> getGlobalQuestionList(List<int> outdatedQLists) async {
+    // if all question lists are up to date, try to take questions from local JSON file
+    if (outdatedQLists.isEmpty) {
       Object getLocalQuestionResult = await _fileService.getQuestionListFromFile();
-      if (getLocalQuestionResult is List<Question>) return getLocalQuestionResult;
+      if (getLocalQuestionResult is List<Question>) {
+        return getLocalQuestionResult;
+      }
+      //if reading file failed, then new lists from DB has to be downloaded
+      //to do this, fill outdatedQList with lists to download
+      else {
+        if (_userService.loggedUser!.isPro) {
+          outdatedQLists.add(1);
+        } else {
+          outdatedQLists.addAll([2,3]);
+        }
+
+      }
+
+
     }
 
-    //if user has outdated qVersion (so downloadQuestions list is not empty), or couldn't read file, download questions from DB
+    //Initializing list that will allow merging couple of lists from DB
     List<Question> questionListFromDB = [];
 
-    for (int listNumber in downloadQuestions)
+    for (int outdatedList in outdatedQLists)
       {
-        List<Question>? questionList = await _databaseService.getQuestionList(listNumber: listNumber);
+        List<Question>? questionList = await _databaseService.getQuestionList(list: outdatedList);
         //if failed to download, interrupt whole method
         if (questionList == null) return Failure(errorGetQListFromDB);
         //if succeeded, add it to main list
@@ -296,9 +311,10 @@ class QuestionService {
         break;
       case QuestionFilter.allNew:
         _qListGlobal!.map((e) {
-          if (_userService.isQuestionInNew1(e.id) != null ||
-              _userService.isQuestionInNew2(e.id) != null ||
-              _userService.isQuestionInNew3(e.id) != null) {
+          if (_userService.isQuestionInQListNew(e.id) != null)
+              // _userService.isQuestionInNew2(e.id) != null ||
+              // _userService.isQuestionInNew3(e.id) != null
+          {
             _qListGlobalFiltered.add(e);
           }
         }).toList();
