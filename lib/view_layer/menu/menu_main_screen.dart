@@ -108,7 +108,7 @@ class MenuScreen extends StatelessWidget {
                     onPressed: //howManyToPractice == 0
                         // ? null
                         () async {
-                            await context.read<Manager>().startPractice();
+                            await context.read<Manager>().startQuiz();
                           }),
                 MenuButton(
                     label: 'Lista pytań',

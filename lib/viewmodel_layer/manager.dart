@@ -31,6 +31,8 @@ class Manager extends ChangeNotifier {
   //Manager properties
   bool _loading = false;
   bool _userHasRegistered = false;
+  int qCategory = 0;
+  int qLevel = 0;
 
 
   String _errorMsg = '';
@@ -126,6 +128,17 @@ class Manager extends ChangeNotifier {
     debugPrint('/// setLoading deployed ///');
     _loading = loading;
     notifyListeners();
+  }
+
+  setQCategory(int catNumber) {
+    qCategory = catNumber;
+    //after choosing Category, navigate to ChooseLevel Screen
+    navigate(Screen.chooseLevel);
+  }
+  setQLevel(int level) {
+    qLevel = level;
+    //after choosing Level, automatically prepare Session Data
+    startSession();
   }
 
   // methods deployed automatically after user signs in or signs out //
@@ -315,15 +328,19 @@ class Manager extends ChangeNotifier {
     notifyListeners();
   }
 
-  startNew({required int qLevel}) async {
-    await _questionService.prepareCurrentSessionData(
+  startSession() {
+    await _questionService.prepareSession(qType: qType, qLevel: qLevel)
+  }
+
+  startLearning({required int qLevel}) async {
+    await _questionService.prepareSession(
         qType: QuestionType.newQuestion, qLevel: qLevel);
     await getNextQuestion();
     navigate(Screen.singleQuestion);
   }
 
-  startPractice() async {
-    await _questionService.prepareCurrentSessionData(
+  startQuiz() async {
+    await _questionService.prepareSession(
         qType: QuestionType.practiceQuestion, qLevel: 0);
     await getNextQuestion();
     navigate(Screen.singleQuestion);

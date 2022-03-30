@@ -48,7 +48,7 @@ class MenuChooseLevel extends StatelessWidget {
                             badgeNum: countLevel1,
                             label: 'Poziom 1',
                             onPressed: () async {
-                                    await context.read<Manager>().startNew(qLevel: 1);
+                                    await context.read<Manager>().startLearning(qLevel: 1);
                                   },
                           ),
                           MenuButton(
@@ -58,7 +58,7 @@ class MenuChooseLevel extends StatelessWidget {
                             isUserPro: isUserPro,
                             label: 'Poziom 2',
                             onPressed: () async {
-                                    await context.read<Manager>().startNew(qLevel: 2);
+                                    await context.read<Manager>().startLearning(qLevel: 2);
                                   },
                           ),
                           MenuButton(
@@ -68,7 +68,7 @@ class MenuChooseLevel extends StatelessWidget {
                             isUserPro: isUserPro,
                             label: 'Poziom 3',
                             onPressed: () async {
-                                    await context.read<Manager>().startNew(qLevel: 3);
+                                    await context.read<Manager>().startLearning(qLevel: 3);
                                   },
                           ),
                         ],

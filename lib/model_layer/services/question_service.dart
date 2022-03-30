@@ -36,7 +36,11 @@ class QuestionService {
   QuestionStatus _qStatus = QuestionStatus.noAnswer;
   QuestionType _qType = QuestionType.newQuestion;
   QuestionFilter _qFilter = QuestionFilter.alphabetical;
-  int _qLevel = 0;
+  //making those two properties below PRIVATE and creating getter and setter for them (to access them externally) is pointless
+  //if I'm accessing them externally, I can make them public in the first place. In DART that's the same.
+  int qLevel = 0;
+  int qCategory = 0;
+
   List<BMap> _bMapList = []; //shuffled list of answers & colors for buttons
 
   //Getters
@@ -54,7 +58,6 @@ class QuestionService {
 
   QuestionFilter get qFilter => _qFilter;
 
-  int get qLevel => _qLevel;
 
   List<BMap> get bMapList => _bMapList;
 
@@ -72,7 +75,7 @@ class QuestionService {
     return _todayPracticeList.length;
   }
 
-  Future<Object> prepareGlobalData() async { //NOT FINISHED
+  Future<Object> prepareGlobalData() async {
     //Get GlobalData from DB
     try {
       globalData = await _databaseService.getGlobalData();
@@ -183,7 +186,7 @@ class QuestionService {
     }
   }
 
-  prepareCurrentSessionData({required QuestionType qType, required int qLevel}) async {
+  prepareSession({required QuestionType qType, required int qLevel}) async {
     //set question type
     _qType = qType;
     //set question level
