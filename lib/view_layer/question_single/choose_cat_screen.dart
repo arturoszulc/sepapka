@@ -44,25 +44,25 @@ class ChooseCategory extends StatelessWidget {
                       MenuButton(
                         label: qCategories[0],
                         onPressed: () async {
-                          await context.read<Manager>().startLearning(qLevel: 1);
+                          await context.read<Manager>().chooseQuestionCategory(0);
                         },
                       ),
                       MenuButton(
                         label: qCategories[1],
                         onPressed: () async {
-                          await context.read<Manager>().startLearning(qLevel: 2);
+                          await context.read<Manager>().chooseQuestionCategory(1);
                         },
                       ),
                       MenuButton(
                         label: qCategories[2],
                         onPressed: () async {
-                          await context.read<Manager>().startLearning(qLevel: 3);
+                          await context.read<Manager>().chooseQuestionCategory(2);
                         },
                       ),
                       MenuButton(
                         label: qCategories[3],
                         onPressed: () async {
-                          await context.read<Manager>().startLearning(qLevel: 3);
+                          await context.read<Manager>().chooseQuestionCategory(3);
                         },
                       ),
                     ],

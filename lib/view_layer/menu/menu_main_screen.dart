@@ -4,6 +4,7 @@ import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/view_layer/custom_widgets/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
+import '../../utils/consts/question.dart';
 import '../custom_widgets/progress_bar_global.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -99,16 +100,15 @@ class MenuScreen extends StatelessWidget {
                 MenuButton(
                     label: 'Nauka',
                     onPressed: () {
-                      context.read<Manager>().navigate(Screen.chooseCategory);
+                      context.read<Manager>().chooseSessionType(QuestionType.learning);
+
                     }),
                 MenuButton(
                     // hasBadge: true,
                     // badgeNum: howManyToPractice,
                     label: 'Quiz',
-                    onPressed: //howManyToPractice == 0
-                        // ? null
-                        () async {
-                            await context.read<Manager>().startQuiz();
+                    onPressed: () {
+                      context.read<Manager>().chooseSessionType(QuestionType.quiz);
                           }),
                 MenuButton(
                     label: 'Lista pytań',

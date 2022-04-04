@@ -304,7 +304,7 @@ class UserService {
     QMap? qMap;
     //method cuts out qMap from it's list and returns it
     switch (qType) {
-      case QuestionType.newQuestion:
+      case QuestionType.learning:
           qMap = _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == qId);
           _loggedUser!.qListNew.remove(qMap);
           return qMap;
@@ -325,7 +325,7 @@ class UserService {
         //     return qMap;
         // }
         break;
-      case QuestionType.practiceQuestion:
+      case QuestionType.quiz:
         qMap = _loggedUser!.qListPractice.firstWhereOrNull((element) => element.id == qId);
         _loggedUser!.qListPractice.remove(qMap);
         return qMap;

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 //Enums
 
 enum QuestionStatus { noAnswer, rightAnswer, wrongAnswer }
-enum QuestionType { newQuestion, practiceQuestion }
+enum QuestionType { learning, quiz }
 enum QuestionFilter {alphabetical, allNew, allPractice, allNotShown, level1, level2, level3, labelName1,labelName2,labelName3,labelName4,}
 
 

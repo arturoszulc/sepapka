@@ -31,8 +31,6 @@ class Manager extends ChangeNotifier {
   //Manager properties
   bool _loading = false;
   bool _userHasRegistered = false;
-  int qCategory = 0;
-  int qLevel = 0;
 
 
   String _errorMsg = '';
@@ -48,7 +46,6 @@ class Manager extends ChangeNotifier {
 
   // bool get newUser => _newUser;
   String get errorMsg => _errorMsg;
-
   String get infoMsg => _infoMsg;
 
   //External Getters
@@ -68,7 +65,7 @@ class Manager extends ChangeNotifier {
 
   //Question Service
 
-  int get howManyToPracticeToday => _questionService.howManyToPracticeToday();
+  // int get howManyToPracticeToday => _questionService.howManyToPracticeToday();
 
   double get progressPercentSession => _questionService.getProgressPercentSession();
 
@@ -76,7 +73,7 @@ class Manager extends ChangeNotifier {
 
   QuestionStatus get qStatus => _questionService.qStatus;
 
-  QuestionType get qType => _questionService.qType;
+  // QuestionType get qType => _questionService.qType;
 
   QuestionFilter get qFilter => _questionService.qFilter;
 
@@ -128,17 +125,6 @@ class Manager extends ChangeNotifier {
     debugPrint('/// setLoading deployed ///');
     _loading = loading;
     notifyListeners();
-  }
-
-  setQCategory(int catNumber) {
-    qCategory = catNumber;
-    //after choosing Category, navigate to ChooseLevel Screen
-    navigate(Screen.chooseLevel);
-  }
-  setQLevel(int level) {
-    qLevel = level;
-    //after choosing Level, automatically prepare Session Data
-    startSession();
   }
 
   // methods deployed automatically after user signs in or signs out //
@@ -322,28 +308,31 @@ class Manager extends ChangeNotifier {
 
   // QUESTIONS
 
+  chooseSessionType(QuestionType type) {
+    _questionService.setQuestionType(type);
+    navigate(Screen.chooseCategory);
+  }
+
+  chooseQuestionCategory(int catNumber) {
+    _questionService.setQuestionCategory(catNumber);
+    //after choosing Category, navigate to ChooseLevel Screen
+    navigate(Screen.chooseLevel);
+  }
+  chooseQuestionLevel(int level) {
+    _questionService.setQuestionLevel(level);
+    //after choosing Level, automatically prepare Session Data
+    startSession();
+  }
+
+  startSession() async {
+    await _questionService.prepareSession();
+    navigate(Screen.singleQuestion);
+  }
+
   checkAnswer(String answer) async {
     ///TODO: LOCK POSSIBILITY OF PUSHING ANOTHER BUTTON BEFORE ANSWER IS CHECKED
     await _questionService.checkAnswer(answer);
     notifyListeners();
-  }
-
-  startSession() {
-    await _questionService.prepareSession(qType: qType, qLevel: qLevel)
-  }
-
-  startLearning({required int qLevel}) async {
-    await _questionService.prepareSession(
-        qType: QuestionType.newQuestion, qLevel: qLevel);
-    await getNextQuestion();
-    navigate(Screen.singleQuestion);
-  }
-
-  startQuiz() async {
-    await _questionService.prepareSession(
-        qType: QuestionType.practiceQuestion, qLevel: 0);
-    await getNextQuestion();
-    navigate(Screen.singleQuestion);
   }
 
   getNextQuestion() async {
@@ -390,31 +379,6 @@ class Manager extends ChangeNotifier {
     }
   }
 
-  // ******* METHODS ON DEMAND ********
-
-  //Questions for Users
-  addQuestionsToDb() async {
-    debugPrint('/// addQuestionsToDb deployed ///');
-
-    for (var question in questionListDB) {
-            await _databaseService.uploadQuestions(question: question);
-    }
-    debugPrint('/// Added questions successfully');
-
-    //
-    // if (!isPro) {
-    //   for (var question in questionListDB) {
-    //     if (question.level == 1) {
-    //       await _databaseService.uploadQuestions(question: question, isPro: isPro);
-    //     }
-    //   }
-    // } else {
-    //   for (var question in questionListDB) {
-    //     await _databaseService.uploadQuestions(question: question, isPro: isPro);
-    //   }
-    // }
-  }
-
   getFilteredQuestionList({QuestionFilter? filter}) {
     if (filter == qFilter) return;
     navigate(Screen.loading);
@@ -434,6 +398,19 @@ class Manager extends ChangeNotifier {
     //if rankLevel is given, return corresponding badge
     if (rankLevel != null) badge = rankLevel.toString();
     return 'assets/images/badges/$badge.png';
+  }
+
+
+  // ******* METHODS ON DEMAND ********
+
+  //Adding new questions to DB
+  addQuestionsToDb() async {
+    debugPrint('/// addQuestionsToDb deployed ///');
+
+    for (var question in questionListDB) {
+      await _databaseService.uploadQuestions(question: question);
+    }
+    debugPrint('/// Questions added to DB successfully');
   }
 
 }
