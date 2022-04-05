@@ -9,9 +9,6 @@ const String userIsPro = 'isPro';
 const String userRankLevel = 'rankLevel';
 const String userRankTotalPoints = 'rankTotalPoints';
 const String userQListNew = 'qListNew';
-// const String userQListNew1 = 'qListNew1';
-// const String userQListNew2 = 'qListNew2';
-// const String userQListNew3 = 'qListNew3';
 const String userQListPractice = 'qListPractice';
 const String userQListNotShown = 'qListNotShown';
 
@@ -36,5 +33,9 @@ const String remarkDate = 'date';
 const String remarkQuestion = 'question';
 const String remarkText = 'text';
 
+//JSON fileNames
+const String questionsFileName1 = 'questionList1';
+const String questionsFileName2 = 'questionList2';
+const String questionsFileName3 = 'questionList3';
 
 

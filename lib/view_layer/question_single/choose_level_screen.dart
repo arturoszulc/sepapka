@@ -12,17 +12,18 @@ class MenuChooseLevel extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** ChooseLevel Screen built ***');
 
-    int countLevel1 = context.read<Manager>().qLevel1Left;
-    int countLevel2 = context.read<Manager>().qLevel2Left;
-    int countLevel3 = context.read<Manager>().qLevel3Left;
+    List<int> countLevels = context.read<Manager>().countQuestionsByLevel;
+    // int countLevel1 = context.read<Manager>().qLevel1Left;
+    // int countLevel2 = context.read<Manager>().qLevel2Left;
+    // int countLevel3 = context.read<Manager>().qLevel3Left;
     bool isUserPro = context.read<Manager>().loggedUser!.isPro;
     return WillPopScope(
-      onWillPop: () => context.read<Manager>().navigate(Screen.chooseCategory),
+      onWillPop: () => context.read<Manager>().navigate(Screen.menu),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => context.read<Manager>().navigate(Screen.chooseCategory),
+            onPressed: () => context.read<Manager>().navigate(Screen.menu),
           ),
           title: const Text('Wybierz poziom trudności'),
           centerTitle: true,
@@ -45,7 +46,7 @@ class MenuChooseLevel extends StatelessWidget {
                         children: [
                           MenuButton(
                             hasBadge: true,
-                            badgeNum: countLevel1,
+                            badgeNum: countLevels[1],
                             label: 'Poziom 1',
                             onPressed: () async {
                                     await context.read<Manager>().chooseQuestionLevel(1);
@@ -53,7 +54,7 @@ class MenuChooseLevel extends StatelessWidget {
                           ),
                           MenuButton(
                             hasBadge: true,
-                            badgeNum: countLevel2,
+                            badgeNum: countLevels[2],
                             proOnly: true,
                             isUserPro: isUserPro,
                             label: 'Poziom 2',
@@ -63,7 +64,7 @@ class MenuChooseLevel extends StatelessWidget {
                           ),
                           MenuButton(
                             hasBadge: true,
-                            badgeNum: countLevel3,
+                            badgeNum: countLevels[3],
                             proOnly: true,
                             isUserPro: isUserPro,
                             label: 'Poziom 3',

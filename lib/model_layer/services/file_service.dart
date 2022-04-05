@@ -31,7 +31,7 @@ class FileService {
   }
 
   Future<Object> getQuestionListFromFile() async {
-    debugPrint('/// Downloading local question data ///');
+
     //get file
   File file = await getFile();
 
@@ -44,11 +44,12 @@ class FileService {
 
     //convert to correct type
     List<Question> questionList = dynamicList.map((e) => Question.fromJson(e)).toList();
-
+    debugPrint('/// Download qGlobalList form JSON: Success ///');
     return questionList;
   }
   catch(e) {
     debugPrint(e.toString());
+    debugPrint('/// Download qGlobalList form JSON: Failure ///');
     return Failure(errorReadingFile);
   }
 

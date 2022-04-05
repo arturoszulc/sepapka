@@ -24,7 +24,9 @@ class MenuButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Badge(
-        // shape: (proOnly && !isUserPro) ? BadgeShape.square : BadgeShape.circle,
+        shape: BadgeShape.square,
+        borderRadius: BorderRadius.circular(8),
+
         badgeContent: (proOnly && !isUserPro) ? const Icon(Icons.lock, size: 12,) : Text(badgeNum.toString(),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
@@ -37,6 +39,7 @@ class MenuButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
       minimumSize: const Size.fromHeight(50)),
           onPressed:
+          //badgeNum > -1 - zmienić to na 0, jeśli przycisk ma być wyszarzony, gdy nie ma pytań
           (!proOnly || (proOnly && isUserPro)) && (!hasBadge || (hasBadge && badgeNum > 0)) ? onPressed : null,
           child: Text(label, textAlign: TextAlign.center,),
         ),

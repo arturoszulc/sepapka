@@ -63,11 +63,12 @@ class Manager extends ChangeNotifier {
 
   bool get isSessionFinished => _questionService.isSessionFinished;
 
-  bool get isUserPromoted => _userService.userLeveledUp;
+  // bool get isUserPromoted => _userService.userLeveledUp;
 
   String get userRankName => _userService.userRankName;
 
   //Question Service
+
 
   // int get howManyToPracticeToday => _questionService.howManyToPracticeToday();
 
@@ -86,6 +87,8 @@ class Manager extends ChangeNotifier {
   List<Question> get qListGlobalFiltered => _questionService.qListGlobalFiltered;
 
   List<String> get qCategories => _questionService.qCategoryList;
+  List<int> get countQuestionsByLevel => _questionService.numOfQuestionsByLevel;
+  List<int> get countQuestionsByCategories => _questionService.numOfQuestionsByCategory;
 
   //AuthService
 
@@ -246,20 +249,20 @@ class Manager extends ChangeNotifier {
 
   // USER
 
-  resetUserProgress() async {
-    navigate(Screen.loading);
-    Object resetResult = await _questionService.resetUserProgress();
-    if (resetResult is Failure) {
-      setError(resetResult);
-      return;
-    }
-    setMessage(msgProgressReset);
-    navigate(Screen.menu);
-  }
+  // resetUserProgress() async {
+  //   navigate(Screen.loading);
+  //   Object resetResult = await _questionService.resetUserProgress();
+  //   if (resetResult is Failure) {
+  //     setError(resetResult);
+  //     return;
+  //   }
+  //   setMessage(msgProgressReset);
+  //   navigate(Screen.menu);
+  // }
 
-  resetIsUserPromotedFLag() {
-    _userService.setUserLeveledUp(false);
-  }
+  // resetIsUserPromotedFLag() {
+  //   _userService.setUserLeveledUp(false);
+  // }
 
   goPro(bool bool) async {
     navigate(Screen.loading);
@@ -314,17 +317,19 @@ class Manager extends ChangeNotifier {
 
   chooseSessionType(QuestionType type) {
     _questionService.setQuestionType(type);
+    navigate(Screen.chooseLevel);
+  }
+
+
+  chooseQuestionLevel(int level) async {
+    await _questionService.setQuestionLevel(level);
+    //after choosing Level, choose category
     navigate(Screen.chooseCategory);
   }
 
   chooseQuestionCategory(int catNumber) {
     _questionService.setQuestionCategory(catNumber);
-    //after choosing Category, navigate to ChooseLevel Screen
-    navigate(Screen.chooseLevel);
-  }
-  chooseQuestionLevel(int level) {
-    _questionService.setQuestionLevel(level);
-    //after choosing Level, automatically prepare Session Data
+    //after choosing Category, prepare Session Data
     startSession();
   }
 

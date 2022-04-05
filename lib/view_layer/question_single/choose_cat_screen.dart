@@ -13,14 +13,14 @@ class ChooseCategory extends StatelessWidget {
     debugPrint('*** ChooseCategory Screen built ***');
 
     List<String> qCategories = context.read<Manager>().qCategories;
-
+    List<int> countQuestionsByCategories = context.read<Manager>().countQuestionsByCategories;
     return WillPopScope(
-        onWillPop: () => context.read<Manager>().navigate(Screen.menu),
+        onWillPop: () => context.read<Manager>().navigate(Screen.chooseLevel),
         child: Scaffold(
         appBar: AppBar(
         leading: IconButton(
         icon: const Icon(Icons.arrow_back, color: Colors.black),
-    onPressed: () => context.read<Manager>().navigate(Screen.menu),
+    onPressed: () => context.read<Manager>().navigate(Screen.chooseLevel),
     ),
     title: const Text('Wybierz kategorię'),
     centerTitle: true,
@@ -43,26 +43,42 @@ class ChooseCategory extends StatelessWidget {
                     children: [
                       MenuButton(
                         label: qCategories[0],
+                        hasBadge: true,
+                        badgeNum: countQuestionsByCategories[0],
                         onPressed: () async {
                           await context.read<Manager>().chooseQuestionCategory(0);
                         },
                       ),
                       MenuButton(
                         label: qCategories[1],
+                        hasBadge: true,
+                        badgeNum: countQuestionsByCategories[1],
                         onPressed: () async {
                           await context.read<Manager>().chooseQuestionCategory(1);
                         },
                       ),
                       MenuButton(
                         label: qCategories[2],
+                        hasBadge: true,
+                        badgeNum: countQuestionsByCategories[2],
                         onPressed: () async {
                           await context.read<Manager>().chooseQuestionCategory(2);
                         },
                       ),
                       MenuButton(
                         label: qCategories[3],
+                        hasBadge: true,
+                        badgeNum: countQuestionsByCategories[3],
                         onPressed: () async {
                           await context.read<Manager>().chooseQuestionCategory(3);
+                        },
+                      ),
+                      MenuButton(
+                        label: qCategories[4],
+                        hasBadge: true,
+                        badgeNum: countQuestionsByCategories[4],
+                        onPressed: () async {
+                          await context.read<Manager>().chooseQuestionCategory(4);
                         },
                       ),
                     ],

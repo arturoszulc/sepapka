@@ -38,7 +38,7 @@ class UserService {
 
   bool get loggedUserChanged => _loggedUserChanged;
 
-  bool get userLeveledUp => _userLeveledUp;
+  // bool get userLeveledUp => _userLeveledUp;
 
   String get userRankName => _rankNames[_loggedUser!.rankLevel];
 
@@ -46,9 +46,9 @@ class UserService {
   //Streams
   // Stream<LoggedUser?> get loggedUserStream => loggedUserStreamController.stream;
 
-  setUserLeveledUp(bool flag) {
-    _userLeveledUp = flag;
-  }
+  // setUserLeveledUp(bool flag) {
+  //   _userLeveledUp = flag;
+  // }
 
   String getProgressPercentGlobal() {
     int previousThreshold = 0;
@@ -63,15 +63,15 @@ class UserService {
     return progressDouble;
   }
 
-  addPoints(int points) {
-    //add points
-    _loggedUser!.rankTotalPoints += points;
-    //calculate rank
-    if (_loggedUser!.rankTotalPoints >= _rankThresholds[_loggedUser!.rankLevel]) {
-      _loggedUser!.rankLevel += 1;
-      setUserLeveledUp(true);
-    }
-  }
+  // addPoints(int points) {
+  //   //add points
+  //   _loggedUser!.rankTotalPoints += points;
+  //   //calculate rank
+  //   if (_loggedUser!.rankTotalPoints >= _rankThresholds[_loggedUser!.rankLevel]) {
+  //     _loggedUser!.rankLevel += 1;
+  //     setUserLeveledUp(true);
+  //   }
+  // }
 
   createDefaultLoggedUser(String userId) async {
     _loggedUser = LoggedUser(

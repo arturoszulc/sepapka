@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
@@ -12,6 +13,7 @@ import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/question.dart';
+import 'package:sepapka/utils/consts/strings.dart';
 import 'package:sepapka/utils/methods.dart';
 
 import '../../locator.dart';
@@ -30,7 +32,8 @@ class QuestionService {
   List<Question> qListSession = []; //10 questions cut out from qListLocal for current session
   List<Question> qListGlobalFiltered = [];
   int _qListCurrentStartLength = 0;
-  int _currentSessionUserPoints = 0;
+
+  // int _currentSessionUserPoints = 0;
   // List<QMap> _todayPracticeList = [];
   Question? currentQuestion;
 
@@ -43,6 +46,8 @@ class QuestionService {
   QuestionFilter qFilter = QuestionFilter.alphabetical;
   int qLevel = 0;
   int qCategoryNum = 0; //int corresponds to index of qList
+  List<int> numOfQuestionsByLevel = [];
+  List<int> numOfQuestionsByCategory = [];
 
   List<BMap> bMapList = []; //shuffled list of answers & colors for buttons
   bool isSessionFinished = false;
@@ -68,18 +73,19 @@ class QuestionService {
     }
 
     //send current rank names and thresholds to userService
-    _userService.prepareRanks(globalData!.rankNames, globalData!.rankThresholds);
+    // _userService.prepareRanks(globalData!.rankNames, globalData!.rankThresholds);
 
     //compare questionVersion from DB with those in LoggedUser object
-    //retreive list of outdated QuestionLists
+    //retrieve list of outdated QuestionLists
     List<int> outdatedQLists = _userService.compareQVersion(globalData!.qVersions);
 
     //get Question List based on compareResult
-    Object getQuestionResult = await getGlobalQuestionList(outdatedQLists);
+    Object getQuestionResult = await getGlobalQuestionLists(outdatedQLists);
     if (getQuestionResult is Failure) return getQuestionResult;
 
-    //update qListGlobal variable
+    //update qListGlobal and count number of questions by level
     qListGlobal = getQuestionResult as List<Question>;
+    countQuestionsByLevel();
 
     //update local user question version and qNewList (if there any any new questions)
     _userService.updateQVersion(globalData!.qVersions);
@@ -89,8 +95,8 @@ class QuestionService {
     return Success();
   }
 
-  Future<Object> getGlobalQuestionList(List<int> outdatedQLists) async {
-    // if all question lists are up to date, try to take questions from local JSON file
+  Future<Object> getGlobalQuestionLists(List<int> outdatedQLists) async {
+    // if all question lists are up to date, try to take questions from local JSON files
     if (outdatedQLists.isEmpty) {
       Object getLocalQuestionResult = await _fileService.getQuestionListFromFile();
       if (getLocalQuestionResult is List<Question>) {
@@ -102,25 +108,21 @@ class QuestionService {
         if (_userService.loggedUser!.isPro) {
           outdatedQLists.add(1);
         } else {
-          outdatedQLists.addAll([2,3]);
+          outdatedQLists.addAll([2, 3]);
         }
-
       }
-
-
     }
 
     //Initializing list that will allow merging couple of lists from DB
     List<Question> questionListFromDB = [];
 
-    for (int outdatedList in outdatedQLists)
-      {
-        List<Question>? questionList = await _databaseService.getQuestionList(list: outdatedList);
-        //if failed to download, interrupt whole method
-        if (questionList == null) return Failure(errorGetQListFromDB);
-        //if succeeded, add it to main list
-        questionListFromDB += questionList;
-      }
+    for (int outdatedList in outdatedQLists) {
+      List<Question>? questionList = await _databaseService.getQuestionList(list: outdatedList);
+      //if failed to download, interrupt whole method
+      if (questionList == null) return Failure(errorGetQListFromDB);
+      //if succeeded, add it to main list
+      questionListFromDB += questionList;
+    }
 
     //after downloading all question lists, save questions to local JSON file
     Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(questionListFromDB);
@@ -131,25 +133,34 @@ class QuestionService {
   setQuestionType(QuestionType type) {
     qType = type;
   }
+
   setQuestionCategory(int catNumber) {
     qCategoryNum = catNumber;
   }
+
   setQuestionLevel(int level) {
     qLevel = level;
+    //create list of questions having that level
+    qListLocal.clear();
+    for (Question question in qListGlobal!) {
+      if (question.level == qLevel) {
+        qListLocal.add(question);
+      }
+    }
+    //count questions in categories
+    countQuestionsByCategory();
   }
 
-
   prepareSession() async {
-
     //reset isSessionFinished flag
     isSessionFinished = false;
 
     //clear the old qlistLocal and qListSession
     // qListLocal.clear();
     qListSession.clear();
+    qListLocal.clear();
     //reset current points counter
-    _currentSessionUserPoints = 0;
-
+    // _currentSessionUserPoints = 0;
 
     //create new qListLocal based on category and level
 
@@ -168,9 +179,9 @@ class QuestionService {
 
     for (Question question in qListLocal) {
       QMap? qMap = _userService.isQuestionInNotShownList(question.id);
-    if (qMap != null) {
-      qListLocal.remove(question);
-    }
+      if (qMap != null) {
+        qListLocal.remove(question);
+      }
     }
 
     debugPrint('QLISTLOCAL trimmed');
@@ -202,7 +213,6 @@ class QuestionService {
     // for (QMap qMap in qMapList) {
     //   qListLocal.add(qListGlobal!.firstWhere((question) => question.id == qMap.id));
     // }
-
   }
 
   Future checkAnswer(String answer) async {
@@ -215,7 +225,7 @@ class QuestionService {
       //set QuestionStatus
       qStatus = QuestionStatus.rightAnswer;
       //Add one point to user
-      _currentSessionUserPoints += 1;
+      // _currentSessionUserPoints += 1;
       //set button color
       bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
       //move question to Practice List
@@ -244,7 +254,6 @@ class QuestionService {
       // }
     }
   }
-
 
   Future<Object> getNextQuestion() async {
     //reset QuestionStatus
@@ -317,33 +326,59 @@ class QuestionService {
     await _userService.moveQMapToNotShown(currentQuestion!.id, qType, qLevel);
   }
 
-  Future<Object> resetUserProgress() async {
-    //clear user lists
-    await _userService.wipeUser();
-
-    //update qNewList
-    await _userService.updateQNewLists(qListGlobal!);
-    return Success();
-  }
+  // Future<Object> resetUserProgress() async {
+  //   //clear user lists
+  //   await _userService.wipeUser();
+  //
+  //   //update qNewList
+  //   await _userService.updateQNewLists(qListGlobal1!);
+  //   return Success();
+  // }
 
   Future<Object> sendQuestionRemark(String remark) async {
     //validate data
     Object validateResult = validateRemark(remark);
     if (validateResult is Failure) return validateResult;
     try {
-    _databaseService.sendQuestionRemark(Remark(
-      date: DateTime.now(),
-      question: currentQuestion!.id,
-      text: remark,
-    ));
-    return Success();
-  }
-  catch(e) {
+      _databaseService.sendQuestionRemark(Remark(
+        date: DateTime.now(),
+        question: currentQuestion!.id,
+        text: remark,
+      ));
+      return Success();
+    } catch (e) {
       debugPrint(e.toString());
       return Failure(errorSendingRemark);
+    }
   }
 
+  countQuestionsByLevel() {
+    numOfQuestionsByCategory = [0,0,0,0];
+    for (Question question in qListGlobal!) {
+      if (question.level == 1) numOfQuestionsByLevel[1] += 1;
+      if (question.level == 2) numOfQuestionsByLevel[2] += 1;
+      if (question.level == 3) numOfQuestionsByLevel[3] += 1;
+    }
+    //first number is total number of questions
+    numOfQuestionsByLevel[0] =
+        numOfQuestionsByLevel[1] + numOfQuestionsByLevel[2] + numOfQuestionsByLevel[3];
   }
+  countQuestionsByCategory() {
+    numOfQuestionsByCategory = [0,0,0,0,0];
+    for (Question question in qListLocal) {
+      if (question.labels[0] == qCategoryList[1]) numOfQuestionsByCategory[1] += 1;
+      if (question.labels[0] == qCategoryList[2]) numOfQuestionsByCategory[2] += 1;
+      if (question.labels[0] == qCategoryList[3]) numOfQuestionsByCategory[3] += 1;
+      if (question.labels[0] == qCategoryList[4]) numOfQuestionsByCategory[4] += 1;
+
+      numOfQuestionsByCategory[0] =
+      numOfQuestionsByCategory[1] +
+      numOfQuestionsByCategory[2] +
+      numOfQuestionsByCategory[3] +
+      numOfQuestionsByCategory[4];
+    }
+  }
+
 
   getFilteredQuestionList(QuestionFilter filter) {
     qFilter = filter;
@@ -357,8 +392,8 @@ class QuestionService {
       case QuestionFilter.allNew:
         qListGlobal!.map((e) {
           if (_userService.isQuestionInQListNew(e.id) != null)
-              // _userService.isQuestionInNew2(e.id) != null ||
-              // _userService.isQuestionInNew3(e.id) != null
+          // _userService.isQuestionInNew2(e.id) != null ||
+          // _userService.isQuestionInNew3(e.id) != null
           {
             qListGlobalFiltered.add(e);
           }

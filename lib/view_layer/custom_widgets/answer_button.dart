@@ -13,21 +13,24 @@ class AnswerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Padding( //to keep buttons separated
       padding: const EdgeInsets.symmetric(
         vertical: 10.0,
-        horizontal: 30.0,
+        // horizontal: 30.0,
       ),
-      child: MaterialButton(
-        onPressed: () {
-          if (qStatus == QuestionStatus.noAnswer) {
-            onSelected();
-          }
-        },
-        minWidth: 300,
-        height: 50.0,
-        color: color,
-        child: Text(answer!),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width*0.7,
+        height: 55.0,
+        child: MaterialButton(
+          onPressed: () {
+            if (qStatus == QuestionStatus.noAnswer) {
+              onSelected();
+            }
+          },
+          // minWidth: 300,
+          color: color,
+          child: Text(answer!, textAlign: TextAlign.center,),
+        ),
       ),
     );
   }

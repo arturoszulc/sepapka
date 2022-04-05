@@ -65,33 +65,33 @@ class MenuScreen extends StatelessWidget {
             color: Colors.grey[300],
           ),
           const SizedBox(height: 20.0),
-          const Text('Twoja ranga:'),
-          const SizedBox(height: 20,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  Text(context.read<Manager>().userRankName),
-                  const SizedBox(height: 10.0),
-                  Text('${context.read<Manager>().loggedUser!.rankTotalPoints} pkt.'),
-                ],
-              ),
-              const SizedBox(width: 20,),
-              Column(
-                children: [
-                  Image.asset(context.read<Manager>().getBadgePath(),
-                    height: 60,
-                    width: 60,),
-                  const SizedBox(height: 10.0),
-                  buildProgressBar(context, 80),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 50),
+          // const Text('Twoja ranga:'),
+          // const SizedBox(height: 20,),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   mainAxisSize: MainAxisSize.min,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     Column(
+          //       children: [
+          //         Text(context.read<Manager>().userRankName),
+          //         const SizedBox(height: 10.0),
+          //         Text('${context.read<Manager>().loggedUser!.rankTotalPoints} pkt.'),
+          //       ],
+          //     ),
+          //     const SizedBox(width: 20,),
+          //     Column(
+          //       children: [
+          //         Image.asset(context.read<Manager>().getBadgePath(),
+          //           height: 60,
+          //           width: 60,),
+          //         const SizedBox(height: 10.0),
+          //         buildProgressBar(context, 80),
+          //       ],
+          //     ),
+          //   ],
+          // ),
+          // const SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: Column(
@@ -115,13 +115,13 @@ class MenuScreen extends StatelessWidget {
                     onPressed: () {
                       context.read<Manager>().getFilteredQuestionList();
                     }),
-                MenuButton(
-                    proOnly: true,
-                    isUserPro: context.read<Manager>().loggedUser!.isPro,
-                    label: 'Ranking',
-                    onPressed: () {
-                      context.read<Manager>().navigate(Screen.userRank);
-                    })
+                // MenuButton(
+                //     proOnly: true,
+                //     isUserPro: context.read<Manager>().loggedUser!.isPro,
+                //     label: 'Ranking',
+                //     onPressed: () {
+                //       context.read<Manager>().navigate(Screen.userRank);
+                //     })
               ],
             ),
           ),
