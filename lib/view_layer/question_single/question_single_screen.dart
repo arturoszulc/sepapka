@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/question.dart';
-import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/view_layer/custom_widgets/dialog_leave_session.dart';
 import 'package:sepapka/view_layer/question_single/session_finished_screen.dart';
@@ -119,7 +118,6 @@ class QuestionSingleScreen extends StatelessWidget {
                   heroTag: 'next',
                   onPressed: () async {
                     await context.read<Manager>().getNextQuestion();
-                    // Navigator.pushReplacementNamed(context, '/question-single');
                   },
                   label: const Text('Dalej >'),
                 ),

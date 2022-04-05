@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:sepapka/model_layer/models/question_map.dart';
 
 import 'api_status.dart';
-import 'consts.dart';
+// import 'consts/strings.dart';
 import 'consts/errors_messages.dart';
 
 

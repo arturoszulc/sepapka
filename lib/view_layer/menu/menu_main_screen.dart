@@ -14,7 +14,7 @@ class MenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Menu built ***');
 
-    int howManyToPractice = context.read<Manager>().howManyToPracticeToday;
+    // int howManyToPractice = context.read<Manager>().howManyToPracticeToday;
 
     return Scaffold(
       appBar: AppBar(

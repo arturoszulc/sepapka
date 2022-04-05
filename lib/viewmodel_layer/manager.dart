@@ -57,6 +57,10 @@ class Manager extends ChangeNotifier {
 
   int get qNewLeft => _userService.loggedUser!.qListNew.length;
 
+  int get qLevel1Left => _questionService.qListLocal.where((element) => element.level == 1).length;
+  int get qLevel2Left => _questionService.qListLocal.where((element) => element.level == 2).length;
+  int get qLevel3Left => _questionService.qListLocal.where((element) => element.level == 3).length;
+
   bool get isSessionFinished => _questionService.isSessionFinished;
 
   bool get isUserPromoted => _userService.userLeveledUp;
@@ -81,7 +85,7 @@ class Manager extends ChangeNotifier {
 
   List<Question> get qListGlobalFiltered => _questionService.qListGlobalFiltered;
 
-  List<String> get qCategories => _questionService.qCategories;
+  List<String> get qCategories => _questionService.qCategoryList;
 
   //AuthService
 
@@ -326,7 +330,7 @@ class Manager extends ChangeNotifier {
 
   startSession() async {
     await _questionService.prepareSession();
-    navigate(Screen.singleQuestion);
+    getNextQuestion();
   }
 
   checkAnswer(String answer) async {
@@ -338,7 +342,7 @@ class Manager extends ChangeNotifier {
   getNextQuestion() async {
     Object nextQuestionResult = await _questionService.getNextQuestion();
     if (nextQuestionResult is Success) {
-      notifyListeners();
+      navigate(Screen.singleQuestion);
     };
     if (nextQuestionResult is Failure) {
       //if failure, then no more questions left. End session.

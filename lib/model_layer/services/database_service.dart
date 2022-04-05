@@ -5,8 +5,7 @@ import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/model_layer/models/rank_user.dart';
 import 'package:sepapka/model_layer/models/remark.dart';
-import 'package:sepapka/utils/consts.dart';
-import 'package:sepapka/utils/consts/errors_messages.dart';
+import 'package:sepapka/utils/consts/strings.dart';
 import 'package:sepapka/utils/methods.dart';
 
 import '../models/question.dart';

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/model_layer/models/global_data.dart';
-import 'package:sepapka/utils/consts.dart';
 import 'package:sepapka/view_layer/custom_widgets/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/utils/consts/nav.dart';

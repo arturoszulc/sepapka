@@ -12,17 +12,17 @@ class MenuChooseLevel extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** ChooseLevel Screen built ***');
 
-    int countLevel1 = context.read<Manager>().qNewLeft;
-    int countLevel2 = 5;//context.read<Manager>().qNewLeftLevel2;
-    int countLevel3 = 5;//context.read<Manager>().qNewLeftLevel3;
+    int countLevel1 = context.read<Manager>().qLevel1Left;
+    int countLevel2 = context.read<Manager>().qLevel2Left;
+    int countLevel3 = context.read<Manager>().qLevel3Left;
     bool isUserPro = context.read<Manager>().loggedUser!.isPro;
     return WillPopScope(
-      onWillPop: () => context.read<Manager>().navigate(Screen.menu),
+      onWillPop: () => context.read<Manager>().navigate(Screen.chooseCategory),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => context.read<Manager>().navigate(Screen.menu),
+            onPressed: () => context.read<Manager>().navigate(Screen.chooseCategory),
           ),
           title: const Text('Wybierz poziom trudności'),
           centerTitle: true,
@@ -48,7 +48,7 @@ class MenuChooseLevel extends StatelessWidget {
                             badgeNum: countLevel1,
                             label: 'Poziom 1',
                             onPressed: () async {
-                                    await context.read<Manager>().startLearning(qLevel: 1);
+                                    await context.read<Manager>().chooseQuestionLevel(1);
                                   },
                           ),
                           MenuButton(
@@ -58,7 +58,7 @@ class MenuChooseLevel extends StatelessWidget {
                             isUserPro: isUserPro,
                             label: 'Poziom 2',
                             onPressed: () async {
-                                    await context.read<Manager>().startLearning(qLevel: 2);
+                              await context.read<Manager>().chooseQuestionLevel(2);
                                   },
                           ),
                           MenuButton(
@@ -68,7 +68,7 @@ class MenuChooseLevel extends StatelessWidget {
                             isUserPro: isUserPro,
                             label: 'Poziom 3',
                             onPressed: () async {
-                                    await context.read<Manager>().startLearning(qLevel: 3);
+                              await context.read<Manager>().chooseQuestionLevel(3);
                                   },
                           ),
                         ],
