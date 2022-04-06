@@ -23,9 +23,8 @@ class MenuScreen extends StatelessWidget {
             children: [
               TextButton(
                 onPressed: () {
-                  context.read<Manager>().navigate(Screen.settings);
                 },
-                child: const Icon(Icons.settings),
+                child: const Icon(Icons.help_outline),
               ),
 
               //wersja poprzednia z username i iconą usera jako przycisk
@@ -97,12 +96,12 @@ class MenuScreen extends StatelessWidget {
             child: Column(
               // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                MenuButton(
-                    label: 'Nauka',
-                    onPressed: () {
-                      context.read<Manager>().chooseSessionType(QuestionType.learning);
-
-                    }),
+                // MenuButton(
+                //     label: 'Nauka',
+                //     onPressed: () {
+                //       context.read<Manager>().chooseSessionType(QuestionType.learning);
+                //
+                //     }),
                 MenuButton(
                     // hasBadge: true,
                     // badgeNum: howManyToPractice,
@@ -114,6 +113,12 @@ class MenuScreen extends StatelessWidget {
                     label: 'Lista pytań',
                     onPressed: () {
                       context.read<Manager>().getFilteredQuestionList();
+                    }),
+                MenuButton(
+                    label: 'Ustawienia',
+                    onPressed: () {
+                      context.read<Manager>().navigate(Screen.settings);
+
                     }),
                 // MenuButton(
                 //     proOnly: true,

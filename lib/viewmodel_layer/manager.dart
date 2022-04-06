@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 
 // import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +31,7 @@ class Manager extends ChangeNotifier {
   bool _loading = false;
   bool _userHasRegistered = false;
 
+  int qListGlobalFilteredIndex = 0;
 
   String _errorMsg = '';
   String _infoMsg = '';
@@ -347,7 +347,7 @@ class Manager extends ChangeNotifier {
   getNextQuestion() async {
     Object nextQuestionResult = await _questionService.getNextQuestion();
     if (nextQuestionResult is Success) {
-      navigate(Screen.singleQuestion);
+      navigate(Screen.quizSingleQuestion);
     };
     if (nextQuestionResult is Failure) {
       //if failure, then no more questions left. End session.
@@ -384,7 +384,7 @@ class Manager extends ChangeNotifier {
     } else {
       setError(null);
       setMessage(msgThanksForRemark);
-      navigate(Screen.singleQuestion);
+      navigate(Screen.quizSingleQuestion);
     }
   }
 
@@ -394,6 +394,10 @@ class Manager extends ChangeNotifier {
     filter ??= QuestionFilter.alphabetical;
     _questionService.getFilteredQuestionList(filter);
     navigate(Screen.listQuestion);
+  }
+  showSingleFilteredQuestion(int index) {
+    qListGlobalFilteredIndex = index;
+    navigate(Screen.listSingleQuestion);
   }
 
   Widget getQuestionIcon(String qId) {

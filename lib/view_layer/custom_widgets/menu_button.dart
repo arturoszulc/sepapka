@@ -24,6 +24,7 @@ class MenuButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Badge(
+        // position: BadgePosition.center(),
         shape: BadgeShape.square,
         borderRadius: BorderRadius.circular(8),
 

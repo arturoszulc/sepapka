@@ -5,7 +5,7 @@ import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
-import 'custom_widgets/question_list_filter_menu.dart';
+import '../custom_widgets/question_list_filter_menu.dart';
 
 class QuestionListScreen extends StatelessWidget {
   const QuestionListScreen({Key? key}) : super(key: key);
@@ -41,6 +41,8 @@ class QuestionListScreen extends StatelessWidget {
                   title: buildTitle(qListGlobalFiltered[index]),
                   subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
                   onTap: () {
+                    manager.showSingleFilteredQuestion(index);
+                    context.read<Manager>().navigate(Screen.listSingleQuestion);
                   },
                 ),
               );

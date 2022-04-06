@@ -235,6 +235,7 @@ class QuestionService {
     else {
       //get question back, at the end of the current list
       qListLocal.add(currentQuestion!);
+      qListSession.add(currentQuestion!);
 
       qStatus = QuestionStatus.wrongAnswer;
       //set wrong button
@@ -320,6 +321,7 @@ class QuestionService {
     //remove question from _qListCurrent
     if (qStatus == QuestionStatus.noAnswer) {
       //if question wasnt answered, remove if from current list
+      qListSession.removeAt(0);
       qListLocal.removeAt(0);
       //else it means question was already removed, so dont do it
     }
@@ -353,7 +355,7 @@ class QuestionService {
   }
 
   countQuestionsByLevel() {
-    numOfQuestionsByCategory = [0,0,0,0];
+    numOfQuestionsByLevel = [0,0,0,0];
     for (Question question in qListGlobal!) {
       if (question.level == 1) numOfQuestionsByLevel[1] += 1;
       if (question.level == 2) numOfQuestionsByLevel[2] += 1;

@@ -4,13 +4,14 @@ import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/view_layer/authenticate/set_username_screen.dart';
 import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
-import 'package:sepapka/view_layer/question_single/choose_cat_screen.dart';
-import 'package:sepapka/view_layer/question_single/choose_level_screen.dart';
-import 'package:sepapka/view_layer/question_list_screen.dart';
-import 'package:sepapka/view_layer/question_single/question_single_screen.dart';
-import 'package:sepapka/view_layer/question_single/remark_screen.dart';
+import 'package:sepapka/view_layer/question_list/question_list_single.dart';
+import 'package:sepapka/view_layer/question_quiz/choose_cat_screen.dart';
+import 'package:sepapka/view_layer/question_quiz/choose_level_screen.dart';
+import 'package:sepapka/view_layer/question_list/question_list_screen.dart';
+import 'package:sepapka/view_layer/question_quiz/question_quiz_single.dart';
+import 'package:sepapka/view_layer/question_quiz/remark_screen.dart';
 import 'package:sepapka/view_layer/ranking/user_ranking_screen.dart';
-import 'package:sepapka/view_layer/question_single/session_finished_screen.dart';
+import 'package:sepapka/view_layer/question_quiz/session_finished_screen.dart';
 import 'package:sepapka/view_layer/user_settings/change_user_data_screen.dart';
 import 'package:sepapka/view_layer/user_settings/debug_screen.dart';
 import 'package:sepapka/view_layer/user_settings/settings_main_screen.dart';
@@ -136,8 +137,8 @@ class Wrapper extends StatelessWidget {
       case Screen.chooseLevel:
         return MenuChooseLevel();
         break;
-      case Screen.singleQuestion:
-        return QuestionSingleScreen();
+      case Screen.quizSingleQuestion:
+        return QuestionQuizSingle();
         break;
       case Screen.sessionFinished:
         return SessionFinished();
@@ -157,6 +158,9 @@ class Wrapper extends StatelessWidget {
 
       case Screen.chooseCategory:
         return ChooseCategory();
+        break;
+      case Screen.listSingleQuestion:
+        return QuestionListSingle();
         break;
     }
   }
