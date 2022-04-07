@@ -16,14 +16,14 @@ class RemarkScreen extends StatelessWidget {
     final error = Provider.of<Manager>(context).errorMsg;
 
     return WillPopScope(
-      onWillPop: () => context.read<Manager>().navigate(Screen.quizSingleQuestion),
+      onWillPop: () => context.read<Manager>().navigate(Screen.quizQuestionSingle),
       child: SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => context.read<Manager>().navigate(Screen.quizSingleQuestion),
+              onPressed: () => context.read<Manager>().navigate(Screen.quizQuestionSingle),
             ),
             title: const Text('Prześlij uwagę'),
             centerTitle: true,

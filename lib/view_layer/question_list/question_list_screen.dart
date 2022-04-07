@@ -12,10 +12,17 @@ class QuestionListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('*** QuestionListScreen built');
+    debugPrint('*** QuestionListScreen built ***');
 
     final manager = Provider.of<Manager>(context);
     final List<Question> qListGlobalFiltered = manager.qListGlobalFiltered;
+    List<Map<String,dynamic>> dropDownList = [
+      {'type': QuestionFilter.labelName1, 'name': manager.qCategories[1],},
+      {'type': QuestionFilter.labelName2, 'name': manager.qCategories[2],},
+
+    ];
+    dynamic myValue;
+
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.menu),
       child: Scaffold(
@@ -25,14 +32,16 @@ class QuestionListScreen extends StatelessWidget {
             onPressed: () => context.read<Manager>().navigate(Screen.menu),
           ),
           actions: [
-            buildFilterMenu(),
+            IconButton(onPressed: () => context.read<Manager>().navigate(Screen.listQuestionFilter),
+              icon: const Icon(Icons.filter_list),
+            ),
           ],
           title: const Text('Lista pytań'),
           elevation: 0.0,
         ),
         body: qListGlobalFiltered.isEmpty ?
         const Center(child: Text('Brak pytań'),)
-        : ListView.builder(
+            : ListView.builder(
             itemCount: qListGlobalFiltered.length,
             itemBuilder: (BuildContext context, int index) {
               return Card(
@@ -42,11 +51,14 @@ class QuestionListScreen extends StatelessWidget {
                   subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
                   onTap: () {
                     manager.showSingleFilteredQuestion(index);
-                    context.read<Manager>().navigate(Screen.listSingleQuestion);
+                    context.read<Manager>().navigate(Screen.listQuestionSingle);
                   },
                 ),
               );
-            }),
+            })
+
+
+
       ),
     );
   }

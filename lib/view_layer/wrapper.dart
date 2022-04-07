@@ -4,6 +4,7 @@ import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/view_layer/authenticate/set_username_screen.dart';
 import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
+import 'package:sepapka/view_layer/question_list/question_list_filter.dart';
 import 'package:sepapka/view_layer/question_list/question_list_single.dart';
 import 'package:sepapka/view_layer/question_quiz/choose_cat_screen.dart';
 import 'package:sepapka/view_layer/question_quiz/choose_level_screen.dart';
@@ -137,7 +138,7 @@ class Wrapper extends StatelessWidget {
       case Screen.chooseLevel:
         return MenuChooseLevel();
         break;
-      case Screen.quizSingleQuestion:
+      case Screen.quizQuestionSingle:
         return QuestionQuizSingle();
         break;
       case Screen.sessionFinished:
@@ -159,8 +160,11 @@ class Wrapper extends StatelessWidget {
       case Screen.chooseCategory:
         return ChooseCategory();
         break;
-      case Screen.listSingleQuestion:
+      case Screen.listQuestionSingle:
         return QuestionListSingle();
+        break;
+      case Screen.listQuestionFilter:
+        return QuestionListFilter();
         break;
     }
   }

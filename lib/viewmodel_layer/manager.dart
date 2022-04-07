@@ -347,7 +347,7 @@ class Manager extends ChangeNotifier {
   getNextQuestion() async {
     Object nextQuestionResult = await _questionService.getNextQuestion();
     if (nextQuestionResult is Success) {
-      navigate(Screen.quizSingleQuestion);
+      navigate(Screen.quizQuestionSingle);
     };
     if (nextQuestionResult is Failure) {
       //if failure, then no more questions left. End session.
@@ -384,20 +384,20 @@ class Manager extends ChangeNotifier {
     } else {
       setError(null);
       setMessage(msgThanksForRemark);
-      navigate(Screen.quizSingleQuestion);
+      navigate(Screen.quizQuestionSingle);
     }
   }
 
   getFilteredQuestionList({QuestionFilter? filter}) {
     if (filter == qFilter) return;
     navigate(Screen.loading);
-    filter ??= QuestionFilter.alphabetical;
+    filter ??= QuestionFilter.all;
     _questionService.getFilteredQuestionList(filter);
     navigate(Screen.listQuestion);
   }
   showSingleFilteredQuestion(int index) {
     qListGlobalFilteredIndex = index;
-    navigate(Screen.listSingleQuestion);
+    navigate(Screen.listQuestionSingle);
   }
 
   Widget getQuestionIcon(String qId) {

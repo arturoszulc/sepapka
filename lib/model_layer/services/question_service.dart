@@ -43,7 +43,7 @@ class QuestionService {
 
   QuestionStatus qStatus = QuestionStatus.noAnswer;
   QuestionType qType = QuestionType.learning; //default to learning
-  QuestionFilter qFilter = QuestionFilter.alphabetical;
+  QuestionFilter qFilter = QuestionFilter.all;
   int qLevel = 0;
   int qCategoryNum = 0; //int corresponds to index of qList
   List<int> numOfQuestionsByLevel = [];
@@ -387,11 +387,11 @@ class QuestionService {
     qListGlobalFiltered.clear();
 
     switch (filter) {
-      case QuestionFilter.alphabetical:
+      case QuestionFilter.all:
         qListGlobalFiltered = List<Question>.from(qListGlobal!);
         qListGlobalFiltered.sort((a, b) => a.q.compareTo(b.q));
         break;
-      case QuestionFilter.allNew:
+      case QuestionFilter.shownOnly:
         qListGlobal!.map((e) {
           if (_userService.isQuestionInQListNew(e.id) != null)
           // _userService.isQuestionInNew2(e.id) != null ||
@@ -401,14 +401,7 @@ class QuestionService {
           }
         }).toList();
         break;
-      case QuestionFilter.allPractice:
-        qListGlobal!.map((e) {
-          if (_userService.isQuestionInPracticeList(e.id) != null) {
-            qListGlobalFiltered.add(e);
-          }
-        }).toList();
-        break;
-      case QuestionFilter.allNotShown:
+      case QuestionFilter.notShownOnly:
         qListGlobal!.map((e) {
           if (_userService.isQuestionInNotShownList(e.id) != null) {
             qListGlobalFiltered.add(e);
