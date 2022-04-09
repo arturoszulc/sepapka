@@ -13,15 +13,16 @@ class QuestionListFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint('*** QuestionListFilter Screen built ***');
-    List<String> qCategories = Provider.of<Manager>(context).qCategories;
+    final manager = Provider.of<Manager>(context);
+    List<String> qCategories = manager.qCategories;
 
     return WillPopScope(
-        onWillPop: () => context.read<Manager>().navigate(Screen.listQuestion),
+        onWillPop: () => context.read<Manager>().getFilteredQuestionList(),
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => context.read<Manager>().navigate(Screen.listQuestion),
+              onPressed: () => context.read<Manager>().getFilteredQuestionList(),
             ),
             title: const Text('Filtry'),
             elevation: 0.0,
@@ -43,10 +44,10 @@ class QuestionListFilter extends StatelessWidget {
                       // spacing: 20,
                     ),
                     // isRadio: true,
-                    onSelected: (index, isSelected) => print('$index button is selected'),
+                    onSelected: (index, isSelected) => manager.setListFilter(fType: index),
                     buttons: ["Wszystkie", "Tylko widoczne", "Tylko ukryte",],
                     controller: GroupButtonController(
-                      selectedIndex: 2,
+                      selectedIndex: manager.filterType,
                     ),
                   ),
                   Padding(
@@ -63,10 +64,10 @@ class QuestionListFilter extends StatelessWidget {
                       // spacing: 20,
                     ),
                     // isRadio: true,
-                    onSelected: (index, isSelected) => print('$index button is selected'),
-                    buttons: ["Poziom 1", "Poziom 2", "Poziom 3", "wszystkie poziomy"],
+                    onSelected: (index, isSelected) => manager.setListFilter(fLevel: index),
+                    buttons: ["Wszystkie", "Poziom 1", "Poziom 2", "Poziom 3"],
                     controller: GroupButtonController(
-                      selectedIndex: 2,
+                      selectedIndex: manager.filterLevel,
                     ),
                   ),
                   const SizedBox(height: 20,),
@@ -86,10 +87,10 @@ class QuestionListFilter extends StatelessWidget {
                       spacing: groupButtonPadding,
                     ),
                     isRadio: true,
-                    onSelected: (index, isSelected) => print('$index button is selected'),
+                    onSelected: (index, isSelected) => manager.setListFilter(fCategory: index),
                     buttons: qCategories,
                     controller: GroupButtonController(
-                      selectedIndex: 2,
+                      selectedIndex: manager.filterCategory,
                     ),
                   ),
 

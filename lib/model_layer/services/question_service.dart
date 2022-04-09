@@ -43,9 +43,18 @@ class QuestionService {
 
   QuestionStatus qStatus = QuestionStatus.noAnswer;
   QuestionType qType = QuestionType.learning; //default to learning
-  QuestionFilter qFilter = QuestionFilter.all;
   int qLevel = 0;
   int qCategoryNum = 0; //int corresponds to index of qList
+
+  //Question List filters
+  FilterQuestion qFilter = FilterQuestion.all;
+  int filterType = 0; //0 = all, 1 = visible 2 = hidden
+  int filterLevel = 0; // 0 = all, 1 = lvl1, 2 = lvl2, 3 = lvl3
+  int filterCategory = 0; //corresponds to qCategories
+  bool filterTypeChanged = false;
+  bool filterLevelChanged = false;
+  bool filterCategoryChanged = false;
+
   List<int> numOfQuestionsByLevel = [];
   List<int> numOfQuestionsByCategory = [];
 
@@ -54,8 +63,6 @@ class QuestionService {
 
   //Getters
   // bool get isSessionFinished => _isSessionFinished;
-
-  // List<Question> get qListGlobalFiltered => _qListGlobalFiltered;
 
   List<String> get qCategoryList => globalData!.qCategories;
 
@@ -85,6 +92,8 @@ class QuestionService {
 
     //update qListGlobal and count number of questions by level
     qListGlobal = getQuestionResult as List<Question>;
+    //also update qListFiltered, so it won't be empty
+    qListGlobalFiltered = List<Question>.from(qListGlobal!);
     countQuestionsByLevel();
 
     //update local user question version and qNewList (if there any any new questions)
@@ -227,7 +236,9 @@ class QuestionService {
       //Add one point to user
       // _currentSessionUserPoints += 1;
       //set button color
-      bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
+      bMapList
+          .firstWhere((element) => element.answer == answer)
+          .color = rightButtonColor;
       //move question to Practice List
       // _userService.moveQMapToPractice(currentQuestion!.id, qType, qLevel, true);
     }
@@ -239,9 +250,13 @@ class QuestionService {
 
       qStatus = QuestionStatus.wrongAnswer;
       //set wrong button
-      bMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
+      bMapList
+          .firstWhere((element) => element.answer == answer)
+          .color = wrongButtonColor;
       //set right button
-      bMapList.firstWhere((element) => element.answer == currentQuestion!.a1).color =
+      bMapList
+          .firstWhere((element) => element.answer == currentQuestion!.a1)
+          .color =
           rightButtonColor;
       //move question to the end of it's list, to try again
       // if (qType == QuestionType.learning) {
@@ -355,7 +370,7 @@ class QuestionService {
   }
 
   countQuestionsByLevel() {
-    numOfQuestionsByLevel = [0,0,0,0];
+    numOfQuestionsByLevel = [0, 0, 0, 0];
     for (Question question in qListGlobal!) {
       if (question.level == 1) numOfQuestionsByLevel[1] += 1;
       if (question.level == 2) numOfQuestionsByLevel[2] += 1;
@@ -365,8 +380,9 @@ class QuestionService {
     numOfQuestionsByLevel[0] =
         numOfQuestionsByLevel[1] + numOfQuestionsByLevel[2] + numOfQuestionsByLevel[3];
   }
+
   countQuestionsByCategory() {
-    numOfQuestionsByCategory = [0,0,0,0,0];
+    numOfQuestionsByCategory = [0, 0, 0, 0, 0];
     for (Question question in qListLocal) {
       if (question.labels[0] == qCategoryList[1]) numOfQuestionsByCategory[1] += 1;
       if (question.labels[0] == qCategoryList[2]) numOfQuestionsByCategory[2] += 1;
@@ -374,89 +390,52 @@ class QuestionService {
       if (question.labels[0] == qCategoryList[4]) numOfQuestionsByCategory[4] += 1;
 
       numOfQuestionsByCategory[0] =
-      numOfQuestionsByCategory[1] +
-      numOfQuestionsByCategory[2] +
-      numOfQuestionsByCategory[3] +
-      numOfQuestionsByCategory[4];
+          numOfQuestionsByCategory[1] +
+              numOfQuestionsByCategory[2] +
+              numOfQuestionsByCategory[3] +
+              numOfQuestionsByCategory[4];
     }
   }
 
 
-  getFilteredQuestionList(QuestionFilter filter) {
-    qFilter = filter;
-    qListGlobalFiltered.clear();
+  getFilteredQuestionList() {
+    //calling this function means that some filter changed
+    // so start with clearing the old one
+    qListGlobalFiltered = List<Question>.from(qListGlobal!);
 
-    switch (filter) {
-      case QuestionFilter.all:
-        qListGlobalFiltered = List<Question>.from(qListGlobal!);
-        qListGlobalFiltered.sort((a, b) => a.q.compareTo(b.q));
-        break;
-      case QuestionFilter.shownOnly:
-        qListGlobal!.map((e) {
-          if (_userService.isQuestionInQListNew(e.id) != null)
-          // _userService.isQuestionInNew2(e.id) != null ||
-          // _userService.isQuestionInNew3(e.id) != null
-          {
-            qListGlobalFiltered.add(e);
-          }
-        }).toList();
-        break;
-      case QuestionFilter.notShownOnly:
-        qListGlobal!.map((e) {
-          if (_userService.isQuestionInNotShownList(e.id) != null) {
-            qListGlobalFiltered.add(e);
-          }
-        }).toList();
-        break;
-      case QuestionFilter.level1:
-        qListGlobal!.map((e) {
-          if (e.level == 1) {
-            qListGlobalFiltered.add(e);
-          }
-        }).toList();
-        break;
-      case QuestionFilter.level2:
-        qListGlobal!.map((e) {
-          if (e.level == 2) {
-            qListGlobalFiltered.add(e);
-          }
-        }).toList();
-        break;
-      case QuestionFilter.level3:
-        qListGlobal!.map((e) {
-          if (e.level == 3) {
-            qListGlobalFiltered.add(e);
-          }
-        }).toList();
-        break;
-      case QuestionFilter.labelName1:
-        qListGlobal!.map((e) {
-          if (e.labels[0] == labelName1) {
-            qListGlobalFiltered.add(e);
-          }
-        }).toList();
-        break;
-      case QuestionFilter.labelName2:
-        qListGlobal!.map((e) {
-          if (e.labels[0] == labelName2) {
-            qListGlobalFiltered.add(e);
-          }
-        }).toList();
-        break;
-      case QuestionFilter.labelName3:
-        qListGlobal!.map((e) {
-          if (e.labels[0] == labelName3) {
-            qListGlobalFiltered.add(e);
-          }
-        }).toList();
-        break;
-      case QuestionFilter.labelName4:
-        qListGlobal!.map((e) {
-          if (e.labels[0] == labelName4) {
-            qListGlobalFiltered.add(e);
-          }
-        }).toList();
-        break;
+    //apply three filters
+    filterListByType();
+    filterListByLevel();
+    filterListByCategory();
+
+    //reset all flags
+    filterTypeChanged = false;
+    filterLevelChanged = false;
+    filterCategoryChanged = false;
+  }
+
+  filterListByType() {
+    //filter only if type is different than 0 (0 = all)
+    if (filterType != 0) {
+    if (filterType == 1) {
+      qListGlobalFiltered.removeWhere((e) => _userService.isQuestionInQListNew(e.id) == null);
+    }
+    if (filterType == 2) {
+      qListGlobalFiltered.removeWhere((e) => _userService.isQuestionInPracticeList(e.id) == null);
+    }
+    }
+  }
+
+  filterListByLevel() {
+    //filter only if level was chosen (0 = all)
+    if (filterLevel != 0) {
+     qListGlobalFiltered.removeWhere((e) => e.level != filterLevel);
+    }
+  }
+  filterListByCategory() {
+    //filter only if category was chosen (0 = all)
+    if (filterCategory != 0) {
+      qListGlobalFiltered.removeWhere((e) => e.labels[0] != qCategoryList[filterCategory]);
     }
   }
 }

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 enum QuestionStatus { noAnswer, rightAnswer, wrongAnswer }
 enum QuestionType { learning, quiz }
-enum QuestionFilter {all, shownOnly, notShownOnly, level1, level2, level3, labelName1,labelName2,labelName3,labelName4,}
+enum FilterQuestion {all, shownOnly, notShownOnly}
 
 
 //Fibonacci series

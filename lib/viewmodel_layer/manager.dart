@@ -80,7 +80,10 @@ class Manager extends ChangeNotifier {
 
   // QuestionType get qType => _questionService.qType;
 
-  QuestionFilter get qFilter => _questionService.qFilter;
+  // FilterQuestion get filterType2 => _questionService.qFilter;
+  int get filterType => _questionService.filterType;
+  int get filterLevel => _questionService.filterLevel;
+  int get filterCategory => _questionService.filterCategory;
 
   List<BMap> get bMapList => _questionService.bMapList;
 
@@ -388,11 +391,32 @@ class Manager extends ChangeNotifier {
     }
   }
 
-  getFilteredQuestionList({QuestionFilter? filter}) {
-    if (filter == qFilter) return;
-    navigate(Screen.loading);
-    filter ??= QuestionFilter.all;
-    _questionService.getFilteredQuestionList(filter);
+  setListFilter({int? fType, int? fLevel, int? fCategory})
+  {
+    if (fType != null) {
+      debugPrint('fType: $fType');
+      _questionService.filterType = fType;
+      _questionService.filterTypeChanged = true;
+    }
+    if (fLevel != null) {
+      debugPrint('fLevel: $fLevel');
+      _questionService.filterLevel = fLevel;
+      _questionService.filterLevelChanged = true;
+
+    }
+    if (fCategory != null) {
+      debugPrint('fCategory: $fCategory');
+      _questionService.filterCategory = fCategory;
+      _questionService.filterCategoryChanged = true;
+
+    }
+  }
+  getFilteredQuestionList() async {
+    if (_questionService.filterTypeChanged || _questionService.filterLevelChanged || _questionService.filterCategoryChanged) {
+      debugPrint('*** Filter changed ***');
+      navigate(Screen.loading);
+      await _questionService.getFilteredQuestionList();
+    }
     navigate(Screen.listQuestion);
   }
   showSingleFilteredQuestion(int index) {

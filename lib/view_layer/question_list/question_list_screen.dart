@@ -15,13 +15,7 @@ class QuestionListScreen extends StatelessWidget {
     debugPrint('*** QuestionListScreen built ***');
 
     final manager = Provider.of<Manager>(context);
-    final List<Question> qListGlobalFiltered = manager.qListGlobalFiltered;
-    List<Map<String,dynamic>> dropDownList = [
-      {'type': QuestionFilter.labelName1, 'name': manager.qCategories[1],},
-      {'type': QuestionFilter.labelName2, 'name': manager.qCategories[2],},
-
-    ];
-    dynamic myValue;
+    List<Question> qListGlobalFiltered = manager.qListGlobalFiltered;
 
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.menu),
