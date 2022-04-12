@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 
 // import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
@@ -23,7 +23,7 @@ class UserService {
 
   //Properties
   bool _loggedUserChanged = false;
-  bool _userLeveledUp = false;
+  // bool _userLeveledUp = false;
   List<String> _rankNames = [];
   List<int> _rankThresholds = [];
 
@@ -165,9 +165,9 @@ class UserService {
       if (!isOnAnyList) {
         //jeśli nie, stwórz jego mapę i zapisz do qNewList
         QMap qMap = createDefaultQMap(question.id);
-        addQMapToNew(qMap, question.level);
+        addQMapToNew(qMap);
         //set flag, that user object was changed
-
+        setLoggedUserChanged(true);
       }
     }
     //if loggedUser changed, update it on DB at the end
@@ -193,8 +193,6 @@ class UserService {
 
   bool isQuestionInAnyList(String questionId) {
     return isQuestionInQListNew(questionId) != null ||
-        // isQuestionInNew2(questionId) != null ||
-        // isQuestionInNew3(questionId) != null ||
         isQuestionInPracticeList(questionId) != null ||
         isQuestionInNotShownList(questionId) != null;
   }
@@ -202,14 +200,6 @@ class UserService {
   QMap? isQuestionInQListNew(String questionId) {
     return _loggedUser!.qListNew.firstWhereOrNull((qMap) => qMap.id == questionId);
   }
-
-  // QMap? isQuestionInNew2(String questionId) {
-  //   return _loggedUser!.qListNew2.firstWhereOrNull((qMap) => qMap.id == questionId);
-  // }
-  //
-  // QMap? isQuestionInNew3(String questionId) {
-  //   return _loggedUser!.qListNew3.firstWhereOrNull((qMap) => qMap.id == questionId);
-  // }
 
   QMap? isQuestionInPracticeList(String questionId) {
     return _loggedUser!.qListPractice.firstWhereOrNull((qMap) => qMap.id == questionId);
@@ -221,9 +211,6 @@ class UserService {
 
   removeQuestionFromAnyQList(String questionId) {
     _loggedUser!.qListNew.removeWhere((e) => e.id == questionId);
-    // _loggedUser!.qListNew1.removeWhere((e) => e.id == questionId);
-    // _loggedUser!.qListNew2.removeWhere((e) => e.id == questionId);
-    // _loggedUser!.qListNew3.removeWhere((e) => e.id == questionId);
     _loggedUser!.qListPractice.removeWhere((e) => e.id == questionId);
     _loggedUser!.qListNotShown.removeWhere((e) => e.id == questionId);
   }
@@ -235,17 +222,6 @@ class UserService {
   List<QMap> getQMapsFromNewList(int qLevel) {
     //return only first 10 elements
     return _loggedUser!.qListNew.slice(0, min(9, _loggedUser!.qListNew.length));
-
-    // switch (qLevel) {
-    //   case 1:
-    //     return _loggedUser!.qListNew1.slice(0, min(9, _loggedUser!.qListNew1.length));
-    //   case 2:
-    //     return _loggedUser!.qListNew2.slice(0, min(9, _loggedUser!.qListNew2.length));
-    //
-    //   case 3:
-    //     return _loggedUser!.qListNew3.slice(0, min(9, _loggedUser!.qListNew3.length));
-    // }
-    // return [];
   }
 
   List<QMap> getTodayPracticeQMapList() {
@@ -274,65 +250,54 @@ class UserService {
   //   }
   // }
 
-  moveQMapToPractice(String qId, QuestionType qType, int qLevel, bool update) async {
-    debugPrint('/// Moving QMap to practice list... ///');
-    //Get QMap by ID from qNewList
-    QMap? qMap = getQMapAndRemove(qId, qType, qLevel);
+  // moveQMapToPractice(String qId, int qLevel, bool update) async {
+  //   debugPrint('/// Moving QMap to practice list... ///');
+  //   //Get QMap by ID from qNewList
+  //   QMap? qMap = getQMapAndRemove(qId, qType, qLevel);
+  //
+  //   if (qMap != null) {
+  //     //if update, set new Date and FibNum
+  //     if (update) {
+  //       qMap.dateModified = _today.toString().substring(0, 10);
+  //       qMap.fibNum = getNextFibNum(qMap.fibNum);
+  //       // setLoggedUserChanged(true);
+  //     }
+  //     //add question QMap to Practice list
+  //     await addQMapToPractice(qMap);
+  //   }
+  // }
 
+  moveQMapToNew(String qId) async {
+    //Cut it from NotShownList
+    QMap? qMap = _loggedUser!.qListNotShown.firstWhereOrNull((element) => element.id == qId);
     if (qMap != null) {
-      //if update, set new Date and FibNum
-      if (update) {
-        qMap.dateModified = _today.toString().substring(0, 10);
-        qMap.fibNum = getNextFibNum(qMap.fibNum);
-        // setLoggedUserChanged(true);
-      }
-      //add question QMap to Practice list
-      await addQMapToPractice(qMap);
-    }
-  }
-
-  moveQMapToNotShown(String qId, QuestionType qType, int qLevel) async {
-    //Get QMap by ID from qNewList
-    QMap? qMap = getQMapAndRemove(qId, qType, qLevel);
-    if (qMap != null) {
-      await addQMapToNotShown(qMap);
+      _loggedUser!.qListNotShown.remove(qMap);
+      await addQMapToNew(qMap);
       debugPrint('/// US: Moved QMap to NotShow list ///');
     }
   }
 
-  QMap? getQMapAndRemove(String qId, QuestionType qType, int qLevel) {
-    QMap? qMap;
-    //method cuts out qMap from it's list and returns it
-    switch (qType) {
-      case QuestionType.learning:
-          qMap = _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == qId);
-          _loggedUser!.qListNew.remove(qMap);
-          return qMap;
-
-        // switch (qLevel) {
-        //   case 1:
-        //     qMap = _loggedUser!.qListNew1.firstWhereOrNull((element) => element.id == qId);
-        //     _loggedUser!.qListNew1.remove(qMap);
-        //     return qMap;
-        //   case 2:
-        //     qMap = _loggedUser!.qListNew2.firstWhereOrNull((element) => element.id == qId);
-        //     _loggedUser!.qListNew2.remove(qMap);
-        //     return qMap;
-        //
-        //   case 3:
-        //     qMap = _loggedUser!.qListNew3.firstWhereOrNull((element) => element.id == qId);
-        //     _loggedUser!.qListNew3.remove(qMap);
-        //     return qMap;
-        // }
-        break;
-      case QuestionType.quiz:
-        qMap = _loggedUser!.qListPractice.firstWhereOrNull((element) => element.id == qId);
-        _loggedUser!.qListPractice.remove(qMap);
-        return qMap;
+  moveQMapToNotShown(String qId) async {
+    //Get QMap by ID from qNewList
+    QMap? qMap = _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == qId);
+    if (qMap != null) {
+      _loggedUser!.qListNew.remove(qMap);
+      await addQMapToNotShown(qMap);
+      debugPrint('/// US: Moved QMap to NotShow list ///');
+      debugPrint(loggedUser!.qListNotShown.toString());
     }
+    setLoggedUserChanged(true);
   }
 
-  addQMapToNew(QMap qMap, int qLevel) {
+  // QMap? getQMapAndRemove(String qId) {
+  //   //method cuts out qMap from it's list and returns it
+  //   QMap? qMap =
+  //
+  //         return qMap;
+  //
+  // }
+
+  addQMapToNew(QMap qMap) {
     //Before this method, it is checked if qMap is on any map.
     //So there's no need to check it again
     setLoggedUserChanged(true);
@@ -351,9 +316,9 @@ class UserService {
     // }
   }
 
-  addQMapToPractice(QMap qMap) {
-    _loggedUser!.qListPractice.add(qMap);
-  }
+  // addQMapToPractice(QMap qMap) {
+  //   _loggedUser!.qListPractice.add(qMap);
+  // }
 
   addQMapToNotShown(QMap qMap) {
     _loggedUser!.qListNotShown.add(qMap);
@@ -419,13 +384,13 @@ class UserService {
   }
 
   Widget getQListIcon(String qId) {
-    if (isQuestionInPracticeList(qId) != null) {
-      return qListIcons['practice']!;
-    }
+    // if (isQuestionInPracticeList(qId) != null) {
+    //   return qListIcons['practice']!;
+    // }
     if (isQuestionInNotShownList(qId) != null) {
       return qListIcons['notShown']!;
     } else {
-      return qListIcons['new']!;
+      return qListIcons['none']!;
     }
   }
 }

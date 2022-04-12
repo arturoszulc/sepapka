@@ -15,6 +15,7 @@ class MenuScreen extends StatelessWidget {
     debugPrint('*** Menu built ***');
 
     // int howManyToPractice = context.read<Manager>().howManyToPracticeToday;
+    debugPrint(context.read<Manager>().loggedUser!.qListNotShown.toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -107,8 +108,8 @@ class MenuScreen extends StatelessWidget {
                     // badgeNum: howManyToPractice,
                     label: 'Quiz',
                     onPressed: () {
-                      context.read<Manager>().chooseSessionType(QuestionType.quiz);
-                          }),
+                      context.read<Manager>().navigate(Screen.chooseLevel);
+                    }),
                 MenuButton(
                     label: 'Lista pytań',
                     onPressed: () {

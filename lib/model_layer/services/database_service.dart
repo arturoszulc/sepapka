@@ -36,9 +36,6 @@ class DatabaseService {
           userRankLevel: user.rankLevel,
           userRankTotalPoints: user.rankTotalPoints,
           userQListNew: user.qListNew.map((e) => e.convertToMap()).toList(),
-          // userQListNew1: user.qListNew1.map((e) => e.convertToMap()).toList(),
-          // userQListNew2: user.qListNew2.map((e) => e.convertToMap()).toList(),
-          // userQListNew3: user.qListNew3.map((e) => e.convertToMap()).toList(),
           userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
           userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),
         })
@@ -58,9 +55,6 @@ class DatabaseService {
       rankTotalPoints: doc.get(userRankTotalPoints),
       qVersions: List<int>.from(doc.get(userQVersions)),
       qListNew: List<QMap>.from(doc.get(userQListNew).map((e) => convertMapToQMap(e))),
-      // qListNew1: List<QMap>.from(doc.get(userQListNew1).map((e) => convertMapToQMap(e))),
-      // qListNew2: List<QMap>.from(doc.get(userQListNew2).map((e) => convertMapToQMap(e))),
-      // qListNew3: List<QMap>.from(doc.get(userQListNew3).map((e) => convertMapToQMap(e))),
       qListPractice: List<QMap>.from(doc.get(userQListPractice).map((e) => convertMapToQMap(e))),
       qListNotShown: List<QMap>.from(doc.get(userQListNotShown).map((e) => convertMapToQMap(e))),
     );

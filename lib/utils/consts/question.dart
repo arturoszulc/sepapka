@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 //Enums
 
 enum QuestionStatus { noAnswer, rightAnswer, wrongAnswer }
-enum QuestionType { learning, quiz }
+// enum QuestionType { learning, quiz }
 enum FilterQuestion {all, shownOnly, notShownOnly}
 
 
@@ -30,4 +30,5 @@ const Map<String, Widget> qListIcons = {
   'new': Icon(Icons.hourglass_empty),
   'practice': Icon(Icons.hourglass_full),
   'notShown': Icon(Icons.not_interested),
+  'none': SizedBox(),
 };

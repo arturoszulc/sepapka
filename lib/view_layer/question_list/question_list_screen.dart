@@ -16,6 +16,7 @@ class QuestionListScreen extends StatelessWidget {
 
     final manager = Provider.of<Manager>(context);
     List<Question> qListGlobalFiltered = manager.qListGlobalFiltered;
+    debugPrint(context.read<Manager>().loggedUser!.qListNotShown.toString());
 
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.menu),

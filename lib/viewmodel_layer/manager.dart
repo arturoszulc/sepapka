@@ -38,7 +38,6 @@ class Manager extends ChangeNotifier {
 
   Screen _currentScreen = Screen.loading;
 
-
   //Manager getters
   bool get loading => _loading;
 
@@ -46,6 +45,7 @@ class Manager extends ChangeNotifier {
 
   // bool get newUser => _newUser;
   String get errorMsg => _errorMsg;
+
   String get infoMsg => _infoMsg;
 
   //External Getters
@@ -58,7 +58,9 @@ class Manager extends ChangeNotifier {
   int get qNewLeft => _userService.loggedUser!.qListNew.length;
 
   int get qLevel1Left => _questionService.qListLocal.where((element) => element.level == 1).length;
+
   int get qLevel2Left => _questionService.qListLocal.where((element) => element.level == 2).length;
+
   int get qLevel3Left => _questionService.qListLocal.where((element) => element.level == 3).length;
 
   bool get isSessionFinished => _questionService.isSessionFinished;
@@ -68,7 +70,6 @@ class Manager extends ChangeNotifier {
   String get userRankName => _userService.userRankName;
 
   //Question Service
-
 
   // int get howManyToPracticeToday => _questionService.howManyToPracticeToday();
 
@@ -82,7 +83,9 @@ class Manager extends ChangeNotifier {
 
   // FilterQuestion get filterType2 => _questionService.qFilter;
   int get filterType => _questionService.filterType;
+
   int get filterLevel => _questionService.filterLevel;
+
   int get filterCategory => _questionService.filterCategory;
 
   List<BMap> get bMapList => _questionService.bMapList;
@@ -90,8 +93,10 @@ class Manager extends ChangeNotifier {
   List<Question> get qListGlobalFiltered => _questionService.qListGlobalFiltered;
 
   List<String> get qCategories => _questionService.qCategoryList;
-  List<int> get countQuestionsByLevel => _questionService.numOfQuestionsByLevel;
-  List<int> get countQuestionsByCategories => _questionService.numOfQuestionsByCategory;
+
+  List<int> get countQuestionsByLevel => _questionService.countQuestionsByLevel();
+
+  List<int> get countQuestionsByCategories => _questionService.countQuestionsByCategory();
 
   //AuthService
 
@@ -175,10 +180,10 @@ class Manager extends ChangeNotifier {
     if (_userHasRegistered) {
       navigate(Screen.setUsername);
       _userHasRegistered = false;
-    }
-    else {
+    } else {
       navigate(Screen.menu);
-    };
+    }
+    ;
   }
 
   ////////////////////////
@@ -318,11 +323,10 @@ class Manager extends ChangeNotifier {
 
   // QUESTIONS
 
-  chooseSessionType(QuestionType type) {
-    _questionService.setQuestionType(type);
-    navigate(Screen.chooseLevel);
-  }
-
+  // chooseSessionType(QuestionType type) {
+  //   _questionService.setQuestionType(type);
+  //   navigate(Screen.chooseLevel);
+  // }
 
   chooseQuestionLevel(int level) async {
     await _questionService.setQuestionLevel(level);
@@ -351,7 +355,8 @@ class Manager extends ChangeNotifier {
     Object nextQuestionResult = await _questionService.getNextQuestion();
     if (nextQuestionResult is Success) {
       navigate(Screen.quizQuestionSingle);
-    };
+    }
+    ;
     if (nextQuestionResult is Failure) {
       //if failure, then no more questions left. End session.
       Object endResult = await _questionService.endSession();
@@ -365,14 +370,16 @@ class Manager extends ChangeNotifier {
 
   interruptSession() async {
     //if session was interrupted, download user again
-    Object interruptResult = _userService.rollUserBack();
-    if (interruptResult is Failure) {
-      setMessage(interruptResult.errorString.toString());
-    }
+    // Object interruptResult = _userService.rollUserBack();
+    // if (interruptResult is Failure) {
+    //   setMessage(interruptResult.errorString.toString());
+    // }
     navigate(Screen.menu);
   }
 
-  moveQuestionToNew() {}
+  moveQuestionToNew(String qId) {
+    _questionService.moveQuestionBackToShown(qId);
+  }
 
   doNotShowThisQuestionAnymore() {
     _questionService.doNotShowThisQuestionAnymore();
@@ -391,8 +398,7 @@ class Manager extends ChangeNotifier {
     }
   }
 
-  setListFilter({int? fType, int? fLevel, int? fCategory})
-  {
+  setListFilter({int? fType, int? fLevel, int? fCategory}) {
     if (fType != null) {
       debugPrint('fType: $fType');
       _questionService.filterType = fType;
@@ -402,23 +408,20 @@ class Manager extends ChangeNotifier {
       debugPrint('fLevel: $fLevel');
       _questionService.filterLevel = fLevel;
       _questionService.filterLevelChanged = true;
-
     }
     if (fCategory != null) {
       debugPrint('fCategory: $fCategory');
       _questionService.filterCategory = fCategory;
       _questionService.filterCategoryChanged = true;
-
     }
   }
+
   getFilteredQuestionList() async {
-    if (_questionService.filterTypeChanged || _questionService.filterLevelChanged || _questionService.filterCategoryChanged) {
-      debugPrint('*** Filter changed ***');
-      navigate(Screen.loading);
-      await _questionService.getFilteredQuestionList();
-    }
+    navigate(Screen.loading);
+    await _questionService.getFilteredQuestionList();
     navigate(Screen.listQuestion);
   }
+
   showSingleFilteredQuestion(int index) {
     qListGlobalFilteredIndex = index;
     navigate(Screen.listQuestionSingle);
@@ -437,7 +440,6 @@ class Manager extends ChangeNotifier {
     return 'assets/images/badges/$badge.png';
   }
 
-
   // ******* METHODS ON DEMAND ********
 
   //Adding new questions to DB
@@ -449,5 +451,4 @@ class Manager extends ChangeNotifier {
     }
     debugPrint('/// Questions added to DB successfully');
   }
-
 }

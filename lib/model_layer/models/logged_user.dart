@@ -21,8 +21,6 @@ class LoggedUser {
         required this.isPro,
         required this.qVersions,
         required this.qListNew,
-        // required this.qListNew2,
-        // required this.qListNew3,
         required this.qListPractice,
         required this.qListNotShown,
         required this.rankLevel,

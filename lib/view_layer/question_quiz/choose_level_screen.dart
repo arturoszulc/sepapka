@@ -46,6 +46,14 @@ class MenuChooseLevel extends StatelessWidget {
                         children: [
                           MenuButton(
                             hasBadge: true,
+                            badgeNum: countLevels[0],
+                            label: 'Wszystkie',
+                            onPressed: () async {
+                              await context.read<Manager>().chooseQuestionLevel(0);
+                            },
+                          ),
+                          MenuButton(
+                            hasBadge: true,
                             badgeNum: countLevels[1],
                             label: 'Poziom 1',
                             onPressed: () async {
