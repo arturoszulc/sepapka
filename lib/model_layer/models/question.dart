@@ -5,7 +5,7 @@ class Question {
   String a2;
   String a3;
   String a4;
-  List<String> labels;
+  int label;
   int level;
   String assetPath;
 
@@ -16,7 +16,7 @@ class Question {
     required this.a2,
     required this.a3,
     required this.a4,
-    required this.labels,
+    required this.label,
     required this.level,
     required this.assetPath,
   });
@@ -28,7 +28,7 @@ class Question {
         a2 = json['a2'],
         a3 = json['a3'],
         a4 = json['a4'],
-        labels = List<String>.from(json['labels']),
+        label = json['label'],
         level = json['level'],
         assetPath = json['assetPath'];
 
@@ -39,7 +39,7 @@ class Question {
         'a2': a2,
         'a3': a3,
         'a4': a4,
-        'labels': labels,
+        'label': label,
         'level': level,
         'assetPath': assetPath,
       };

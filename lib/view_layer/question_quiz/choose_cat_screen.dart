@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
+import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/view_layer/custom_widgets/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
@@ -12,7 +13,6 @@ class ChooseCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** ChooseCategory Screen built ***');
 
-    List<String> qCategories = context.read<Manager>().qCategories;
     List<int> countQuestionsByCategories = context.read<Manager>().countQuestionsByCategories;
     return WillPopScope(
         onWillPop: () => context.read<Manager>().navigate(Screen.chooseLevel),
@@ -42,7 +42,7 @@ class ChooseCategory extends StatelessWidget {
                     // crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       MenuButton(
-                        label: qCategories[0],
+                        label: qCategoryList[0],
                         hasBadge: true,
                         badgeNum: countQuestionsByCategories[0],
                         onPressed: () async {
@@ -50,7 +50,7 @@ class ChooseCategory extends StatelessWidget {
                         },
                       ),
                       MenuButton(
-                        label: qCategories[1],
+                        label: qCategoryList[1],
                         hasBadge: true,
                         badgeNum: countQuestionsByCategories[1],
                         onPressed: () async {
@@ -58,7 +58,7 @@ class ChooseCategory extends StatelessWidget {
                         },
                       ),
                       MenuButton(
-                        label: qCategories[2],
+                        label: qCategoryList[2],
                         hasBadge: true,
                         badgeNum: countQuestionsByCategories[2],
                         onPressed: () async {
@@ -66,7 +66,7 @@ class ChooseCategory extends StatelessWidget {
                         },
                       ),
                       MenuButton(
-                        label: qCategories[3],
+                        label: qCategoryList[3],
                         hasBadge: true,
                         badgeNum: countQuestionsByCategories[3],
                         onPressed: () async {
@@ -74,7 +74,7 @@ class ChooseCategory extends StatelessWidget {
                         },
                       ),
                       MenuButton(
-                        label: qCategories[4],
+                        label: qCategoryList[4],
                         hasBadge: true,
                         badgeNum: countQuestionsByCategories[4],
                         onPressed: () async {

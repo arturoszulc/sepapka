@@ -46,7 +46,7 @@ class QuestionService {
   int qCategoryNum = 0; //int corresponds to index of qList
 
   //Question List filters
-  FilterQuestion qFilter = FilterQuestion.all;
+  // FilterQuestion qFilter = FilterQuestion.all;
   int filterType = 0; //0 = all, 1 = visible 2 = hidden
   int filterLevel = 0; // 0 = all, 1 = lvl1, 2 = lvl2, 3 = lvl3
   int filterCategory = 0; //corresponds to qCategories
@@ -63,7 +63,7 @@ class QuestionService {
   //Getters
   // bool get isSessionFinished => _isSessionFinished;
 
-  List<String> get qCategoryList => globalData!.qCategories;
+  // List<String> get qCategoryList => globalData!.qCategories;
 
   // List<BMap> get bMapList => _bMapList;
 
@@ -176,7 +176,7 @@ class QuestionService {
     //filter by Category
 
     if (qCategoryNum != 0) {
-      qListLocal.removeWhere((e) => e.labels[0] != qCategoryList[qCategoryNum]);
+      qListLocal.removeWhere((e) => e.label != qCategoryNum);
     }
 
     //now cut out of qListLocal any question that is on NotShownList
@@ -339,20 +339,20 @@ class QuestionService {
     if (qLevel == 0) {
       for (Question question in qListGlobal!) {
         if (_userService.isQuestionInNotShownList(question.id) == null) {
-          if (question.labels[0] == qCategoryList[1]) numOfQuestionsByCategory[1] += 1;
-          if (question.labels[0] == qCategoryList[2]) numOfQuestionsByCategory[2] += 1;
-          if (question.labels[0] == qCategoryList[3]) numOfQuestionsByCategory[3] += 1;
-          if (question.labels[0] == qCategoryList[4]) numOfQuestionsByCategory[4] += 1;
+          if (question.label == 1) numOfQuestionsByCategory[1] += 1;
+          if (question.label == 2) numOfQuestionsByCategory[2] += 1;
+          if (question.label == 3) numOfQuestionsByCategory[3] += 1;
+          if (question.label == 4) numOfQuestionsByCategory[4] += 1;
         }
       }
     } else {
       for (Question question in qListGlobal!) {
         if (_userService.isQuestionInNotShownList(question.id) == null) {
           if (question.level == qLevel) {
-            if (question.labels[0] == qCategoryList[1]) numOfQuestionsByCategory[1] += 1;
-            if (question.labels[0] == qCategoryList[2]) numOfQuestionsByCategory[2] += 1;
-            if (question.labels[0] == qCategoryList[3]) numOfQuestionsByCategory[3] += 1;
-            if (question.labels[0] == qCategoryList[4]) numOfQuestionsByCategory[4] += 1;
+            if (question.label == 1) numOfQuestionsByCategory[1] += 1;
+            if (question.label == 2) numOfQuestionsByCategory[2] += 1;
+            if (question.label == 3) numOfQuestionsByCategory[3] += 1;
+            if (question.label == 4) numOfQuestionsByCategory[4] += 1;
           }
         }
       }
@@ -404,7 +404,7 @@ class QuestionService {
   filterListByCategory() {
     //filter only if category was chosen (0 = all)
     if (filterCategory != 0) {
-      qListGlobalFiltered.removeWhere((e) => e.labels[0] != qCategoryList[filterCategory]);
+      qListGlobalFiltered.removeWhere((e) => e.label != filterCategory);
     }
   }
 }

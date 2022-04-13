@@ -80,7 +80,7 @@ class Manager extends ChangeNotifier {
 
   List<Question> get qListGlobalFiltered => _questionService.qListGlobalFiltered;
 
-  List<String> get qCategories => _questionService.qCategoryList;
+  // List<String> get qCategories => _questionService.qCategoryList;
 
   List<int> get countQuestionsByLevel => _questionService.countQuestionsByLevel();
 
@@ -309,13 +309,19 @@ class Manager extends ChangeNotifier {
     navigate(Screen.menu);
   }
 
-  moveQuestionToNew(String qId) {
-    _questionService.moveQuestionBackToShown(qId);
+  moveQuestionBackToShown() {
+    _questionService.moveQuestionBackToShown(qListGlobalFiltered[qListGlobalFilteredIndex].id);
   }
 
   doNotShowThisQuestionAnymore() {
     _questionService.doNotShowThisQuestionAnymore();
     getNextQuestion();
+  }
+
+  bool isQuestionHidden(String qId) {
+    var result = _userService.isQuestionInNotShownList(qId);
+    if (result == null) return false;
+    return true;
   }
 
   sendQuestionRemark(String remark) async {

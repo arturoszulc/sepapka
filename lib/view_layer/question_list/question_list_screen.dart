@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/model_layer/models/question.dart';
@@ -34,21 +35,62 @@ class QuestionListScreen extends StatelessWidget {
         ),
         body: qListGlobalFiltered.isEmpty ?
         const Center(child: Text('Brak pytań'),)
-            : ListView.builder(
-            itemCount: qListGlobalFiltered.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                child: ListTile(
-                  contentPadding: const EdgeInsets.all(10.0),
-                  title: buildTitle(qListGlobalFiltered[index]),
-                  subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
-                  onTap: () {
-                    manager.showSingleFilteredQuestion(index);
-                    context.read<Manager>().navigate(Screen.listQuestionSingle);
-                  },
+            : Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Typ', style: TextStyle(fontWeight: FontWeight.bold),),
+                            Text(qTypeList[manager.filterType]),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Poz. trudności', style: TextStyle(fontWeight: FontWeight.bold),),
+                            Text(qLevelList[manager.filterLevel]),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Kategoria', style: TextStyle(fontWeight: FontWeight.bold),),
+                            Text(qCategoryList[manager.filterCategory]),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              );
-            })
+                Expanded(
+                  child: ListView.builder(
+                  itemCount: qListGlobalFiltered.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.all(10.0),
+                        title: buildTitle(qListGlobalFiltered[index]),
+                        subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
+                        onTap: () {
+                          manager.showSingleFilteredQuestion(index);
+                          context.read<Manager>().navigate(Screen.listQuestionSingle);
+                        },
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            )
 
 
 
@@ -87,14 +129,14 @@ Widget buildSubtitle(BuildContext context, Question q) {
             padding: const EdgeInsets.symmetric(
                 horizontal: 8.0, vertical: 2.0),
             child: Text(
-              q.labels[0],
+              qCategoryList[q.label],
               style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 11),
             ),
           ),
-          color: labelColors[q.labels[0]]),
+          color: labelColors[q.label]),
       context.read<Manager>().getQuestionIcon(q.id),
 
       // SizedBox(width: 15.0),

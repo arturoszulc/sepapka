@@ -18,12 +18,12 @@ const String questionA1 = 'a1';
 const String questionA2 = 'a2';
 const String questionA3 = 'a3';
 const String questionA4 = 'a4';
-const String questionLabels = 'labels';
+const String questionLabel = 'label';
 const String questionLevel = 'level';
 const String questionAssetPath = 'assetPath';
 
 //GlobalData model properties
-const String globalDataQCategories = 'qCategories';
+// const String globalDataQCategories = 'qCategories';
 const String globalDataQVersions = 'qVersions';
 const String globalDataRankNames = 'rankNames';
 const String globalDataRankThresholds = 'rankThresholds';

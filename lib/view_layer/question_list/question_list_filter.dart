@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:group_button/group_button.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/consts/question.dart';
 import '../../viewmodel_layer/manager.dart';
 
 class QuestionListFilter extends StatelessWidget {
@@ -13,7 +14,6 @@ class QuestionListFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** QuestionListFilter Screen built ***');
     final manager = Provider.of<Manager>(context);
-    List<String> qCategories = manager.qCategories;
 
     return WillPopScope(
         onWillPop: () => context.read<Manager>().getFilteredQuestionList(),
@@ -44,7 +44,7 @@ class QuestionListFilter extends StatelessWidget {
                     ),
                     // isRadio: true,
                     onSelected: (index, isSelected) => manager.setListFilter(fType: index),
-                    buttons: ["Wszystkie", "Tylko widoczne", "Tylko ukryte",],
+                    buttons: qTypeList,
                     controller: GroupButtonController(
                       selectedIndex: manager.filterType,
                     ),
@@ -64,7 +64,7 @@ class QuestionListFilter extends StatelessWidget {
                     ),
                     // isRadio: true,
                     onSelected: (index, isSelected) => manager.setListFilter(fLevel: index),
-                    buttons: ["Wszystkie", "Poziom 1", "Poziom 2", "Poziom 3"],
+                    buttons: qLevelList,
                     controller: GroupButtonController(
                       selectedIndex: manager.filterLevel,
                     ),
@@ -87,7 +87,7 @@ class QuestionListFilter extends StatelessWidget {
                     ),
                     isRadio: true,
                     onSelected: (index, isSelected) => manager.setListFilter(fCategory: index),
-                    buttons: qCategories,
+                    buttons: qCategoryList,
                     controller: GroupButtonController(
                       selectedIndex: manager.filterCategory,
                     ),

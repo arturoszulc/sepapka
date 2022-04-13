@@ -45,7 +45,7 @@ Widget singleQuestionTopBar(BuildContext context) {
       //Options button
       Expanded(
           // flex: 2,
-          child: buildSettingsMenu()),
+          child: buildSettingsMenu(false)),
     ],
   );
 }

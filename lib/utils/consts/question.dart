@@ -6,7 +6,13 @@ import 'package:flutter/material.dart';
 
 enum QuestionStatus { noAnswer, rightAnswer, wrongAnswer }
 // enum QuestionType { learning, quiz }
-enum FilterQuestion {all, shownOnly, notShownOnly}
+// enum FilterQuestion {all, shownOnly, notShownOnly}
+
+//Lists
+const List<String> qTypeList = ["wszystkie", "tylko widoczne", "tylko ukryte"];
+const List<String> qLevelList = ["wszystkie", "poziom 1", "poziom 2", "poziom 3"];
+const List<String> qCategoryList = ["wszystkie", "definicje", "sieci niskiego napięcia", "urządzenia elektryczne","ochrona przeciwporażeniowa"];
+
 
 
 //Fibonacci series
@@ -19,12 +25,7 @@ const String labelName2 = 'sieci niskiego napięcia';
 const String labelName3 = 'urządzenia elektryczne';
 const String labelName4 = 'ochrona przeciwporażeniowa';
 
-const Map<String, Color?> labelColors = {
-  'definicje': Colors.blue,
-  'sieci niskiego napięcia': Colors.green,
-  'urządzenia elektryczne': Colors.red,
-  'ochrona przeciwporażeniowa': Colors.purple,
-};
+const List<Color?> labelColors = [Colors.blue, Colors.green, Colors.red, Colors.purple];
 
 const Map<String, Widget> qListIcons = {
   'new': Icon(Icons.hourglass_empty),

@@ -76,7 +76,6 @@ class DatabaseService {
     debugPrint('/// DB: reading DATA doc... ///');
     var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
     return GlobalData(
-      qCategories: List<String>.from(doc.get(globalDataQCategories)),
       qVersions: List<int>.from(doc.get(globalDataQVersions)),
       rankNames: List<String>.from(doc.get(globalDataRankNames)),
       rankThresholds: List<int>.from(doc.get(globalDataRankThresholds)),
@@ -107,7 +106,7 @@ class DatabaseService {
           a2: doc.get(questionA2),
           a3: doc.get(questionA3),
           a4: doc.get(questionA4),
-          labels: List<String>.from(doc.get(questionLabels)),
+          label: doc.get(questionLabel),
           level: doc.get(questionLevel),
           assetPath: doc.get(questionAssetPath));
     }).toList();
@@ -126,14 +125,14 @@ class DatabaseService {
       default: doc = questions1Collection.doc(question.id);
     }
     return await doc.set({
-      'q': question.q,
-      'a1': question.a1,
-      'a2': question.a2,
-      'a3': question.a3,
-      'a4': question.a4,
-      'labels': question.labels,
-      'level': question.level,
-      'assetPath': question.assetPath,
+      questionQ: question.q,
+      questionA1: question.a1,
+      questionA2: question.a2,
+      questionA3: question.a3,
+      questionA4: question.a4,
+      questionLabel: question.label,
+      questionLevel: question.level,
+      questionAssetPath: question.assetPath,
     });
   }
 
