@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/view_layer/custom_widgets/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/utils/consts/nav.dart';
-import 'package:badges/badges.dart';
 
 class MenuChooseLevel extends StatelessWidget {
   const MenuChooseLevel({Key? key}) : super(key: key);

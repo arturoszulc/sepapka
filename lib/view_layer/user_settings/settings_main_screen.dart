@@ -86,43 +86,43 @@ class SettingsScreen extends StatelessWidget {
               //   ],
               // ),
 
-              const SizedBox(height: 20.0),
+              // const SizedBox(height: 20.0),
 
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      enabled: false,
-                      // autovalidateMode: AutovalidateMode.onUserInteraction,
-                      initialValue: context.read<Manager>().loggedUser!.username,
-                      // controller: emailFieldController,
-                      textInputAction: TextInputAction.next,
-                      decoration: const InputDecoration(
-                        labelText: 'Nazwa użytkownika',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      context.read<Manager>().navigate(Screen.changeUserName);
-                      // Navigator.pushNamed(context, '/settings-change-user-data');
-                    },
-                    icon: const Icon(Icons.edit),
-                  ),
-
-                  // const Text('Nazwa użytkownika'),
-                  // Container(
-                  //   margin: EdgeInsets.only(top: 10.0),
-                  //     padding: const EdgeInsets.all(10.0),
-                  //     decoration: BoxDecoration(
-                  //       border: Border.all(),
-                  //       borderRadius: BorderRadius.circular(5),
-                  //     ),
-                  //     child: Text(context.read<Manager>().loggedUser!.username)),
-                ],
-              ),
+              // Row(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Expanded(
+              //       child: TextFormField(
+              //         enabled: false,
+              //         // autovalidateMode: AutovalidateMode.onUserInteraction,
+              //         initialValue: context.read<Manager>().loggedUser!.username,
+              //         // controller: emailFieldController,
+              //         textInputAction: TextInputAction.next,
+              //         decoration: const InputDecoration(
+              //           labelText: 'Nazwa użytkownika',
+              //           border: OutlineInputBorder(),
+              //         ),
+              //       ),
+              //     ),
+              //     IconButton(
+              //       onPressed: () {
+              //         context.read<Manager>().navigate(Screen.changeUserName);
+              //         // Navigator.pushNamed(context, '/settings-change-user-data');
+              //       },
+              //       icon: const Icon(Icons.edit),
+              //     ),
+              //
+              //     const Text('Nazwa użytkownika'),
+              //     Container(
+              //       margin: EdgeInsets.only(top: 10.0),
+              //         padding: const EdgeInsets.all(10.0),
+              //         decoration: BoxDecoration(
+              //           border: Border.all(),
+              //           borderRadius: BorderRadius.circular(5),
+              //         ),
+              //         child: Text(context.read<Manager>().loggedUser!.username)),
+              //   ],
+              // ),
               const SizedBox(height: 20.0),
 
 

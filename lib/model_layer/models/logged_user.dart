@@ -7,8 +7,6 @@ class LoggedUser {
   bool isPro;
   List qVersions;
   List<QMap> qListNew;
-  // List<QMap> qListNew2;
-  // List<QMap> qListNew3;
   List<QMap> qListPractice; //not used
   List<QMap> qListNotShown;
   int rankLevel;

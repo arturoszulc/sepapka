@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 
@@ -16,7 +15,7 @@ Future buildMessageDialog(BuildContext context, String message) {
           crossAxisAlignment: CrossAxisAlignment.start,
           // mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
+            const Icon(
               Icons.info,
               color: Colors.blueAccent,
             ),

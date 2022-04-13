@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:group_button/group_button.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/utils/consts/nav.dart';
 
 import '../../viewmodel_layer/manager.dart';
 
@@ -59,7 +58,7 @@ class QuestionListFilter extends StatelessWidget {
                     options: GroupButtonOptions(
 
                       textPadding: EdgeInsets.symmetric(horizontal: groupButtonTextPadding,),
-                      unselectedTextStyle: TextStyle(),
+                      // unselectedTextStyle: TextStyle(),
                       mainGroupAlignment: MainGroupAlignment.spaceEvenly,
                       // spacing: 20,
                     ),

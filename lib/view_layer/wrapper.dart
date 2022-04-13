@@ -116,56 +116,32 @@ class Wrapper extends StatelessWidget {
     switch (currentScreen) {
       case Screen.loading:
         return const LoadingScreen();
-        break;
       case Screen.signIn:
         return SignInScreen();
-        break;
       case Screen.menu:
         return MenuScreen();
-        break;
       case Screen.resetPassword:
         return ResetPasswordScreen();
-        break;
-      case Screen.setUsername:
-        return SetUsernameScreen();
-        break;
       case Screen.settings:
         return const SettingsScreen();
-        break;
-      case Screen.changeUserName:
-        return ChangeUserData();
-        break;
       case Screen.chooseLevel:
         return MenuChooseLevel();
-        break;
       case Screen.quizQuestionSingle:
         return QuestionQuizSingle();
-        break;
       case Screen.sessionFinished:
         return SessionFinished();
-        break;
       case Screen.listQuestion:
         return QuestionListScreen();
-        break;
-      case Screen.userRank:
-        return UserRankScreen();
-        break;
       case Screen.remark:
         return RemarkScreen();
-        break;
       case Screen.debug:
         return DebugScreen();
-        break;
-
       case Screen.chooseCategory:
         return ChooseCategory();
-        break;
       case Screen.listQuestionSingle:
         return QuestionListSingle();
-        break;
       case Screen.listQuestionFilter:
         return QuestionListFilter();
-        break;
     }
   }
 }

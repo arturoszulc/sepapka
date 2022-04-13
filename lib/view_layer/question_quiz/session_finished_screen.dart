@@ -14,7 +14,6 @@ class SessionFinished extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        // await context.read<Manager>().resetIsUserPromotedFLag();
         await context.read<Manager>().navigate(Screen.menu);
         return false;
       },
@@ -29,13 +28,6 @@ class SessionFinished extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
                 ),
                 const SizedBox(height: 30.0),
-                //if user got promoted
-                // if (context.read<Manager>().isUserPromoted) Column(
-                //   children: [
-                //     const Text('Gratulacje!'),
-                //     Text('Awansowałeś do rangi: ${context.read<Manager>().userRankName}'),
-                //   ],
-                // ),
 
                 const SizedBox(height: 30.0),
                 ElevatedButton.icon(
@@ -49,7 +41,6 @@ class SessionFinished extends StatelessWidget {
               ],
             ),
           ),
-          // floatingActionButton: FloatingActionButton(onPressed: () {}, child: const Icon(Icons.exit_to_app)),
         ),
       ),
     );

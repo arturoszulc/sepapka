@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/consts/errors_messages.dart';
+
 
 Future leaveSessionDialog(BuildContext context) {
   return showDialog(
     barrierDismissible: false,
     context: context,
     builder: (BuildContext context) => AlertDialog(
-      title: Text('Czy na pewno chcesz przerwać sesję? Postępy nie zostaną zapisane.'),
+      title: const Text(msgLeaveSession),
       actions: [
         TextButton(
           onPressed: () {

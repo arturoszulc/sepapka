@@ -13,8 +13,11 @@ class QuestionListSingle extends StatelessWidget {
 
     // final manager = Provider.of<Manager>(context);
     int index = Provider.of<Manager>(context).qListGlobalFilteredIndex;
-    // int index = context.read<Manager>().qListGlobalFilteredIndex;
+    int filteredListLength = context.read<Manager>().qListGlobalFiltered.length-1;
     final question = context.read<Manager>().qListGlobalFiltered[index];
+
+    debugPrint('current index: $index');
+    debugPrint('list length: $filteredListLength');
 
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.listQuestion),
@@ -34,22 +37,21 @@ class QuestionListSingle extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: Row(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              FloatingActionButton(
-                heroTag: 'previous',
-                onPressed: () {
+              IconButton(
+                icon: const Icon(Icons.navigate_before_outlined),
+                onPressed: index == 0 ? null : () {
                   context.read<Manager>().showSingleFilteredQuestion(index-1);
                 },
-                child: const Text('Prev'),
               ),
-              FloatingActionButton(
-                heroTag: 'next',
-                onPressed: () {
+              IconButton(
+                icon: const Icon(Icons.navigate_next_outlined),
+
+                onPressed: index == filteredListLength ? null : () {
                   context.read<Manager>().showSingleFilteredQuestion(index+1);
 
                 },
-                child: const Text('Next'),
               ),
             ],
           ),

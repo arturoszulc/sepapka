@@ -29,7 +29,6 @@ class Manager extends ChangeNotifier {
 
   //Manager properties
   bool _loading = false;
-  bool _userHasRegistered = false;
 
   int qListGlobalFilteredIndex = 0;
 
@@ -57,21 +56,12 @@ class Manager extends ChangeNotifier {
 
   int get qNewLeft => _userService.loggedUser!.qListNew.length;
 
-  int get qLevel1Left => _questionService.qListLocal.where((element) => element.level == 1).length;
-
-  int get qLevel2Left => _questionService.qListLocal.where((element) => element.level == 2).length;
-
-  int get qLevel3Left => _questionService.qListLocal.where((element) => element.level == 3).length;
-
   bool get isSessionFinished => _questionService.isSessionFinished;
-
-  // bool get isUserPromoted => _userService.userLeveledUp;
 
   String get userRankName => _userService.userRankName;
 
   //Question Service
 
-  // int get howManyToPracticeToday => _questionService.howManyToPracticeToday();
 
   double get progressPercentSession => _questionService.getProgressPercentSession();
 
@@ -79,9 +69,7 @@ class Manager extends ChangeNotifier {
 
   QuestionStatus get qStatus => _questionService.qStatus;
 
-  // QuestionType get qType => _questionService.qType;
 
-  // FilterQuestion get filterType2 => _questionService.qFilter;
   int get filterType => _questionService.filterType;
 
   int get filterLevel => _questionService.filterLevel;
@@ -176,14 +164,14 @@ class Manager extends ChangeNotifier {
       navigate(Screen.signIn);
       return;
     }
-    //if user just registered, allow him to set his Username
-    if (_userHasRegistered) {
-      navigate(Screen.setUsername);
-      _userHasRegistered = false;
-    } else {
-      navigate(Screen.menu);
-    }
-    ;
+    // //if user just registered, allow him to set his Username
+    // if (_userHasRegistered) {
+    //   navigate(Screen.setUsername);
+    //   _userHasRegistered = false;
+    // } else {
+    //   navigate(Screen.menu);
+    // }
+    navigate(Screen.menu);
   }
 
   ////////////////////////
@@ -216,7 +204,6 @@ class Manager extends ChangeNotifier {
     }
     if (registerResult is Success) {
       setError(null);
-      _userHasRegistered = true;
     }
   }
 
@@ -257,21 +244,6 @@ class Manager extends ChangeNotifier {
 
   // USER
 
-  // resetUserProgress() async {
-  //   navigate(Screen.loading);
-  //   Object resetResult = await _questionService.resetUserProgress();
-  //   if (resetResult is Failure) {
-  //     setError(resetResult);
-  //     return;
-  //   }
-  //   setMessage(msgProgressReset);
-  //   navigate(Screen.menu);
-  // }
-
-  // resetIsUserPromotedFLag() {
-  //   _userService.setUserLeveledUp(false);
-  // }
-
   goPro(bool bool) async {
     navigate(Screen.loading);
     //change user property and reset qVersion (in order to re-download questions from DB
@@ -291,42 +263,8 @@ class Manager extends ChangeNotifier {
     navigate(Screen.menu);
   }
 
-  setUsername(String username) async {
-    navigate(Screen.loading);
-    Object changeUsernameResult = await _userService.changeUserName(username);
-    if (changeUsernameResult is Failure) {
-      setError(changeUsernameResult);
-      navigate(Screen.setUsername);
-      return;
-    }
-    if (changeUsernameResult is Success) {
-      setError(null);
-      navigate(Screen.menu);
-      return;
-    }
-  }
-
-  updateUserData(String username) async {
-    navigate(Screen.loading);
-    Object changeUsernameResult = await _userService.changeUserName(username);
-    if (changeUsernameResult is Failure) {
-      setError(changeUsernameResult);
-      navigate(Screen.changeUserName);
-      return;
-    }
-    if (changeUsernameResult is Success) {
-      setError(null);
-      navigate(Screen.settings);
-      return;
-    }
-  }
 
   // QUESTIONS
-
-  // chooseSessionType(QuestionType type) {
-  //   _questionService.setQuestionType(type);
-  //   navigate(Screen.chooseLevel);
-  // }
 
   chooseQuestionLevel(int level) async {
     await _questionService.setQuestionLevel(level);
@@ -356,10 +294,9 @@ class Manager extends ChangeNotifier {
     if (nextQuestionResult is Success) {
       navigate(Screen.quizQuestionSingle);
     }
-    ;
     if (nextQuestionResult is Failure) {
       //if failure, then no more questions left. End session.
-      Object endResult = await _questionService.endSession();
+      Object endResult = _questionService.endSession();
       if (endResult is Failure) {
         setMessage(endResult.errorString.toString());
         return;
@@ -369,11 +306,6 @@ class Manager extends ChangeNotifier {
   }
 
   interruptSession() async {
-    //if session was interrupted, download user again
-    // Object interruptResult = _userService.rollUserBack();
-    // if (interruptResult is Failure) {
-    //   setMessage(interruptResult.errorString.toString());
-    // }
     navigate(Screen.menu);
   }
 
@@ -431,14 +363,14 @@ class Manager extends ChangeNotifier {
     return _userService.getQListIcon(qId);
   }
 
-  String getBadgePath({int? rankLevel}) {
-    String badge = '0';
-    //if rank level is not given, return loggedUser badge
-    if (rankLevel == null) badge = loggedUser!.rankLevel.toString();
-    //if rankLevel is given, return corresponding badge
-    if (rankLevel != null) badge = rankLevel.toString();
-    return 'assets/images/badges/$badge.png';
-  }
+  // String getBadgePath({int? rankLevel}) {
+  //   String badge = '0';
+  //   //if rank level is not given, return loggedUser badge
+  //   if (rankLevel == null) badge = loggedUser!.rankLevel.toString();
+  //   //if rankLevel is given, return corresponding badge
+  //   if (rankLevel != null) badge = rankLevel.toString();
+  //   return 'assets/images/badges/$badge.png';
+  // }
 
   // ******* METHODS ON DEMAND ********
 

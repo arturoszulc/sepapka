@@ -58,7 +58,7 @@ class DebugScreen extends StatelessWidget {
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Czy na pewno chcesz to zrobić?'),
+        title: const Text('Czy na pewno chcesz to zrobić?'),
         actions: [
           TextButton(
             onPressed: () {

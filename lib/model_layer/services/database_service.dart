@@ -60,16 +60,16 @@ class DatabaseService {
     );
   }
 
-  // VERIFY if theres user with the same Username
-  Future<bool> checkIfUsernameIsAvailable(String userId, String username) async {
-    debugPrint('/// DB: searching for that username... ///');
-    QuerySnapshot snapshot =
-        await usersCollection.where('username', isEqualTo: username).get(const GetOptions(source: Source.server));
-    //if there's no documents with this userName, return True
-    if (snapshot.docs.isEmpty) return true;
-    //else username is taken, return FALSE
-    return false;
-  }
+  // // VERIFY if theres user with the same Username
+  // Future<bool> checkIfUsernameIsAvailable(String userId, String username) async {
+  //   debugPrint('/// DB: searching for that username... ///');
+  //   QuerySnapshot snapshot =
+  //       await usersCollection.where('username', isEqualTo: username).get(const GetOptions(source: Source.server));
+  //   //if there's no documents with this userName, return True
+  //   if (snapshot.docs.isEmpty) return true;
+  //   //else username is taken, return FALSE
+  //   return false;
+  // }
 
   //Get GlobalData document
   Future<GlobalData> getGlobalData() async {

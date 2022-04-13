@@ -4,7 +4,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/global_data.dart';
-import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/model_layer/models/remark.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/file_service.dart';
@@ -180,10 +179,8 @@ class QuestionService {
       qListLocal.removeWhere((e) => e.labels[0] != qCategoryList[qCategoryNum]);
     }
 
-
     //now cut out of qListLocal any question that is on NotShownList
     qListLocal.removeWhere((e) => _userService.isQuestionInNotShownList(e.id) != null);
-
 
     debugPrint('QLISTLOCAL trimmed');
     debugPrint(qListLocal.toString());
@@ -225,12 +222,8 @@ class QuestionService {
     if (answer == currentQuestion!.a1) {
       //set QuestionStatus
       qStatus = QuestionStatus.rightAnswer;
-      //Add one point to user
-      // _currentSessionUserPoints += 1;
       //set button color
       bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
-      //move question to Practice List
-      // _userService.moveQMapToPractice(currentQuestion!.id, qType, qLevel, true);
     }
     //if wrong answer
     else {
@@ -239,21 +232,11 @@ class QuestionService {
       qListSession.add(currentQuestion!);
 
       qStatus = QuestionStatus.wrongAnswer;
-      //set wrong button
+      //color wrong button
       bMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
-      //set right button
+      //color right button
       bMapList.firstWhere((element) => element.answer == currentQuestion!.a1).color =
           rightButtonColor;
-      //move question to the end of it's list, to try again
-      // if (qType == QuestionType.learning) {
-      //   //if question was new, there's no point in updateing database
-      //   // if i'm correct, delete this if statement
-      //   // _userService.moveQuestionToNew(_currentQuestion!.id, qType, qLevel);
-      // }
-      // if (qType == QuestionType.quiz) {
-      //   //move but do not update date or fibNum
-      //   _userService.moveQMapToPractice(currentQuestion!.id, qType, qLevel, false);
-      // }
     }
   }
 
@@ -275,32 +258,15 @@ class QuestionService {
     }
   }
 
-  Future<Object> endSession() async {
-    //if it was practice session, note the change
-    // if (qType == QuestionType.quiz) _hasTodayPracticeListChanged = true;
-
+  Object endSession() {
     currentQuestion = null;
     isSessionFinished = true;
-    //give user points
-    // _userService.addPoints(_currentSessionUserPoints);
-    //update user
-    Object updateResult = await _userService.updateLoggedUserInDb();
-    if (updateResult is Failure) return updateResult;
     return Success();
   }
 
   double getProgressPercentSession() {
     return (_qListCurrentStartLength - qListLocal.length) / _qListCurrentStartLength;
   }
-
-  //Below method was used to determine number shown on badge, on the Practice button
-  // int howManyToPracticeToday() {
-  //   if (_hasTodayPracticeListChanged) {
-  //     _todayPracticeList = _userService.getTodayPracticeQMapList();
-  //     _hasTodayPracticeListChanged = false;
-  //   }
-  //   return _todayPracticeList.length;
-  // }
 
   createBMap() {
     if (currentQuestion != null) {
@@ -327,21 +293,13 @@ class QuestionService {
       //else it means question was already removed, so dont do it
     }
     await _userService.moveQMapToNotShown(currentQuestion!.id);
+    _userService.updateLoggedUserInDb();
   }
 
   moveQuestionBackToShown(String qId) async {
     await _userService.moveQMapToNew(qId);
     _userService.updateLoggedUserInDb();
   }
-
-  // Future<Object> resetUserProgress() async {
-  //   //clear user lists
-  //   await _userService.wipeUser();
-  //
-  //   //update qNewList
-  //   await _userService.updateQNewLists(qListGlobal1!);
-  //   return Success();
-  // }
 
   Future<Object> sendQuestionRemark(String remark) async {
     //validate data
@@ -389,11 +347,13 @@ class QuestionService {
       }
     } else {
       for (Question question in qListGlobal!) {
-        if (question.level == qLevel) {
-          if (question.labels[0] == qCategoryList[1]) numOfQuestionsByCategory[1] += 1;
-          if (question.labels[0] == qCategoryList[2]) numOfQuestionsByCategory[2] += 1;
-          if (question.labels[0] == qCategoryList[3]) numOfQuestionsByCategory[3] += 1;
-          if (question.labels[0] == qCategoryList[4]) numOfQuestionsByCategory[4] += 1;
+        if (_userService.isQuestionInNotShownList(question.id) == null) {
+          if (question.level == qLevel) {
+            if (question.labels[0] == qCategoryList[1]) numOfQuestionsByCategory[1] += 1;
+            if (question.labels[0] == qCategoryList[2]) numOfQuestionsByCategory[2] += 1;
+            if (question.labels[0] == qCategoryList[3]) numOfQuestionsByCategory[3] += 1;
+            if (question.labels[0] == qCategoryList[4]) numOfQuestionsByCategory[4] += 1;
+          }
         }
       }
     }

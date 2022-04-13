@@ -283,10 +283,8 @@ class UserService {
     if (qMap != null) {
       _loggedUser!.qListNew.remove(qMap);
       await addQMapToNotShown(qMap);
-      debugPrint('/// US: Moved QMap to NotShow list ///');
-      debugPrint(loggedUser!.qListNotShown.toString());
+      debugPrint('/// US: Moved QMap to NotShown list ///');
     }
-    setLoggedUserChanged(true);
   }
 
   // QMap? getQMapAndRemove(String qId) {
@@ -360,28 +358,28 @@ class UserService {
     return fibSeries[currentFibNumIndex + 1];
   }
 
-  Future<Object> changeUserName(String username) async {
-    //check if name was even changed
-    if (username == _loggedUser!.username) return Success();
-
-    //validate characters
-    Object validateResult = validateUsername(username);
-    if (validateResult is Failure) return validateResult;
-
-    //check if username is not taken
-    try {
-      bool isUsernameAvailableResult =
-          await _databaseService.checkIfUsernameIsAvailable(_loggedUser!.documentId, username);
-      if (!isUsernameAvailableResult) return Failure(errorUsernameTaken);
-      //if TRUE, update user on DB
-      _loggedUser!.username = username;
-      await updateLoggedUserInDb();
-      return Success();
-    } catch (e) {
-      debugPrint(e.toString());
-      return Failure(errorDbGeneric);
-    }
-  }
+  // Future<Object> changeUserName(String username) async {
+  //   //check if name was even changed
+  //   if (username == _loggedUser!.username) return Success();
+  //
+  //   //validate characters
+  //   Object validateResult = validateUsername(username);
+  //   if (validateResult is Failure) return validateResult;
+  //
+  //   //check if username is not taken
+  //   try {
+  //     bool isUsernameAvailableResult =
+  //         await _databaseService.checkIfUsernameIsAvailable(_loggedUser!.documentId, username);
+  //     if (!isUsernameAvailableResult) return Failure(errorUsernameTaken);
+  //     //if TRUE, update user on DB
+  //     _loggedUser!.username = username;
+  //     await updateLoggedUserInDb();
+  //     return Success();
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //     return Failure(errorDbGeneric);
+  //   }
+  // }
 
   Widget getQListIcon(String qId) {
     // if (isQuestionInPracticeList(qId) != null) {

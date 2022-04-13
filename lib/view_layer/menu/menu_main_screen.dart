@@ -4,18 +4,12 @@ import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/view_layer/custom_widgets/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
-import '../../utils/consts/question.dart';
-import '../custom_widgets/progress_bar_global.dart';
-
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('*** Menu built ***');
-
-    // int howManyToPractice = context.read<Manager>().howManyToPracticeToday;
-    debugPrint(context.read<Manager>().loggedUser!.qListNotShown.toString());
+    debugPrint('*** Menu Main Screen built ***');
 
     return Scaffold(
       appBar: AppBar(
@@ -51,12 +45,7 @@ class MenuScreen extends StatelessWidget {
         children: [
 
           const SizedBox(height: 20.0),
-          Text(context.read<Manager>().loggedUser!.username,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          Image.asset('assets/images/general/sepapka-logo.png', height: 100,),
           const SizedBox(height: 20.0),
 
           Container(

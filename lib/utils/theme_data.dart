@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'consts/colors.dart';
 
@@ -35,7 +34,6 @@ ThemeData lightTheme() {
         primary: Colors.grey.shade600,
       ),
     ),
-
     //elevatedButton style
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

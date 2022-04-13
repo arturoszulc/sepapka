@@ -29,7 +29,7 @@ class ResetPasswordScreen extends StatelessWidget {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => context.read<Manager>().navigate(Screen.signIn),
           ),
-          title: Text('Zresetuj hasło'),
+          title: const Text('Zresetuj hasło'),
           centerTitle: true,
           // title: const Text('Sign In Screen'),
         ),

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
-import '../custom_widgets/question_list_filter_menu.dart';
 
 class QuestionListScreen extends StatelessWidget {
   const QuestionListScreen({Key? key}) : super(key: key);
@@ -16,7 +15,6 @@ class QuestionListScreen extends StatelessWidget {
 
     final manager = Provider.of<Manager>(context);
     List<Question> qListGlobalFiltered = manager.qListGlobalFiltered;
-    debugPrint(context.read<Manager>().loggedUser!.qListNotShown.toString());
 
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.menu),
