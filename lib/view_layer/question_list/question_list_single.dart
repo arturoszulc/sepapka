@@ -19,7 +19,6 @@ class QuestionListSingle extends StatelessWidget {
     int filteredListLength = context.read<Manager>().qListGlobalFiltered.length-1;
     final question = context.read<Manager>().qListGlobalFiltered[index];
     final bool isQuestionHidden = context.read<Manager>().isQuestionHidden(question.id);
-    debugPrint('isQuestionHidden: $isQuestionHidden');
 
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.listQuestion),
@@ -51,7 +50,7 @@ class QuestionListSingle extends StatelessWidget {
                 children: [
                   const Text('Odpowiedź:', style: TextStyle(fontSize: 16.0,)),
                   const SizedBox(height: 30,),
-                  Text(question.a1, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+                  Text(question.a1, style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
 
               ],),
             ),),

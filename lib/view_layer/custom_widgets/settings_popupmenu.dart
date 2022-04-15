@@ -9,7 +9,7 @@ Widget buildSettingsMenu(bool isQuestionHidden) {
     icon: const Icon(Icons.settings),
     itemBuilder: (context) => [
       PopupMenuItem(
-        onTap: isQuestionHidden ? () =>  context.read<Manager>().moveQuestionBackToShown() : () => context.read<Manager>().doNotShowThisQuestionAnymore(),
+        onTap: isQuestionHidden ? () async => await context.read<Manager>().moveQuestionBackToShown() : () async => await context.read<Manager>().doNotShowThisQuestionAnymore(),
         child: isQuestionHidden ? const Text('Przywróć pytanie') : const Text('Nie pokazuj więcej tego pytania'),
       ),
       PopupMenuItem(

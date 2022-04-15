@@ -315,6 +315,15 @@ class Manager extends ChangeNotifier {
     //this method is available only in Question List Screen, so you always have to update
     //filtered question list
     await _questionService.getFilteredQuestionList();
+    if (qListGlobalFilteredIndex == qListGlobalFiltered.length && qListGlobalFilteredIndex > 0) {
+      debugPrint('Entered IF loop');
+      qListGlobalFilteredIndex -= 1;
+      if (qListGlobalFiltered.isEmpty) {
+        debugPrint('QListGlobalFiltered IS EMPTY');
+        navigate(Screen.listQuestion);
+
+      }
+    }
     notifyListeners();
   }
 
@@ -335,6 +344,14 @@ class Manager extends ChangeNotifier {
       await _userService.moveQMapToNotShown(qListGlobalFiltered[qListGlobalFilteredIndex].id);
       _userService.updateLoggedUserInDb();
       await _questionService.getFilteredQuestionList();
+      if (qListGlobalFilteredIndex == qListGlobalFiltered.length && qListGlobalFilteredIndex > 0) {
+        debugPrint('Entered IF loop');
+        qListGlobalFilteredIndex -= 1;
+        if (qListGlobalFiltered.isEmpty) {
+          debugPrint('QListGlobalFiltered IS EMPTY');
+          navigate(Screen.listQuestion);
+        }
+      }
       notifyListeners();
     }
   }
