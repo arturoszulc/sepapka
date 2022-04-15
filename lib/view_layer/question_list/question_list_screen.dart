@@ -74,6 +74,7 @@ class QuestionListScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: ListView.builder(
+                    shrinkWrap: true,
                   itemCount: qListGlobalFiltered.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Card(

@@ -7,6 +7,7 @@ import 'package:sepapka/view_layer/custom_widgets/dialog_leave_session.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import '../custom_widgets/answer_button.dart';
+import '../custom_widgets/build_question.dart';
 import '../custom_widgets/single_question_top_bar.dart';
 
 class QuestionQuizSingle extends StatelessWidget {
@@ -40,31 +41,13 @@ class QuestionQuizSingle extends StatelessWidget {
                   singleQuestionTopBar(context),
                   const SizedBox(height: 10.0,),
                   Expanded(
-                    flex: 3,
-                    child: question == null ? Container() :
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
-                          child: Text(
-                            question.q,
-                            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                            // maxLines: 3,
-                          ),
-                        ),
-                        Expanded(
-                          child: question.assetPath.isEmpty ? Container() :
-                          Image.asset('assets/images/questions/${question.assetPath}',
-
-                            ),
-                        ),
-                      ],
-                    ),
-                  ),
-
+                      flex: 3,
+                      child: buildQuestion(question)),
                   Expanded(
                     flex: 6,
-                    child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                       AnswerButton(
                         qStatus: manager.qStatus,
                         answer: aMapList[0].answer,

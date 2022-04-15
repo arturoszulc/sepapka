@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:group_button/group_button.dart';
 import 'package:provider/provider.dart';
+import 'package:sepapka/utils/consts/colors.dart';
 
 import '../../utils/consts/question.dart';
 import '../../viewmodel_layer/manager.dart';
+import '../custom_widgets/groupbutton_options.dart';
 
 class QuestionListFilter extends StatelessWidget {
   const QuestionListFilter({Key? key}) : super(key: key);
   static double textPadding = 10.0;
-  static double groupButtonTextPadding = 10.0;
-  static double groupButtonPadding = 10.0;
   @override
   Widget build(BuildContext context) {
     debugPrint('*** QuestionListFilter Screen built ***');
@@ -38,11 +38,7 @@ class QuestionListFilter extends StatelessWidget {
                     ),
                   ),
                   GroupButton(
-                    options: GroupButtonOptions(
-                      // mainGroupAlignment: MainGroupAlignment.end,
-                      // spacing: 20,
-                    ),
-                    // isRadio: true,
+                    options: myGroupButtonOptions(),
                     onSelected: (index, isSelected) => manager.setListFilter(fType: index),
                     buttons: qTypeList,
                     controller: GroupButtonController(
@@ -55,13 +51,7 @@ class QuestionListFilter extends StatelessWidget {
                     ),
                   ),
                   GroupButton(
-                    options: GroupButtonOptions(
-
-                      textPadding: EdgeInsets.symmetric(horizontal: groupButtonTextPadding,),
-                      // unselectedTextStyle: TextStyle(),
-                      mainGroupAlignment: MainGroupAlignment.spaceEvenly,
-                      // spacing: 20,
-                    ),
+                    options: myGroupButtonOptions(),
                     // isRadio: true,
                     onSelected: (index, isSelected) => manager.setListFilter(fLevel: index),
                     buttons: qLevelList,
@@ -76,15 +66,7 @@ class QuestionListFilter extends StatelessWidget {
                     ),
                   ),
                   GroupButton(
-                    options: GroupButtonOptions(
-                      // buttonWidth: 150,
-                      textPadding: EdgeInsets.symmetric(horizontal: groupButtonTextPadding,),
-                      // buttonHeight: 50,
-                      groupingType: GroupingType.wrap,
-                      // mainGroupAlignment: MainGroupAlignment.start,
-                      // crossGroupAlignment: CrossGroupAlignment.start,
-                      spacing: groupButtonPadding,
-                    ),
+                    options: myGroupButtonOptions(),
                     isRadio: true,
                     onSelected: (index, isSelected) => manager.setListFilter(fCategory: index),
                     buttons: qCategoryList,

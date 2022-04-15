@@ -60,12 +60,6 @@ class QuestionService {
   List<BMap> bMapList = []; //shuffled list of answers & colors for buttons
   bool isSessionFinished = false;
 
-  //Getters
-  // bool get isSessionFinished => _isSessionFinished;
-
-  // List<String> get qCategoryList => globalData!.qCategories;
-
-  // List<BMap> get bMapList => _bMapList;
 
   //Methods
 
@@ -186,31 +180,11 @@ class QuestionService {
     debugPrint(qListLocal.toString());
 
     //get maximum 10 questions to session list
-    //warning: //.toList() below makes the list growable, so I can add or remove elements from it
-    qListSession = qListLocal.slice(0, min(9, qListLocal.length)).toList();
-    // List<QMap> qMapList = [];
+    qListSession = getSetOfQuestions();
 
-    //lets see how the lists look like now
-    debugPrint('DONE PREPARING LISTS');
-    debugPrint('qListLocal:');
-    debugPrint(qListLocal.toString());
-    debugPrint('qListSession:');
-    debugPrint(qListSession.toString());
 
     //set starting length of _qListCurrent for session progress bar
     _qListCurrentStartLength = qListLocal.length;
-
-    // if (_qType == QuestionType.learning) {
-    //   //if user chose learning based on level, get QMaps from NewList
-    //   qMapList = _userService.getQMapsFromNewList(_qLevel);
-    // }
-    // if (_qType == QuestionType.quiz) {
-    //   //if user chose Practice, get today's practice
-    //   qMapList = _todayPracticeList;
-    // }
-    // for (QMap qMap in qMapList) {
-    //   qListLocal.add(qListGlobal!.firstWhere((question) => question.id == qMap.id));
-    // }
   }
 
   Future checkAnswer(String answer) async {
@@ -228,7 +202,7 @@ class QuestionService {
     //if wrong answer
     else {
       //get question back, at the end of the current list
-      qListLocal.add(currentQuestion!);
+      // qListLocal.add(currentQuestion!);
       qListSession.add(currentQuestion!);
 
       qStatus = QuestionStatus.wrongAnswer;
@@ -243,6 +217,10 @@ class QuestionService {
   Future<Object> getNextQuestion() async {
     //reset QuestionStatus
     qStatus = QuestionStatus.noAnswer;
+    //if list is empty, try to get next 10 questions
+    if (qListSession.isEmpty) {
+      qListSession = getSetOfQuestions();
+    }
 
     //if there is a question on the list
     if (qListSession.isNotEmpty) {
@@ -257,7 +235,11 @@ class QuestionService {
       return Failure();
     }
   }
-
+  List<Question> getSetOfQuestions() {
+    //get maximum 10 questions to session list
+    //warning: //.toList() below makes the list growable, so I can add or remove elements from it
+    return qListLocal.slice(0, min(3, qListLocal.length)).toList();
+  }
   Object endSession() {
     currentQuestion = null;
     isSessionFinished = true;

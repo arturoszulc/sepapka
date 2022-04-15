@@ -183,7 +183,6 @@ class Manager extends ChangeNotifier {
   signIn({required String email, required String password}) async {
     //start loading app
     navigate(Screen.loading);
-    // setLoading(true);
     //Try to sign in
     Object signInResult = await _authService.signInEmail(email, password);
     if (signInResult is Failure) {

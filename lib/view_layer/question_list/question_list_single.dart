@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sepapka/view_layer/custom_widgets/build_question.dart';
 
 import '../../utils/consts/nav.dart';
 import '../../viewmodel_layer/manager.dart';
@@ -38,33 +39,19 @@ class QuestionListSingle extends StatelessWidget {
           children: [
             const SizedBox(height: 10.0,),
             Expanded(
-              flex: 2,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
-                    child: Text(
-                      question.q,
-                      style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                      // maxLines: 3,
-                    ),
-                  ),
-                  Expanded(
-                    child: question.assetPath.isEmpty ? Container() :
-                    Image.asset('assets/images/questions/${question.assetPath}',
-
-                    ),
-                  ),
-                ],
-              ),
+              flex: 3,
+              child: buildQuestion(question),
             ),
-            Expanded(child: Container(
-              color: Colors.grey,
+            Expanded(
+              flex: 6,
+              child: Container(
+              // color: Colors.grey,
               child: Column(
-
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Odpowiedź:', style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text(question.a1),
+                  const Text('Odpowiedź:', style: TextStyle(fontSize: 16.0,)),
+                  const SizedBox(height: 30,),
+                  Text(question.a1, style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
 
               ],),
             ),),

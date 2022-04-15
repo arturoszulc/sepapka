@@ -25,7 +25,7 @@ const String labelName2 = 'sieci niskiego napięcia';
 const String labelName3 = 'urządzenia elektryczne';
 const String labelName4 = 'ochrona przeciwporażeniowa';
 
-const List<Color?> labelColors = [Colors.blue, Colors.green, Colors.red, Colors.purple];
+const List<Color?> labelColors = [Colors.grey, Colors.blue, Colors.green, Colors.red, Colors.purple];
 
 const Map<String, Widget> qListIcons = {
   'new': Icon(Icons.hourglass_empty),
