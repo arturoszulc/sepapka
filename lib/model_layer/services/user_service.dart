@@ -50,18 +50,18 @@ class UserService {
   //   _userLeveledUp = flag;
   // }
 
-  String getProgressPercentGlobal() {
-    int previousThreshold = 0;
-    int currentThreshold = _rankThresholds[_loggedUser!.rankLevel];
-    if (_loggedUser!.rankLevel > 0) {
-      previousThreshold = _rankThresholds[_loggedUser!.rankLevel - 1];
-    }
-    double progressInt =
-        (_loggedUser!.rankTotalPoints - previousThreshold) * 100 / currentThreshold;
-    String progressDouble = progressInt.toStringAsFixed(1);
-
-    return progressDouble;
-  }
+  // String getProgressPercentGlobal() {
+  //   int previousThreshold = 0;
+  //   int currentThreshold = _rankThresholds[_loggedUser!.rankLevel];
+  //   if (_loggedUser!.rankLevel > 0) {
+  //     previousThreshold = _rankThresholds[_loggedUser!.rankLevel - 1];
+  //   }
+  //   double progressInt =
+  //       (_loggedUser!.rankTotalPoints - previousThreshold) * 100 / currentThreshold;
+  //   String progressDouble = progressInt.toStringAsFixed(1);
+  //
+  //   return progressDouble;
+  // }
 
   // addPoints(int points) {
   //   //add points
@@ -160,7 +160,7 @@ class UserService {
   Future<void> updateQNewLists(List<Question> qListGlobal) async {
     for (var question in qListGlobal) {
       //check if question is on any list
-      bool isOnAnyList = isQuestionInAnyList(question.id);
+      bool isOnAnyList = isQuestionOnAnyList(question.id);
 
       if (!isOnAnyList) {
         //jeśli nie, stwórz jego mapę i zapisz do qNewList
@@ -191,7 +191,7 @@ class UserService {
     }
     }
 
-  bool isQuestionInAnyList(String questionId) {
+  bool isQuestionOnAnyList(String questionId) {
     return isQuestionInQListNew(questionId) != null ||
         isQuestionInPracticeList(questionId) != null ||
         isQuestionInNotShownList(questionId) != null;

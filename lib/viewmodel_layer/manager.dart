@@ -52,7 +52,7 @@ class Manager extends ChangeNotifier {
   //UserService
   LoggedUser? get loggedUser => _userService.loggedUser;
 
-  String get progressPercentGlobal => _userService.getProgressPercentGlobal();
+  // String get progressPercentGlobal => _userService.getProgressPercentGlobal();
 
   int get qNewLeft => _userService.loggedUser!.qListNew.length;
 
@@ -64,6 +64,7 @@ class Manager extends ChangeNotifier {
 
 
   double get progressPercentSession => _questionService.getProgressPercentSession();
+  String get userScore => _questionService.getUserScore();
 
   Question? get currentQuestion => _questionService.currentQuestion;
 
@@ -308,11 +309,15 @@ class Manager extends ChangeNotifier {
     navigate(Screen.menu);
   }
 
-  moveQuestionBackToShown() {
+  moveQuestionBackToShown() async {
     _questionService.moveQuestionBackToShown(qListGlobalFiltered[qListGlobalFilteredIndex].id);
+    await _questionService.getFilteredQuestionList();
+    notifyListeners();
   }
 
   doNotShowThisQuestionAnymore() {
+    // BUG
+    //User can call this method on question list screen and this move user to SessionFinished Screen
     _questionService.doNotShowThisQuestionAnymore();
     getNextQuestion();
   }

@@ -42,6 +42,11 @@ ThemeData lightTheme() {
       ),
     ),
 
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: myPrimary,
+      foregroundColor: mySecondary,
+    ),
+
     //iconButton style
     // iconTheme: IconThemeData(
     //   color: const Color(0xff383838),

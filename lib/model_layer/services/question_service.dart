@@ -26,22 +26,18 @@ class QuestionService {
   //Properties
   GlobalData? globalData; //downloaded from DB
   List<Question>? qListGlobal; //all questions
-  List<Question> qListLocal = []; //questions based on chosen Category and Level
-  List<Question> qListSession = []; //10 questions cut out from qListLocal for current session
+  List<Question> qListSession = []; //questions based on chosen Category and Level
+  // List<Question> qListSession = []; //10 questions cut out from qListLocal for current session
   List<Question> qListGlobalFiltered = [];
-  int _qListCurrentStartLength = 0;
-
-  // int _currentSessionUserPoints = 0;
-  // List<QMap> _todayPracticeList = [];
+  int qListCurrentStartLength = 0;
+  int numberOfRightAnswers = 0;
   Question? currentQuestion;
 
-  //making those two properties below PRIVATE and creating getter and setter for them (to access them externally) is THE SAME
+  //making properties below PRIVATE and creating getter and setter for them (to access them externally) is THE SAME
   //as making them public in the first place.
-  //So there's point in making only those variables _private which shouldn't be modified in simple way
+  //So I should make only those variables _private which shouldn't be modified in simple way
 
   QuestionStatus qStatus = QuestionStatus.noAnswer;
-
-  // QuestionType qType = QuestionType.learning; //default to learning
   int qLevel = 0;
   int qCategoryNum = 0; //int corresponds to index of qList
 
@@ -72,8 +68,6 @@ class QuestionService {
       return Failure(errorGetGlobalData);
     }
 
-    //send current rank names and thresholds to userService
-    // _userService.prepareRanks(globalData!.rankNames, globalData!.rankThresholds);
 
     //compare questionVersion from DB with those in LoggedUser object
     //retrieve list of outdated QuestionLists
@@ -85,6 +79,7 @@ class QuestionService {
 
     //update qListGlobal and count number of questions by level
     qListGlobal = getQuestionResult as List<Question>;
+
     //also update qListFiltered, so it won't be empty
     qListGlobalFiltered = List<Question>.from(qListGlobal!);
 
@@ -131,21 +126,8 @@ class QuestionService {
     return questionListFromDB;
   }
 
-  // setQuestionType(QuestionType type) {
-  //   qType = type;
-  // }
-
   setQuestionLevel(int level) {
     qLevel = level;
-    // //create list of questions having that level
-    // qListLocal.clear();
-    // for (Question question in qListGlobal!) {
-    //   if (question.level == qLevel) {
-    //     qListLocal.add(question);
-    //   }
-    // }
-    //count questions in categories
-    // countQuestionsByCategory();
   }
 
   setQuestionCategory(int catNumber) {
@@ -153,44 +135,41 @@ class QuestionService {
   }
 
   prepareSession() async {
-    //reset isSessionFinished flag
+    //reset isSessionFinished flag and num of right answers
     isSessionFinished = false;
-
-    //clear the old qlistLocal and qListSession
-    // qListSession.clear();
-    qListLocal = List<Question>.from(qListGlobal!);
+    numberOfRightAnswers = 0;
+    //clear the old qListSession
+    qListSession = List<Question>.from(qListGlobal!);
     //reset current points counter
     // _currentSessionUserPoints = 0;
 
     //filter by Level
     if (qLevel != 0) {
-      qListLocal.removeWhere((e) => e.level != qLevel);
+      qListSession.removeWhere((e) => e.level != qLevel);
     }
 
     //filter by Category
 
     if (qCategoryNum != 0) {
-      qListLocal.removeWhere((e) => e.label != qCategoryNum);
+      qListSession.removeWhere((e) => e.label != qCategoryNum);
     }
 
     //now cut out of qListLocal any question that is on NotShownList
-    qListLocal.removeWhere((e) => _userService.isQuestionInNotShownList(e.id) != null);
+    qListSession.removeWhere((e) => _userService.isQuestionInNotShownList(e.id) != null);
 
-    debugPrint('QLISTLOCAL trimmed');
-    debugPrint(qListLocal.toString());
 
     //get maximum 10 questions to session list
-    qListSession = getSetOfQuestions();
+    // qListSession = getSetOfQuestions();
 
 
     //set starting length of _qListCurrent for session progress bar
-    _qListCurrentStartLength = qListLocal.length;
+    qListCurrentStartLength = qListSession.length;
   }
 
   Future checkAnswer(String answer) async {
     //remove question from qListLocal and qListSession
-    qListLocal.removeAt(0);
     qListSession.removeAt(0);
+    // qListSession.removeAt(0);
 
     //If right answer
     if (answer == currentQuestion!.a1) {
@@ -198,12 +177,15 @@ class QuestionService {
       qStatus = QuestionStatus.rightAnswer;
       //set button color
       bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
+      //add one to countRightAnswers
+      numberOfRightAnswers += 1;
+
     }
     //if wrong answer
     else {
       //get question back, at the end of the current list
       // qListLocal.add(currentQuestion!);
-      qListSession.add(currentQuestion!);
+      // qListSession.add(currentQuestion!);
 
       qStatus = QuestionStatus.wrongAnswer;
       //color wrong button
@@ -217,10 +199,7 @@ class QuestionService {
   Future<Object> getNextQuestion() async {
     //reset QuestionStatus
     qStatus = QuestionStatus.noAnswer;
-    //if list is empty, try to get next 10 questions
-    if (qListSession.isEmpty) {
-      qListSession = getSetOfQuestions();
-    }
+
 
     //if there is a question on the list
     if (qListSession.isNotEmpty) {
@@ -238,7 +217,7 @@ class QuestionService {
   List<Question> getSetOfQuestions() {
     //get maximum 10 questions to session list
     //warning: //.toList() below makes the list growable, so I can add or remove elements from it
-    return qListLocal.slice(0, min(3, qListLocal.length)).toList();
+    return qListSession.slice(0, min(3, qListSession.length)).toList();
   }
   Object endSession() {
     currentQuestion = null;
@@ -247,7 +226,12 @@ class QuestionService {
   }
 
   double getProgressPercentSession() {
-    return (_qListCurrentStartLength - qListLocal.length) / _qListCurrentStartLength;
+    return (qListCurrentStartLength - qListSession.length) / qListCurrentStartLength;
+  }
+  String getUserScore() {
+    double scoreDouble = (numberOfRightAnswers / qListCurrentStartLength) * 100;
+    String scoreString = scoreDouble.toStringAsFixed(1);
+    return scoreString;
   }
 
   createBMap() {
@@ -271,7 +255,6 @@ class QuestionService {
     if (qStatus == QuestionStatus.noAnswer) {
       //if question wasnt answered, remove it from current list
       qListSession.removeAt(0);
-      qListLocal.removeAt(0);
       //else it means question was already removed, so dont do it
     }
     await _userService.moveQMapToNotShown(currentQuestion!.id);
