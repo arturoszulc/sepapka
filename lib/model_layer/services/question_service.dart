@@ -101,11 +101,11 @@ class QuestionService {
       //if reading file failed, then new lists from DB has to be downloaded
       //to do this, fill outdatedQList with lists to download
       else {
+        outdatedQLists.add(1);
         if (_userService.loggedUser!.isPro) {
-          outdatedQLists.add(1);
-        } else {
           outdatedQLists.addAll([2, 3]);
         }
+
       }
     }
 
@@ -197,8 +197,11 @@ class QuestionService {
   }
 
   Future<Object> getNextQuestion() async {
-    //reset QuestionStatus
+    if (qStatus == QuestionStatus.noAnswer) {
+      qListSession.removeAt(0);
+    }
     qStatus = QuestionStatus.noAnswer;
+
 
 
     //if there is a question on the list
@@ -250,16 +253,10 @@ class QuestionService {
     }
   }
 
-  doNotShowThisQuestionAnymore() async {
-    //remove question from _qListCurrent
-    if (qStatus == QuestionStatus.noAnswer) {
-      //if question wasnt answered, remove it from current list
-      qListSession.removeAt(0);
-      //else it means question was already removed, so dont do it
-    }
-    await _userService.moveQMapToNotShown(currentQuestion!.id);
-    _userService.updateLoggedUserInDb();
-  }
+  // doNotShowThisQuestionAnymore() async {
+  //   await _userService.moveQMapToNotShown(currentQuestion!.id);
+  //   _userService.updateLoggedUserInDb();
+  // }
 
   moveQuestionBackToShown(String qId) async {
     await _userService.moveQMapToNew(qId);
@@ -342,9 +339,9 @@ class QuestionService {
     filterListByCategory();
 
     //reset all flags
-    filterTypeChanged = false;
-    filterLevelChanged = false;
-    filterCategoryChanged = false;
+    // filterTypeChanged = false;
+    // filterLevelChanged = false;
+    // filterCategoryChanged = false;
   }
 
   filterListByType() {

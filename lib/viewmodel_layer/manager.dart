@@ -310,16 +310,33 @@ class Manager extends ChangeNotifier {
   }
 
   moveQuestionBackToShown() async {
-    _questionService.moveQuestionBackToShown(qListGlobalFiltered[qListGlobalFilteredIndex].id);
+    await _userService.moveQMapToNew(qListGlobalFiltered[qListGlobalFilteredIndex].id);
+    _userService.updateLoggedUserInDb();
+    //this method is available only in Question List Screen, so you always have to update
+    //filtered question list
     await _questionService.getFilteredQuestionList();
     notifyListeners();
   }
 
-  doNotShowThisQuestionAnymore() {
-    // BUG
-    //User can call this method on question list screen and this move user to SessionFinished Screen
-    _questionService.doNotShowThisQuestionAnymore();
-    getNextQuestion();
+  doNotShowThisQuestionAnymore() async {
+    //BUG
+    //when hiding last question on list, there's RangeError
+
+
+    //there are two use cases
+    //1. User calls this method during quiz
+    if (_currentScreen == Screen.quizQuestionSingle) {
+      await _userService.moveQMapToNotShown(currentQuestion!.id);
+      _userService.updateLoggedUserInDb();
+      getNextQuestion();
+    }
+    //2. User calls this method during question list
+    else {
+      await _userService.moveQMapToNotShown(qListGlobalFiltered[qListGlobalFilteredIndex].id);
+      _userService.updateLoggedUserInDb();
+      await _questionService.getFilteredQuestionList();
+      notifyListeners();
+    }
   }
 
   bool isQuestionHidden(String qId) {
@@ -344,17 +361,17 @@ class Manager extends ChangeNotifier {
     if (fType != null) {
       debugPrint('fType: $fType');
       _questionService.filterType = fType;
-      _questionService.filterTypeChanged = true;
+      // _questionService.filterTypeChanged = true;
     }
     if (fLevel != null) {
       debugPrint('fLevel: $fLevel');
       _questionService.filterLevel = fLevel;
-      _questionService.filterLevelChanged = true;
+      // _questionService.filterLevelChanged = true;
     }
     if (fCategory != null) {
       debugPrint('fCategory: $fCategory');
       _questionService.filterCategory = fCategory;
-      _questionService.filterCategoryChanged = true;
+      // _questionService.filterCategoryChanged = true;
     }
   }
 
