@@ -13,30 +13,13 @@ class MenuScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          Row(
-            children: [
-              TextButton(
-                onPressed: () {
-                },
-                child: const Icon(Icons.help_outline),
-              ),
-
-              //wersja poprzednia z username i iconą usera jako przycisk
-              // child: Row(
-              //   children: [
-              //     Text(
-              //       context.read<Manager>().loggedUser!.username,
-              //       style: const TextStyle(fontSize: 16),
-              //     ),
-              //     const SizedBox(width: 10),
-              //     const Icon(Icons.account_circle),
-              //   ],
-              // ),
-
-            ],
-          ),
-        ],
+        // actions: [
+        //   TextButton(
+        //     onPressed: () {
+        //     },
+        //     child: const Icon(Icons.help_outline),
+        //   ),
+        // ],
       ),
       body: Column(
         // mainAxisAlignment: MainAxisAlignment.start,
@@ -104,12 +87,16 @@ class MenuScreen extends StatelessWidget {
                     onPressed: () {
                       context.read<Manager>().getFilteredQuestionList();
                     }),
-                MenuButton(
-                    label: 'Ustawienia',
-                    onPressed: () {
-                      context.read<Manager>().navigate(Screen.settings);
-
-                    }),
+                MenuButton(label: 'Wyloguj się', onPressed: () async {
+                  await context.read<Manager>().signOut();
+                  // context.read<Manager>().addQuestionsToDb();
+                }),
+                // MenuButton(
+                //     label: 'Ustawienia',
+                //     onPressed: () {
+                //       context.read<Manager>().navigate(Screen.settings);
+                //
+                //     }),
                 // MenuButton(
                 //     proOnly: true,
                 //     isUserPro: context.read<Manager>().loggedUser!.isPro,
@@ -124,12 +111,13 @@ class MenuScreen extends StatelessWidget {
 
         ],
       ),
-
-      // bottomNavigationBar: BottomAppBar(
-      //     color: Colors.transparent,
-      //     elevation: 0,
-      //     child: SafeArea(child: buildProgressBar(context))
-      // ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey,
+          foregroundColor: Colors.white,
+          child: const Text('Debug'),
+          onPressed: () {
+            context.read<Manager>().navigate(Screen.debug);
+          }),
     );
   }
 }

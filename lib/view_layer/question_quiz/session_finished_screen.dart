@@ -32,7 +32,7 @@ class SessionFinished extends StatelessWidget {
                   radius: 120.0,
                   lineWidth: 13.0,
                   animation: true,
-                  animationDuration: 1000,
+                  animationDuration: 2000,
                   percent: double.parse(userScore) / 100,
                   center: Text(
                     '$userScore %',

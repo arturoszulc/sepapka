@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/view_layer/custom_widgets/build_question.dart';
 
+import '../../model_layer/models/question.dart';
 import '../../utils/consts/nav.dart';
 import '../../viewmodel_layer/manager.dart';
 import '../custom_widgets/settings_popupmenu.dart';
@@ -15,10 +16,10 @@ class QuestionListSingle extends StatelessWidget {
     debugPrint('*** QuestionListSingle Screen built ***');
 
     // final manager = Provider.of<Manager>(context);
-    int index = Provider.of<Manager>(context).qListGlobalFilteredIndex;
-    int filteredListLength = context.read<Manager>().qListGlobalFiltered.length-1;
-    final question = context.read<Manager>().qListGlobalFiltered[index];
-    final bool isQuestionHidden = context.read<Manager>().isQuestionHidden(question.id);
+    final int index = Provider.of<Manager>(context).qListGlobalFilteredIndex;
+    final int filteredListLength = context.read<Manager>().qListGlobalFiltered.length-1;
+    Question? question = context.read<Manager>().getSingleFilteredQuestion();
+    final bool isQuestionHidden = context.read<Manager>().isQuestionHidden(question?.id);
 
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.listQuestion),
@@ -34,7 +35,7 @@ class QuestionListSingle extends StatelessWidget {
             buildSettingsMenu(isQuestionHidden),
           ],
         ),
-        body: Column(
+        body: question == null ? Container() : Column(
           children: [
             const SizedBox(height: 10.0,),
             Expanded(
@@ -43,8 +44,6 @@ class QuestionListSingle extends StatelessWidget {
             ),
             Expanded(
               flex: 6,
-              child: Container(
-              // color: Colors.grey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -52,8 +51,7 @@ class QuestionListSingle extends StatelessWidget {
                   const SizedBox(height: 30,),
                   Text(question.a1, style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
 
-              ],),
-            ),),
+              ],),),
 
           ],
         ),

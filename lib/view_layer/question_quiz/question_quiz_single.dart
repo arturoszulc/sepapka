@@ -99,7 +99,7 @@ class QuestionQuizSingle extends StatelessWidget {
                 child: FloatingActionButton.extended(
                   heroTag: 'next',
                   onPressed: () async {
-                    await context.read<Manager>().getNextQuestion();
+                    await context.read<Manager>().getNextQuizQuestion();
                   },
                   label: const Text('Dalej >'),
                 ),

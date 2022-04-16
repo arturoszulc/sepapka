@@ -168,7 +168,7 @@ class QuestionService {
 
   Future checkAnswer(String answer) async {
     //remove question from qListLocal and qListSession
-    qListSession.removeAt(0);
+    removeCurrentQuestionFromSession();
     // qListSession.removeAt(0);
 
     //If right answer
@@ -197,9 +197,6 @@ class QuestionService {
   }
 
   Future<Object> getNextQuestion() async {
-    if (qStatus == QuestionStatus.noAnswer) {
-      qListSession.removeAt(0);
-    }
     qStatus = QuestionStatus.noAnswer;
 
 
@@ -217,6 +214,7 @@ class QuestionService {
       return Failure();
     }
   }
+
   List<Question> getSetOfQuestions() {
     //get maximum 10 questions to session list
     //warning: //.toList() below makes the list growable, so I can add or remove elements from it
@@ -226,6 +224,10 @@ class QuestionService {
     currentQuestion = null;
     isSessionFinished = true;
     return Success();
+  }
+
+  removeCurrentQuestionFromSession() {
+    qListSession.removeAt(0);
   }
 
   double getProgressPercentSession() {

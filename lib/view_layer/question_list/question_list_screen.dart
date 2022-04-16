@@ -84,7 +84,7 @@ class QuestionListScreen extends StatelessWidget {
                         subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
                         onTap: () {
                           manager.showSingleFilteredQuestion(index);
-                          context.read<Manager>().navigate(Screen.listQuestionSingle);
+                          // context.read<Manager>().navigate(Screen.listQuestionSingle);
                         },
                       ),
                     );

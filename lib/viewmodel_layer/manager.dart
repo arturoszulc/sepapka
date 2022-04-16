@@ -52,8 +52,6 @@ class Manager extends ChangeNotifier {
   //UserService
   LoggedUser? get loggedUser => _userService.loggedUser;
 
-  // String get progressPercentGlobal => _userService.getProgressPercentGlobal();
-
   int get qNewLeft => _userService.loggedUser!.qListNew.length;
 
   bool get isSessionFinished => _questionService.isSessionFinished;
@@ -62,14 +60,13 @@ class Manager extends ChangeNotifier {
 
   //Question Service
 
-
   double get progressPercentSession => _questionService.getProgressPercentSession();
+
   String get userScore => _questionService.getUserScore();
 
   Question? get currentQuestion => _questionService.currentQuestion;
 
   QuestionStatus get qStatus => _questionService.qStatus;
-
 
   int get filterType => _questionService.filterType;
 
@@ -263,7 +260,6 @@ class Manager extends ChangeNotifier {
     navigate(Screen.menu);
   }
 
-
   // QUESTIONS
 
   chooseQuestionLevel(int level) async {
@@ -280,7 +276,7 @@ class Manager extends ChangeNotifier {
 
   startSession() async {
     await _questionService.prepareSession();
-    getNextQuestion();
+    getNextQuizQuestion();
   }
 
   checkAnswer(String answer) async {
@@ -289,7 +285,7 @@ class Manager extends ChangeNotifier {
     notifyListeners();
   }
 
-  getNextQuestion() async {
+  getNextQuizQuestion() async {
     Object nextQuestionResult = await _questionService.getNextQuestion();
     if (nextQuestionResult is Success) {
       navigate(Screen.quizQuestionSingle);
@@ -310,68 +306,47 @@ class Manager extends ChangeNotifier {
   }
 
   moveQuestionBackToShown() async {
+    debugPrint('moveQuestionBackToShown deployed');
     await _userService.moveQMapToNew(qListGlobalFiltered[qListGlobalFilteredIndex].id);
     _userService.updateLoggedUserInDb();
     //this method is available only in Question List Screen, so you always have to update
     //filtered question list
     await _questionService.getFilteredQuestionList();
     if (qListGlobalFilteredIndex == qListGlobalFiltered.length && qListGlobalFilteredIndex > 0) {
-      debugPrint('Entered IF loop');
       qListGlobalFilteredIndex -= 1;
-      if (qListGlobalFiltered.isEmpty) {
-        debugPrint('QListGlobalFiltered IS EMPTY');
-        navigate(Screen.listQuestion);
-
-      }
     }
-    notifyListeners();
+    showSingleFilteredQuestion(qListGlobalFilteredIndex);
   }
 
   doNotShowThisQuestionAnymore() async {
-    //BUG
-    //when hiding last question on list, there's RangeError
-
+    debugPrint('doNotShowThisQuestionAnymore() deployed');
 
     //there are two use cases
     //1. User calls this method during quiz
     if (_currentScreen == Screen.quizQuestionSingle) {
       await _userService.moveQMapToNotShown(currentQuestion!.id);
       _userService.updateLoggedUserInDb();
-      getNextQuestion();
+      _questionService.removeCurrentQuestionFromSession();
+      getNextQuizQuestion();
     }
     //2. User calls this method during question list
-    else {
+    if (_currentScreen == Screen.listQuestionSingle) {
       await _userService.moveQMapToNotShown(qListGlobalFiltered[qListGlobalFilteredIndex].id);
       _userService.updateLoggedUserInDb();
       await _questionService.getFilteredQuestionList();
       if (qListGlobalFilteredIndex == qListGlobalFiltered.length && qListGlobalFilteredIndex > 0) {
         debugPrint('Entered IF loop');
         qListGlobalFilteredIndex -= 1;
-        if (qListGlobalFiltered.isEmpty) {
-          debugPrint('QListGlobalFiltered IS EMPTY');
-          navigate(Screen.listQuestion);
-        }
       }
-      notifyListeners();
+      showSingleFilteredQuestion(qListGlobalFilteredIndex);
     }
   }
 
-  bool isQuestionHidden(String qId) {
+  bool isQuestionHidden(String? qId) {
+    if (qId == null) return false;
     var result = _userService.isQuestionInNotShownList(qId);
     if (result == null) return false;
     return true;
-  }
-
-  sendQuestionRemark(String remark) async {
-    Object sendResult = await _questionService.sendQuestionRemark(remark);
-    if (sendResult is Failure) {
-      setError(sendResult);
-      navigate(Screen.remark);
-    } else {
-      setError(null);
-      setMessage(msgThanksForRemark);
-      navigate(Screen.quizQuestionSingle);
-    }
   }
 
   setListFilter({int? fType, int? fLevel, int? fCategory}) {
@@ -398,9 +373,37 @@ class Manager extends ChangeNotifier {
     navigate(Screen.listQuestion);
   }
 
+  Question ? getSingleFilteredQuestion() {
+    if (qListGlobalFiltered.isEmpty) return null;
+    return qListGlobalFiltered[qListGlobalFilteredIndex];
+  }
+
   showSingleFilteredQuestion(int index) {
+    debugPrint('Entered showSingleFilteredQuestion');
+    //update index
     qListGlobalFilteredIndex = index;
-    navigate(Screen.listQuestionSingle);
+    //update question
+
+    //update isQuestionHidden
+    if (qListGlobalFiltered.isEmpty) {
+      debugPrint('QListGlobalFiltered IS EMPTY');
+      navigate(Screen.listQuestion);
+    } else {
+      //refresh screen
+      navigate(Screen.listQuestionSingle);
+    }
+  }
+
+  sendQuestionRemark(String remark) async {
+    Object sendResult = await _questionService.sendQuestionRemark(remark);
+    if (sendResult is Failure) {
+      setError(sendResult);
+      navigate(Screen.remark);
+    } else {
+      setError(null);
+      setMessage(msgThanksForRemark);
+      navigate(Screen.quizQuestionSingle);
+    }
   }
 
   Widget getQuestionIcon(String qId) {
