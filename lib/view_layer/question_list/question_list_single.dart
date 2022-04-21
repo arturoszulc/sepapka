@@ -4,7 +4,6 @@ import 'package:sepapka/view_layer/custom_widgets/build_question.dart';
 
 import '../../model_layer/models/question.dart';
 import '../../utils/consts/nav.dart';
-import '../../utils/consts/question.dart';
 import '../../viewmodel_layer/manager.dart';
 import '../custom_widgets/settings_popupmenu.dart';
 
@@ -32,9 +31,6 @@ class QuestionListSingle extends StatelessWidget {
           title: Text('Pytanie ${index + 1} / ${filteredListLength + 1}'),
           centerTitle: true,
           actions: [
-            isQuestionHidden
-                ? qListIcons['notShown']!
-                : Container(),
             buildSettingsMenu(isQuestionHidden),
           ],
         ),
@@ -42,10 +38,23 @@ class QuestionListSingle extends StatelessWidget {
             ? Container()
             : Column(
                 children: [
+                  isQuestionHidden
+                      ? DecoratedBox(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.grey[300]),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'ukryte',
+                            // style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      )
+                      : const SizedBox(),
                   const SizedBox(
                     height: 10.0,
                   ),
-
                   Expanded(
                     flex: 3,
                     child: buildQuestion(question),
@@ -77,7 +86,6 @@ class QuestionListSingle extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-
               IconButton(
                 icon: const Icon(
                   Icons.navigate_before_outlined,

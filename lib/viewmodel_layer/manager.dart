@@ -56,7 +56,7 @@ class Manager extends ChangeNotifier {
 
   bool get isSessionFinished => _questionService.isSessionFinished;
 
-  String get userRankName => _userService.userRankName;
+  // String get userRankName => _userService.userRankName;
 
   //Question Service
 
@@ -425,7 +425,7 @@ class Manager extends ChangeNotifier {
   addQuestionsToDb() async {
     debugPrint('/// addQuestionsToDb deployed ///');
 
-    for (var question in questionListDB) {
+    for (var question in questionList) {
       await _databaseService.uploadQuestions(question: question);
     }
     debugPrint('/// Questions added to DB successfully');

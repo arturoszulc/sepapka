@@ -24,8 +24,8 @@ class UserService {
   //Properties
   bool _loggedUserChanged = false;
   // bool _userLeveledUp = false;
-  List<String> _rankNames = [];
-  List<int> _rankThresholds = [];
+  // List<String> _rankNames = [];
+  // List<int> _rankThresholds = [];
 
   //parsing subString to get rid of time
   final DateTime _today = DateTime.parse(DateTime.now().toString().substring(0, 10));
@@ -40,7 +40,7 @@ class UserService {
 
   // bool get userLeveledUp => _userLeveledUp;
 
-  String get userRankName => _rankNames[_loggedUser!.rankLevel];
+  // String get userRankName => _rankNames[_loggedUser!.rankLevel];
 
   // StreamController<LoggedUser?> loggedUserStreamController = StreamController();
   //Streams
@@ -100,7 +100,6 @@ class UserService {
       debugPrint(errorGetUserDataFromDB);
       //if there's an error, assume that user was not yet created
       createDefaultLoggedUser(userId);
-      // loggedUserStreamController.add(_loggedUser);
       return Success();
     }
   }
@@ -154,7 +153,7 @@ class UserService {
     return outdatedQLists;
   }
 
-  Future<void> updateQNewLists(List<Question> qListGlobal) async {
+  Future<void> updateQNewList(List<Question> qListGlobal) async {
     for (var question in qListGlobal) {
       //check if question is on any list
       bool isOnAnyList = isQuestionOnAnyList(question.id);
@@ -174,11 +173,11 @@ class UserService {
     }
   }
 
-  prepareRanks(List<String> rankNames, List<int> rankThresholds) {
-    debugPrint('/// Preparing ranks data... ///');
-    _rankNames = rankNames;
-    _rankThresholds = rankThresholds;
-  }
+  // prepareRanks(List<String> rankNames, List<int> rankThresholds) {
+  //   debugPrint('/// Preparing ranks data... ///');
+  //   _rankNames = rankNames;
+  //   _rankThresholds = rankThresholds;
+  // }
 
   updateQVersion(List<int> qVersions) {
     if (loggedUser!.isPro) {

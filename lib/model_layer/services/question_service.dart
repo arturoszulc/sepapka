@@ -6,7 +6,6 @@ import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/global_data.dart';
 import 'package:sepapka/model_layer/models/remark.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
-import 'package:sepapka/model_layer/services/file_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/colors.dart';
@@ -15,17 +14,18 @@ import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/utils/methods.dart';
 
 import '../../locator.dart';
+import '../../utils/question_list.dart';
 import '../models/question.dart';
 
 class QuestionService {
   //Services Injection
   final _userService = serviceLocator.get<UserService>();
   final _databaseService = serviceLocator.get<DatabaseService>();
-  final _fileService = serviceLocator.get<FileService>();
+  // final _fileService = serviceLocator.get<FileService>();
 
   //Properties
   GlobalData? globalData; //downloaded from DB
-  List<Question>? qListGlobal; //all questions
+  List<Question> qListGlobal = questionList; //all questions
   List<Question> qListSession = []; //questions based on chosen Category and Level
   // List<Question> qListSession = []; //10 questions cut out from qListLocal for current session
   List<Question> qListGlobalFiltered = [];
@@ -61,70 +61,74 @@ class QuestionService {
 
   Future<Object> prepareGlobalData() async {
     //Get GlobalData from DB
-    try {
-      globalData = await _databaseService.getGlobalData();
-    } catch (e) {
-      debugPrint(e.toString());
-      return Failure(errorGetGlobalData);
-    }
+    // try {
+    //   globalData = await _databaseService.getGlobalData();
+    // } catch (e) {
+    //   debugPrint(e.toString());
+    //   return Failure(errorGetGlobalData);
+    // }
 
 
-    //compare questionVersion from DB with those in LoggedUser object
-    //retrieve list of outdated QuestionLists
-    List<int> outdatedQLists = _userService.compareQVersion(globalData!.qVersions);
+    // //compare questionVersion from DB with those in LoggedUser object
+    // //retrieve list of outdated QuestionLists
+    // List<int> outdatedQLists = _userService.compareQVersion(globalData!.qVersions);
+    //
+    // //get Question List based on compareResult
+    // Object getQuestionResult = await getGlobalQuestionLists(outdatedQLists);
+    // if (getQuestionResult is Failure) return getQuestionResult;
+    //
+    // //update qListGlobal and count number of questions by level
+    // qListGlobal = getQuestionResult as List<Question>;
+    //
+    // //also update qListFiltered, so it won't be empty
+    // qListGlobalFiltered = List<Question>.from(qListGlobal!);
 
-    //get Question List based on compareResult
-    Object getQuestionResult = await getGlobalQuestionLists(outdatedQLists);
-    if (getQuestionResult is Failure) return getQuestionResult;
+//    // update local user question version and qNewList (if there any any new questions)
+    // _userService.updateQVersion(globalData!.qVersions);
 
-    //update qListGlobal and count number of questions by level
-    qListGlobal = getQuestionResult as List<Question>;
-
-    //also update qListFiltered, so it won't be empty
-    qListGlobalFiltered = List<Question>.from(qListGlobal!);
-
-    //update local user question version and qNewList (if there any any new questions)
-    _userService.updateQVersion(globalData!.qVersions);
-    await _userService.updateQNewLists(qListGlobal!);
+    //Sort qListGlobal alphabetically
+    qListGlobal.sort((a,b) => a.q.compareTo(b.q));
+    //update user qNewList
+    await _userService.updateQNewList(qListGlobal);
 
     debugPrint('/// QuestionService: Finished preparing GlobalData ///');
     return Success();
   }
 
-  Future<Object> getGlobalQuestionLists(List<int> outdatedQLists) async {
-    // if all question lists are up to date, try to take questions from local JSON files
-    if (outdatedQLists.isEmpty) {
-      Object getLocalQuestionResult = await _fileService.getQuestionListFromFile();
-      if (getLocalQuestionResult is List<Question>) {
-        return getLocalQuestionResult;
-      }
-      //if reading file failed, then new lists from DB has to be downloaded
-      //to do this, fill outdatedQList with lists to download
-      else {
-        outdatedQLists.add(1);
-        if (_userService.loggedUser!.isPro) {
-          outdatedQLists.addAll([2, 3]);
-        }
-
-      }
-    }
-
-    //Initializing list that will allow merging couple of lists from DB
-    List<Question> questionListFromDB = [];
-
-    for (int outdatedList in outdatedQLists) {
-      List<Question>? questionList = await _databaseService.getQuestionList(list: outdatedList);
-      //if failed to download, interrupt whole method
-      if (questionList == null) return Failure(errorGetQListFromDB);
-      //if succeeded, add it to main list
-      questionListFromDB += questionList;
-    }
-
-    //after downloading all question lists, save questions to local JSON file
-    Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(questionListFromDB);
-    if (saveQuestionToFileResult is Failure) return saveQuestionToFileResult;
-    return questionListFromDB;
-  }
+  // Future<Object> getGlobalQuestionLists(List<int> outdatedQLists) async {
+  //   // if all question lists are up to date, try to take questions from local JSON files
+  //   if (outdatedQLists.isEmpty) {
+  //     Object getLocalQuestionResult = await _fileService.getQuestionListFromFile();
+  //     if (getLocalQuestionResult is List<Question>) {
+  //       return getLocalQuestionResult;
+  //     }
+  //     //if reading file failed, then new lists from DB has to be downloaded
+  //     //to do this, fill outdatedQList with lists to download
+  //     else {
+  //       outdatedQLists.add(1);
+  //       if (_userService.loggedUser!.isPro) {
+  //         outdatedQLists.addAll([2, 3]);
+  //       }
+  //
+  //     }
+  //   }
+  //
+  //   //Initializing list that will allow merging couple of lists from DB
+  //   List<Question> questionListFromDB = [];
+  //
+  //   for (int outdatedList in outdatedQLists) {
+  //     List<Question>? questionList = await _databaseService.getQuestionList(list: outdatedList);
+  //     //if failed to download, interrupt whole method
+  //     if (questionList == null) return Failure(errorGetQListFromDB);
+  //     //if succeeded, add it to main list
+  //     questionListFromDB += questionList;
+  //   }
+  //
+  //   //after downloading all question lists, save questions to local JSON file
+  //   Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(questionListFromDB);
+  //   if (saveQuestionToFileResult is Failure) return saveQuestionToFileResult;
+  //   return questionListFromDB;
+  // }
 
   setQuestionLevel(int level) {
     qLevel = level;
@@ -139,7 +143,7 @@ class QuestionService {
     isSessionFinished = false;
     numberOfRightAnswers = 0;
     //clear the old qListSession
-    qListSession = List<Question>.from(qListGlobal!);
+    qListSession = List<Question>.from(qListGlobal);
     //reset current points counter
     // _currentSessionUserPoints = 0;
 
@@ -183,10 +187,6 @@ class QuestionService {
     }
     //if wrong answer
     else {
-      //get question back, at the end of the current list
-      // qListLocal.add(currentQuestion!);
-      // qListSession.add(currentQuestion!);
-
       qStatus = QuestionStatus.wrongAnswer;
       //color wrong button
       bMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
@@ -285,7 +285,7 @@ class QuestionService {
   List<int> countQuestionsByLevel() {
     debugPrint('*** countQuestionsByLevel() deployed ***');
     numOfQuestionsByLevel = [0, 0, 0, 0];
-    for (Question question in qListGlobal!) {
+    for (Question question in qListGlobal) {
       if (_userService.isQuestionInNotShownList(question.id) == null) {
         if (question.level == 1) numOfQuestionsByLevel[1] += 1;
         if (question.level == 2) numOfQuestionsByLevel[2] += 1;
@@ -301,7 +301,7 @@ class QuestionService {
   List<int> countQuestionsByCategory() {
     numOfQuestionsByCategory = [0, 0, 0, 0, 0];
     if (qLevel == 0) {
-      for (Question question in qListGlobal!) {
+      for (Question question in qListGlobal) {
         if (_userService.isQuestionInNotShownList(question.id) == null) {
           if (question.label == 1) numOfQuestionsByCategory[1] += 1;
           if (question.label == 2) numOfQuestionsByCategory[2] += 1;
@@ -310,7 +310,7 @@ class QuestionService {
         }
       }
     } else {
-      for (Question question in qListGlobal!) {
+      for (Question question in qListGlobal) {
         if (_userService.isQuestionInNotShownList(question.id) == null) {
           if (question.level == qLevel) {
             if (question.label == 1) numOfQuestionsByCategory[1] += 1;
@@ -333,7 +333,7 @@ class QuestionService {
   getFilteredQuestionList() {
     //calling this function means that some filter changed
     // so start with clearing the old one
-    qListGlobalFiltered = List<Question>.from(qListGlobal!);
+    qListGlobalFiltered = List<Question>.from(qListGlobal);
 
     //apply three filters
     filterListByType();

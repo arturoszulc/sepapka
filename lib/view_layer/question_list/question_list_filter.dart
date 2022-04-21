@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:group_button/group_button.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/utils/consts/colors.dart';
 
 import '../../utils/consts/question.dart';
 import '../../viewmodel_layer/manager.dart';
