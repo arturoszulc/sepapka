@@ -64,7 +64,7 @@ class QuestionListScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Kategoria', style: TextStyle(fontWeight: FontWeight.bold),),
+                            const Text('Kategoria', style: TextStyle(fontWeight: FontWeight.bold),),
                             Text(qCategoryList[manager.filterCategory]),
                           ],
                         ),

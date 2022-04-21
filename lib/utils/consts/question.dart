@@ -11,7 +11,7 @@ enum QuestionStatus { noAnswer, rightAnswer, wrongAnswer }
 //Lists
 const List<String> qTypeList = ["wszystkie", "tylko widoczne", "tylko ukryte"];
 const List<String> qLevelList = ["wszystkie", "poziom 1", "poziom 2", "poziom 3"];
-const List<String> qCategoryList = ["wszystkie", "definicje", "sieci niskiego napięcia", "urządzenia elektryczne","ochrona przeciwporażeniowa"];
+const List<String> qCategoryList = ["wszystkie", "definicje", "sieci niskiego napięcia", "ochrona przeciwporażeniowa", "urządzenia elektryczne"];
 
 
 
@@ -22,8 +22,8 @@ const List<int> fibSeries = [0, 1, 2, 3, 5, 8, 13, 21];
 
 const String labelName1 = 'definicje';
 const String labelName2 = 'sieci niskiego napięcia';
-const String labelName3 = 'urządzenia elektryczne';
-const String labelName4 = 'ochrona przeciwporażeniowa';
+const String labelName3 = 'ochrona przeciwporażeniowa';
+const String labelName4 = 'urządzenia elektryczne';
 
 const List<Color?> labelColors = [Colors.grey, Colors.blue, Colors.green, Colors.red, Colors.purple];
 

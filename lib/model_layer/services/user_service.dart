@@ -82,9 +82,6 @@ class UserService {
         rankTotalPoints: 0,
         qVersions: [1,1,1],
         qListNew: [],
-        // qListNew1: [],
-        // qListNew2: [],
-        // qListNew3: [],
         qListPractice: [],
         qListNotShown: []);
   }
@@ -326,18 +323,16 @@ class UserService {
     _loggedUser!.rankLevel = 0;
     _loggedUser!.rankTotalPoints = 0;
     _loggedUser!.qListNew.clear();
-    // _loggedUser!.qListNew1.clear();
-    // _loggedUser!.qListNew2.clear();
-    // _loggedUser!.qListNew3.clear();
     _loggedUser!.qListPractice.clear();
     _loggedUser!.qListNotShown.clear();
+
   }
 
   //bool property of this method is to be deleted - it will only allow to go PRO
   Future<Object> goPro(bool bool) async {
     if (!bool) wipeUser(); //if go FREE, wipe user
     _loggedUser!.isPro = bool;
-    // _loggedUser!.qVersion = 1;
+    _loggedUser!.qVersions = [1,1,1];
     try {
       await _databaseService.updateUser(_loggedUser!);
       return Success();

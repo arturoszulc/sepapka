@@ -89,21 +89,7 @@ class MenuScreen extends StatelessWidget {
                     }),
                 MenuButton(label: 'Wyloguj się', onPressed: () async {
                   await context.read<Manager>().signOut();
-                  // context.read<Manager>().addQuestionsToDb();
                 }),
-                // MenuButton(
-                //     label: 'Ustawienia',
-                //     onPressed: () {
-                //       context.read<Manager>().navigate(Screen.settings);
-                //
-                //     }),
-                // MenuButton(
-                //     proOnly: true,
-                //     isUserPro: context.read<Manager>().loggedUser!.isPro,
-                //     label: 'Ranking',
-                //     onPressed: () {
-                //       context.read<Manager>().navigate(Screen.userRank);
-                //     })
               ],
             ),
           ),

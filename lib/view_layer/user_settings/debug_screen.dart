@@ -18,7 +18,7 @@ class DebugScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => context.read<Manager>().navigate(Screen.settings),
+          onPressed: () => context.read<Manager>().navigate(Screen.menu),
         ),
         title: const Text('DEBUG'),
         centerTitle: true,
@@ -44,6 +44,9 @@ class DebugScreen extends StatelessWidget {
                 var result = await goProDialog(context);
                 if (result) await context.read<Manager>().goPro(!context.read<Manager>().loggedUser!.isPro);
               },),
+            MenuButton(label: 'Prześlij pytania do bazy', onPressed: () async {
+              context.read<Manager>().addQuestionsToDb();
+            }),
           ],
         ),
       ),
