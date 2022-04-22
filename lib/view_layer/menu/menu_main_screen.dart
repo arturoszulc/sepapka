@@ -10,19 +10,10 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint('*** Menu Main Screen built ***');
-
     return Scaffold(
       appBar: AppBar(
-        // actions: [
-        //   TextButton(
-        //     onPressed: () {
-        //     },
-        //     child: const Icon(Icons.help_outline),
-        //   ),
-        // ],
       ),
       body: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -37,33 +28,6 @@ class MenuScreen extends StatelessWidget {
             color: Colors.grey[300],
           ),
           const SizedBox(height: 20.0),
-          // const Text('Twoja ranga:'),
-          // const SizedBox(height: 20,),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   mainAxisSize: MainAxisSize.min,
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: [
-          //     Column(
-          //       children: [
-          //         Text(context.read<Manager>().userRankName),
-          //         const SizedBox(height: 10.0),
-          //         Text('${context.read<Manager>().loggedUser!.rankTotalPoints} pkt.'),
-          //       ],
-          //     ),
-          //     const SizedBox(width: 20,),
-          //     Column(
-          //       children: [
-          //         Image.asset(context.read<Manager>().getBadgePath(),
-          //           height: 60,
-          //           width: 60,),
-          //         const SizedBox(height: 10.0),
-          //         buildProgressBar(context, 80),
-          //       ],
-          //     ),
-          //   ],
-          // ),
-          // const SizedBox(height: 50),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: Column(

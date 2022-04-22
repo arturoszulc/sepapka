@@ -25,7 +25,7 @@ class QuestionService {
 
   //Properties
   GlobalData? globalData; //downloaded from DB
-  List<Question> qListGlobal = questionList; //all questions
+  List<Question> qListGlobal = []; //all questions
   List<Question> qListSession = []; //questions based on chosen Category and Level
   // List<Question> qListSession = []; //10 questions cut out from qListLocal for current session
   List<Question> qListGlobalFiltered = [];
@@ -68,6 +68,18 @@ class QuestionService {
     //   return Failure(errorGetGlobalData);
     // }
 
+    //prepare qListGlobal
+    if (!_userService.loggedUser!.isPro) {
+      for (Question question in questionList) {
+        if (question.level == 1) {
+          qListGlobal.add(question);
+        }
+      }
+    } else {
+      qListGlobal = List<Question>.from(questionList);
+    }
+
+    debugPrint('qListGlobalLength: ${qListGlobal.length}');
 
     // //compare questionVersion from DB with those in LoggedUser object
     // //retrieve list of outdated QuestionLists
@@ -144,8 +156,6 @@ class QuestionService {
     numberOfRightAnswers = 0;
     //clear the old qListSession
     qListSession = List<Question>.from(qListGlobal);
-    //reset current points counter
-    // _currentSessionUserPoints = 0;
 
     //filter by Level
     if (qLevel != 0) {
@@ -161,6 +171,8 @@ class QuestionService {
     //now cut out of qListLocal any question that is on NotShownList
     qListSession.removeWhere((e) => _userService.isQuestionInNotShownList(e.id) != null);
 
+    //shuffle the list
+    qListSession.shuffle();
 
     //get maximum 10 questions to session list
     // qListSession = getSetOfQuestions();
@@ -334,7 +346,8 @@ class QuestionService {
     //calling this function means that some filter changed
     // so start with clearing the old one
     qListGlobalFiltered = List<Question>.from(qListGlobal);
-
+    debugPrint('qListGlobalLength: ${qListGlobal.length}');
+    debugPrint('qListFiltered: ${qListGlobalFiltered.length}');
     //apply three filters
     filterListByType();
     filterListByLevel();

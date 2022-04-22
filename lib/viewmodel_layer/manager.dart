@@ -162,13 +162,6 @@ class Manager extends ChangeNotifier {
       navigate(Screen.signIn);
       return;
     }
-    // //if user just registered, allow him to set his Username
-    // if (_userHasRegistered) {
-    //   navigate(Screen.setUsername);
-    //   _userHasRegistered = false;
-    // } else {
-    //   navigate(Screen.menu);
-    // }
     navigate(Screen.menu);
   }
 
@@ -422,12 +415,12 @@ class Manager extends ChangeNotifier {
   // ******* METHODS ON DEMAND ********
 
   //Adding new questions to DB
-  addQuestionsToDb() async {
-    debugPrint('/// addQuestionsToDb deployed ///');
-
-    for (var question in questionList) {
-      await _databaseService.uploadQuestions(question: question);
-    }
-    debugPrint('/// Questions added to DB successfully');
-  }
+  // addQuestionsToDb() async {
+  //   debugPrint('/// addQuestionsToDb deployed ///');
+  //
+  //   for (var question in questionList) {
+  //     await _databaseService.uploadQuestions(question: question);
+  //   }
+  //   debugPrint('/// Questions added to DB successfully');
+  // }
 }

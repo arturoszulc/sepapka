@@ -73,14 +73,14 @@ class UserService {
   //   }
   // }
 
-  createDefaultLoggedUser(String userId) async {
+  createDefaultLoggedUser(String userId) {
     _loggedUser = LoggedUser(
         documentId: userId,
         username: 'uczeń-' + getRandomString(5),
         isPro: false,
-        rankLevel: 0,
-        rankTotalPoints: 0,
-        qVersions: [1,1,1],
+        // rankLevel: 0,
+        // rankTotalPoints: 0,
+        // qVersions: [1,1,1],
         qListNew: [],
         qListPractice: [],
         qListNotShown: []);
@@ -99,7 +99,7 @@ class UserService {
     } catch (e) {
       debugPrint(errorGetUserDataFromDB);
       //if there's an error, assume that user was not yet created
-      createDefaultLoggedUser(userId);
+      await createDefaultLoggedUser(userId);
       return Success();
     }
   }
@@ -129,29 +129,29 @@ class UserService {
     // loggedUserStreamController.add(_loggedUser);
   }
 
-  List<int> compareQVersion(List<int> qVersions) {
-    debugPrint('/// Checking if questions are up to date ///');
-    List<int> outdatedQLists = [];
-
-    //Every user
-    if (qVersions[0] != loggedUser!.qVersions[0]){
-      outdatedQLists.add(1);
-      debugPrint('questions1 outdated');
-    }
-    //Pro user
-    if (loggedUser!.isPro)
-      {
-        if (qVersions[1] != loggedUser!.qVersions[1]){
-          outdatedQLists.add(2);
-          debugPrint('questions2 outdated');
-        }
-        if (qVersions[2] != loggedUser!.qVersions[2]){
-          outdatedQLists.add(3);
-          debugPrint('questions3 outdated');
-        }
-      }
-    return outdatedQLists;
-  }
+  // List<int> compareQVersion(List<int> qVersions) {
+  //   debugPrint('/// Checking if questions are up to date ///');
+  //   List<int> outdatedQLists = [];
+  //
+  //   //Every user
+  //   if (qVersions[0] != loggedUser!.qVersions[0]){
+  //     outdatedQLists.add(1);
+  //     debugPrint('questions1 outdated');
+  //   }
+  //   //Pro user
+  //   if (loggedUser!.isPro)
+  //     {
+  //       if (qVersions[1] != loggedUser!.qVersions[1]){
+  //         outdatedQLists.add(2);
+  //         debugPrint('questions2 outdated');
+  //       }
+  //       if (qVersions[2] != loggedUser!.qVersions[2]){
+  //         outdatedQLists.add(3);
+  //         debugPrint('questions3 outdated');
+  //       }
+  //     }
+  //   return outdatedQLists;
+  // }
 
   Future<void> updateQNewList(List<Question> qListGlobal) async {
     for (var question in qListGlobal) {
@@ -179,13 +179,13 @@ class UserService {
   //   _rankThresholds = rankThresholds;
   // }
 
-  updateQVersion(List<int> qVersions) {
-    if (loggedUser!.isPro) {
-      _loggedUser!.qVersions = qVersions;
-    } else {
-      _loggedUser!.qVersions[0] = qVersions[0];
-    }
-    }
+  // updateQVersion(List<int> qVersions) {
+  //   if (loggedUser!.isPro) {
+  //     _loggedUser!.qVersions = qVersions;
+  //   } else {
+  //     _loggedUser!.qVersions[0] = qVersions[0];
+  //   }
+  //   }
 
   bool isQuestionOnAnyList(String questionId) {
     return isQuestionInQListNew(questionId) != null ||
@@ -220,19 +220,19 @@ class UserService {
     return _loggedUser!.qListNew.slice(0, min(9, _loggedUser!.qListNew.length));
   }
 
-  List<QMap> getTodayPracticeQMapList() {
-    debugPrint('/// UserService: Getting TodayPracticeQMapList... ///');
-    List<QMap> todayPracticeList = [];
-
-    if (_loggedUser!.qListPractice.isNotEmpty) {
-      for (var qMap in _loggedUser!.qListPractice) {
-        if (getDateDifferenceInDays(qMap) < 1) {
-          todayPracticeList.add(qMap);
-        }
-      }
-    }
-    return todayPracticeList;
-  }
+  // List<QMap> getTodayPracticeQMapList() {
+  //   debugPrint('/// UserService: Getting TodayPracticeQMapList... ///');
+  //   List<QMap> todayPracticeList = [];
+  //
+  //   if (_loggedUser!.qListPractice.isNotEmpty) {
+  //     for (var qMap in _loggedUser!.qListPractice) {
+  //       if (getDateDifferenceInDays(qMap) < 1) {
+  //         todayPracticeList.add(qMap);
+  //       }
+  //     }
+  //   }
+  //   return todayPracticeList;
+  // }
 
   // moveQuestionToNew(String qId, QuestionType qType, int qLevel) async {
   //   //Get QMap
@@ -319,8 +319,8 @@ class UserService {
   }
 
   wipeUser() {
-    _loggedUser!.rankLevel = 0;
-    _loggedUser!.rankTotalPoints = 0;
+    // _loggedUser!.rankLevel = 0;
+    // _loggedUser!.rankTotalPoints = 0;
     _loggedUser!.qListNew.clear();
     _loggedUser!.qListPractice.clear();
     _loggedUser!.qListNotShown.clear();
@@ -331,7 +331,7 @@ class UserService {
   Future<Object> goPro(bool bool) async {
     if (!bool) wipeUser(); //if go FREE, wipe user
     _loggedUser!.isPro = bool;
-    _loggedUser!.qVersions = [1,1,1];
+    // _loggedUser!.qVersions = [1,1,1];
     try {
       await _databaseService.updateUser(_loggedUser!);
       return Success();

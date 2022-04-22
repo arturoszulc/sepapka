@@ -12,9 +12,6 @@ class MenuChooseLevel extends StatelessWidget {
     debugPrint('*** ChooseLevel Screen built ***');
 
     List<int> countLevels = context.read<Manager>().countQuestionsByLevel;
-    // int countLevel1 = context.read<Manager>().qLevel1Left;
-    // int countLevel2 = context.read<Manager>().qLevel2Left;
-    // int countLevel3 = context.read<Manager>().qLevel3Left;
     bool isUserPro = context.read<Manager>().loggedUser!.isPro;
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.menu),

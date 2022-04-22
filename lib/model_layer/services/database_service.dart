@@ -12,11 +12,9 @@ import '../models/question.dart';
 
 class DatabaseService {
   final CollectionReference dataCollection = FirebaseFirestore.instance.collection('data');
-  final CollectionReference questions1Collection = FirebaseFirestore.instance.collection('questions1');
-  final CollectionReference questions2Collection = FirebaseFirestore.instance.collection('questions2');
-  final CollectionReference questions3Collection = FirebaseFirestore.instance.collection('questions3');
-  final CollectionReference questionsProCollection = FirebaseFirestore.instance.collection('questionsPro');
-  final CollectionReference questionsFreeCollection = FirebaseFirestore.instance.collection('questionsFree');
+  // final CollectionReference questions1Collection = FirebaseFirestore.instance.collection('questions1');
+  // final CollectionReference questions2Collection = FirebaseFirestore.instance.collection('questions2');
+  // final CollectionReference questions3Collection = FirebaseFirestore.instance.collection('questions3');
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
   final CollectionReference remarksCollection = FirebaseFirestore.instance.collection('remarks');
   final Query usersRankQuery =
@@ -30,11 +28,11 @@ class DatabaseService {
     return usersCollection
         .doc(user.documentId)
         .set({
-          userQVersions: user.qVersions,
+          // userQVersions: user.qVersions,
           userUsername: user.username,
           userIsPro: user.isPro,
-          userRankLevel: user.rankLevel,
-          userRankTotalPoints: user.rankTotalPoints,
+          // userRankLevel: user.rankLevel,
+          // userRankTotalPoints: user.rankTotalPoints,
           userQListNew: user.qListNew.map((e) => e.convertToMap()).toList(),
           userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
           userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),
@@ -51,9 +49,9 @@ class DatabaseService {
       documentId: doc.id,
       username: doc.get(userUsername),
       isPro: doc.get(userIsPro),
-      rankLevel: doc.get(userRankLevel),
-      rankTotalPoints: doc.get(userRankTotalPoints),
-      qVersions: List<int>.from(doc.get(userQVersions)),
+      // rankLevel: doc.get(userRankLevel),
+      // rankTotalPoints: doc.get(userRankTotalPoints),
+      // qVersions: List<int>.from(doc.get(userQVersions)),
       qListNew: List<QMap>.from(doc.get(userQListNew).map((e) => convertMapToQMap(e))),
       qListPractice: List<QMap>.from(doc.get(userQListPractice).map((e) => convertMapToQMap(e))),
       qListNotShown: List<QMap>.from(doc.get(userQListNotShown).map((e) => convertMapToQMap(e))),
@@ -89,52 +87,52 @@ class DatabaseService {
   // }
 
   //Get question list (either Free or Pro user based on parameter)
-  Future<List<Question>?> getQuestionList({required int list}) async {
-    debugPrint('/// DB: reading QList number: $list ///');
-    QuerySnapshot? snapshot;
-    switch (list) {
-      case 1: snapshot = await questions1Collection.get(); break;
-      case 2: snapshot = await questions2Collection.get(); break;
-      case 3: snapshot = await questions3Collection.get(); break;
-      default: snapshot = await questions1Collection.get();
-    }
-    return snapshot.docs.map((doc) {
-      return Question(
-          id: doc.id,
-          q: doc.get(questionQ),
-          a1: doc.get(questionA1),
-          a2: doc.get(questionA2),
-          a3: doc.get(questionA3),
-          a4: doc.get(questionA4),
-          label: doc.get(questionLabel),
-          level: doc.get(questionLevel),
-          assetPath: doc.get(questionAssetPath));
-    }).toList();
-  }
+  // Future<List<Question>?> getQuestionList({required int list}) async {
+  //   debugPrint('/// DB: reading QList number: $list ///');
+  //   QuerySnapshot? snapshot;
+  //   switch (list) {
+  //     case 1: snapshot = await questions1Collection.get(); break;
+  //     case 2: snapshot = await questions2Collection.get(); break;
+  //     case 3: snapshot = await questions3Collection.get(); break;
+  //     default: snapshot = await questions1Collection.get();
+  //   }
+  //   return snapshot.docs.map((doc) {
+  //     return Question(
+  //         id: doc.id,
+  //         q: doc.get(questionQ),
+  //         a1: doc.get(questionA1),
+  //         a2: doc.get(questionA2),
+  //         a3: doc.get(questionA3),
+  //         a4: doc.get(questionA4),
+  //         label: doc.get(questionLabel),
+  //         level: doc.get(questionLevel),
+  //         assetPath: doc.get(questionAssetPath));
+  //   }).toList();
+  // }
 
   //Upload questions to DB ****** method on demand *******
-  Future<void> uploadQuestions({required Question question}) async {
-    debugPrint('### ID IS ${question.id} ###');
-
-    DocumentReference doc;
-
-    switch (question.level) {
-      case 1: doc = questions1Collection.doc(question.id); break;
-      case 2: doc = questions2Collection.doc(question.id); break;
-      case 3: doc = questions3Collection.doc(question.id); break;
-      default: doc = questions1Collection.doc(question.id);
-    }
-    return await doc.set({
-      questionQ: question.q,
-      questionA1: question.a1,
-      questionA2: question.a2,
-      questionA3: question.a3,
-      questionA4: question.a4,
-      questionLabel: question.label,
-      questionLevel: question.level,
-      questionAssetPath: question.assetPath,
-    });
-  }
+  // Future<void> uploadQuestions({required Question question}) async {
+  //   debugPrint('### ID IS ${question.id} ###');
+  //
+  //   DocumentReference doc;
+  //
+  //   switch (question.level) {
+  //     case 1: doc = questions1Collection.doc(question.id); break;
+  //     case 2: doc = questions2Collection.doc(question.id); break;
+  //     case 3: doc = questions3Collection.doc(question.id); break;
+  //     default: doc = questions1Collection.doc(question.id);
+  //   }
+  //   return await doc.set({
+  //     questionQ: question.q,
+  //     questionA1: question.a1,
+  //     questionA2: question.a2,
+  //     questionA3: question.a3,
+  //     questionA4: question.a4,
+  //     questionLabel: question.label,
+  //     questionLevel: question.level,
+  //     questionAssetPath: question.assetPath,
+  //   });
+  // }
 
   List<RankUser> _usersRankTop(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
