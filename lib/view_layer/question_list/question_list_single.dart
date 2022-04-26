@@ -57,7 +57,7 @@ class QuestionListSingle extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 3,
-                    child: buildQuestion(question),
+                    child: buildQuestion(context, question),
                   ),
                   Expanded(
                     flex: 6,
@@ -69,9 +69,13 @@ class QuestionListSingle extends StatelessWidget {
                               fontSize: 16.0,
                             )),
                         const SizedBox(height: 30),
-                        Text(
-                          question.a1,
-                          style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            question.a1,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                          ),
                         ),
                         const SizedBox(height: 30),
                       ],

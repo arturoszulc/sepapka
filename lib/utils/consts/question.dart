@@ -11,7 +11,7 @@ enum QuestionStatus { noAnswer, rightAnswer, wrongAnswer }
 //Lists
 const List<String> qTypeList = ["wszystkie", "tylko widoczne", "tylko ukryte"];
 const List<String> qLevelList = ["wszystkie", "poziom 1", "poziom 2", "poziom 3"];
-const List<String> qCategoryList = ["wszystkie", "definicje", "sieci niskiego napięcia", "ochrona przeciwporażeniowa", "urządzenia elektryczne"];
+const List<String> qCategoryList = ["wszystkie", "definicje", "ochrona przeciwporażeniowa", "sieci niskiego napięcia", "urządzenia elektryczne"];
 
 
 

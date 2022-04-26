@@ -18,7 +18,6 @@ import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/consts/question.dart';
-import 'package:sepapka/utils/question_list.dart';
 
 class Manager extends ChangeNotifier {
   //Services Injection
@@ -366,7 +365,7 @@ class Manager extends ChangeNotifier {
     navigate(Screen.listQuestion);
   }
 
-  Question ? getSingleFilteredQuestion() {
+  Question? getSingleFilteredQuestion() {
     if (qListGlobalFiltered.isEmpty) return null;
     return qListGlobalFiltered[qListGlobalFilteredIndex];
   }
@@ -403,24 +402,38 @@ class Manager extends ChangeNotifier {
     return _userService.getQListIcon(qId);
   }
 
-  // String getBadgePath({int? rankLevel}) {
-  //   String badge = '0';
-  //   //if rank level is not given, return loggedUser badge
-  //   if (rankLevel == null) badge = loggedUser!.rankLevel.toString();
-  //   //if rankLevel is given, return corresponding badge
-  //   if (rankLevel != null) badge = rankLevel.toString();
-  //   return 'assets/images/badges/$badge.png';
-  // }
+  Widget? getImage(String path) {
+    //if question has no image, return null
+    if (path.isEmpty) return null;
+    //otherwise try to get the image
+    return Image.asset(
+      'assets/images/questions/$path',
+      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+        return Image.asset('assets/images/questions/error.png');
+      },
+    );
 
-  // ******* METHODS ON DEMAND ********
+    //on fail return default error image
+  }
 
-  //Adding new questions to DB
-  // addQuestionsToDb() async {
-  //   debugPrint('/// addQuestionsToDb deployed ///');
-  //
-  //   for (var question in questionList) {
-  //     await _databaseService.uploadQuestions(question: question);
-  //   }
-  //   debugPrint('/// Questions added to DB successfully');
-  // }
+// String getBadgePath({int? rankLevel}) {
+//   String badge = '0';
+//   //if rank level is not given, return loggedUser badge
+//   if (rankLevel == null) badge = loggedUser!.rankLevel.toString();
+//   //if rankLevel is given, return corresponding badge
+//   if (rankLevel != null) badge = rankLevel.toString();
+//   return 'assets/images/badges/$badge.png';
+// }
+
+// ******* METHODS ON DEMAND ********
+
+//Adding new questions to DB
+// addQuestionsToDb() async {
+//   debugPrint('/// addQuestionsToDb deployed ///');
+//
+//   for (var question in questionList) {
+//     await _databaseService.uploadQuestions(question: question);
+//   }
+//   debugPrint('/// Questions added to DB successfully');
+// }
 }

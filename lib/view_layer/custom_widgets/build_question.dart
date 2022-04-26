@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../model_layer/models/question.dart';
+import '../../viewmodel_layer/manager.dart';
 
 
 
-Widget buildQuestion(Question? question) {
+Widget buildQuestion(BuildContext context, Question? question) {
   return question == null ? Container() :
   Column(
     children: [
@@ -17,10 +19,9 @@ Widget buildQuestion(Question? question) {
         ),
       ),
       Expanded(
-        child: question.assetPath.isEmpty ? Container() :
-        Image.asset('assets/images/questions/${question.assetPath}',
-
-        ),
+        child: context.read<Manager>().getImage(question.assetPath) ?? Container(),
+        // child: question.assetPath.isEmpty ? Container() :
+        // Image.asset('assets/images/questions/${question.assetPath}'),
       ),
     ],
   );

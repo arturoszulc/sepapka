@@ -44,6 +44,7 @@ class QuestionListFilter extends StatelessWidget {
                       selectedIndex: manager.filterType,
                     ),
                   ),
+                  const SizedBox(height: 20,),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: textPadding),
                     child: Text('Poziom trudności', style: Theme.of(context).textTheme.headline6,

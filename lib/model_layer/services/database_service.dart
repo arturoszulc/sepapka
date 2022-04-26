@@ -12,9 +12,6 @@ import '../models/question.dart';
 
 class DatabaseService {
   final CollectionReference dataCollection = FirebaseFirestore.instance.collection('data');
-  // final CollectionReference questions1Collection = FirebaseFirestore.instance.collection('questions1');
-  // final CollectionReference questions2Collection = FirebaseFirestore.instance.collection('questions2');
-  // final CollectionReference questions3Collection = FirebaseFirestore.instance.collection('questions3');
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
   final CollectionReference remarksCollection = FirebaseFirestore.instance.collection('remarks');
   final Query usersRankQuery =

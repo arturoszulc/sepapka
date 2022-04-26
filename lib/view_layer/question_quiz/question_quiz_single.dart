@@ -42,7 +42,7 @@ class QuestionQuizSingle extends StatelessWidget {
                   const SizedBox(height: 10.0,),
                   Expanded(
                       flex: 3,
-                      child: buildQuestion(question)),
+                      child: buildQuestion(context, question)),
                   Expanded(
                     flex: 6,
                     child: Column(
