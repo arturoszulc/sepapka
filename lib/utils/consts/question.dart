@@ -30,6 +30,6 @@ const List<Color?> labelColors = [Colors.grey, Colors.blue, Colors.green, Colors
 const Map<String, Widget> qListIcons = {
   'new': Icon(Icons.hourglass_empty),
   'practice': Icon(Icons.hourglass_full),
-  'notShown': Icon(Icons.not_interested),
+  'notShown': Icon(Icons.visibility_off),
   'none': SizedBox(),
 };

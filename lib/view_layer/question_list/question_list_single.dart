@@ -6,6 +6,7 @@ import '../../model_layer/models/question.dart';
 import '../../utils/consts/nav.dart';
 import '../../viewmodel_layer/manager.dart';
 import '../custom_widgets/settings_popupmenu.dart';
+import '../custom_widgets/snackbar_hide_question.dart';
 
 class QuestionListSingle extends StatelessWidget {
   const QuestionListSingle({Key? key}) : super(key: key);
@@ -31,27 +32,48 @@ class QuestionListSingle extends StatelessWidget {
           title: Text('Pytanie ${index + 1} / ${filteredListLength + 1}'),
           centerTitle: true,
           actions: [
-            buildSettingsMenu(isQuestionHidden),
+            isQuestionHidden ?
+            IconButton(
+                onPressed: () async {
+                  await context.read<Manager>().moveQuestionBackToShown();
+                  // var snackBar = const SnackBar(
+                  //     duration: Duration(seconds: 1),
+                  //     behavior: SnackBarBehavior.floating,
+                  //     content: Text(''));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie będzie widoczne'));
+                },
+                icon: const Icon(Icons.visibility_off)) :
+                IconButton(
+                    onPressed: () async {
+                      await context.read<Manager>().doNotShowThisQuestionAnymore();
+                      // var snackBar = const SnackBar(
+                      //   duration: Duration(seconds: 1),
+                      //     behavior: SnackBarBehavior.floating,
+                      //     content: Text('Pytanie zostało ukryte'));
+                      ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie zostało ukryte'));
+                    },
+                    icon: const Icon(Icons.visibility)),
+            // buildSettingsMenu(isQuestionHidden),
           ],
         ),
         body: question == null
             ? Container()
             : Column(
                 children: [
-                  isQuestionHidden
-                      ? DecoratedBox(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.grey[300]),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            'ukryte',
-                            // style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      )
-                      : const SizedBox(),
+                  // isQuestionHidden
+                  //     ? DecoratedBox(
+                  //       decoration: BoxDecoration(
+                  //           borderRadius: BorderRadius.circular(12),
+                  //           color: Colors.grey[300]),
+                  //       child: const Padding(
+                  //         padding: EdgeInsets.all(8.0),
+                  //         child: Text(
+                  //           'ukryte',
+                  //           // style: TextStyle(fontWeight: FontWeight.bold),
+                  //         ),
+                  //       ),
+                  //     )
+                  //     : const SizedBox(),
                   const SizedBox(
                     height: 10.0,
                   ),
@@ -68,9 +90,9 @@ class QuestionListSingle extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 16.0,
                             )),
-                        const SizedBox(height: 30),
+                        // const SizedBox(height: 30),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
                           child: Text(
                             question.a1,
                             textAlign: TextAlign.center,

@@ -80,7 +80,7 @@ class QuestionListScreen extends StatelessWidget {
                     return Card(
                       child: ListTile(
                         contentPadding: const EdgeInsets.all(10.0),
-                        title: buildTitle(qListGlobalFiltered[index]),
+                        title: buildTitle(context, qListGlobalFiltered[index]),
                         subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
                         onTap: () {
                           manager.showSingleFilteredQuestion(index);
@@ -100,9 +100,9 @@ class QuestionListScreen extends StatelessWidget {
   }
 }
 
-Widget buildTitle(Question q) {
+Widget buildTitle(BuildContext context, Question q) {
   return Padding(
-    padding: const EdgeInsets.only(bottom: 8.0),
+    padding: const EdgeInsets.only(bottom: 8.0, right: 0),
     child: Row(
       // mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,9 +112,10 @@ Widget buildTitle(Question q) {
             flex: 7,
             child: Text(q.q, style: const TextStyle())),
         Expanded(
-          child: Text('lvl ${q.level.toString()}',
-            textAlign: TextAlign.right,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+          child: Container(
+            alignment: Alignment.centerRight,
+              // color: Colors.grey,
+              child: context.read<Manager>().getQuestionIcon(q.id)),
         ),
       ],
     ),
@@ -138,7 +139,11 @@ Widget buildSubtitle(BuildContext context, Question q) {
             ),
           ),
           color: labelColors[q.label]),
-      context.read<Manager>().getQuestionIcon(q.id),
+      Text('poz. ${q.level.toString()}',
+        // textAlign: TextAlign.right,
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      // context.read<Manager>().getQuestionIcon(q.id),
 
       // SizedBox(width: 15.0),
       // Icon(Icons.new_releases, color: Colors.grey),

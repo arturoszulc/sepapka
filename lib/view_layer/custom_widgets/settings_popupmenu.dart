@@ -4,17 +4,29 @@ import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 
 
-Widget buildSettingsMenu(bool isQuestionHidden) {
+Widget buildSettingsMenu() {
   return PopupMenuButton(
     icon: const Icon(Icons.settings),
     itemBuilder: (context) => [
       PopupMenuItem(
-        onTap: isQuestionHidden ? () async => await context.read<Manager>().moveQuestionBackToShown() : () async => await context.read<Manager>().doNotShowThisQuestionAnymore(),
-        child: isQuestionHidden ? const Text('Przywróć pytanie') : const Text('Nie pokazuj więcej tego pytania'),
+        onTap: () async => await context.read<Manager>().doNotShowThisQuestionAnymore(),
+        child: Row(
+          children: const [
+            Icon(Icons.visibility_off),
+            SizedBox(width: 10),
+            Text('Ukryj pytanie'),
+          ],
+        ),
       ),
       PopupMenuItem(
         onTap: () => context.read<Manager>().navigate(Screen.remark),
-        child: const Text('Zgłoś uwagę do pytania'),
+        child: Row(
+          children: const [
+            Icon(Icons.message),
+            SizedBox(width: 10),
+            Text('Zgłoś uwagę'),
+          ],
+        ),
       ),
     ],
   );

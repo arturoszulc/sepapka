@@ -84,27 +84,15 @@ class QuestionQuizSingle extends StatelessWidget {
                   ),
                 ]),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              // FloatingActionButton(
-              //     heroTag: 'exit',
-              //     onPressed: () {
-              //       Navigator.of(context)
-              //           .pushNamedAndRemoveUntil('/wrapper', (Route<dynamic> route) => false);
-              //     },
-              //     child: const Icon(Icons.exit_to_app)),
-              Visibility(
-                visible: manager.qStatus == QuestionStatus.noAnswer ? false : true,
-                child: FloatingActionButton.extended(
-                  heroTag: 'next',
-                  onPressed: () async {
-                    await context.read<Manager>().getNextQuizQuestion();
-                  },
-                  label: const Text('Dalej >'),
-                ),
-              ),
-            ]),
+          floatingActionButton: Visibility(
+            visible: manager.qStatus == QuestionStatus.noAnswer ? false : true,
+            child: FloatingActionButton.extended(
+              heroTag: 'next',
+              onPressed: () async {
+                await context.read<Manager>().getNextQuizQuestion();
+              },
+              label: const Text('Dalej >'),
+            ),
           ),
         ),
       ),
