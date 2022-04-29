@@ -69,14 +69,17 @@ class QuestionService {
     // }
 
     //prepare qListGlobal
-    if (!_userService.loggedUser!.isPro) {
+
+    qListGlobal.clear();
+    qListGlobalFiltered.clear();
+    if (_userService.loggedUser!.isPro) {
+      qListGlobal = List<Question>.from(questionList);
+    } else {
       for (Question question in questionList) {
         if (question.level == 1) {
           qListGlobal.add(question);
         }
       }
-    } else {
-      qListGlobal = List<Question>.from(questionList);
     }
 
     debugPrint('qListGlobalLength: ${qListGlobal.length}');

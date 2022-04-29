@@ -1,12 +1,13 @@
 import 'package:sepapka/model_layer/models/question.dart';
 
 
-//przycisk dodający pytania to SIGN OUT
-
 final List<Question> questionList = [
 
   Question( id:'epoDl89w4G4cRcNFrG7Y', q: 'Przez który z wymienionych przewodów, w warunkach normalnych, nie płynie prąd', a1: 'ochronny PE', a2: 'neutralny N', a3: 'fazowy L', a4: 'środkowy M', label: 3, level: 1, assetPath: ''),
   Question( id:'AMJEwqpt0BFHrFPBfOa9', q: 'Widoczny na poniższym rysunku układ sieci to', a1: 'sieć TN-S', a2: 'sieć TT', a3: 'sieć TN-C', a4: 'sieć IT', label: 3, level: 1, assetPath: 'uklad_sieci_tns.png'),
+  Question( id:'2zAyU7iC6ezUClsr00Jb', q: 'Widoczny na poniższym rysunku układ sieci to', a1: 'sieć TN-C', a2: 'sieć TT', a3: 'sieć TN-S', a4: 'sieć IT', label: 3, level: 1, assetPath: 'uklad_sieci_tnc.png'),
+  Question( id:'mtysXyyxAKsI5fDDbxkQ', q: 'Widoczny na poniższym rysunku układ sieci to', a1: 'sieć TT', a2: 'sieć TN-C', a3: 'sieć TN-S', a4: 'sieć IT', label: 3, level: 1, assetPath: 'uklad_sieci_tt.png'),
+  Question( id:'aB3lk8DLlbFkFzAzTYeB', q: 'Widoczny na poniższym rysunku układ sieci to', a1: 'sieć IT', a2: 'sieć TN-C', a3: 'sieć TN-S', a4: 'sieć TT', label: 3, level: 1, assetPath: 'uklad_sieci_it.png'),
   Question( id:'PLVwRwFHsGpH0Wht6A8I', q: 'W Polsce wartości napięć instalacji elektrycznej w budynkach mieszkalnych wynoszą obecnie', a1: '230/400 V', a2: '220/380 V', a3: '110/220 V', a4: '230/230 V', label: 3, level: 1, assetPath: ''),
   Question( id:'byUIns8tvzPsYtTEqGDQ', q: 'W przewodzie pięciożyłowym, wyposażonym w żyłę ochronną o barwie żółto-zielonej, poszczególne żyły fazowe powinny być oznaczone barwami', a1: 'brązową, czarną, szarą', a2: 'brązową, czarną, czerwoną', a3: 'czarną, szarą, białą', a4: 'żółtą, zieloną, białą', label: 3, level: 1, assetPath: ''),
   Question( id:'fsZjPohRT77i8mbkxSlx', q: 'Żadna instalacja elektryczna prądu przemiennego nie może się obyć bez przewodu', a1: 'fazowego L', a2: 'neutralnego N', a3: 'ochronno-neutralnego PEN', a4: 'ochronnego PE', label: 3, level: 1, assetPath: ''),
@@ -16,8 +17,10 @@ final List<Question> questionList = [
   Question( id:'GEejjxG5ANHktyC5u7OG', q: 'Bieguny dodatni i ujemny w obwodach prądu stałego oznacza się symbolami', a1: 'L+, L-', a2: 'L1, L2', a3: 'C, D', a4: 'L+, M', label: 3, level: 1, assetPath: ''),
   Question( id:'FrOMVCFbf0fEykTBCYLe', q: 'Izolacji którego z przewodów NIE można oznaczyć barwą jasnoniebieską', a1: 'ochronnego (PE)', a2: 'środkowego (M)', a3: 'neutralnego (N)', a4: 'bieguna ujemnego (L-)', label: 3, level: 1, assetPath: ''),
   Question( id:'KPPP1yASG9RRCqQev2pG', q: 'Który z elementów NIE JEST środkiem ochrony podstawowej?', a1: 'wyłącznik nadprądowy', a2: 'izolacja przewodu', a3: 'bariera', a4: 'obudowa', label: 2, level: 1, assetPath: ''),
+  Question( id:'ybjakPUbkUWzMbzGo8Me', q: 'Wśród rodzajów ochrony przed porażeniem elektrycznym NIE znajdziemy', a1: 'ochrony izolującej', a2: 'ochrony podstawowej', a3: 'ochrony przy uszkodzeniu', a4: 'ochrony uzupełniającej', label: 2, level: 1, assetPath: ''),
+  Question( id:'avv65tF0dxefRkpHpnQg', q: 'Środki ochrony przy uszkodzeniu mają za zadanie', a1: 'chronić przed dotykiem pośrednim', a2: 'chronić przed dotykiem bezpośrednim', a3: 'zminimalizować skutki porażenia elektrycznego', a4: 'nie dopuścić do wystąpienia pożaru', label: 2, level: 1, assetPath: ''),
   Question( id:'NGiewEECb8HxxcbhpTnL', q: 'Aby wyłącznik różnicowoprądowy stanowił skuteczną ochronę uzupełniającą, jego znamionowy prąd różnicowy nie może przekraczać', a1: '30 mA', a2: '10 mA', a3: '100 mA', a4: '500 mA', label: 2, level: 1, assetPath: ''),
-  Question( id:'VaUUnTSBLGPjrNDRoh4X', q: 'Środki ochrony podstawowej mają za zadanie', a1: 'uniemożliwić dotyk bezpośredni', a2: 'zabezpieczyć dom przed uderzeniem pioruna', a3: 'zabezpieczyć instalację elektryczną przed skutkami pożaru', a4: 'odciąć zasilanie po wystąpieniu zwarcia', label: 2, level: 1, assetPath: ''),
+  Question( id:'VaUUnTSBLGPjrNDRoh4X', q: 'Środki ochrony podstawowej mają za zadanie', a1: 'uniemożliwić dotyk bezpośredni', a2: 'zabezpieczyć dom przed uderzeniem pioruna', a3: 'chronić przed dotykiem pośrednim', a4: 'odciąć zasilanie po wystąpieniu zwarcia', label: 2, level: 1, assetPath: ''),
   Question( id:'h7LfvK6tudgatMZlZWF1', q: 'Poniższa grafika przedstawia dotyk', a1: 'pośredni', a2: 'bezpośredni', a3: 'zamierzony', a4: 'wyrównawczy', label: 2, level: 1, assetPath: 'dotyk_posredni.png'),
   Question( id:'Rw6DoNprhXRUY2dSVbh0', q: 'Której klasy ochronności urządzeń elektrycznych dotyczy poniższy symbol?', a1: 'klasy II', a2: 'klasy 0', a3: 'klasy I', a4: 'klasy III', label: 4, level: 1, assetPath: 'klasa_II_ochronnosci.png'),
   Question( id:'gvn0FfFP3aPmO4Q1Li75', q: 'Której klasy ochronności urządzeń elektrycznych dotyczy poniższy symbol?', a1: 'klasy III', a2: 'klasy 0', a3: 'klasy I', a4: 'klasy II', label: 4, level: 1, assetPath: 'klasa_III_ochronnosci.png'),
@@ -68,11 +71,14 @@ final List<Question> questionList = [
   Question( id:'S5Ti0yeOm1nhgKMBIpK6', q: 'Układ sieci TT można stosować tylko wtedy, gdy', a1: 'możłiwe jest oddzielenie uziomu roboczego od uziomu przewodu ochronnego', a2: 'stosowane jest bardzo niskie napięcie ochronne', a3: 'istnieje uziom fundamentowy', a4: 'sieć jest trójfazowa', label: 3, level: 3, assetPath: ''),
   Question( id:'jLxY6iTnYocYtkq93uoi', q: 'Sieć w układzie IT NIE może posiadać', a1: 'części przewodzących dostępnych nieuziemionych', a2: 'wszystkich części czynnych odizolowanych od ziemi', a3: 'jednego punktu sieci połączonego z ziemią poprzez impedancję', a4: 'części przewodzących dostępnych uziemionych niezależnie', label: 3, level: 3, assetPath: ''),
   Question( id:'bxK9KJFVZhbH3GFLBlwq', q: 'W układzie TN-S części przewodzące dostępne są', a1: 'połączone bezpośrednio z uziemionym punktem sieci', a2: 'połączone bezpośrednio z ziemią', a3: 'połączone z ziemią przez impedancję', a4: 'połączone z uziemionym punktem sieci przez impedancję', label: 3, level: 3, assetPath: ''),
+  Question( id:'zCo5uCmoTubDnLlyQWdX', q: 'Który z wymienionych układów sieci znajduje zastosowanie w pomieszczeniach medycznych, górnictwie i przemyśle chemicznym?', a1: 'IT', a2: 'TT', a3: 'TN-C', a4: 'TN-S', label: 3, level: 3, assetPath: ''),
   Question( id:'kSQxIViEpGPUUGEaBItC', q: 'Ochrony przez samoczynnie wyłączenie zasilania NIE może realizować', a1: 'rozłącznik izolacyjny', a2: 'bezpiecznik topikowy', a3: 'wyłącznik nadprądowy', a4: 'wyłącznik różnicowoprądowy', label: 2, level: 3, assetPath: ''),
   Question( id:'eQgeDoaX37agSq5ki91l', q: 'Urządzenia III klasy ochronności mogą być zasilanie napięciem', a1: 'SELV lub PELV', a2: 'przemiennym do 230 V', a3: 'stałym do 230 V', a4: 'przemiennym do 1 kV', label: 4, level: 3, assetPath: ''),
   Question( id:'A1dKs2Fjh96Cpb7bJTsX', q: 'Temperatura graniczna izolacji żyły wykonanej z polichlorku winylu (PVC) wynosi', a1: '70°C', a2: '60°C', a3: '90°C', a4: '105°C', label: 4, level: 3, assetPath: ''),
   Question( id:'yPHcWOKQga0pPc2rroDX', q: 'Temperatura graniczna izolacji żyły wykonanej z polietylenu usieciowanego (XLPE) wynosi', a1: '90°C', a2: '60°C', a3: '70°C', a4: '105°C', label: 4, level: 3, assetPath: ''),
   Question( id:'VIQJuz8TGDQLl5Coe5j5', q: 'Wyłączniki o charakterystyce typu B mają przedział zadziałania wyzwalaczy elektromagnesowych na poziomie', a1: '(3 \u00F7 5) I\u2099', a2: '(5 \u00F7 10) I\u2099', a3: '(10 \u00F7 20) I\u2099', a4: '(1 \u00F7 3) I\u2099', label: 4, level: 3, assetPath: ''),
+  Question( id:'ioBUBIe4grPe1oSzwJW3', q: 'Który z symboli oznacza najwyższą ochronę urządzenia przed wnikaniem ciał stałych?', a1: 'IP67', a2: 'IP48', a3: 'IP49', a4: 'IP12', label: 4, level: 3, assetPath: ''),
+  Question( id:'MDo5DvMfSWhfTCPCv4C1', q: 'Który z symboli oznacza najwyższą ochronę urządzenia przed dostawaniem do jego wnęrza wody?', a1: 'IP48', a2: 'IP57', a3: 'IP12', a4: 'IP66', label: 4, level: 3, assetPath: ''),
 
 
 ];
