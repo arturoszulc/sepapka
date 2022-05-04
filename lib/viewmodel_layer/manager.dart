@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-
-// import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart'; //iconData is from here
 import 'package:sepapka/locator.dart';
@@ -18,6 +16,7 @@ import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/consts/question.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class Manager extends ChangeNotifier {
   //Services Injection
@@ -33,6 +32,7 @@ class Manager extends ChangeNotifier {
 
   String _errorMsg = '';
   String _infoMsg = '';
+  String appVersion = '';
 
   Screen _currentScreen = Screen.loading;
 
@@ -93,6 +93,11 @@ class Manager extends ChangeNotifier {
   Stream<List<RankUser>?> get userRankUser => _databaseService.userRankUser;
 
   Manager() {
+    //get app version
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      appVersion = packageInfo.version;
+    });
+
     //on initialize, subscribe to stream that checks if user is logged in or not
     watchAuthUser();
   }
@@ -217,7 +222,6 @@ class Manager extends ChangeNotifier {
   resetPassword(String email) async {
     debugPrint('/// manager ResetPassword deployed');
     navigate(Screen.loading);
-    //TODO: uncomment the _authService method
     Object resetPassResult = await _authService.resetPassword(email);
     if (resetPassResult is Failure) {
       await setError(resetPassResult);
@@ -387,7 +391,7 @@ class Manager extends ChangeNotifier {
   }
 
   sendQuestionRemark(String remark) async {
-    Object sendResult = await _questionService.sendQuestionRemark(remark);
+    Object sendResult = await _questionService.sendQuestionRemark(remark, appVersion);
     if (sendResult is Failure) {
       setError(sendResult);
       navigate(Screen.remark);

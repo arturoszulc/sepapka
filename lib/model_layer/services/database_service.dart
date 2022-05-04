@@ -8,14 +8,14 @@ import 'package:sepapka/model_layer/models/remark.dart';
 import 'package:sepapka/utils/consts/strings.dart';
 import 'package:sepapka/utils/methods.dart';
 
-import '../models/question.dart';
-
 class DatabaseService {
   final CollectionReference dataCollection = FirebaseFirestore.instance.collection('data');
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
   final CollectionReference remarksCollection = FirebaseFirestore.instance.collection('remarks');
-  final Query usersRankQuery =
-      FirebaseFirestore.instance.collection('users').orderBy('rankTotalPoints', descending: true).limit(10);
+  final Query usersRankQuery = FirebaseFirestore.instance
+      .collection('users')
+      .orderBy('rankTotalPoints', descending: true)
+      .limit(10);
 
   // //UPDATE USER DATA
   // DO NOT USE ASYNC/AWAIT on SET function, because when device is offline, it won't return
@@ -157,6 +157,7 @@ class DatabaseService {
     return remarksCollection
         .doc()
         .set({
+          remarkAppVersion: remark.appV,
           remarkDate: remark.date,
           remarkQuestion: remark.question,
           remarkText: remark.text,

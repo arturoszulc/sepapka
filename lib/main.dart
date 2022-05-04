@@ -5,11 +5,13 @@ import 'package:sepapka/locator.dart';
 import 'package:sepapka/utils/theme_data.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // wymagane do inicjalizacji Firebase
   await Firebase.initializeApp(); // wymagane do inicjalizacji Firebase
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   setupGetIt();
   runApp(const MyApp());
 }
@@ -25,9 +27,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Manager>(
           create: (context) => Manager(),
         ),
-        // ChangeNotifierProvider<NavManager>(
-        //   create: (context) => NavManager(),
-        // ),
       ],
       child: MaterialApp(
         title: 'SEPapka',

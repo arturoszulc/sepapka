@@ -51,7 +51,7 @@ class RemarkScreen extends StatelessWidget {
                     textInputAction: TextInputAction.done,
                       // expands: true,
                       maxLines: 6,
-                      decoration: InputDecoration(border: const OutlineInputBorder()),
+                      decoration: const InputDecoration(border: OutlineInputBorder()),
                       // hintText: ,
                       onChanged: (val) {
                         remark = val;

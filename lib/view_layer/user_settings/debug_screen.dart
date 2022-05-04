@@ -30,12 +30,12 @@ class DebugScreen extends StatelessWidget {
             const SizedBox(height: 50,),
 
             Text('LoggedUser ID: ${context.read<Manager>().loggedUser!.documentId}'),
-            Text('LoggedUser qNew: ${context.read<Manager>().loggedUser!.qListNew.length}'),
+            const SizedBox(height: 10),
+            Text('Widoczne pytania: ${context.read<Manager>().loggedUser!.qListNew.length}'),
             Text(
-                'LoggedUser qPractice: ${context.read<Manager>().loggedUser!.qListPractice.length}'),
-            Text(
-                'LoggedUser qNotShown: ${context.read<Manager>().loggedUser!.qListNotShown.length}'),
-            Text('LoggedUser is Pro: ${context.read<Manager>().loggedUser!.isPro.toString()}'),
+                'Ukryte pytania: ${context.read<Manager>().loggedUser!.qListNotShown.length}'),
+            const SizedBox(height: 10),
+            Text('LoggedUser.isPro: ${context.read<Manager>().loggedUser!.isPro.toString()}'),
             const SizedBox(height: 20.0),
 
             MenuButton(

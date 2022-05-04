@@ -12,6 +12,12 @@ class MenuScreen extends StatelessWidget {
     debugPrint('*** Menu Main Screen built ***');
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text('v. ${context.read<Manager>().appVersion}'),
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

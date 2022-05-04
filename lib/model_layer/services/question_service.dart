@@ -280,12 +280,14 @@ class QuestionService {
     _userService.updateLoggedUserInDb();
   }
 
-  Future<Object> sendQuestionRemark(String remark) async {
+  Future<Object> sendQuestionRemark(String remark, String appVersion) async {
     //validate data
     Object validateResult = validateRemark(remark);
     if (validateResult is Failure) return validateResult;
     try {
-      _databaseService.sendQuestionRemark(Remark(
+      _databaseService.sendQuestionRemark(
+          Remark(
+        appV: appVersion,
         date: DateTime.now(),
         question: currentQuestion!.id,
         text: remark,
