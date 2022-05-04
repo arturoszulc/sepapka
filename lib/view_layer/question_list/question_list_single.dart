@@ -14,7 +14,7 @@ class QuestionListSingle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint('*** QuestionListSingle Screen built ***');
-
+    // ScaffoldMessenger.of(context).clearSnackBars();
     // final manager = Provider.of<Manager>(context);
     final int index = Provider.of<Manager>(context).qListGlobalFilteredIndex;
     final int filteredListLength = context.read<Manager>().qListGlobalFiltered.length - 1;
@@ -120,7 +120,8 @@ class QuestionListSingle extends StatelessWidget {
                 onPressed: index == 0
                     ? null
                     : () {
-                        context.read<Manager>().showSingleFilteredQuestion(index - 1);
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                  context.read<Manager>().showSingleFilteredQuestion(index - 1);
                       },
               ),
               IconButton(
@@ -131,7 +132,8 @@ class QuestionListSingle extends StatelessWidget {
                 onPressed: index == filteredListLength
                     ? null
                     : () {
-                        context.read<Manager>().showSingleFilteredQuestion(index + 1);
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                  context.read<Manager>().showSingleFilteredQuestion(index + 1);
                       },
               ),
             ],

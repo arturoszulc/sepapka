@@ -12,7 +12,6 @@ class QuestionListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint('*** QuestionListScreen built ***');
-
     final manager = Provider.of<Manager>(context);
     List<Question> qListGlobalFiltered = manager.qListGlobalFiltered;
 
