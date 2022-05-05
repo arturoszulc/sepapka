@@ -38,7 +38,6 @@ class ValidationService {
   void validateEmail(String val) {
     bool emailValid = RegExp(emailPattern).hasMatch(val);
     if (!emailValid) {
-      // if (val.isEmpty || !val.contains('@') || !val.contains('.\S')) {
       _email = ValidationModel(null, errorValEmail);
     } else {
       _email = ValidationModel(val, null);
@@ -48,7 +47,6 @@ class ValidationService {
   void validateEmailRemind(String val) {
     bool emailValid = RegExp(emailPattern).hasMatch(val);
     if (!emailValid) {
-      // if (val.isEmpty || !val.contains('@') || !val.contains('.\S')) {
       _emailRemind = ValidationModel(null, errorValEmail);
     } else {
       _emailRemind = ValidationModel(val, null);
@@ -59,13 +57,10 @@ class ValidationService {
     bool passwordValidLength = RegExp(passwordPatternLength).hasMatch(val);
     if (!passwordValidLength) {
       _password = ValidationModel(null, errorValPasswordLength);
-      // return;
     } else {
-      debugPrint('PASSED LENGTH VAL');
       bool passwordValidComplexity = RegExp(passwordPatternComplexity).hasMatch(val);
       if (!passwordValidComplexity) {
         _password = ValidationModel(null, errorValPasswordComplexity);
-        // return;
       } else {
         _password = ValidationModel(val, null);
       }
