@@ -7,8 +7,6 @@ import 'package:sepapka/utils/consts/nav.dart';
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
   final _authFormKey = GlobalKey<FormState>();
-  String email = '';
-  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -31,39 +29,49 @@ class SignInScreen extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20.0),
-
                   //pole EMAIL
                   TextFormField(
+                    initialValue: manager.email.value,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Adres e-mail',
+                      errorText: manager.email.error,
                     ),
-                    onChanged: (val) {
-                      email = val;
+                    onChanged: (String val) {
+                      manager.validateEmail(val);
                     },
+                    onTap: () => manager.hideError(),
+                    // onEditingComplete: () {
+                    //
+                    // },
                   ),
 
                   //pole PASSWORD
                   TextFormField(
+                    initialValue: manager.password.value,
                     obscureText: true,
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Hasło',
+                      errorText: manager.password.error,
+                      errorMaxLines: 2,
                     ),
-                    onChanged: (val) {
-                      password = val;
+                    onChanged: (String val) {
+                      manager.validatePassword(val);
                     },
+                    onTap: () => manager.hideError(),
                   ),
                 ],
               ),
             ),
+            const SizedBox(height: 20,),
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.only(top: 10.0, bottom: 5.0),
                 child: Text(
                   manager.errorMsg.toString(),
-                  style: const TextStyle(color: Colors.red),
+                  style: TextStyle(color: Colors.grey[700]),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -74,20 +82,17 @@ class SignInScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {
-                      manager.signIn(email: email, password: password);
-                      // manager.addQuestionsToDb();
-                    },
+                    onPressed: (!manager.isEmailAndPasswordValid) ? null : () =>
+                      manager.signIn(email: 'manager.email.value!', password: manager.password.value!),
+
                     child: const Text('Zaloguj się'),
                   ),
                 ),
                 const SizedBox(width: 20),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {
-                      manager.register(email: email, password: password);
-                      // manager.addQuestionsToDb();
-                    },
+                    onPressed: (!manager.isEmailAndPasswordValid) ? null : () =>
+                      manager.register(email: manager.email.value!, password: manager.password.value!),
                     child: const Text('Utwórz konto'),
                   ),
                 ),
@@ -109,20 +114,14 @@ class SignInScreen extends StatelessWidget {
               label: const Text('Zaloguj się przez Google'),
             ),
             const SizedBox(height: 10),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text('Nie pamiętasz hasła?'),
-                TextButton(
-                  onPressed: () {
-                    context.read<Manager>().navigate(Screen.resetPassword);
-                  },
-                  child: const Text(
-                    'Zresetuj hasło',
-                    style: TextStyle(decoration: TextDecoration.underline),
-                  ),
-                ),
-              ],
+            TextButton(
+              onPressed: () {
+                context.read<Manager>().navigate(Screen.resetPassword);
+              },
+              child: const Text(
+                'Nie pamiętasz hasła?',
+                style: TextStyle(decoration: TextDecoration.underline),
+              ),
             ),
 
           // //if there's message in manager, show dialog

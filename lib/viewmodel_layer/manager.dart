@@ -8,10 +8,12 @@ import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/model_layer/models/rank_user.dart';
+import 'package:sepapka/model_layer/models/validation.dart';
 import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/question_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
+import 'package:sepapka/model_layer/services/validation_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/nav.dart';
@@ -24,6 +26,7 @@ class Manager extends ChangeNotifier {
   UserService _userService = serviceLocator.get<UserService>();
   QuestionService _questionService = serviceLocator.get<QuestionService>();
   DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
+  ValidationService _validationService = serviceLocator.get<ValidationService>();
 
   //Manager properties
   bool _loading = false;
@@ -92,6 +95,14 @@ class Manager extends ChangeNotifier {
 
   Stream<List<RankUser>?> get userRankUser => _databaseService.userRankUser;
 
+
+  //ValidationService
+  ValidationModel get email => _validationService.email;
+  ValidationModel get emailRemind => _validationService.emailRemind;
+  ValidationModel get password => _validationService.password;
+  ValidationModel get remark => _validationService.remark;
+  bool get isEmailAndPasswordValid => _validationService.isEmailAndPasswordValid;
+
   Manager() {
     //get app version
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
@@ -120,6 +131,10 @@ class Manager extends ChangeNotifier {
       debugPrint('setError debugPrint: $_errorMsg');
       notifyListeners();
     }
+  }
+  hideError(){
+    _errorMsg = '';
+    notifyListeners();
   }
 
   setMessage(String msg) {
@@ -170,10 +185,9 @@ class Manager extends ChangeNotifier {
   }
 
   ////////////////////////
-  // METHODS ON DEMAND  //
+  //        AUTH        //
   ////////////////////////
 
-  // AUTH
 
   signIn({required String email, required String password}) async {
     //start loading app
@@ -235,7 +249,9 @@ class Manager extends ChangeNotifier {
     }
   }
 
-  // USER
+  ////////////////////////
+  //        USER        //
+  ////////////////////////
 
   goPro(bool bool) async {
     navigate(Screen.loading);
@@ -256,7 +272,10 @@ class Manager extends ChangeNotifier {
     navigate(Screen.menu);
   }
 
-  // QUESTIONS
+  ////////////////////////
+  //     QUESTIONS      //
+  ////////////////////////
+
 
   chooseQuestionLevel(int level) async {
     await _questionService.setQuestionLevel(level);
@@ -401,6 +420,29 @@ class Manager extends ChangeNotifier {
       navigate(Screen.quizQuestionSingle);
     }
   }
+
+  ////////////////////////
+  //     VALIDATION     //
+  ////////////////////////
+
+  void validateEmail(String val) {
+    _validationService.validateEmail(val);
+    notifyListeners();
+  }
+  void validatePassword(String val) {
+    _validationService.validatePassword(val);
+    notifyListeners();
+  }
+  void validateEmailRemind(String val) {
+    _validationService.validateEmailRemind(val);
+    notifyListeners();
+  }
+  void validateRemark(String val) {
+    _validationService.validateRemark(val);
+    notifyListeners();
+  }
+
+
 
   Widget getQuestionIcon(String qId) {
     return _userService.getQListIcon(qId);

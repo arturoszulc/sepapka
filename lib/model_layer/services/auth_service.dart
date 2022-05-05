@@ -21,10 +21,10 @@ class AuthService {
   // register with e-mail and password
 
   Future<Object> registerWithEmailAndPassword(String email, String password) async {
-    Object valEmailResult = validateEmail(email);
-    if (valEmailResult is Failure) return valEmailResult;
-    Object valPasswordResult = validatePassword(password);
-    if (valPasswordResult is Failure) return valPasswordResult;
+    // Object valEmailResult = validateEmail(email);
+    // if (valEmailResult is Failure) return valEmailResult;
+    // Object valPasswordResult = validatePassword(password);
+    // if (valPasswordResult is Failure) return valPasswordResult;
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password).timeout(
             const Duration(seconds: 5),
@@ -83,8 +83,8 @@ class AuthService {
   }
 
   Future<Object> resetPassword(String email) async {
-    Object valEmailResult = validateEmail(email);
-    if (valEmailResult is Failure) return valEmailResult;
+    // Object valEmailResult = validateEmail(email);
+    // if (valEmailResult is Failure) return valEmailResult;
     try {
       await _auth.sendPasswordResetEmail(email: email);
       return Success();

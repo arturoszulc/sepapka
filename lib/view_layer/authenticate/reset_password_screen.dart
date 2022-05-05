@@ -19,11 +19,13 @@ class ResetPasswordScreen extends StatelessWidget {
 
     //clear field on rebuild
     // emailFieldController.clear();
-    final error = Provider.of<Manager>(context).errorMsg;
+    final manager = Provider.of<Manager>(context);
+    final error = manager.errorMsg;
     // final error = context.read<Manager>().errorMsg;
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.signIn),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -37,6 +39,7 @@ class ResetPasswordScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Column(
             children: [
+              const Text('Na podany niżej adres e-mail zostanie wysłany link do zresetowania hasła'),
               Form(
                 key: _resetForm,
                 child: Column(
@@ -47,11 +50,12 @@ class ResetPasswordScreen extends StatelessWidget {
                     TextFormField(
                       // controller: emailFieldController,
                       textInputAction: TextInputAction.done,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Adres e-mail',
+                        errorText: manager.emailRemind.error,
                       ),
                       onChanged: (val) {
-                        email = val;
+                        manager.validateEmailRemind(val);
                       },
                     ),
 
@@ -70,7 +74,7 @@ class ResetPasswordScreen extends StatelessWidget {
               const SizedBox(height: 10.0),
               ElevatedButton(
                 onPressed: () async {
-                  await context.read<Manager>().resetPassword(email);
+                  await manager.resetPassword(email);
                   // if (result != null) {
                   //   Navigator.of(context).pushNamedAndRemoveUntil(
                   //     '/wrapper', (Route<dynamic> route) => false);
