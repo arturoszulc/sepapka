@@ -409,8 +409,8 @@ class Manager extends ChangeNotifier {
     }
   }
 
-  sendQuestionRemark(String remark) async {
-    Object sendResult = await _questionService.sendQuestionRemark(remark, appVersion);
+  sendQuestionRemark() async {
+    Object sendResult = await _questionService.sendQuestionRemark(remark.value!, appVersion);
     if (sendResult is Failure) {
       setError(sendResult);
       navigate(Screen.remark);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/view_layer/custom_widgets/settings_popupmenu.dart';
+import 'package:sepapka/utils/custom_widgets/settings_popupmenu.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 

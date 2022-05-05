@@ -75,8 +75,13 @@ class ValidationService {
   void validateRemark(String val) {
     bool remarkValid = RegExp(remarkPattern).hasMatch(val);
     if (!remarkValid) {
-      _remark = ValidationModel(null, errorRemarkChars);
-    } else {
+      if (val.isEmpty) {
+        _remark = ValidationModel(null, null);
+      } else {
+        _remark = ValidationModel(null, errorRemarkChars);
+      }
+    }
+    else {
       _remark = ValidationModel(val, null);
     }
   }

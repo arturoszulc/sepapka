@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
-import 'package:sepapka/view_layer/custom_widgets/app_loading.dart';
+import 'package:sepapka/utils/custom_widgets/app_loading.dart';
 import 'package:sepapka/view_layer/question_list/question_list_filter.dart';
 import 'package:sepapka/view_layer/question_list/question_list_single.dart';
 import 'package:sepapka/view_layer/question_quiz/choose_cat_screen.dart';
@@ -16,7 +16,7 @@ import 'package:sepapka/view_layer/user_settings/settings_main_screen.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import 'authenticate/sing_in_screen.dart';
-import 'custom_widgets/dialog_message.dart';
+import '../../utils/custom_widgets/dialog_message.dart';
 import 'menu/menu_main_screen.dart';
 
 class Wrapper extends StatelessWidget {

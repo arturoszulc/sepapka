@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/utils/consts/nav.dart';
-
-
-
+import 'package:sepapka/utils/custom_widgets/sign_in_button.dart';
+import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   ResetPasswordScreen({Key? key}) : super(key: key);
@@ -20,7 +18,7 @@ class ResetPasswordScreen extends StatelessWidget {
     //clear field on rebuild
     // emailFieldController.clear();
     final manager = Provider.of<Manager>(context);
-    final error = manager.errorMsg;
+    final errorMsg = manager.errorMsg;
     // final error = context.read<Manager>().errorMsg;
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.signIn),
@@ -39,7 +37,8 @@ class ResetPasswordScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Column(
             children: [
-              const Text('Na podany niżej adres e-mail zostanie wysłany link do zresetowania hasła'),
+              const Text(
+                  'Na podany niżej adres e-mail zostanie wysłany link do zresetowania hasła'),
               Form(
                 key: _resetForm,
                 child: Column(
@@ -48,6 +47,7 @@ class ResetPasswordScreen extends StatelessWidget {
 
                     //pole EMAIL
                     TextFormField(
+                      initialValue: manager.emailRemind.value,
                       // controller: emailFieldController,
                       textInputAction: TextInputAction.done,
                       decoration: InputDecoration(
@@ -57,8 +57,8 @@ class ResetPasswordScreen extends StatelessWidget {
                       onChanged: (val) {
                         manager.validateEmailRemind(val);
                       },
+                      onTap: () => manager.hideError(),
                     ),
-
                   ],
                 ),
               ),
@@ -66,28 +66,24 @@ class ResetPasswordScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
-                  error,
-                  style: const TextStyle(color: Colors.red),
-                  textAlign: TextAlign.center,
+                  errorMsg,
+                  style: TextStyle(color: Colors.grey[700]),
+                  textAlign: TextAlign.left,
                 ),
               ),
               const SizedBox(height: 10.0),
-              ElevatedButton(
-                onPressed: () async {
-                  await manager.resetPassword(email);
-                  // if (result != null) {
-                  //   Navigator.of(context).pushNamedAndRemoveUntil(
-                  //     '/wrapper', (Route<dynamic> route) => false);
-                  // }
-                },
-                child: const Text('Resetuj hasło'),
-              ),
+              SignInButton(
+                  onPressed: (manager.emailRemind.value == null)
+                      ? null
+                      : () async {
+                          await manager.resetPassword(manager.emailRemind.value!);
+                        },
+                  label: 'Resetuj hasło'),
               const SizedBox(height: 100),
             ],
           ),
         ),
       ),
     );
-
   }
 }

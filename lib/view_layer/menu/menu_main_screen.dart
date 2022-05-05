@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
-import 'package:sepapka/view_layer/custom_widgets/menu_button.dart';
+import 'package:sepapka/utils/custom_widgets/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class MenuScreen extends StatelessWidget {

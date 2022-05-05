@@ -137,7 +137,7 @@ class AuthService {
         return "Hasło nieprawidłowe";
       case "ERROR_USER_NOT_FOUND":
       case "user-not-found":
-        return "Nie znaleziono konta z podanym adresem e-mail";
+        return "Nie znaleziono konta zarejestrowanego na podany adres e-mail";
       case "ERROR_USER_DISABLED":
       case "user-disabled":
         return "Użytkownik jest zablokowany";

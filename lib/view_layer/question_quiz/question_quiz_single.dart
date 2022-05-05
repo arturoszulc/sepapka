@@ -3,12 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/utils/consts/question.dart';
-import 'package:sepapka/view_layer/custom_widgets/dialog_leave_session.dart';
+import 'package:sepapka/utils/custom_widgets/dialog_leave_session.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
-import '../custom_widgets/answer_button.dart';
-import '../custom_widgets/build_question.dart';
-import '../custom_widgets/single_question_top_bar.dart';
+import '../../utils/custom_widgets/answer_button.dart';
+import '../../utils/custom_widgets/build_question.dart';
+import '../../utils/custom_widgets/single_question_top_bar.dart';
 
 class QuestionQuizSingle extends StatelessWidget {
   const QuestionQuizSingle({Key? key}) : super(key: key);

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/utils/consts/nav.dart';
-
+import 'package:sepapka/utils/custom_widgets/sign_in_button.dart';
+import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
@@ -41,9 +42,6 @@ class SignInScreen extends StatelessWidget {
                       manager.validateEmail(val);
                     },
                     onTap: () => manager.hideError(),
-                    // onEditingComplete: () {
-                    //
-                    // },
                   ),
 
                   //pole PASSWORD
@@ -64,7 +62,9 @@ class SignInScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
@@ -81,19 +81,20 @@ class SignInScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: (!manager.isEmailAndPasswordValid) ? null : () =>
-                      manager.signIn(email: 'manager.email.value!', password: manager.password.value!),
-
-                    child: const Text('Zaloguj się'),
-                  ),
+                    child: SignInButton(onPressed: (!manager.isEmailAndPasswordValid)
+                        ? null : () =>
+                        manager.signIn(
+                            email: manager.email.value!, password: manager.password.value!),
+                        label: 'Zaloguj się')
                 ),
                 const SizedBox(width: 20),
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: (!manager.isEmailAndPasswordValid) ? null : () =>
-                      manager.register(email: manager.email.value!, password: manager.password.value!),
-                    child: const Text('Utwórz konto'),
+                  child: SignInButton(
+                    onPressed: (!manager.isEmailAndPasswordValid)
+                        ? null : () =>
+                        manager.register(
+                            email: manager.email.value!, password: manager.password.value!),
+                    label: 'Utwórz konto',
                   ),
                 ),
               ],
@@ -105,12 +106,14 @@ class SignInScreen extends StatelessWidget {
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
-                onPressed: () {
-                  manager.signInWithGoogle();
-                },
-                icon: Image.asset('assets/images/general/g-logo.png',
-                  height: 22,
-                  width: 22,),
+              onPressed: () {
+                manager.signInWithGoogle();
+              },
+              icon: Image.asset(
+                'assets/images/general/g-logo.png',
+                height: 22,
+                width: 22,
+              ),
               label: const Text('Zaloguj się przez Google'),
             ),
             const SizedBox(height: 10),
@@ -124,8 +127,8 @@ class SignInScreen extends StatelessWidget {
               ),
             ),
 
-          // //if there's message in manager, show dialog
-          // if (manager.infoMsg.isNotEmpty) MessageDialog(msg: manager.infoMsg),
+            // //if there's message in manager, show dialog
+            // if (manager.infoMsg.isNotEmpty) MessageDialog(msg: manager.infoMsg),
           ],
         ),
       ),
