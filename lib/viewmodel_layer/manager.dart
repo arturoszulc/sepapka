@@ -11,6 +11,7 @@ import 'package:sepapka/model_layer/models/rank_user.dart';
 import 'package:sepapka/model_layer/models/validation.dart';
 import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
+import 'package:sepapka/model_layer/services/purchase_service.dart';
 import 'package:sepapka/model_layer/services/question_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/model_layer/services/validation_service.dart';
@@ -27,6 +28,7 @@ class Manager extends ChangeNotifier {
   QuestionService _questionService = serviceLocator.get<QuestionService>();
   DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
   ValidationService _validationService = serviceLocator.get<ValidationService>();
+  PurchaseService _purchaseService = serviceLocator.get<PurchaseService>();
 
   //Manager properties
   bool _loading = false;
@@ -182,6 +184,18 @@ class Manager extends ChangeNotifier {
       return;
     }
     navigate(Screen.menu);
+  }
+  bool get isAvailable => _purchaseService.isAvailable;
+  String get product => _purchaseService.product;
+
+  checkIfStoreIsAvailable() async {
+    _purchaseService.checkIfStoreIsAvailable();
+    notifyListeners();
+  }
+
+  getUserProducts() async {
+    await _purchaseService.getUserProducts();
+  notifyListeners();
   }
 
   ////////////////////////

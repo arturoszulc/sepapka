@@ -13,7 +13,8 @@ class DebugScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Debug Screen built ***');
 
-
+    String product = Provider.of<Manager>(context).product;
+    bool isAvailable = Provider.of<Manager>(context).isAvailable;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -29,26 +30,61 @@ class DebugScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 50,),
 
-            Text('LoggedUser ID: ${context.read<Manager>().loggedUser!.documentId}'),
+            Text('LoggedUser ID: ${context
+                .read<Manager>()
+                .loggedUser!
+                .documentId}'),
             const SizedBox(height: 10),
-            Text('Widoczne pytania: ${context.read<Manager>().loggedUser!.qListNew.length}'),
+            Text('Widoczne pytania: ${context
+                .read<Manager>()
+                .loggedUser!
+                .qListNew
+                .length}'),
             Text(
-                'Ukryte pytania: ${context.read<Manager>().loggedUser!.qListNotShown.length}'),
+                'Ukryte pytania: ${context
+                    .read<Manager>()
+                    .loggedUser!
+                    .qListNotShown
+                    .length}'),
             const SizedBox(height: 10),
-            Text('LoggedUser.isPro: ${context.read<Manager>().loggedUser!.isPro.toString()}'),
+            Text('LoggedUser.isPro: ${context
+                .read<Manager>()
+                .loggedUser!
+                .isPro
+                .toString()}'),
             const SizedBox(height: 20.0),
 
             MenuButton(
-              label: context.read<Manager>().loggedUser!.isPro ? 'Go FREE' : 'Go PRO',
+              label: context
+                  .read<Manager>()
+                  .loggedUser!
+                  .isPro ? 'Go FREE' : 'Go PRO',
               onPressed: () async {
                 var result = await goProDialog(context);
-                if (result) await context.read<Manager>().goPro(!context.read<Manager>().loggedUser!.isPro);
+                if (result) {
+                  await context.read<Manager>().goPro(!context
+                    .read<Manager>()
+                    .loggedUser!
+                    .isPro);
+                }
+              },),
+            MenuButton(
+              label: 'get products',
+              onPressed: () async {
+                await context.read<Manager>().checkIfStoreIsAvailable();
+                await context.read<Manager>().getUserProducts();
+              },),
+            Text('Is Available: ${isAvailable.toString()}'),
+            Text('Product:$product'),
+            MenuButton(
+              label: 'buy product',
+              onPressed: () async {
+                await context.read<Manager>().buyProduct();
               },),
           ],
         ),
       ),
     );
-
   }
 
   // DELETE THIS WIDGET RIGHT AFTER DELETING GO PRO/FREE BUTTON
@@ -57,23 +93,24 @@ class DebugScreen extends StatelessWidget {
     return showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Czy na pewno chcesz to zrobić?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context, rootNavigator: true).pop(false);
-            },
-            child: const Text('Nie'),
+      builder: (BuildContext context) =>
+          AlertDialog(
+            title: const Text('Czy na pewno chcesz to zrobić?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop(false);
+                },
+                child: const Text('Nie'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop(true);
+                },
+                child: const Text('Tak'),
+              ),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context, rootNavigator: true).pop(true);
-            },
-            child: const Text('Tak'),
-          ),
-        ],
-      ),
     );
   }
 }
