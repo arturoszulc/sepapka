@@ -82,7 +82,6 @@ class Manager extends ChangeNotifier {
 
   List<Question> get qListGlobalFiltered => _questionService.qListGlobalFiltered;
 
-  // List<String> get qCategories => _questionService.qCategoryList;
 
   List<int> get countQuestionsByLevel => _questionService.countQuestionsByLevel();
 
@@ -93,9 +92,9 @@ class Manager extends ChangeNotifier {
   Stream<User?> get authUser => _authService.auth.authStateChanges();
 
   //DatabaseService
-  Stream<List<RankUser>> get userRankTop => _databaseService.usersRankTop;
+  // Stream<List<RankUser>> get userRankTop => _databaseService.usersRankTop;
 
-  Stream<List<RankUser>?> get userRankUser => _databaseService.userRankUser;
+  // Stream<List<RankUser>?> get userRankUser => _databaseService.userRankUser;
 
 
   //ValidationService
@@ -104,6 +103,7 @@ class Manager extends ChangeNotifier {
   ValidationModel get password => _validationService.password;
   ValidationModel get remark => _validationService.remark;
   bool get isEmailAndPasswordValid => _validationService.isEmailAndPasswordValid;
+
 
   Manager() {
     //get app version
@@ -185,18 +185,7 @@ class Manager extends ChangeNotifier {
     }
     navigate(Screen.menu);
   }
-  bool get isAvailable => _purchaseService.isAvailable;
-  String get product => _purchaseService.product;
 
-  checkIfStoreIsAvailable() async {
-    _purchaseService.checkIfStoreIsAvailable();
-    notifyListeners();
-  }
-
-  getUserProducts() async {
-    await _purchaseService.getUserProducts();
-  notifyListeners();
-  }
 
   ////////////////////////
   //        AUTH        //
@@ -454,6 +443,52 @@ class Manager extends ChangeNotifier {
   void validateRemark(String val) {
     _validationService.validateRemark(val);
     notifyListeners();
+  }
+
+  ////////////////////////
+  //      PURCHASE      //
+  ////////////////////////
+
+  bool get isAvailable => _purchaseService.isStoreAvailable;
+  String get productName => _purchaseService.productName;
+  String get productPrice => _purchaseService.productPrice;
+  // StreamSubscription? get purchaseStream => _purchaseService.subscription;
+  Stream<bool> get hasPurchased => _purchaseService.purchaseStream;
+  StreamSubscription<bool>? hasPurchasedListener;
+
+
+  initializeStore() async {
+    Object initializeResult = await _purchaseService.initialize();
+    if (initializeResult is Failure) {
+      debugPrint(initializeResult.errorString);
+      navigate(Screen.purchaseError);
+      return;
+    }
+    navigate(Screen.purchase);
+    hasPurchasedListener = hasPurchased.listen((purchaseCompleted) {
+      if (purchaseCompleted) {
+       debugPrint('&&&& PURCHASE COMPLETED &&&&');
+       // hasPurchasedListener!.cancel();
+      }
+      else {debugPrint('Yet nothing happened...');}
+    });
+  }
+
+  leaveStore() async {
+    debugPrint('*** leaving store... ***');
+    // _purchaseService.closeStore();
+    await hasPurchasedListener!.cancel();
+    // hasPurchasedListener = null;
+    navigate(Screen.chooseLevel);
+  }
+
+  getUserProducts() async {
+    await _purchaseService.getUserProducts();
+    notifyListeners();
+  }
+
+  buyProduct() {
+    _purchaseService.buyProduct();
   }
 
 

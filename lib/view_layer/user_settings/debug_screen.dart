@@ -13,7 +13,7 @@ class DebugScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Debug Screen built ***');
 
-    String product = Provider.of<Manager>(context).product;
+    String product = Provider.of<Manager>(context).productName;
     bool isAvailable = Provider.of<Manager>(context).isAvailable;
     return Scaffold(
       appBar: AppBar(
@@ -71,8 +71,8 @@ class DebugScreen extends StatelessWidget {
             MenuButton(
               label: 'get products',
               onPressed: () async {
-                await context.read<Manager>().checkIfStoreIsAvailable();
-                await context.read<Manager>().getUserProducts();
+                // await context.read<Manager>().checkIfStoreIsAvailable();
+                // await context.read<Manager>().getUserProducts();
               },),
             Text('Is Available: ${isAvailable.toString()}'),
             Text('Product:$product'),

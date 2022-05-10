@@ -19,5 +19,8 @@ enum Screen {
   // userRank,
   remark,
   debug,
+  purchase,
+  purchaseError,
+  purchaseSuccess,
 
 }

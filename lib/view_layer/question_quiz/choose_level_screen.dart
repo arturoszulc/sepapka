@@ -86,6 +86,16 @@ class MenuChooseLevel extends StatelessWidget {
             ],
           ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton.extended(onPressed: () {
+          context.read<Manager>().initializeStore();
+        }, label: Row(
+          children: const [
+            Text('Odblokuj pytania'),
+            SizedBox(width: 5),
+            Icon(Icons.lock_open, size: 16, color: Colors.black,),
+          ],
+        ),),
       ),
     );
   }

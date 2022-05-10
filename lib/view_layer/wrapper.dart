@@ -3,6 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/utils/custom_widgets/app_loading.dart';
+import 'package:sepapka/view_layer/purchase/purchase_error_screen.dart';
+import 'package:sepapka/view_layer/purchase/purchase_screen.dart';
+import 'package:sepapka/view_layer/purchase/purchase_success_screen.dart';
 import 'package:sepapka/view_layer/question_list/question_list_filter.dart';
 import 'package:sepapka/view_layer/question_list/question_list_single.dart';
 import 'package:sepapka/view_layer/question_quiz/choose_cat_screen.dart';
@@ -86,6 +89,12 @@ class Wrapper extends StatelessWidget {
         return QuestionListSingle();
       case Screen.listQuestionFilter:
         return QuestionListFilter();
+      case Screen.purchase:
+        return PurchaseScreen();
+      case Screen.purchaseError:
+        return PurchaseError();
+      case Screen.purchaseSuccess:
+        return PurchaseSuccess();
     }
   }
 }

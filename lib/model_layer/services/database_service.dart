@@ -131,26 +131,26 @@ class DatabaseService {
   //   });
   // }
 
-  List<RankUser> _usersRankTop(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return RankUser(
-          documentId: doc.id,
-          username: doc.get(userUsername),
-          rankLevel: doc.get(userRankLevel),
-          rankTotalPoints: doc.get(userRankTotalPoints));
-    }).toList();
-  }
+  // List<RankUser> _usersRankTop(QuerySnapshot snapshot) {
+  //   return snapshot.docs.map((doc) {
+  //     return RankUser(
+  //         documentId: doc.id,
+  //         username: doc.get(userUsername),
+  //         rankLevel: doc.get(userRankLevel),
+  //         rankTotalPoints: doc.get(userRankTotalPoints));
+  //   }).toList();
+  // }
 
-  List<RankUser>? _usersRankUser(QuerySnapshot snapshot) {
-    return null;
-    // return snapshot.docs.map((doc) {
-    //   return RankUser(
-    //       documentId: doc.id,
-    //       username: doc.get(userUsername),
-    //       rankLevel: doc.get(userRankLevel),
-    //       rankTotalPoints: doc.get(userRankTotalPoints));
-    // }).toList();
-  }
+  // List<RankUser>? _usersRankUser(QuerySnapshot snapshot) {
+  //   return null;
+  //   // return snapshot.docs.map((doc) {
+  //   //   return RankUser(
+  //   //       documentId: doc.id,
+  //   //       username: doc.get(userUsername),
+  //   //       rankLevel: doc.get(userRankLevel),
+  //   //       rankTotalPoints: doc.get(userRankTotalPoints));
+  //   // }).toList();
+  // }
 
   Future<void> sendQuestionRemark(Remark remark) {
     debugPrint('/// DB: writing REMARK doc... ///');
@@ -166,7 +166,7 @@ class DatabaseService {
         .catchError((error) => debugPrint("DB: Failed to create remark: $error"));
   }
 
-  Stream<List<RankUser>> get usersRankTop => usersRankQuery.snapshots().map(_usersRankTop);
+  // Stream<List<RankUser>> get usersRankTop => usersRankQuery.snapshots().map(_usersRankTop);
 
-  Stream<List<RankUser>?> get userRankUser => usersRankQuery.snapshots().map(_usersRankUser);
+  // Stream<List<RankUser>?> get userRankUser => usersRankQuery.snapshots().map(_usersRankUser);
 }
