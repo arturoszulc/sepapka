@@ -10,14 +10,15 @@ class PurchaseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('*** Purchase Screen built');
     final manager = Provider.of<Manager>(context);
     return WillPopScope(
-      onWillPop: () => context.read<Manager>().leaveStore(),
+      onWillPop: () => context.read<Manager>().closeStore(),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
-            onPressed: () => context.read<Manager>().leaveStore(),
+            onPressed: () => context.read<Manager>().closeStore(),
           ),
           title: const Text('Odblokuj pytania'),
           centerTitle: true,

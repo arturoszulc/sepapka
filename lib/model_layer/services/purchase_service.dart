@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:collection/collection.dart';
-import 'package:sepapka/utils/consts/nav.dart';
 
 import '../../utils/api_status.dart';
 
@@ -12,7 +11,7 @@ class PurchaseService {
   //main instance
   final InAppPurchase _iap = InAppPurchase.instance;
   bool isStoreAvailable = false;
-  final StreamController<bool> _purchaseController = StreamController<bool>();
+  StreamController<bool> _purchaseController = StreamController<bool>();
 
   Stream<bool> get purchaseStream => _purchaseController.stream;
 
@@ -34,61 +33,60 @@ class PurchaseService {
   StreamSubscription? subscription;
 
   Future<Object> initialize() async {
-    _purchaseController.add(false);
     await checkIfStoreIsAvailable();
-    if (isStoreAvailable) {
+    if (!isStoreAvailable) return Failure('Store is not available');
+
+    rebuildStreamController();
       await getUserProducts();
       if (_products.isEmpty) {
         return Failure('No products found');
       }
-      // await InAppPurchase.instance.restorePurchases();
       //monitor everything user has bought and add it to list
       subscription = _iap.purchaseStream.listen((List<PurchaseDetails> list) {
         debugPrint('*** Purchase stream updated!!! ***');
         purchaseList.addAll(list);
         verifyPurchase();
+        // Object verifyResult = verifyPurchase();
+        // if (verifyResult is Failure) return verifyResult;
       });
       return Success();
-    }
-    else {
-      return Failure('Store is not available');
-    }
+  }
+
+  rebuildStreamController() {
+    _purchaseController.close();
+    _purchaseController = StreamController<bool>();
   }
 
   closeStore() async {
-    // _purchaseController.close().then((_) {
-    //   debugPrint('purchaseController hasListener? ${_purchaseController.hasListener}');
-    // });
-    // await subscription?.cancel();
+    _purchaseController.close();
+    debugPrint('Is purchaseController closed? ${_purchaseController.isClosed}');
+    await subscription?.cancel();
     // subscription = null;
     // debugPrint(subscription.resume());
   }
 
-  void verifyPurchase() {
+  Object verifyPurchase() {
     purchaseDetails =
         purchaseList.firstWhereOrNull((purchase) => purchase?.productID == _productID);
-    if (purchaseDetails != null) {
-      debugPrint('Got purchaseDetails');
-      if (purchaseDetails?.status == PurchaseStatus.purchased) {
+    if (purchaseDetails != null && purchaseDetails?.status == PurchaseStatus.purchased) {
         debugPrint('*** User has purchased something!!!');
-
         if (purchaseDetails!.pendingCompletePurchase) {
           _iap.completePurchase(purchaseDetails!);
           subscription?.cancel();
           _purchaseController.add(true);
+          return Success();
         }
       }
-      if (purchaseDetails?.status == PurchaseStatus.error) {
-        debugPrint('### Purchase status is ERROR###');
+      if (purchaseDetails != null && purchaseDetails?.status == PurchaseStatus.error) {
+        return Failure('### ERROR: Something went wrong with the purchase... ###');
+      } else {
+        return Failure('### ERROR: Unhandled purchase custom error');
       }
-    }
+
   }
 
   Future<void> checkIfStoreIsAvailable() async {
     isStoreAvailable = await _iap.isAvailable();
-    if (isStoreAvailable) {
-      debugPrint('*** Store is available ***');
-    }
   }
 
   Future<void> getUserProducts() async {

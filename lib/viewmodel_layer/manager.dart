@@ -452,12 +452,12 @@ class Manager extends ChangeNotifier {
   bool get isAvailable => _purchaseService.isStoreAvailable;
   String get productName => _purchaseService.productName;
   String get productPrice => _purchaseService.productPrice;
-  // StreamSubscription? get purchaseStream => _purchaseService.subscription;
   Stream<bool> get hasPurchased => _purchaseService.purchaseStream;
-  StreamSubscription<bool>? hasPurchasedListener;
+  StreamSubscription<bool>? purchaseListener;
 
 
-  initializeStore() async {
+  openStore() async {
+    debugPrint('*** Opening Store ***');
     Object initializeResult = await _purchaseService.initialize();
     if (initializeResult is Failure) {
       debugPrint(initializeResult.errorString);
@@ -465,20 +465,18 @@ class Manager extends ChangeNotifier {
       return;
     }
     navigate(Screen.purchase);
-    hasPurchasedListener = hasPurchased.listen((purchaseCompleted) {
+    purchaseListener = hasPurchased.listen((purchaseCompleted) {
       if (purchaseCompleted) {
        debugPrint('&&&& PURCHASE COMPLETED &&&&');
-       // hasPurchasedListener!.cancel();
+      closeStore();
       }
-      else {debugPrint('Yet nothing happened...');}
-    });
+    }, onError: ((_) {debugPrint('purchaseListener ERROR');}),);
   }
 
-  leaveStore() async {
-    debugPrint('*** leaving store... ***');
-    // _purchaseService.closeStore();
-    await hasPurchasedListener!.cancel();
-    // hasPurchasedListener = null;
+  closeStore() async {
+    debugPrint('*** closing store... ***');
+    await purchaseListener!.cancel();
+    _purchaseService.closeStore();
     navigate(Screen.chooseLevel);
   }
 
