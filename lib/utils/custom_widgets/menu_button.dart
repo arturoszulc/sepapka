@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:sepapka/utils/consts/colors.dart';
 
 class MenuButton extends StatelessWidget {
   const MenuButton({
@@ -34,7 +35,7 @@ class MenuButton extends StatelessWidget {
           ),
         ),
         toAnimate: false,
-        badgeColor: Colors.blue,
+        badgeColor: myComplementary,
         showBadge: (hasBadge && badgeNum > 0) || (proOnly && !isUserPro) ? true : false,
         child: ElevatedButton(
       style: ElevatedButton.styleFrom(

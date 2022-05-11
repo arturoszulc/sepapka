@@ -52,35 +52,6 @@ class DebugScreen extends StatelessWidget {
                 .loggedUser!
                 .isPro
                 .toString()}'),
-            const SizedBox(height: 20.0),
-
-            MenuButton(
-              label: context
-                  .read<Manager>()
-                  .loggedUser!
-                  .isPro ? 'Go FREE' : 'Go PRO',
-              onPressed: () async {
-                var result = await goProDialog(context);
-                if (result) {
-                  await context.read<Manager>().goPro(!context
-                    .read<Manager>()
-                    .loggedUser!
-                    .isPro);
-                }
-              },),
-            MenuButton(
-              label: 'get products',
-              onPressed: () async {
-                // await context.read<Manager>().checkIfStoreIsAvailable();
-                // await context.read<Manager>().getUserProducts();
-              },),
-            Text('Is Available: ${isAvailable.toString()}'),
-            Text('Product:$product'),
-            MenuButton(
-              label: 'buy product',
-              onPressed: () async {
-                await context.read<Manager>().buyProduct();
-              },),
           ],
         ),
       ),

@@ -35,13 +35,13 @@ class PurchaseService {
   Future<Object> initialize() async {
     await checkIfStoreIsAvailable();
     if (!isStoreAvailable) return Failure('### ERROR: Store is not available ###');
-
     rebuildStreamController();
       await getUserProducts();
       if (_products.isEmpty) {
         return Failure('No products found');
       }
-      //monitor everything user has bought and add it to list
+    verifyPurchase();
+    //monitor everything user has bought and add it to list
       subscription = _iap.purchaseStream.listen((List<PurchaseDetails> list) {
         debugPrint('*** Purchase stream updated!!! ***');
         purchaseList.addAll(list);
@@ -74,9 +74,15 @@ class PurchaseService {
           _iap.completePurchase(purchaseDetails!);
           subscription?.cancel();
           _purchaseController.add(true);
+          purchaseList.clear();
           return Success();
         }
       }
+    if (purchaseDetails != null && purchaseDetails?.status == PurchaseStatus.pending) {
+      debugPrint('There is some purchase pending *********');
+      debugPrint('Status: ${purchaseDetails!.status}');
+      debugPrint('PendingComplete?: ${purchaseDetails!.pendingCompletePurchase.toString()}');
+    }
       if (purchaseDetails != null && purchaseDetails?.status == PurchaseStatus.error) {
         return Failure('### ERROR: Something went wrong with the purchase... ###');
       } else {

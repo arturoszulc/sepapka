@@ -168,7 +168,7 @@ class DatabaseService {
         .catchError((error) => debugPrint("DB: Failed to create remark: $error"));
   }
 
-  savePurchaseDetails(PurchaseDetails purchaseDetails, String userID) {
+  Future<void> savePurchaseDetails(PurchaseDetails purchaseDetails, String userID) {
     debugPrint('/// DB: writing PurchaseDetails doc... ///');
     return purchaseCollection
         .doc()

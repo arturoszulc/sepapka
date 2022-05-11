@@ -327,11 +327,8 @@ class UserService {
 
   }
 
-  //bool property of this method is to be deleted - it will only allow to go PRO
-  Future<Object> goPro(bool bool) async {
-    if (!bool) wipeUser(); //if go FREE, wipe user
-    _loggedUser!.isPro = bool;
-    // _loggedUser!.qVersions = [1,1,1];
+  Future<Object> goPro() async {
+    _loggedUser!.isPro = true;
     try {
       await _databaseService.updateUser(_loggedUser!);
       return Success();

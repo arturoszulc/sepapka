@@ -27,11 +27,10 @@ class ChooseCategory extends StatelessWidget {
     ),
     body: Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          const SizedBox(height: 100),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.5,
             child: Row(
@@ -87,7 +86,6 @@ class ChooseCategory extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 20),
         ],
       ),
     ),

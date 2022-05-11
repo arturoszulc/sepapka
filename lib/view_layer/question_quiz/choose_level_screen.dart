@@ -26,11 +26,10 @@ class MenuChooseLevel extends StatelessWidget {
         ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              const SizedBox(height: 100),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: Row(
@@ -43,7 +42,7 @@ class MenuChooseLevel extends StatelessWidget {
                           MenuButton(
                             hasBadge: true,
                             badgeNum: countLevels[0],
-                            label: 'Wszystkie',
+                            label: 'wszystkie',
                             onPressed: () async {
                               await context.read<Manager>().chooseQuestionLevel(0);
                             },
@@ -51,7 +50,7 @@ class MenuChooseLevel extends StatelessWidget {
                           MenuButton(
                             hasBadge: true,
                             badgeNum: countLevels[1],
-                            label: 'Poziom 1',
+                            label: 'poziom 1',
                             onPressed: () async {
                                     await context.read<Manager>().chooseQuestionLevel(1);
                                   },
@@ -61,7 +60,7 @@ class MenuChooseLevel extends StatelessWidget {
                             badgeNum: countLevels[2],
                             proOnly: true,
                             isUserPro: isUserPro,
-                            label: 'Poziom 2',
+                            label: 'poziom 2',
                             onPressed: () async {
                               await context.read<Manager>().chooseQuestionLevel(2);
                                   },
@@ -71,7 +70,7 @@ class MenuChooseLevel extends StatelessWidget {
                             badgeNum: countLevels[3],
                             proOnly: true,
                             isUserPro: isUserPro,
-                            label: 'Poziom 3',
+                            label: 'poziom 3',
                             onPressed: () async {
                               await context.read<Manager>().chooseQuestionLevel(3);
                                   },
@@ -82,7 +81,6 @@ class MenuChooseLevel extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
             ],
           ),
         ),

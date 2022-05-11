@@ -256,10 +256,8 @@ class Manager extends ChangeNotifier {
   //        USER        //
   ////////////////////////
 
-  goPro(bool bool) async {
-    navigate(Screen.loading);
-    //change user property and reset qVersion (in order to re-download questions from DB
-    Object goProResult = await _userService.goPro(bool);
+  goPro() async {
+    Object goProResult = await _userService.goPro();
     if (goProResult is Failure) {
       setError(goProResult);
       return;
@@ -470,12 +468,17 @@ class Manager extends ChangeNotifier {
   listenStore() {
     purchaseListener = hasPurchased.listen((purchaseCompleted) async {
       if (purchaseCompleted) {
+        navigate(Screen.loading);
         debugPrint('&&&& PURCHASE COMPLETED &&&&');
         _databaseService.savePurchaseDetails(_purchaseService.purchaseDetails!, loggedUser!.documentId);
         await closeStore();
-        await goPro(true);
+        await goPro();
+        navigate(Screen.purchaseSuccess);
       }
-    }, onError: ((_) {debugPrint('purchaseListener ERROR');}),);
+    }, onError: ((_) {
+      debugPrint('purchaseListener ERROR');
+      navigate(Screen.purchaseError);
+    }),);
   }
 
   closeStore() async {
