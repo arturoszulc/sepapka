@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:sepapka/model_layer/models/global_data.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
-import 'package:sepapka/model_layer/models/rank_user.dart';
 import 'package:sepapka/model_layer/models/remark.dart';
 import 'package:sepapka/utils/consts/strings.dart';
 import 'package:sepapka/utils/methods.dart';
@@ -12,10 +12,12 @@ class DatabaseService {
   final CollectionReference dataCollection = FirebaseFirestore.instance.collection('data');
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
   final CollectionReference remarksCollection = FirebaseFirestore.instance.collection('remarks');
-  final Query usersRankQuery = FirebaseFirestore.instance
-      .collection('users')
-      .orderBy('rankTotalPoints', descending: true)
-      .limit(10);
+  final CollectionReference purchaseCollection = FirebaseFirestore.instance.collection('purchases');
+
+  // final Query usersRankQuery = FirebaseFirestore.instance
+  //     .collection('users')
+  //     .orderBy('rankTotalPoints', descending: true)
+  //     .limit(10);
 
   // //UPDATE USER DATA
   // DO NOT USE ASYNC/AWAIT on SET function, because when device is offline, it won't return
@@ -166,7 +168,26 @@ class DatabaseService {
         .catchError((error) => debugPrint("DB: Failed to create remark: $error"));
   }
 
-  // Stream<List<RankUser>> get usersRankTop => usersRankQuery.snapshots().map(_usersRankTop);
+  savePurchaseDetails(PurchaseDetails purchaseDetails, String userID) {
+    debugPrint('/// DB: writing PurchaseDetails doc... ///');
+    return purchaseCollection
+        .doc()
+        .set({
+          purchaseUserID: userID,
+          purchasePurchaseID: purchaseDetails.purchaseID,
+          purchaseProductID: purchaseDetails.productID,
+          purchaseVerificationDataLocal: purchaseDetails.verificationData.localVerificationData,
+          purchaseVerificationDataServer: purchaseDetails.verificationData.serverVerificationData,
+          purchaseVerificationDataSource: purchaseDetails.verificationData.source,
+          purchaseTimestamp: purchaseDetails.transactionDate ?? 'null',
+          purchaseDate: DateTime.now().toString(),
+          purchaseStatus: purchaseDetails.status.toString(),
+        })
+        .then((value) => debugPrint('/// DB: PurchaseDetails sent ///'))
+        .catchError((error) => debugPrint("DB: Error saving PurchaseDetails: $error"));
+  }
 
-  // Stream<List<RankUser>?> get userRankUser => usersRankQuery.snapshots().map(_usersRankUser);
+// Stream<List<RankUser>> get usersRankTop => usersRankQuery.snapshots().map(_usersRankTop);
+
+// Stream<List<RankUser>?> get userRankUser => usersRankQuery.snapshots().map(_usersRankUser);
 }

@@ -262,17 +262,15 @@ class Manager extends ChangeNotifier {
     Object goProResult = await _userService.goPro(bool);
     if (goProResult is Failure) {
       setError(goProResult);
-      navigate(Screen.settings);
       return;
     }
     //prepare new global data
     Object prepareDataResult = await _questionService.prepareGlobalData();
     if (prepareDataResult is Failure) {
       setError(prepareDataResult);
-      navigate(Screen.settings);
       return;
     }
-    navigate(Screen.menu);
+    navigate(Screen.purchaseSuccess);
   }
 
   ////////////////////////
@@ -465,10 +463,17 @@ class Manager extends ChangeNotifier {
       return;
     }
     navigate(Screen.purchase);
-    purchaseListener = hasPurchased.listen((purchaseCompleted) {
+    listenStore();
+
+  }
+
+  listenStore() {
+    purchaseListener = hasPurchased.listen((purchaseCompleted) async {
       if (purchaseCompleted) {
-       debugPrint('&&&& PURCHASE COMPLETED &&&&');
-      closeStore();
+        debugPrint('&&&& PURCHASE COMPLETED &&&&');
+        _databaseService.savePurchaseDetails(_purchaseService.purchaseDetails!, loggedUser!.documentId);
+        await closeStore();
+        await goPro(true);
       }
     }, onError: ((_) {debugPrint('purchaseListener ERROR');}),);
   }
@@ -477,7 +482,6 @@ class Manager extends ChangeNotifier {
     debugPrint('*** closing store... ***');
     await purchaseListener!.cancel();
     _purchaseService.closeStore();
-    navigate(Screen.chooseLevel);
   }
 
   getUserProducts() async {
@@ -495,7 +499,7 @@ class Manager extends ChangeNotifier {
     return _userService.getQListIcon(qId);
   }
 
-  Widget? getImage(String path) {
+  Widget? getQuestionImage(String path) {
     //if question has no image, return null
     if (path.isEmpty) return null;
     //otherwise try to get the image
@@ -516,17 +520,5 @@ class Manager extends ChangeNotifier {
 //   //if rankLevel is given, return corresponding badge
 //   if (rankLevel != null) badge = rankLevel.toString();
 //   return 'assets/images/badges/$badge.png';
-// }
-
-// ******* METHODS ON DEMAND ********
-
-//Adding new questions to DB
-// addQuestionsToDb() async {
-//   debugPrint('/// addQuestionsToDb deployed ///');
-//
-//   for (var question in questionList) {
-//     await _databaseService.uploadQuestions(question: question);
-//   }
-//   debugPrint('/// Questions added to DB successfully');
 // }
 }

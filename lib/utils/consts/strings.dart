@@ -34,6 +34,17 @@ const String remarkDate = 'date';
 const String remarkQuestion = 'question';
 const String remarkText = 'text';
 
+//PurchaseDetails properties
+const String purchaseUserID = 'userID';
+const String purchasePurchaseID = 'purchaseID';
+const String purchaseProductID = 'productID';
+const String purchaseVerificationDataLocal = 'verificationDataLocal';
+const String purchaseVerificationDataServer = 'verificationDataServer';
+const String purchaseVerificationDataSource = 'verificationDataSource';
+const String purchaseTimestamp = 'transactionTimestamp';
+const String purchaseDate = 'purchaseDate';
+const String purchaseStatus = 'status';
+
 //JSON fileNames
 const String questionsFileName1 = 'questionList1';
 const String questionsFileName2 = 'questionList2';

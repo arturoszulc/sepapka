@@ -19,7 +19,7 @@ Widget buildQuestion(BuildContext context, Question? question) {
         ),
       ),
       Expanded(
-        child: context.read<Manager>().getImage(question.assetPath) ?? Container(),
+        child: context.read<Manager>().getQuestionImage(question.assetPath) ?? Container(),
         // child: question.assetPath.isEmpty ? Container() :
         // Image.asset('assets/images/questions/${question.assetPath}'),
       ),

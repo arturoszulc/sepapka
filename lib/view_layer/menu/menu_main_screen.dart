@@ -73,6 +73,7 @@ class MenuScreen extends StatelessWidget {
           child: const Text('Debug'),
           onPressed: () {
             context.read<Manager>().navigate(Screen.debug);
+            // context.read<Manager>().navigate(Screen.purchaseError);
           }),
     );
   }

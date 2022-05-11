@@ -87,7 +87,7 @@ class MenuChooseLevel extends StatelessWidget {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton.extended(onPressed: () {
+        floatingActionButton: isUserPro ? null : FloatingActionButton.extended(onPressed: () {
           context.read<Manager>().openStore();
         }, label: Row(
           children: const [

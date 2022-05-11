@@ -34,7 +34,7 @@ class PurchaseService {
 
   Future<Object> initialize() async {
     await checkIfStoreIsAvailable();
-    if (!isStoreAvailable) return Failure('Store is not available');
+    if (!isStoreAvailable) return Failure('### ERROR: Store is not available ###');
 
     rebuildStreamController();
       await getUserProducts();
