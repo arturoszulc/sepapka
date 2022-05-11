@@ -13,7 +13,6 @@ class ResetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     debugPrint('*** ResetPasswordScreen build ***');
-    String email = '';
 
     //clear field on rebuild
     // emailFieldController.clear();

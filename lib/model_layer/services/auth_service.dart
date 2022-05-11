@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
-import 'package:sepapka/utils/methods.dart';
 
 class AuthService {
   //Properties

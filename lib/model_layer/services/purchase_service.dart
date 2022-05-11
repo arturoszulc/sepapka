@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:collection/collection.dart';
 
 import '../../utils/api_status.dart';
 
@@ -36,20 +36,20 @@ class PurchaseService {
     await checkIfStoreIsAvailable();
     if (!isStoreAvailable) return Failure('### ERROR: Store is not available ###');
     rebuildStreamController();
-      await getUserProducts();
-      if (_products.isEmpty) {
-        return Failure('No products found');
-      }
-    verifyPurchase();
+    await getUserProducts();
+    if (_products.isEmpty) {
+      return Failure('No products found');
+    }
+    //verify on initialize to solve any pending purchases
     //monitor everything user has bought and add it to list
-      subscription = _iap.purchaseStream.listen((List<PurchaseDetails> list) {
-        debugPrint('*** Purchase stream updated!!! ***');
-        purchaseList.addAll(list);
-        verifyPurchase();
-        // Object verifyResult = verifyPurchase();
-        // if (verifyResult is Failure) return verifyResult;
-      });
-      return Success();
+    subscription = _iap.purchaseStream.listen((List<PurchaseDetails> list) {
+      debugPrint('*** Purchase stream updated!!! ***');
+      purchaseList.addAll(list);
+      verifyPurchase();
+      // Object verifyResult = verifyPurchase();
+      // if (verifyResult is Failure) return verifyResult;
+    });
+    return Success();
   }
 
   rebuildStreamController() {
@@ -65,30 +65,42 @@ class PurchaseService {
     // debugPrint(subscription.resume());
   }
 
-  Object verifyPurchase() {
+  verifyPurchase() async {
     purchaseDetails =
         purchaseList.firstWhereOrNull((purchase) => purchase?.productID == _productID);
-    if (purchaseDetails != null && purchaseDetails?.status == PurchaseStatus.purchased) {
-        debugPrint('*** User has purchased something!!!');
-        if (purchaseDetails!.pendingCompletePurchase) {
-          _iap.completePurchase(purchaseDetails!);
-          subscription?.cancel();
-          _purchaseController.add(true);
-          purchaseList.clear();
-          return Success();
-        }
-      }
-    if (purchaseDetails != null && purchaseDetails?.status == PurchaseStatus.pending) {
-      debugPrint('There is some purchase pending *********');
-      debugPrint('Status: ${purchaseDetails!.status}');
-      debugPrint('PendingComplete?: ${purchaseDetails!.pendingCompletePurchase.toString()}');
-    }
-      if (purchaseDetails != null && purchaseDetails?.status == PurchaseStatus.error) {
-        return Failure('### ERROR: Something went wrong with the purchase... ###');
-      } else {
-        return Failure('### ERROR: Unhandled purchase custom error');
-      }
 
+    switch (purchaseDetails?.status) {
+      case PurchaseStatus.pending:
+        debugPrint('*** verifyPurchase(): Purchase PENDING ***');
+        debugPrint('Status: ${purchaseDetails!.status}');
+        debugPrint('PendingComplete?: ${purchaseDetails!.pendingCompletePurchase.toString()}');
+        break;
+      case PurchaseStatus.purchased:
+        debugPrint('*** verifyPurchase(): Purchase COMPLETED ***');
+        subscription?.cancel();
+        _purchaseController.add(true);
+        break;
+      case PurchaseStatus.error:
+        return Failure('### ERROR: Something went wrong with the purchase... ###');
+      case PurchaseStatus.restored:
+        debugPrint('*** verifyPurchase(): Purchase RESTORED ***');
+        debugPrint('Status: ${purchaseDetails!.status}');
+        debugPrint('PendingComplete?: ${purchaseDetails!.pendingCompletePurchase.toString()}');
+        break;
+      case PurchaseStatus.canceled:
+        debugPrint('*** verifyPurchase(): Purchase CANCELED ***');
+        debugPrint('Status: ${purchaseDetails!.status}');
+        debugPrint('PendingComplete?: ${purchaseDetails!.pendingCompletePurchase.toString()}');
+        break;
+      case null:
+        debugPrint('*** verifyPurchase(): Purchase is NULL ***');
+    }
+    if (purchaseDetails != null && purchaseDetails!.pendingCompletePurchase) {
+      debugPrint('Completing Purchase...');
+      await _iap.completePurchase(purchaseDetails!);
+      purchaseList.clear();
+      purchaseDetails = null;
+    }
   }
 
   Future<void> checkIfStoreIsAvailable() async {
@@ -104,10 +116,10 @@ class PurchaseService {
       productPrice = _products[0].rawPrice.toString();
       productName = _products[0].title;
     }
-  }
 
-    void buyProduct() {
-      final PurchaseParam purchaseParam = PurchaseParam(productDetails: _products[0]);
-      _iap.buyConsumable(purchaseParam: purchaseParam, autoConsume: true);
-    }
   }
+  void buyProduct() {
+    final PurchaseParam purchaseParam = PurchaseParam(productDetails: _products[0]);
+    _iap.buyNonConsumable(purchaseParam: purchaseParam);
+  }
+}

@@ -20,6 +20,7 @@ enum Screen {
   remark,
   debug,
   purchase,
+  purchasePending,
   purchaseError,
   purchaseSuccess,
 

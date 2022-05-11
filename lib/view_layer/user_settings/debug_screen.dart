@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/utils/custom_widgets/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 
@@ -13,8 +12,6 @@ class DebugScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** Debug Screen built ***');
 
-    String product = Provider.of<Manager>(context).productName;
-    bool isAvailable = Provider.of<Manager>(context).isAvailable;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

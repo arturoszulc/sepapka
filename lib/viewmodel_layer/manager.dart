@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart'; //iconData is from here
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
@@ -448,6 +449,7 @@ class Manager extends ChangeNotifier {
   bool get isAvailable => _purchaseService.isStoreAvailable;
   String get productName => _purchaseService.productName;
   String get productPrice => _purchaseService.productPrice;
+  PurchaseStatus? get purchaseStatus => _purchaseService.purchaseDetails?.status;
   Stream<bool> get hasPurchased => _purchaseService.purchaseStream;
   StreamSubscription<bool>? purchaseListener;
 
@@ -460,9 +462,12 @@ class Manager extends ChangeNotifier {
       navigate(Screen.purchaseError);
       return;
     }
-    navigate(Screen.purchase);
     listenStore();
-
+    if (purchaseStatus != null && purchaseStatus == PurchaseStatus.pending) {
+      navigate(Screen.purchasePending);
+    } else {
+      navigate(Screen.purchase);
+    }
   }
 
   listenStore() {

@@ -5,7 +5,6 @@ import 'package:sepapka/utils/custom_widgets/build_question.dart';
 import '../../model_layer/models/question.dart';
 import '../../utils/consts/nav.dart';
 import '../../viewmodel_layer/manager.dart';
-import '../../utils/custom_widgets/settings_popupmenu.dart';
 import '../../utils/custom_widgets/snackbar_hide_question.dart';
 
 class QuestionListSingle extends StatelessWidget {
