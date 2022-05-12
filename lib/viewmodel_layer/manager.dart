@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart'; //iconData is from here
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
@@ -446,60 +447,67 @@ class Manager extends ChangeNotifier {
   //      PURCHASE      //
   ////////////////////////
 
-  bool get isAvailable => _purchaseService.isStoreAvailable;
-  String get productName => _purchaseService.productName;
-  String get productPrice => _purchaseService.productPrice;
-  PurchaseStatus? get purchaseStatus => _purchaseService.purchaseDetails?.status;
-  Stream<bool> get hasPurchased => _purchaseService.purchaseStream;
-  StreamSubscription<bool>? purchaseListener;
 
-
-  openStore() async {
-    debugPrint('*** Opening Store ***');
-    Object initializeResult = await _purchaseService.initialize();
-    if (initializeResult is Failure) {
-      debugPrint(initializeResult.errorString);
-      navigate(Screen.purchaseError);
-      return;
-    }
-    listenStore();
-    if (purchaseStatus != null && purchaseStatus == PurchaseStatus.pending) {
-      navigate(Screen.purchasePending);
-    } else {
-      navigate(Screen.purchase);
-    }
+  revenueCatStart() async {
+    await _purchaseService.init();
+    await _purchaseService.getOffers();
   }
 
-  listenStore() {
-    purchaseListener = hasPurchased.listen((purchaseCompleted) async {
-      if (purchaseCompleted) {
-        navigate(Screen.loading);
-        debugPrint('&&&& PURCHASE COMPLETED &&&&');
-        _databaseService.savePurchaseDetails(_purchaseService.purchaseDetails!, loggedUser!.documentId);
-        await closeStore();
-        await goPro();
-        navigate(Screen.purchaseSuccess);
-      }
-    }, onError: ((_) {
-      debugPrint('purchaseListener ERROR');
-      navigate(Screen.purchaseError);
-    }),);
-  }
 
-  closeStore() async {
-    debugPrint('*** closing store... ***');
-    await purchaseListener!.cancel();
-    _purchaseService.closeStore();
-  }
+  // bool get isAvailable => _purchaseService.isStoreAvailable;
+  // String get productName => _purchaseService.productName;
+  // String get productPrice => _purchaseService.productPrice;
+  // PurchaseStatus? get purchaseStatus => _purchaseService.purchaseDetails?.status;
+  // Stream<bool> get hasPurchased => _purchaseService.purchaseStream;
+  // StreamSubscription<bool>? purchaseListener;
 
-  getUserProducts() async {
-    await _purchaseService.getUserProducts();
-    notifyListeners();
-  }
 
-  buyProduct() {
-    _purchaseService.buyProduct();
-  }
+  // openStore() async {
+  //   debugPrint('*** Opening Store ***');
+  //   Object initializeResult = await _purchaseService.initialize();
+  //   if (initializeResult is Failure) {
+  //     debugPrint(initializeResult.errorString);
+  //     navigate(Screen.purchaseError);
+  //     return;
+  //   }
+  //   listenStore();
+  //   if (purchaseStatus != null && purchaseStatus == PurchaseStatus.pending) {
+  //     navigate(Screen.purchasePending);
+  //   } else {
+  //     navigate(Screen.purchase);
+  //   }
+  // }
+  //
+  // listenStore() {
+  //   purchaseListener = hasPurchased.listen((purchaseCompleted) async {
+  //     if (purchaseCompleted) {
+  //       navigate(Screen.loading);
+  //       debugPrint('&&&& PURCHASE COMPLETED &&&&');
+  //       _databaseService.savePurchaseDetails(_purchaseService.purchaseDetails!, loggedUser!.documentId);
+  //       await closeStore();
+  //       await goPro();
+  //       navigate(Screen.purchaseSuccess);
+  //     }
+  //   }, onError: ((_) {
+  //     debugPrint('purchaseListener ERROR');
+  //     navigate(Screen.purchaseError);
+  //   }),);
+  // }
+  //
+  // closeStore() async {
+  //   debugPrint('*** closing store... ***');
+  //   await purchaseListener!.cancel();
+  //   _purchaseService.closeStore();
+  // }
+  //
+  // getUserProducts() async {
+  //   await _purchaseService.getUserProducts();
+  //   notifyListeners();
+  // }
+  //
+  // buyProduct() {
+  //   _purchaseService.buyProduct();
+  // }
 
 
 

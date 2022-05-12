@@ -51,6 +51,7 @@ dependencies:
   group_button: ^4.8.0
   in_app_purchase: ^3.0.2
   package_info_plus: ^1.4.2
+  purchases_flutter: ^3.10.0
 
 
 flutter_icons:

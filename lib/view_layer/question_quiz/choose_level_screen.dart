@@ -86,7 +86,7 @@ class MenuChooseLevel extends StatelessWidget {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: isUserPro ? null : FloatingActionButton.extended(onPressed: () {
-          context.read<Manager>().openStore();
+          context.read<Manager>().revenueCatStart();
         }, label: Row(
           children: const [
             Text('Odblokuj pytania'),

@@ -19,7 +19,7 @@ class PurchaseScreen extends StatelessWidget {
     final manager = Provider.of<Manager>(context);
     return WillPopScope(
       onWillPop: () {
-        context.read<Manager>().closeStore();
+        // context.read<Manager>().closeStore();
         return context.read<Manager>().navigate(Screen.chooseLevel);
       },
       child: Scaffold(
@@ -28,7 +28,7 @@ class PurchaseScreen extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
-              context.read<Manager>().closeStore();
+              // context.read<Manager>().closeStore();
               context.read<Manager>().navigate(Screen.chooseLevel);
             },
           ),
@@ -98,19 +98,19 @@ class PurchaseScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FloatingActionButton.extended(
-                        backgroundColor: myComplementary,
-                        label: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 18.0),
-                          child: Text(
-                            'Kup za ${manager.productPrice} zł',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                        onPressed: () {
-                              manager.buyProduct();
-                        },
-                      ),
+                      // FloatingActionButton.extended(
+                      //   backgroundColor: myComplementary,
+                      //   label: Padding(
+                      //     padding: const EdgeInsets.symmetric(vertical: 18.0),
+                      //     child: Text(
+                      //       'Kup za ${manager.productPrice} zł',
+                      //       style: const TextStyle(color: Colors.white),
+                      //     ),
+                      //   ),
+                      //   onPressed: () {
+                      //         manager.buyProduct();
+                      //   },
+                      // ),
                       const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(
