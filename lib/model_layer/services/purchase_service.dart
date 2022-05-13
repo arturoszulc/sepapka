@@ -2,10 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import '../../utils/api_status.dart';
 
 class PurchaseService {
 

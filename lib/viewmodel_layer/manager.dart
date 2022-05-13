@@ -3,13 +3,10 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart'; //iconData is from here
-import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question.dart';
-import 'package:sepapka/model_layer/models/rank_user.dart';
 import 'package:sepapka/model_layer/models/validation.dart';
 import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
@@ -515,19 +512,7 @@ class Manager extends ChangeNotifier {
     return _userService.getQListIcon(qId);
   }
 
-  Widget? getQuestionImage(String path) {
-    //if question has no image, return null
-    if (path.isEmpty) return null;
-    //otherwise try to get the image
-    return Image.asset(
-      'assets/images/questions/$path',
-      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-        return Image.asset('assets/images/questions/error.png');
-      },
-    );
 
-    //on fail return default error image
-  }
 
 // String getBadgePath({int? rankLevel}) {
 //   String badge = '0';

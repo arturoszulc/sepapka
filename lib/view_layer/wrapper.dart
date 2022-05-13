@@ -67,13 +67,13 @@ class Wrapper extends StatelessWidget {
       case Screen.signIn:
         return SignInScreen();
       case Screen.menu:
-        return MenuScreen();
+        return const MenuScreen();
       case Screen.resetPassword:
         return ResetPasswordScreen();
       case Screen.settings:
         return const SettingsScreen();
       case Screen.chooseLevel:
-        return MenuChooseLevel();
+        return const MenuChooseLevel();
       case Screen.quizQuestionSingle:
         return QuestionQuizSingle();
       case Screen.sessionFinished:

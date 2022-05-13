@@ -35,20 +35,12 @@ class QuestionListSingle extends StatelessWidget {
             IconButton(
                 onPressed: () async {
                   await context.read<Manager>().moveQuestionBackToShown();
-                  // var snackBar = const SnackBar(
-                  //     duration: Duration(seconds: 1),
-                  //     behavior: SnackBarBehavior.floating,
-                  //     content: Text(''));
                   ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie będzie widoczne'));
                 },
                 icon: const Icon(Icons.visibility_off)) :
                 IconButton(
                     onPressed: () async {
                       await context.read<Manager>().doNotShowThisQuestionAnymore();
-                      // var snackBar = const SnackBar(
-                      //   duration: Duration(seconds: 1),
-                      //     behavior: SnackBarBehavior.floating,
-                      //     content: Text('Pytanie zostało ukryte'));
                       ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie zostało ukryte'));
                     },
                     icon: const Icon(Icons.visibility)),
@@ -59,20 +51,6 @@ class QuestionListSingle extends StatelessWidget {
             ? Container()
             : Column(
                 children: [
-                  // isQuestionHidden
-                  //     ? DecoratedBox(
-                  //       decoration: BoxDecoration(
-                  //           borderRadius: BorderRadius.circular(12),
-                  //           color: Colors.grey[300]),
-                  //       child: const Padding(
-                  //         padding: EdgeInsets.all(8.0),
-                  //         child: Text(
-                  //           'ukryte',
-                  //           // style: TextStyle(fontWeight: FontWeight.bold),
-                  //         ),
-                  //       ),
-                  //     )
-                  //     : const SizedBox(),
                   const SizedBox(
                     height: 10.0,
                   ),
@@ -81,7 +59,7 @@ class QuestionListSingle extends StatelessWidget {
                     child: buildQuestion(context, question),
                   ),
                   Expanded(
-                    flex: 6,
+                    flex: 3,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
