@@ -22,24 +22,27 @@ class QuestionListScreen extends StatelessWidget {
               icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () => context.read<Manager>().navigate(Screen.menu),
             ),
-            actions: [
-              IconButton(
-                onPressed: () => context.read<Manager>().navigate(Screen.listQuestionFilter),
-                icon: const Icon(Icons.filter_list),
-              ),
-            ],
+            // actions: [
+            //   IconButton(
+            //     onPressed: () => context.read<Manager>().navigate(Screen.listQuestionFilter),
+            //     icon: const Icon(Icons.filter_list),
+            //   ),
+            // ],
             title: const Text('Lista pytań'),
+            centerTitle: true,
             elevation: 0.0,
           ),
           body: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
+              InkWell(
+                onTap: () => context.read<Manager>().navigate(Screen.listQuestionFilter),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
@@ -49,9 +52,7 @@ class QuestionListScreen extends StatelessWidget {
                           Text(qTypeList[manager.filterType]),
                         ],
                       ),
-                    ),
-                    Expanded(
-                      child: Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
@@ -61,9 +62,7 @@ class QuestionListScreen extends StatelessWidget {
                           Text(qLevelList[manager.filterLevel]),
                         ],
                       ),
-                    ),
-                    Expanded(
-                      child: Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
@@ -73,8 +72,15 @@ class QuestionListScreen extends StatelessWidget {
                           Text(qCategoryList[manager.filterCategory]),
                         ],
                       ),
-                    ),
-                  ],
+                      const Icon(Icons.filter_list),
+                      // IconButton(
+                      //   padding: EdgeInsets.zero,
+                      //   constraints: const BoxConstraints(),
+                      //   onPressed: () {},
+                      //   icon: const Icon(Icons.filter_list),
+                      // ),
+                    ],
+                  ),
                 ),
               ),
               Expanded(

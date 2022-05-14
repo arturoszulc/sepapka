@@ -23,60 +23,59 @@ class QuestionListFilter extends StatelessWidget {
               onPressed: () => context.read<Manager>().getFilteredQuestionList(),
             ),
             title: const Text('Filtry'),
+            centerTitle: true,
             elevation: 0.0,
           ),
           body: Center(
-            child: Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: textPadding),
-                    child: Text('Rodzaj pytań', style: Theme.of(context).textTheme.headline6,
-                    ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: textPadding),
+                  child: Text('Rodzaj pytań', style: Theme.of(context).textTheme.headline6,
                   ),
-                  GroupButton(
-                    options: myGroupButtonOptions(),
-                    onSelected: (index, isSelected) => manager.setListFilter(fType: index),
-                    buttons: qTypeList,
-                    controller: GroupButtonController(
-                      selectedIndex: manager.filterType,
-                    ),
+                ),
+                GroupButton(
+                  options: myGroupButtonOptions(),
+                  onSelected: (index, isSelected) => manager.setListFilter(fType: index),
+                  buttons: qTypeList,
+                  controller: GroupButtonController(
+                    selectedIndex: manager.filterType,
                   ),
-                  const SizedBox(height: 20,),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: textPadding),
-                    child: Text('Poziom trudności', style: Theme.of(context).textTheme.headline6,
-                    ),
+                ),
+                const SizedBox(height: 20,),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: textPadding),
+                  child: Text('Poziom trudności', style: Theme.of(context).textTheme.headline6,
                   ),
-                  GroupButton(
-                    options: myGroupButtonOptions(),
-                    // isRadio: true,
-                    onSelected: (index, isSelected) => manager.setListFilter(fLevel: index),
-                    buttons: qLevelList,
-                    controller: GroupButtonController(
-                      selectedIndex: manager.filterLevel,
-                    ),
+                ),
+                GroupButton(
+                  options: myGroupButtonOptions(),
+                  // isRadio: true,
+                  onSelected: (index, isSelected) => manager.setListFilter(fLevel: index),
+                  buttons: qLevelList,
+                  controller: GroupButtonController(
+                    selectedIndex: manager.filterLevel,
                   ),
-                  const SizedBox(height: 20,),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: textPadding),
-                    child: Text('Kategoria', style: Theme.of(context).textTheme.headline6,
-                    ),
+                ),
+                const SizedBox(height: 20,),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: textPadding),
+                  child: Text('Kategoria', style: Theme.of(context).textTheme.headline6,
                   ),
-                  GroupButton(
-                    options: myGroupButtonOptions(),
-                    isRadio: true,
-                    onSelected: (index, isSelected) => manager.setListFilter(fCategory: index),
-                    buttons: qCategoryList,
-                    controller: GroupButtonController(
-                      selectedIndex: manager.filterCategory,
-                    ),
+                ),
+                GroupButton(
+                  options: myGroupButtonOptions(),
+                  isRadio: true,
+                  onSelected: (index, isSelected) => manager.setListFilter(fCategory: index),
+                  buttons: qCategoryList,
+                  controller: GroupButtonController(
+                    selectedIndex: manager.filterCategory,
                   ),
+                ),
 
-                ],
-              ),
+              ],
             ),
           ),
         ));

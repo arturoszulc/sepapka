@@ -70,7 +70,7 @@ class SignInScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10.0, bottom: 5.0),
                 child: Text(
                   manager.errorMsg.toString(),
-                  style: TextStyle(color: Colors.grey[700]),
+                  style: const TextStyle(color: Colors.red),
                   textAlign: TextAlign.left,
                 ),
               ),

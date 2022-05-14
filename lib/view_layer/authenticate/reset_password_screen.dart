@@ -66,7 +66,7 @@ class ResetPasswordScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
                   errorMsg,
-                  style: TextStyle(color: Colors.grey[700]),
+                  style: const TextStyle(color: Colors.red),
                   textAlign: TextAlign.left,
                 ),
               ),

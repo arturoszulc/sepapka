@@ -53,6 +53,9 @@ dependencies:
   package_info_plus: ^1.4.2
   purchases_flutter: ^3.10.0
 
+flutter_native_splash:
+  color: "#ffe375"
+  image: assets/images/general/splash_screen.png
 
 flutter_icons:
   ios: true

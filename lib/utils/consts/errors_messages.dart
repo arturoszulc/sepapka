@@ -36,7 +36,7 @@ const String errorSignInGoogle = 'Błąd logowania przez Google. Spróbuj ponown
 //Validation errors
 const String errorValEmail = 'Wprowadź prawidłowy adres e-mail';
 // const String errorValPassword = 'Hasło musi zawierać: \n - co najmniej 8 znaków \n - co najmniej 1 cyfrę \n - co najmniej 1 znak specjalny';
-const String errorValPasswordLength = 'Hasło musi zawierać co najmniej 8 znaków';
+const String errorValPasswordLength = 'Hasło musi zawierać co najmniej 6 znaków';
 const String errorValPasswordComplexity = 'Hasło musi zawierać co najmniej 1 literę, cyfrę i znak specjalny';
 
 

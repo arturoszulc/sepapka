@@ -63,18 +63,18 @@ class MenuScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          // const SizedBox(height: 20),
 
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.grey,
-          foregroundColor: Colors.white,
-          child: const Text('Debug'),
-          onPressed: () {
-            context.read<Manager>().navigate(Screen.debug);
-            // context.read<Manager>().navigate(Screen.purchaseError);
-          }),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Colors.grey,
+      //     foregroundColor: Colors.white,
+      //     child: const Text('Debug'),
+      //     onPressed: () {
+      //       context.read<Manager>().navigate(Screen.debug);
+      //       // context.read<Manager>().navigate(Screen.purchaseError);
+      //     }),
     );
   }
 }
