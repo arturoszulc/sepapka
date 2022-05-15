@@ -7,6 +7,7 @@ import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/model_layer/models/remark.dart';
 import 'package:sepapka/utils/consts/strings.dart';
 import 'package:sepapka/utils/methods.dart';
+import 'package:collection/collection.dart';
 
 class DatabaseService {
   final CollectionReference dataCollection = FirebaseFirestore.instance.collection('data');
@@ -167,6 +168,12 @@ class DatabaseService {
         .then((value) => debugPrint('/// DB: Remark sent ///'))
         .catchError((error) => debugPrint("DB: Failed to create remark: $error"));
   }
+
+  Future<String?> verifyPatroniteEmail(String email) async {
+    var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
+    return List<String>.from(doc.get('patronite')).firstWhereOrNull((e) => e == email);
+  }
+
 
   Future<void> savePurchaseDetails(PurchaseDetails purchaseDetails, String userID) {
     debugPrint('/// DB: writing PurchaseDetails doc... ///');

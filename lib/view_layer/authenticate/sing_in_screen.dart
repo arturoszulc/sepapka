@@ -40,7 +40,7 @@ class SignInScreen extends StatelessWidget {
                     onChanged: (String val) {
                       manager.validateEmail(val);
                     },
-                    onTap: () => manager.hideError(),
+                    onTap: () => manager.setError(null),
                   ),
 
                   //pole PASSWORD
@@ -56,7 +56,7 @@ class SignInScreen extends StatelessWidget {
                     onChanged: (String val) {
                       manager.validatePassword(val);
                     },
-                    onTap: () => manager.hideError(),
+                    onTap: () => manager.setError(null),
                   ),
                 ],
               ),

@@ -23,5 +23,6 @@ enum Screen {
   purchasePending,
   purchaseError,
   purchaseSuccess,
+  purchasePatronite,
 
 }

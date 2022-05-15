@@ -74,7 +74,7 @@ class RemarkScreen extends StatelessWidget {
                     onChanged: (String val) {
                       manager.validateRemark(val);
                     },
-                    onTap: () => manager.hideError(),
+                    onTap: () => manager.setError(null),
                   ),
                 ),
                 Padding(

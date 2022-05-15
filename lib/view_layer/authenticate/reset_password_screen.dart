@@ -56,7 +56,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       onChanged: (val) {
                         manager.validateEmailRemind(val);
                       },
-                      onTap: () => manager.hideError(),
+                      onTap: () => manager.setError(null),
                     ),
                   ],
                 ),

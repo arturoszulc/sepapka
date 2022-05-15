@@ -126,16 +126,13 @@ class Manager extends ChangeNotifier {
   setError(Failure? failure) {
     if (failure == null) {
       _errorMsg = '';
+      notifyListeners();
       return;
     } else {
       _errorMsg = failure.errorString!;
       debugPrint('setError debugPrint: $_errorMsg');
       notifyListeners();
     }
-  }
-  hideError(){
-    _errorMsg = '';
-    notifyListeners();
   }
 
   setMessage(String msg) {
@@ -448,6 +445,19 @@ class Manager extends ChangeNotifier {
   revenueCatStart() async {
     await _purchaseService.init();
     await _purchaseService.getOffers();
+  }
+
+  purchasePatronite(String email) async {
+    String? verifyEmailResult = await _databaseService.verifyPatroniteEmail(email);
+    if (verifyEmailResult == null) {
+      setError(Failure('Nie znaleziono Patrona z takim adresem e-mail'));
+      navigate(Screen.purchasePatronite);
+    }
+    else {
+      setError(null);
+      goPro();
+      navigate(Screen.purchaseSuccess);
+    }
   }
 
 

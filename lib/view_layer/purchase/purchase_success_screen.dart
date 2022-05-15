@@ -23,11 +23,15 @@ class PurchaseSuccess extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: const [
-              Icon(Icons.check_box, size: 36, color: Colors.green,),
+              // Icon(Icons.check_box, size: 36, color: Colors.green,),
+              Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Text('Dzięki za dotychczasowe wsparcie mojej twórczości!', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+              ),
               SizedBox(height: 10,),
               Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text('Transakcja zakończona pomyślnie!\nWszystkie pytania oraz funkcje aplikacji zostały odblokowane.', textAlign: TextAlign.center,),
+                padding: EdgeInsets.all(20.0),
+                child: Text('Z ogromną przyjemnością przekazuję Ci dożywotni dostęp do wszystkich funkcji mojej aplikacji. Mam nadzieję, że okażą się przydatne!', textAlign: TextAlign.center,),
               ),
             ],),),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
