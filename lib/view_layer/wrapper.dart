@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
+import 'package:sepapka/utils/tabels/oznaczenia_przewodow_barwami.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/utils/custom_widgets/app_loading.dart';
 import 'package:sepapka/view_layer/purchase/purchase_error_screen.dart';
@@ -22,6 +23,7 @@ import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import 'authenticate/sing_in_screen.dart';
 import '../../utils/custom_widgets/dialog_message.dart';
+import 'knowledge_base/tables/oznaczenia_przewodow_barwami.dart';
 import 'menu/menu_main_screen.dart';
 
 class Wrapper extends StatelessWidget {
@@ -102,6 +104,8 @@ class Wrapper extends StatelessWidget {
       case Screen.purchasePatronite:
         return PurchasePatronite();
         break;
+      case Screen.knowledgeBase:
+        return TabelaPrzewody();
     }
   }
 }

@@ -57,6 +57,11 @@ class MenuScreen extends StatelessWidget {
                     onPressed: () {
                       context.read<Manager>().getFilteredQuestionList();
                     }),
+                MenuButton(
+                    label: 'Baza wiedzy',
+                    onPressed: () {
+                      context.read<Manager>().navigate(Screen.knowledgeBase);
+                    }),
                 MenuButton(label: 'Wyloguj się', onPressed: () async {
                   await context.read<Manager>().signOut();
                 }),

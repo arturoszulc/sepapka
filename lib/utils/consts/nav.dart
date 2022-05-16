@@ -24,5 +24,6 @@ enum Screen {
   purchaseError,
   purchaseSuccess,
   purchasePatronite,
+  knowledgeBase,
 
 }
