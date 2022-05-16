@@ -29,6 +29,7 @@ const String globalDataRankNames = 'rankNames';
 const String globalDataRankThresholds = 'rankThresholds';
 
 //Remark model properties
+const String remarkUserId = 'userId';
 const String remarkAppVersion = 'appVersion';
 const String remarkDate = 'date';
 const String remarkQuestion = 'question';

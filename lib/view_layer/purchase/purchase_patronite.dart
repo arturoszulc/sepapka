@@ -53,7 +53,7 @@ class PurchasePatronite extends StatelessWidget {
                     // controller: emailFieldController,
                     textInputAction: TextInputAction.done,
                     decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                      // border: OutlineInputBorder(),
                       labelText: 'Adres e-mail',
                       // errorText: manager.emailRemind.error,
                     ),
@@ -77,7 +77,7 @@ class PurchasePatronite extends StatelessWidget {
                 SignInButton(
                     onPressed: () async {
                       debugPrint(email);
-                      await manager.purchasePatronite(email);
+                      await manager.purchasePatronite(email.toLowerCase());
                     },
                     label: 'Odblokuj dostęp'),
                 // const SizedBox(height: 100),

@@ -192,7 +192,7 @@ class Manager extends ChangeNotifier {
     //start loading app
     navigate(Screen.loading);
     //Try to sign in
-    Object signInResult = await _authService.signInEmail(email, password);
+    Object signInResult = await _authService.signInEmail(email.toLowerCase(), password);
     if (signInResult is Failure) {
       setError(signInResult);
       navigate(Screen.signIn);
@@ -204,7 +204,7 @@ class Manager extends ChangeNotifier {
     //start loading app
     navigate(Screen.loading);
     //register user
-    Object registerResult = await _authService.registerWithEmailAndPassword(email, password);
+    Object registerResult = await _authService.registerWithEmailAndPassword(email.toLowerCase(), password);
     if (registerResult is Failure) {
       setError(registerResult);
       navigate(Screen.signIn);
@@ -235,7 +235,7 @@ class Manager extends ChangeNotifier {
   resetPassword(String email) async {
     debugPrint('/// manager ResetPassword deployed');
     navigate(Screen.loading);
-    Object resetPassResult = await _authService.resetPassword(email);
+    Object resetPassResult = await _authService.resetPassword(email.toLowerCase());
     if (resetPassResult is Failure) {
       await setError(resetPassResult);
       navigate(Screen.resetPassword);

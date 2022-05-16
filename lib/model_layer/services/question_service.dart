@@ -21,6 +21,7 @@ class QuestionService {
   //Services Injection
   final _userService = serviceLocator.get<UserService>();
   final _databaseService = serviceLocator.get<DatabaseService>();
+
   // final _fileService = serviceLocator.get<FileService>();
 
   //Properties
@@ -55,7 +56,6 @@ class QuestionService {
 
   List<BMap> bMapList = []; //shuffled list of answers & colors for buttons
   bool isSessionFinished = false;
-
 
   //Methods
 
@@ -102,7 +102,7 @@ class QuestionService {
     // _userService.updateQVersion(globalData!.qVersions);
 
     //Sort qListGlobal alphabetically
-    qListGlobal.sort((a,b) => a.q.compareTo(b.q));
+    qListGlobal.sort((a, b) => a.q.compareTo(b.q));
     //update user qNewList
     await _userService.updateQNewList(qListGlobal);
 
@@ -180,7 +180,6 @@ class QuestionService {
     //get maximum 10 questions to session list
     // qListSession = getSetOfQuestions();
 
-
     //set starting length of _qListCurrent for session progress bar
     qListCurrentStartLength = qListSession.length;
   }
@@ -198,7 +197,6 @@ class QuestionService {
       bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
       //add one to countRightAnswers
       numberOfRightAnswers += 1;
-
     }
     //if wrong answer
     else {
@@ -213,8 +211,6 @@ class QuestionService {
 
   Future<Object> getNextQuestion() async {
     qStatus = QuestionStatus.noAnswer;
-
-
 
     //if there is a question on the list
     if (qListSession.isNotEmpty) {
@@ -235,6 +231,7 @@ class QuestionService {
     //warning: //.toList() below makes the list growable, so I can add or remove elements from it
     return qListSession.slice(0, min(3, qListSession.length)).toList();
   }
+
   Object endSession() {
     currentQuestion = null;
     isSessionFinished = true;
@@ -248,6 +245,7 @@ class QuestionService {
   double getProgressPercentSession() {
     return (qListCurrentStartLength - qListSession.length) / qListCurrentStartLength;
   }
+
   String getUserScore() {
     double scoreDouble = (numberOfRightAnswers / qListCurrentStartLength) * 100;
     String scoreString = scoreDouble.toStringAsFixed(1);
@@ -285,8 +283,8 @@ class QuestionService {
     Object validateResult = validateRemark(remark);
     if (validateResult is Failure) return validateResult;
     try {
-      _databaseService.sendQuestionRemark(
-          Remark(
+      _databaseService.sendQuestionRemark(Remark(
+        userId: _userService.loggedUser!.documentId,
         appV: appVersion,
         date: DateTime.now(),
         question: currentQuestion!.id,

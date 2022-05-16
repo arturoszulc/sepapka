@@ -160,6 +160,7 @@ class DatabaseService {
     return remarksCollection
         .doc()
         .set({
+      remarkUserId: remark.userId,
           remarkAppVersion: remark.appV,
           remarkDate: remark.date,
           remarkQuestion: remark.question,

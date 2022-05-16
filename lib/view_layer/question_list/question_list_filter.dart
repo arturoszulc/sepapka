@@ -33,7 +33,7 @@ class QuestionListFilter extends StatelessWidget {
                 const SizedBox(height: 20),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: textPadding),
-                  child: Text('Rodzaj pytań', style: Theme.of(context).textTheme.headline6,
+                  child: Text('Typ pytań', style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
                 GroupButton(

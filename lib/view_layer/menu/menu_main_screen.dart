@@ -15,7 +15,7 @@ class MenuScreen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text('v. ${context.read<Manager>().appVersion}'),
+            child: Text('v. ${context.read<Manager>().appVersion} (beta)'),
           ),
         ],
       ),
