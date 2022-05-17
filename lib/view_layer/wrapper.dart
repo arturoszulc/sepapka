@@ -4,6 +4,7 @@ import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/tabels/oznaczenia_przewodow_barwami.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/utils/custom_widgets/app_loading.dart';
+import 'package:sepapka/view_layer/knowledge_base/knowledge_base_menu.dart';
 import 'package:sepapka/view_layer/purchase/purchase_error_screen.dart';
 import 'package:sepapka/view_layer/purchase/purchase_patronite.dart';
 import 'package:sepapka/view_layer/purchase/purchase_pending.dart';
@@ -23,7 +24,8 @@ import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import 'authenticate/sing_in_screen.dart';
 import '../../utils/custom_widgets/dialog_message.dart';
-import 'knowledge_base/tables/oznaczenia_przewodow_barwami.dart';
+import 'knowledge_base/tables/wire_ampacity.dart';
+import 'knowledge_base/tables/wire_colors.dart';
 import 'menu/menu_main_screen.dart';
 
 class Wrapper extends StatelessWidget {
@@ -103,9 +105,12 @@ class Wrapper extends StatelessWidget {
         return PurchasePending();
       case Screen.purchasePatronite:
         return PurchasePatronite();
-        break;
       case Screen.knowledgeBase:
-        return TabelaPrzewody();
+        return const KnowledgeBaseMenu();
+      case Screen.tableWireColors:
+        return const WireColors();
+      case Screen.tableWireAmpacity:
+        return WireAmpacity();
     }
   }
 }

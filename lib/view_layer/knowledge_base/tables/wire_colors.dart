@@ -5,13 +5,13 @@ import 'package:sepapka/utils/tabels/oznaczenia_przewodow_barwami.dart';
 
 import '../../../viewmodel_layer/manager.dart';
 
-class TabelaPrzewody extends StatelessWidget {
-  const TabelaPrzewody({Key? key}) : super(key: key);
+class WireColors extends StatelessWidget {
+  const WireColors({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final columns = TabelaOznaczeniaPrzewodow().headers;
-    final rows = TabelaOznaczeniaPrzewodow().rows;
+    final columns = TableWireColors().headers;
+    final rows = TableWireColors().rows;
 
     return WillPopScope(
       onWillPop: () {

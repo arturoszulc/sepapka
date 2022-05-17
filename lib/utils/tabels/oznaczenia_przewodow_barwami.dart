@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TabelaOznaczeniaPrzewodow {
+class TableWireColors {
   final List<String> headers = ['Nazwa (PL)', 'Nazwa (ENG)', 'Kod', 'Kolor'];
   final List<Przewod> rows = [
     const Przewod('czarna', 'black', 'BK', Colors.black),
@@ -11,14 +11,6 @@ class TabelaOznaczeniaPrzewodow {
     const Przewod('zielona', 'green', 'GN', Colors.green),
     const Przewod('niebieska\n(jasnoniebieska)', 'blue\n(lightblue)', 'BU', Colors.blue),
     const Przewod('fioletowa', 'violet', 'VT', Colors.purple),
-    const Przewod('szara', 'grey', 'GY', Colors.grey),
-    const Przewod('biała', 'white', 'WH', Colors.white),
-    const Przewod('różowa', 'pink', 'PK', Colors.pink),
-    Przewod('złota', 'gold', 'GD', Colors.yellowAccent.shade700),
-    const Przewod('turkusowa', 'turquoise', 'TQ', Colors.teal),
-    Przewod('srebrna', 'silver', 'SR', Colors.grey.shade300),
-    Przewod('żółto-zielona', 'green and\nyellow', 'GNYE', Colors.lightGreenAccent),
-
     const Przewod('szara', 'grey', 'GY', Colors.grey),
     const Przewod('biała', 'white', 'WH', Colors.white),
     const Przewod('różowa', 'pink', 'PK', Colors.pink),

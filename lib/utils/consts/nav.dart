@@ -25,5 +25,7 @@ enum Screen {
   purchaseSuccess,
   purchasePatronite,
   knowledgeBase,
+  tableWireColors,
+  tableWireAmpacity,
 
 }
