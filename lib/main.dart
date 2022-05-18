@@ -6,6 +6,7 @@ import 'package:sepapka/utils/theme_data.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:flutter/services.dart';
+import 'package:sepapka/viewmodel_layer/manager_calc.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -26,6 +27,10 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<Manager>(
           create: (context) => Manager(),
+        ),
+        ChangeNotifierProvider<CalcManager>(
+        create: (context) => CalcManager(),
+          lazy: true,
         ),
       ],
       child: MaterialApp(

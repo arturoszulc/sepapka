@@ -28,4 +28,7 @@ enum Screen {
   tableWireColors,
   tableWireAmpacity,
 
+  calculators,
+  calcPowerThreePhase,
+
 }

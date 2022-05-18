@@ -37,17 +37,8 @@ class MenuScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // MenuButton(
-                //     label: 'Nauka',
-                //     onPressed: () {
-                //       context.read<Manager>().chooseSessionType(QuestionType.learning);
-                //
-                //     }),
                 MenuButton(
-                    // hasBadge: true,
-                    // badgeNum: howManyToPractice,
                     label: 'Quiz',
                     onPressed: () {
                       context.read<Manager>().navigate(Screen.chooseLevel);
@@ -61,6 +52,11 @@ class MenuScreen extends StatelessWidget {
                     label: 'Baza wiedzy',
                     onPressed: () {
                       context.read<Manager>().navigate(Screen.knowledgeBase);
+                    }),
+                MenuButton(
+                    label: 'Kalkulatory',
+                    onPressed: () {
+                      context.read<Manager>().navigate(Screen.calculators);
                     }),
                 MenuButton(label: 'Wyloguj się', onPressed: () async {
                   await context.read<Manager>().signOut();

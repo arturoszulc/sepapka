@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
-import 'package:sepapka/utils/tabels/oznaczenia_przewodow_barwami.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/utils/custom_widgets/app_loading.dart';
+import 'package:sepapka/view_layer/calculators/calc_power_three_phase.dart';
+import 'package:sepapka/view_layer/calculators/calculators_menu.dart';
 import 'package:sepapka/view_layer/knowledge_base/knowledge_base_menu.dart';
 import 'package:sepapka/view_layer/purchase/purchase_error_screen.dart';
 import 'package:sepapka/view_layer/purchase/purchase_patronite.dart';
@@ -111,6 +112,11 @@ class Wrapper extends StatelessWidget {
         return const WireColors();
       case Screen.tableWireAmpacity:
         return WireAmpacity();
+      case Screen.calculators:
+        return const CalculatorsMenuScreen();
+        break;
+      case Screen.calcPowerThreePhase:
+        return CalcPowerThreePhase();
     }
   }
 }
