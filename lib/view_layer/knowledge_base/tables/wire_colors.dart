@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/tabels/oznaczenia_przewodow_barwami.dart';
 
+import '../../../utils/tabels/table_wire_colors.dart';
 import '../../../viewmodel_layer/manager.dart';
 
 class WireColors extends StatelessWidget {
