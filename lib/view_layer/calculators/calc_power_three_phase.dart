@@ -32,7 +32,7 @@ class CalcPowerThreePhase extends StatelessWidget {
                 FilteringTextInputFormatter.digitsOnly
               ],
               onChanged: (val) {
-                calcManager.powerThreePhaseR1 = double.tryParse(val)!;
+                calcManager.powerThreePhaseR1 = double.tryParse(val) ?? 0;
               },
             ),
             const Text('R2'),
@@ -42,7 +42,7 @@ class CalcPowerThreePhase extends StatelessWidget {
                 FilteringTextInputFormatter.digitsOnly
               ],
               onChanged: (val) {
-                calcManager.powerThreePhaseR2 = double.tryParse(val)!;
+                calcManager.powerThreePhaseR2 = double.tryParse(val) ?? 0;
               },
             ),
             const Text('R3'),
@@ -52,7 +52,7 @@ class CalcPowerThreePhase extends StatelessWidget {
                 FilteringTextInputFormatter.digitsOnly
               ],
               onChanged: (val) {
-                calcManager.powerThreePhaseR3 = double.tryParse(val)!;
+                calcManager.powerThreePhaseR3 = double.tryParse(val) ?? 0;
               },
             ),
             const SizedBox(height: 20,),

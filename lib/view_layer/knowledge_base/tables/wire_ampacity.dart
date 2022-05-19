@@ -61,6 +61,8 @@ class _WireAmpacityState extends State<WireAmpacity> {
                       ),
                     ),
                   ),
+                  Image.asset(layingWiresMethods[index].assetPath,
+                  height: 400,)
                 ]),
             Expanded(
               child: SingleChildScrollView(

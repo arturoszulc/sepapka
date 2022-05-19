@@ -1,7 +1,7 @@
 const List<LayingWiresMethod> layingWiresMethods = [
-  LayingWiresMethod('A1', 'jednożyłowe, w termoizolacji, w rurach/listwach', ''),
-  LayingWiresMethod('A2', 'wielożyłowe, w termoizolacji, w rurach/listwach/bezpośrednio', ''),
-  LayingWiresMethod('B1', 'jednożyłowe, w/na ścianie/podłodze, w rurach/listwach', ''),
+  LayingWiresMethod('A1', 'jednożyłowe, w termoizolacji, w rurach/listwach', 'assets/images/knowledge_base/wire_ampacity/wire_ampacity_a1.png'),
+  LayingWiresMethod('A2', 'wielożyłowe, w termoizolacji, w rurach/listwach/bezpośrednio', 'assets/images/knowledge_base/wire_ampacity/wire_ampacity_a2.png'),
+  LayingWiresMethod('B1', 'jednożyłowe, w/na ścianie/podłodze, w rurach/listwach', 'assets/images/knowledge_base/wire_ampacity/wire_ampacity_b1.png'),
   LayingWiresMethod('B2', 'wielożyłowe, w/na ścianie/podłodze, w rurach/listwach', ''),
   LayingWiresMethod('C', 'wielożyłowe, w/na ścianie/podłodze, w rurach/listwach', ''),
   LayingWiresMethod('E', 'wielożyłowe, w/na ścianie/podłodze, w rurach/listwach', ''),
