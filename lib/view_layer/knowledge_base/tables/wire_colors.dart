@@ -44,20 +44,52 @@ class WireColors extends StatelessWidget {
       columns.map((String column) => DataColumn(label: Text(column))).toList();
 }
 
-List<DataRow> getRows(List<Przewod> rows) => rows.map((Przewod przewod) {
+List<DataRow> getRows(List<Przewod> rows) =>
+    rows.map((Przewod przewod) {
       final cells = [przewod.namePL, przewod.nameENG, przewod.colorCode, przewod.color];
       return DataRow(cells: getCells(cells));
     }).toList();
 
-List<DataCell> getCells(List<dynamic> cells) => cells
-    .map((data) => DataCell(data is Color
-        ? Container(
-            width: 25,
-            height: 15,
-            color: data,
-          )
-        : Text('$data')))
-    .toList();
+List<DataCell> getCells(List<dynamic> cells) =>
+    cells
+        .map((data) {
+      if (data == Colors.greenAccent) {
+        return DataCell(Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 25,
+              height: 7.5,
+              color: Colors.yellow,
+              ),
+            Container(
+              width: 25,
+              height: 7.5,
+              color: Colors.green,
+            ),
+          ],
+        ));
+      }
+      if (data is Color) {
+        return DataCell(Container(
+          width: 25,
+          height: 15,
+          color: data,
+        ));
+      }
+      return DataCell(Text('$data'));
+    }
+// DataCell(
+//     // data is Color
+//     //     ? Container(
+//     //         width: 25,
+//     //         height: 15,
+//     //         color: data,
+//     //       )
+//         : Text('$data')
+// )
+    )
+        .toList();
 
 // List<DataCell> getCells2(List<dynamic> cells) => cells.map((data) {
 //       switch (data) {

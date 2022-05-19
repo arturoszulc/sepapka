@@ -22,7 +22,7 @@ class _WireAmpacityState extends State<WireAmpacity> {
     String key = layingWiresMethods[index].symbol;
     return WillPopScope(
       onWillPop: () {
-        return context.read<Manager>().navigate(Screen.menu);
+        return context.read<Manager>().navigate(Screen.knowledgeBase);
       },
       child: Scaffold(
         // backgroundColor: myPrimaryLight,
@@ -30,50 +30,55 @@ class _WireAmpacityState extends State<WireAmpacity> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
-              context.read<Manager>().navigate(Screen.menu);
+              context.read<Manager>().navigate(Screen.knowledgeBase);
             },
           ),
-          title: Text('Obciążalność przewodów'),
+          title: const Text('Obciążalność przewodów'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
-              const Text('Wybierz sposób ułożenia przewodu'),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Card(
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                              child: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      if (index > 0) index -= 1;
-                                    });
-                                  },
-                                  icon: const Icon(Icons.arrow_left))),
-                          Expanded(
-                              child: Text(
-                            layingWiresMethods[index].symbol,
-                            textAlign: TextAlign.center,
-                          )),
-                          Expanded(child: IconButton(onPressed: () {
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                                child: FloatingActionButton.small(
+                                    onPressed: () {
+                                      setState(() {
+                                        if (index > 0) index -= 1;
+                                      });
+                                    },
+                                    child: const Icon(Icons.arrow_left, size: 36,))),
+                            Expanded(
+                                child: Text(
+                              layingWiresMethods[index].symbol,
+                              textAlign: TextAlign.center,
+                                  textScaleFactor: 2,
+                            )),
+                            Expanded(child: FloatingActionButton.small(onPressed: () {
 
-                            setState(() {
-                            if (index < layingWiresMethods.length-1) index += 1;
-                            });
-                          }, icon: const Icon(Icons.arrow_right))),
-                        ],
+                              setState(() {
+                              if (index < layingWiresMethods.length-1) index += 1;
+                              });
+                            }, child: const Icon(Icons.arrow_right, size: 36,))),
+                          ],
+                        ),
                       ),
+                      // const SizedBox(height: 10,),
                       Row(
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 20.0),
                               child: Image.asset(
                                 layingWiresMethods[index].assetPath,
                               ),
@@ -91,14 +96,25 @@ class _WireAmpacityState extends State<WireAmpacity> {
               FittedBox(
                 fit: BoxFit.fitWidth,
                 child: DataTable(
-                    columnSpacing: 15.0,
+                    // columnSpacing: 15.0,
                     columns: const <DataColumn>[
-                      DataColumn(label: Text('Przekrój\nprzewodów [mm\u00B2]')),
+                      DataColumn(label: Text('Przekrój\nprzewodów\n[mm\u00B2]')),
                       DataColumn(label: Text('Obciążalność\nobwodu 1-f [A]')),
                       DataColumn(label: Text('Obciążalność\nobwodu 3-f [A]')),
                     ],
                     rows: getRows(tableWireAmpacityData[key]!)),
               ),
+              const SizedBox(height: 20,),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Szczegóły:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Dane dotyczą przewodów miedzianych w izolacji/płaszczu PVC. Temperatura żyły: 70\u00B0C. Temperatura otoczenia: 25\u00B0C'),
+              ),
+
+
             ],
           ),
         ),

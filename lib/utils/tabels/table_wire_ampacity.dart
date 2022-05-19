@@ -1,9 +1,28 @@
 const List<LayingWiresMethod> layingWiresMethods = [
-  LayingWiresMethod('A1', 'jednożyłowe, w termoizolacji, w rurach/listwach', 'assets/images/knowledge_base/wire_ampacity/wire_ampacity_a1.png'),
-  LayingWiresMethod('A2', 'wielożyłowe, w termoizolacji, w rurach/listwach/bezpośrednio', 'assets/images/knowledge_base/wire_ampacity/wire_ampacity_a2.png'),
-  LayingWiresMethod('B1', 'jednożyłowe, w/na ścianie/podłodze, w rurach/listwach', 'assets/images/knowledge_base/wire_ampacity/wire_ampacity_b1.png'),
-  LayingWiresMethod('B2', 'wielożyłowe, w/na ścianie/podłodze, w rurach/listwach', ''),
-  LayingWiresMethod('C', 'wielożyłowe, w/na ścianie/podłodze, w rurach/listwach', ''),
+  LayingWiresMethod('A1', '\u2022 jednożyłowe,\n'
+      '\u2022 w termoizolacji,\n'
+      '\u2022 w rurach lub listwach',
+      'assets/images/knowledge_base/wire_ampacity/wire_ampacity_a1.png'),
+  LayingWiresMethod('A2', '\u2022 wielożyłowe,\n'
+      '\u2022 w termoizolacji,\n'
+      '\u2022 w rurach, listwach lub beezpośrednio',
+      'assets/images/knowledge_base/wire_ampacity/wire_ampacity_a2.png'),
+  LayingWiresMethod(
+      'B1',
+      '\u2022 jednożyłowe\n'
+          '\u2022 w kanałach instalacyjnych lub rurkach\n'
+          '\u2022 na ścianie lub pod tynkiem',
+      'assets/images/knowledge_base/wire_ampacity/wire_ampacity_b1.png'),
+  LayingWiresMethod(
+      'B2',
+      '\u2022 wielożyłowe\n'
+          '\u2022 w kanałach instalacyjnych lub rurkach\n'
+          '\u2022 na ścianie lub pod tynkiem', ''),
+  LayingWiresMethod(
+      'C',
+      '\u2022 jedno- lub wielożyłowe,\n'
+          '\u2022 na ścianie, w tynku lub pod tynkiem\n'
+          '\u2022 w korytku kablowym nieperforowanym', ''),
   LayingWiresMethod('E', 'wielożyłowe, w/na ścianie/podłodze, w rurach/listwach', ''),
   LayingWiresMethod('F', 'wielożyłowe, w/na ścianie/podłodze, w rurach/listwach', ''),
   LayingWiresMethod('G', 'wielożyłowe, w/na ścianie/podłodze, w rurach/listwach', ''),
@@ -16,7 +35,6 @@ class LayingWiresMethod {
 
   const LayingWiresMethod(this.symbol, this.description, this.assetPath);
 }
-
 
 const Map<String, WireNumber> tableWireAmpacityData = {
   'A1': WireNumber(twoWires: {
@@ -74,9 +92,9 @@ const Map<String, WireNumber> tableWireAmpacityData = {
     '120': '182',
   }),
   'B1': WireNumber(twoWires: {
-    '1,5': '',
-    '2,5': '',
-    '4': '',
+    '1,5': '18,5',
+    '2,5': '25',
+    '4': '34',
     '6': '',
     '10': '',
     '16': '',
@@ -235,11 +253,7 @@ const Map<String, WireNumber> tableWireAmpacityData = {
     '95': '',
     '120': '',
   }),
-
-
-
 };
-
 
 class WireNumber {
   final Map<String, String> twoWires;

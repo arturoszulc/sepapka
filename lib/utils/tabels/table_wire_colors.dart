@@ -17,7 +17,7 @@ class TableWireColors {
     Przewod('złota', 'gold', 'GD', Colors.yellowAccent.shade700),
     const Przewod('turkusowa', 'turquoise', 'TQ', Colors.teal),
     Przewod('srebrna', 'silver', 'SR', Colors.grey.shade300),
-    Przewod('żółto-zielona', 'green and\nyellow', 'GNYE', Colors.lightGreenAccent),
+    const Przewod('żółto-zielona', 'green and\nyellow', 'GNYE', Colors.greenAccent),
   ];
 }
 
