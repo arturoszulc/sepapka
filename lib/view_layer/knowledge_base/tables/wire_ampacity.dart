@@ -8,20 +8,18 @@ import '../../../viewmodel_layer/manager.dart';
 class WireAmpacity extends StatefulWidget {
   WireAmpacity({Key? key}) : super(key: key);
 
-
   @override
   State<WireAmpacity> createState() => _WireAmpacityState();
 }
 
 class _WireAmpacityState extends State<WireAmpacity> {
-
   final _tableKey = GlobalKey<PaginatedDataTableState>();
 
   int index = 0;
 
   @override
   Widget build(BuildContext context) {
-  String key = layingWiresMethods[index].symbol;
+    String key = layingWiresMethods[index].symbol;
     return WillPopScope(
       onWillPop: () {
         return context.read<Manager>().navigate(Screen.menu);
@@ -35,52 +33,74 @@ class _WireAmpacityState extends State<WireAmpacity> {
               context.read<Manager>().navigate(Screen.menu);
             },
           ),
+          title: Text('Obciążalność przewodów'),
+          centerTitle: true,
         ),
-        body: Column(
-          children: [
-            Column(
-                children: [
-                  const Text('Wybierz sposób ułożenia przewodu'),
-                  Card(
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              const Text('Wybierz sposób ułożenia przewodu'),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                              child: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      if (index > 0) index -= 1;
+                                    });
+                                  },
+                                  icon: const Icon(Icons.arrow_left))),
+                          Expanded(
+                              child: Text(
+                            layingWiresMethods[index].symbol,
+                            textAlign: TextAlign.center,
+                          )),
+                          Expanded(child: IconButton(onPressed: () {
 
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: ListTile(
-                          title: Text(layingWiresMethods[index].symbol),
-                          leading: IconButton(icon: const Icon(Icons.arrow_left), onPressed: () {
                             setState(() {
-                              if (index > 0) index -= 1;
-
-                            });}),
-                          trailing: IconButton(icon: const Icon(Icons.arrow_right), onPressed: () {
-                            setState(() {
-                              if (index < layingWiresMethods.length-1) index += 1;
+                            if (index < layingWiresMethods.length-1) index += 1;
                             });
-
-                          },),
+                          }, icon: const Icon(Icons.arrow_right))),
+                        ],
                       ),
-                    ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                layingWiresMethods[index].assetPath,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(layingWiresMethods[index].description),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Image.asset(layingWiresMethods[index].assetPath,
-                  height: 400,)
-                ]),
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: DataTable(
-                    columnSpacing: 15.0,
-                      columns: const <DataColumn>[
-                        DataColumn(label: Text('Przekrój\nprzewodów [mm\u00B2]')),
-                        DataColumn(label: Text('Obciążalność\nobwodu 1-f [A]')),
-                        DataColumn(label: Text('Obciążalność\nobwodu 3-f [A]')),
-                      ],
-                      rows: getRows(tableWireAmpacityData[key]!)),
                 ),
               ),
-            ),
-          ],
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: DataTable(
+                    columnSpacing: 15.0,
+                    columns: const <DataColumn>[
+                      DataColumn(label: Text('Przekrój\nprzewodów [mm\u00B2]')),
+                      DataColumn(label: Text('Obciążalność\nobwodu 1-f [A]')),
+                      DataColumn(label: Text('Obciążalność\nobwodu 3-f [A]')),
+                    ],
+                    rows: getRows(tableWireAmpacityData[key]!)),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -101,9 +121,5 @@ class _WireAmpacityState extends State<WireAmpacity> {
     // return DataRow(cells: getCells(cells));
   }
 
-  List<DataCell> getCells(List<dynamic> cells) =>
-      cells
-          .map((data) => DataCell(Text('$data')))
-          .toList();
+  List<DataCell> getCells(List<dynamic> cells) => cells.map((data) => DataCell(Text('$data'))).toList();
 }
-
