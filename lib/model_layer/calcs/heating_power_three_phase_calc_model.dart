@@ -8,7 +8,7 @@ class HeatingPowerThreePhaseCalc {
 
   String errorMsg = '';
   bool mode = false;
-  double heaterResistance = 50;
+  double heaterResistance = 0;
 
   String deltaPower = '';
   String starPower = '';

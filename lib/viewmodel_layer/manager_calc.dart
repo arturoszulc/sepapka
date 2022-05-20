@@ -5,7 +5,8 @@ import 'package:sepapka/model_layer/calcs/heating_power_three_phase_calc_model.d
 class CalcManager extends ChangeNotifier {
 
   final bool calcIsReady = true;
-  String? calcError;
+  String calcError = '';
+  bool isResultVisible = false;
 
 
   setCalcError(String? msg) {
@@ -15,6 +16,15 @@ class CalcManager extends ChangeNotifier {
       calcError = msg;
     }
     notifyListeners();
+  }
+
+  hideResult() {
+    isResultVisible = false;
+    // notifyListeners();
+  }
+
+  showResult() {
+    isResultVisible = true;
   }
 
 
@@ -32,9 +42,12 @@ class CalcManager extends ChangeNotifier {
     if (!hptpCalc.mode) {
       //calculate power
       bool isSuccess = hptpCalc.calcPower();
-      if (!isSuccess) setCalcError(hptpCalc.errorMsg);
-      debugPrint('StarPower = ${hptpCalc.starPower} W');
-      debugPrint('DeltaPower = ${hptpCalc.deltaPower} W');
+      if (!isSuccess) {
+        setCalcError(hptpCalc.errorMsg);
+      } else {
+        showResult();
+        // notifyListeners();
+      }
 
     }
     else {

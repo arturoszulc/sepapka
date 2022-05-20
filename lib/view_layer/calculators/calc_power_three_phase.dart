@@ -8,24 +8,38 @@ import '../../viewmodel_layer/manager_calc.dart';
 class CalcHeatingPowerThreePhase extends StatelessWidget {
   const CalcHeatingPowerThreePhase({Key? key}) : super(key: key);
 
+  void unfocus(BuildContext context) {
+    debugPrint('tapped gesture detector');
+    FocusScopeNode currentFocus = FocusScope.of(context);
+
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    debugPrint('*** CalcHeatingPowerThreePhase built ***');
     final CalcManager calcManager = Provider.of<CalcManager>(context);
     bool calcMode = context.read<CalcManager>().hptpCalc.mode;
     debugPrint(calcMode.toString());
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            context.read<Manager>().navigate(Screen.menu);
-          },
+    return GestureDetector(
+      onTap: () {
+        unfocus(context);
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              context.read<Manager>().navigate(Screen.menu);
+            },
+          ),
+          title: const Text('Moc grzania 3-f'),
+          centerTitle: true,
         ),
-        title: const Text('Moc grzania 3-f'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Column(
+        body: Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -82,26 +96,21 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
               height: 10,
             ),
             Expanded(
-                child: calcMode
+              child: calcMode
                     ? buildResistanceCalculator(calcManager)
-                    : buildPowerCalculator(calcManager)),
+                    : buildPowerCalculator(context, calcManager),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget buildPowerCalculator(CalcManager calcManager) {
+  Widget buildPowerCalculator(BuildContext context, CalcManager calcManager) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Column(
         children: [
-          AnimatedContainer(
-            curve: Curves.easeInCirc,
-            color: Colors.green,
-            width: calcManager.hptpCalc.heaterResistance,
-            height: 200,
-            duration: const Duration(milliseconds: 500),),
           const Text(
             'Podaj rezystancję jednej grzałki [\u03A9]',
             textAlign: TextAlign.left,
@@ -118,6 +127,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
               debugPrint(val);
               calcManager.hptpCalc.heaterResistance = val.isEmpty ? 0.0 : double.parse(val);
             },
+            onTap: () => calcManager.hideResult(),
           ),
           Align(
             alignment: Alignment.centerLeft,
@@ -132,9 +142,22 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () {
+                unfocus(context);
                 calcManager.calculateHeatingPowerThreePhase();
               },
               child: const Text('Calculate power')),
+
+          const SizedBox(height: 20,),
+          calcManager.isResultVisible ? Card(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(children: [
+              const Text('Wynik:', style: TextStyle(fontWeight: FontWeight.bold),),
+              Text('W układzie gwiazdy: ${calcManager.hptpCalc.starPower} W'),
+              Text('W układzie trójkąta: ${calcManager.hptpCalc.deltaPower} W'),
+            ],),
+            ),
+          ) : Container(),
         ],
       ),
     );
