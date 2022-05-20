@@ -115,8 +115,8 @@ class Wrapper extends StatelessWidget {
       case Screen.calculators:
         return const CalculatorsMenuScreen();
         break;
-      case Screen.calcPowerThreePhase:
-        return CalcPowerThreePhase();
+      case Screen.calcHeatingPowerThreePhase:
+        return CalcHeatingPowerThreePhase();
     }
   }
 }

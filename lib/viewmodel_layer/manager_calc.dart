@@ -1,38 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:sepapka/model_layer/calcs/heating_power_three_phase_calc_model.dart';
 
 
 class CalcManager extends ChangeNotifier {
 
   final bool calcIsReady = true;
+  String? calcError;
 
-  final double voltagePhaseToNeutral = 230.0;
-  final double voltagePhaseToPhase = 400.0;
 
-  double resistanceThreePhaseR1 = 0;
-  double resistanceThreePhaseR2 = 0;
-  double resistanceThreePhaseR3 = 0;
-
-  double powerThreePhaseR1 = 0;
-  double powerThreePhaseR2 = 0;
-  double powerThreePhaseR3 = 0;
-  double powerThreePhaseP1 = 0;
-  double powerThreePhaseP2 = 0;
-  double powerThreePhaseP3 = 0;
-  double powerThreePhaseResult = 0;
-
-  void powerThreePhaseStar() {
-    powerThreePhaseP1 = (voltagePhaseToNeutral * voltagePhaseToNeutral) / powerThreePhaseR1;
-    debugPrint(powerThreePhaseP1.toString());
-    powerThreePhaseP2 = (voltagePhaseToNeutral * voltagePhaseToNeutral) / powerThreePhaseR2;
-    powerThreePhaseP3 = (voltagePhaseToNeutral * voltagePhaseToNeutral) / powerThreePhaseR3;
-    powerThreePhaseResult = powerThreePhaseP1 + powerThreePhaseP2 + powerThreePhaseP3;
+  setCalcError(String? msg) {
+    if (msg == null) {
+      calcError = '';
+    } else {
+      calcError = msg;
+    }
     notifyListeners();
   }
 
-  void powerThreePhaseDelta() {
 
-    powerThreePhaseResult = 15.0;
+  //HEATING POWER THREE PHASE - HPTP
+
+  HeatingPowerThreePhaseCalc hptpCalc = HeatingPowerThreePhaseCalc();
+
+  void setHeatingPowerCalcMode(bool mode) {
+    hptpCalc.mode = mode;
     notifyListeners();
   }
+
+  void calculateHeatingPowerThreePhase() {
+    setCalcError(null);
+    if (!hptpCalc.mode) {
+      //calculate power
+      bool isSuccess = hptpCalc.calcPower();
+      if (!isSuccess) setCalcError(hptpCalc.errorMsg);
+      debugPrint('StarPower = ${hptpCalc.starPower} W');
+      debugPrint('DeltaPower = ${hptpCalc.deltaPower} W');
+
+    }
+    else {
+      //calculate heater resistance
+    }
+  }
+
+
 
 }

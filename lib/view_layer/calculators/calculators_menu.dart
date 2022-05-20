@@ -32,9 +32,9 @@ class CalculatorsMenuScreen extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         MenuButton(
-            label: 'Moc w obwodach 3-fazowych',
+            label: 'Moc grzania w obwodach 3-fazowych',
             onPressed: () {
-              context.read<Manager>().navigate(Screen.calcPowerThreePhase);
+              context.read<Manager>().navigate(Screen.calcHeatingPowerThreePhase);
             }),
     ],),
       ),

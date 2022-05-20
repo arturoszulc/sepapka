@@ -29,6 +29,6 @@ enum Screen {
   tableWireAmpacity,
 
   calculators,
-  calcPowerThreePhase,
+  calcHeatingPowerThreePhase,
 
 }

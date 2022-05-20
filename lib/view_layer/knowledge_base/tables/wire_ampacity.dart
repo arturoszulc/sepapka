@@ -52,7 +52,7 @@ class _WireAmpacityState extends State<WireAmpacity> {
                           children: [
                             Expanded(
                                 child: FloatingActionButton.small(
-                                    onPressed: () {
+                                    onPressed: (index == 0) ? null : () {
                                       setState(() {
                                         if (index > 0) index -= 1;
                                       });
@@ -64,7 +64,8 @@ class _WireAmpacityState extends State<WireAmpacity> {
                               textAlign: TextAlign.center,
                                   textScaleFactor: 2,
                             )),
-                            Expanded(child: FloatingActionButton.small(onPressed: () {
+                            Expanded(child: FloatingActionButton.small(onPressed:
+                            (index == layingWiresMethods.length-1) ? null : () {
 
                               setState(() {
                               if (index < layingWiresMethods.length-1) index += 1;

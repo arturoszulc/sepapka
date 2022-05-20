@@ -45,6 +45,7 @@ ThemeData lightTheme() {
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: myPrimary,
       foregroundColor: mySecondary,
+      disabledElevation: 0,
     ),
 
     //iconButton style
