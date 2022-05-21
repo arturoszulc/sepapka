@@ -24,13 +24,13 @@ class PurchasePending extends StatelessWidget {
           body: Center(child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               SpinKitFadingCircle(
-                color: myPrimary,
+                // color: myPrimary,
                 size: 50.0,
               ),
-              SizedBox(height: 10,),
-              Padding(
+              const SizedBox(height: 10,),
+              const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text('Twoja transakcja jest przetwarzana\nMoże to zająć kilka minut.', textAlign: TextAlign.center,),
               ),

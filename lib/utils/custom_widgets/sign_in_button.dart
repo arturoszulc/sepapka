@@ -14,7 +14,7 @@ class SignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(myPrimary),
+        // backgroundColor: MaterialStateProperty.all<Color>(myPrimary),
       ),
       onPressed: onPressed,
       child: Text(label),

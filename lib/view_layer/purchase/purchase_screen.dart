@@ -10,7 +10,7 @@ class PurchaseScreen extends StatelessWidget {
 
   static const TextStyle featuresTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
   static const double iconSize = 45.0;
-  static const Color iconColor = myComplementary;
+  // static const Color iconColor = myComplementary;
   static const EdgeInsetsGeometry tilePadding = EdgeInsets.symmetric(horizontal: 40, vertical: 10);
 
   @override
@@ -58,7 +58,7 @@ class PurchaseScreen extends StatelessWidget {
                         leading: Icon(
                           Icons.question_mark_rounded,
                           size: iconSize,
-                          color: iconColor,
+                          // color: iconColor,
                         ),
                         title: Text(
                           'odblokuj wszystkie pytania',
@@ -70,7 +70,7 @@ class PurchaseScreen extends StatelessWidget {
                         leading: Icon(
                           Icons.settings,
                           size: iconSize,
-                          color: iconColor,
+                          // color: iconColor,
                         ),
                         title: Text(
                           'uzyskaj dostęp do nadchodzących funkcji',
@@ -82,7 +82,7 @@ class PurchaseScreen extends StatelessWidget {
                         leading: Icon(
                           Icons.rocket_launch,
                           size: iconSize,
-                          color: iconColor,
+                          // color: iconColor,
                         ),
                         title: Text(
                           'wspieraj dalszy rozwój aplikacji',

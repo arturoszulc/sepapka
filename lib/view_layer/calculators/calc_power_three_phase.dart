@@ -32,7 +32,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               context.read<Manager>().navigate(Screen.menu);
             },
@@ -118,33 +118,23 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
             child: const Text(
               'Podaj rezystancję jednej grzałki [\u03A9]',
               textAlign: TextAlign.left,
-              style: TextStyle(color: mySecondary),
+              // style: TextStyle(color: mySecondary),
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                color: myPrimary,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: TextField(
+              style: Theme.of(context).textTheme.headline6,
+              // textAlign: TextAlign.right,
+              decoration: InputDecoration(
+                border: InputBorder.none,
               ),
-              borderRadius: const BorderRadius.all(Radius.circular(15))
-            ),
-
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: TextField(
-                style: Theme.of(context).textTheme.headline6,
-                // textAlign: TextAlign.right,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                ),
-                keyboardType: TextInputType.number,
-                onChanged: (val) {
-                  debugPrint(val);
-                  calcManager.hptpCalc.heaterResistance = val.isEmpty ? 0.0 : double.parse(val);
-                },
-                onTap: () => calcManager.hideResult(),
-              ),
+              keyboardType: TextInputType.number,
+              onChanged: (val) {
+                debugPrint(val);
+                calcManager.hptpCalc.heaterResistance = val.isEmpty ? 0.0 : double.parse(val);
+              },
+              onTap: () => calcManager.hideResult(),
             ),
           ),
           Align(

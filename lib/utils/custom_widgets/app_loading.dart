@@ -7,10 +7,10 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: SpinKitCubeGrid(
-          color: myPrimary,
+          color: Theme.of(context).colorScheme.primary,
           size: 50.0,
         ),
       ),

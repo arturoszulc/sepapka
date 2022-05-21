@@ -48,12 +48,16 @@ class MyApp extends StatelessWidget {
             error: Color(0xffb00020),
           ),
           usedColors: 2,
-          surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
+          surfaceMode: FlexSurfaceMode.highSurfaceLowScaffold,
           blendLevel: 20,
           appBarOpacity: 0.95,
           subThemesData: const FlexSubThemesData(
             blendOnLevel: 20,
             blendOnColors: false,
+            textButtonSchemeColor: SchemeColor.inverseSurface,
+            outlinedButtonSchemeColor: SchemeColor.inverseSurface,
+            fabUseShape: false,
+            fabSchemeColor: SchemeColor.primaryContainer,
           ),
           useMaterial3ErrorColors: true,
           visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -79,6 +83,10 @@ class MyApp extends StatelessWidget {
           appBarOpacity: 0.90,
           subThemesData: const FlexSubThemesData(
             blendOnLevel: 30,
+            textButtonSchemeColor: SchemeColor.inverseSurface,
+            outlinedButtonSchemeColor: SchemeColor.inverseSurface,
+            fabUseShape: false,
+            fabSchemeColor: SchemeColor.primaryContainer,
           ),
           useMaterial3ErrorColors: true,
           visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -88,6 +96,7 @@ class MyApp extends StatelessWidget {
         ),
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
+
 themeMode: ThemeMode.light,
 
         // theme: lightTheme(),

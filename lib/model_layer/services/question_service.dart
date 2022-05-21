@@ -255,10 +255,10 @@ class QuestionService {
   createBMap() {
     if (currentQuestion != null) {
       bMapList = [
-        BMap(answer: currentQuestion!.a1, color: normalButtonColor),
-        BMap(answer: currentQuestion!.a2, color: normalButtonColor),
-        BMap(answer: currentQuestion!.a3, color: normalButtonColor),
-        BMap(answer: currentQuestion!.a4, color: normalButtonColor),
+        BMap(answer: currentQuestion!.a1, color: flexSchemeLight.primary),
+        BMap(answer: currentQuestion!.a2, color: flexSchemeLight.primary),
+        BMap(answer: currentQuestion!.a3, color: flexSchemeLight.primary),
+        BMap(answer: currentQuestion!.a4, color: flexSchemeLight.primary),
       ];
       //shuffle buttons
       bMapList.shuffle();

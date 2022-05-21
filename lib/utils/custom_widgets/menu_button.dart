@@ -28,14 +28,14 @@ class MenuButton extends StatelessWidget {
         // position: BadgePosition.center(),
         shape: BadgeShape.square,
         borderRadius: BorderRadius.circular(8),
-
+        badgeColor: Theme.of(context).colorScheme.secondaryContainer,
         badgeContent: (proOnly && !isUserPro) ? const Icon(Icons.lock, size: 12,) : Text(badgeNum.toString(),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
         toAnimate: false,
-        badgeColor: myComplementary,
+        // badgeColor: myComplementary,
         showBadge: (hasBadge && badgeNum > 0) || (proOnly && !isUserPro) ? true : false,
         child: ElevatedButton(
       style: ElevatedButton.styleFrom(
