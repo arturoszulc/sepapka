@@ -20,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () => context.read<Manager>().navigate(Screen.menu),
           ),
           title: const Text('Profil użytkownika'),

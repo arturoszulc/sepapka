@@ -25,7 +25,7 @@ class QuestionListSingle extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () => context.read<Manager>().navigate(Screen.listQuestion),
           ),
           title: Text('Pytanie ${index + 1} / ${filteredListLength + 1}'),

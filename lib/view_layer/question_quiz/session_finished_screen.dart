@@ -22,9 +22,9 @@ class SessionFinished extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   'Sesja zakończona!',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.0),
+                  style: Theme.of(context).textTheme.headline3,
                 ),
                 const SizedBox(height: 30.0),
                 const SizedBox(height: 30.0),
@@ -38,16 +38,17 @@ class SessionFinished extends StatelessWidget {
                     '$userScore %',
                     style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
                   ),
-                  header: const Padding(
-                    padding: EdgeInsets.only(bottom: 30.0),
+                  header: Padding(
+                    padding: const EdgeInsets.only(bottom: 30.0),
                     child: Text(
                       "Twój wynik",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17.0),
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
                   circularStrokeCap: CircularStrokeCap.round,
-                  progressColor: Colors.purple,
-                ),
+                  progressColor: Theme.of(context).colorScheme.primary,
+
+          ),
                 // Text('${context.read<Manager>().userScore} %',
                 //     style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold)),
                 // const SizedBox(height: 30.0),

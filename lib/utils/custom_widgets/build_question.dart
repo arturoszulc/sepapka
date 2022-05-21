@@ -27,7 +27,7 @@ Widget buildQuestion(BuildContext context, Question? question) {
             },
             child: Hero(
                 tag: 'imageHero',
-                child: buildQuestionImage(question.assetPath) ?? Container())),
+                child: buildQuestionImage(context, question.assetPath) ?? Container())),
         // child: question.assetPath.isEmpty ? Container() :
         // Image.asset('assets/images/questions/${question.assetPath}'),
       ),

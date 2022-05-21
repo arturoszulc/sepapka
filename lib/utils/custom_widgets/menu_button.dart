@@ -28,10 +28,11 @@ class MenuButton extends StatelessWidget {
         // position: BadgePosition.center(),
         shape: BadgeShape.square,
         borderRadius: BorderRadius.circular(8),
-        badgeColor: Theme.of(context).colorScheme.secondaryContainer,
+        badgeColor: Theme.of(context).colorScheme.secondary,
         badgeContent: (proOnly && !isUserPro) ? const Icon(Icons.lock, size: 12,) : Text(badgeNum.toString(),
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.tertiaryContainer,
           ),
         ),
         toAnimate: false,

@@ -15,10 +15,10 @@ class KnowledgeBaseMenu extends StatelessWidget {
       child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () => context.read<Manager>().navigate(Screen.menu),
             ),
-            title: const Text('Wybierz poziom trudności'),
+            title: const Text('Tablice'),
             centerTitle: true,
           ),
           body: Center(

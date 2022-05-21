@@ -25,7 +25,7 @@ class ResetPasswordScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () => context.read<Manager>().navigate(Screen.signIn),
           ),
           title: const Text('Zresetuj hasło'),

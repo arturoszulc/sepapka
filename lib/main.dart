@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
           usedColors: 2,
           surfaceMode: FlexSurfaceMode.highSurfaceLowScaffold,
           blendLevel: 20,
-          appBarOpacity: 0.95,
+          appBarOpacity: 0.00,
           subThemesData: const FlexSubThemesData(
             blendOnLevel: 20,
             blendOnColors: false,
@@ -79,10 +79,9 @@ class MyApp extends StatelessWidget {
           usedColors: 2,
           surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
           blendLevel: 15,
-          appBarStyle: FlexAppBarStyle.background,
           appBarOpacity: 0.90,
+          darkIsTrueBlack: true,
           subThemesData: const FlexSubThemesData(
-            blendOnLevel: 30,
             textButtonSchemeColor: SchemeColor.inverseSurface,
             outlinedButtonSchemeColor: SchemeColor.inverseSurface,
             fabUseShape: false,
@@ -96,6 +95,7 @@ class MyApp extends StatelessWidget {
         ),
 // If you do not have a themeMode switch, uncomment this line
 // to let the device system mode control the theme mode:
+// themeMode: ThemeMode.system,
 
 themeMode: ThemeMode.light,
 

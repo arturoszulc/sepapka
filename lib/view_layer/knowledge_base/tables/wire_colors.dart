@@ -22,7 +22,7 @@ class WireColors extends StatelessWidget {
         // backgroundColor: myPrimaryLight,
         appBar: AppBar(
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               context.read<Manager>().navigate(Screen.knowledgeBase);
             },

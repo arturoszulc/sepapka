@@ -14,7 +14,7 @@ class PurchaseError extends StatelessWidget {
     child: Scaffold(
     appBar: AppBar(
     leading: IconButton(
-    icon: const Icon(Icons.arrow_back, color: Colors.black),
+    icon: const Icon(Icons.arrow_back),
     onPressed: () => context.read<Manager>().navigate(Screen.chooseLevel),
     ),
     // title: const Text('Purchase Error'),

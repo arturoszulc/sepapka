@@ -12,6 +12,7 @@ class MenuScreen extends StatelessWidget {
     debugPrint('*** Menu Main Screen built ***');
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -26,8 +27,9 @@ class MenuScreen extends StatelessWidget {
 
           const SizedBox(height: 20.0),
           Image.asset('assets/images/general/sepapka-logo.png', height: 100,),
-          const SizedBox(height: 20.0),
-
+          const SizedBox(height: 10.0),
+          Text('v. ${context.read<Manager>().appVersion} (beta)'),
+          const SizedBox(height: 10.0),
           Container(
             height: 3,
             width: 20,
@@ -49,7 +51,7 @@ class MenuScreen extends StatelessWidget {
                       context.read<Manager>().getFilteredQuestionList();
                     }),
                 MenuButton(
-                    label: 'Baza wiedzy',
+                    label: 'Tablice',
                     onPressed: () {
                       context.read<Manager>().navigate(Screen.knowledgeBase);
                     }),

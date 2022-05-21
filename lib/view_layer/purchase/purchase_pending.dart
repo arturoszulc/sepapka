@@ -15,7 +15,7 @@ class PurchasePending extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () => context.read<Manager>().navigate(Screen.menu),
             ),
             // title: const Text('Purchase Error'),
@@ -26,7 +26,7 @@ class PurchasePending extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               SpinKitFadingCircle(
-                // color: myPrimary,
+                color: Theme.of(context).colorScheme.primary,
                 size: 50.0,
               ),
               const SizedBox(height: 10,),
