@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sepapka/utils/consts/colors.dart';
 
 import '../../utils/consts/nav.dart';
 import '../../viewmodel_layer/manager.dart';
@@ -110,24 +111,41 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Podaj rezystancję jednej grzałki [\u03A9]',
-            textAlign: TextAlign.left,
-          ),
-          TextField(
-            // textAlign: TextAlign.right,
-            decoration: const InputDecoration(
-              // label: Text('Rezystancja grzałki'),
-              // hintText: 'np. 2000',
-              suffix: Text('\u03A9'),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15.0),
+            child: const Text(
+              'Podaj rezystancję jednej grzałki [\u03A9]',
+              textAlign: TextAlign.left,
+              style: TextStyle(color: mySecondary),
             ),
-            keyboardType: TextInputType.number,
-            onChanged: (val) {
-              debugPrint(val);
-              calcManager.hptpCalc.heaterResistance = val.isEmpty ? 0.0 : double.parse(val);
-            },
-            onTap: () => calcManager.hideResult(),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: myPrimary,
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(15))
+            ),
+
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: TextField(
+                style: Theme.of(context).textTheme.headline6,
+                // textAlign: TextAlign.right,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (val) {
+                  debugPrint(val);
+                  calcManager.hptpCalc.heaterResistance = val.isEmpty ? 0.0 : double.parse(val);
+                },
+                onTap: () => calcManager.hideResult(),
+              ),
+            ),
           ),
           Align(
             alignment: Alignment.centerLeft,

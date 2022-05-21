@@ -52,6 +52,7 @@ dependencies:
   in_app_purchase: ^3.0.2
   package_info_plus: ^1.4.2
   purchases_flutter: ^3.10.0
+  flex_color_scheme: ^5.0.1
 
 flutter_native_splash:
   color: "#ffe375"

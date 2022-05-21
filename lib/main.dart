@@ -7,6 +7,7 @@ import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:flutter/services.dart';
 import 'package:sepapka/viewmodel_layer/manager_calc.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 
 void main() async {
   WidgetsFlutterBinding
@@ -35,9 +36,64 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'SEPapka',
-        theme: lightTheme(),
-        darkTheme: darkTheme(),
-        themeMode: ThemeMode.system,
+        theme: FlexThemeData.light(
+          colors: const FlexSchemeColor(
+            primary: Color(0xffffe375),
+            primaryContainer: Color(0xffd0e4ff),
+            secondary: Color(0xff383838),
+            secondaryContainer: Color(0xffffdbcf),
+            tertiary: Color(0xff7591ff),
+            tertiaryContainer: Color(0xff95f0ff),
+            appBarColor: Color(0xffffdbcf),
+            error: Color(0xffb00020),
+          ),
+          usedColors: 2,
+          surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
+          blendLevel: 20,
+          appBarOpacity: 0.95,
+          subThemesData: const FlexSubThemesData(
+            blendOnLevel: 20,
+            blendOnColors: false,
+          ),
+          useMaterial3ErrorColors: true,
+          visualDensity: FlexColorScheme.comfortablePlatformDensity,
+          useMaterial3: true,
+          // To use the playground font, add GoogleFonts package and uncomment
+          // fontFamily: GoogleFonts.notoSans().fontFamily,
+        ),
+        darkTheme: FlexThemeData.dark(
+          colors: const FlexSchemeColor(
+            primary: Color(0xffffe375),
+            primaryContainer: Color(0xffd0e4ff),
+            secondary: Color(0xff383838),
+            secondaryContainer: Color(0xffffdbcf),
+            tertiary: Color(0xff7591ff),
+            tertiaryContainer: Color(0xff95f0ff),
+            appBarColor: Color(0xffffdbcf),
+            error: Color(0xffb00020),
+          ).defaultError.toDark(0, false),
+          usedColors: 2,
+          surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
+          blendLevel: 15,
+          appBarStyle: FlexAppBarStyle.background,
+          appBarOpacity: 0.90,
+          subThemesData: const FlexSubThemesData(
+            blendOnLevel: 30,
+          ),
+          useMaterial3ErrorColors: true,
+          visualDensity: FlexColorScheme.comfortablePlatformDensity,
+          useMaterial3: true,
+          // To use the playground font, add GoogleFonts package and uncomment
+          // fontFamily: GoogleFonts.notoSans().fontFamily,
+        ),
+// If you do not have a themeMode switch, uncomment this line
+// to let the device system mode control the theme mode:
+themeMode: ThemeMode.light,
+
+        // theme: lightTheme(),
+        // darkTheme: darkTheme(),
+        // themeMode: ThemeMode.dark,
+        // // themeMode: ThemeMode.system,
         home: const Wrapper(),
         // routes: {
         //   '/wrapper': (context) => const Wrapper(),

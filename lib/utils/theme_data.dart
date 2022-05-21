@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'consts/colors.dart';
 
 ThemeData lightTheme() {
-
-
-
   return ThemeData(
+    useMaterial3: true,
     brightness: Brightness.light,
     colorScheme: ColorScheme.fromSwatch().copyWith(
       primary: myPrimary,
@@ -39,6 +37,7 @@ ThemeData lightTheme() {
       style: ElevatedButton.styleFrom(
         primary: myPrimary, //button color
         onPrimary: mySecondary, //text button color
+
       ),
     ),
 
@@ -59,24 +58,24 @@ ThemeData lightTheme() {
 
     //text form input style
     textSelectionTheme: const TextSelectionThemeData(cursorColor: mySecondary),
-      inputDecorationTheme: const InputDecorationTheme(
+    inputDecorationTheme: const InputDecorationTheme(
       focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: mySecondary,
-        )
-      ),
+          borderSide: BorderSide(
+        color: mySecondary,
+      )),
       // focusColor: mySecondary,
 
       labelStyle: TextStyle(
         color: mySecondary,
       ),
     ),
-
   );
 }
 
 ThemeData darkTheme() {
   return ThemeData(
-    brightness: Brightness.dark,
+      brightness: Brightness.dark,
+    primaryColor: myPrimary,
+
   );
 }
