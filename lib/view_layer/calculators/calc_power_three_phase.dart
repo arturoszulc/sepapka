@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:group_button/group_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/colors.dart';
+import 'package:sepapka/utils/custom_widgets/groupbutton_options.dart';
+import 'dart:ui';
 
 import '../../utils/consts/nav.dart';
 import '../../viewmodel_layer/manager.dart';
@@ -23,6 +26,10 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
     debugPrint('*** CalcHeatingPowerThreePhase built ***');
     final CalcManager calcManager = Provider.of<CalcManager>(context);
     bool calcMode = context.read<CalcManager>().hptpCalc.mode;
+    final double width = MediaQuery.of(context).size.width;
+    final Size physicalScreenSize = window.physicalSize;
+    final double physicalWidth = physicalScreenSize.width;
+    double physicalHeight = physicalScreenSize.height;
     debugPrint(calcMode.toString());
     return GestureDetector(
       onTap: () {
@@ -42,6 +49,39 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
         ),
         body: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      Radio(
+                          value: 1, groupValue: 'null', onChanged: (index) {}),
+                      Expanded(
+                        child: Text('Radio button 1'),
+                      )
+                    ],
+                  ),
+                  flex: 1,
+                ),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Radio(
+                          value: 1, groupValue: 'null', onChanged: (index) {}),
+                      Expanded(child: Text('Radio 2'))
+                    ],
+                  ),
+                  flex: 1,
+                ),
+              ],
+            ),
+            GroupButton(
+              options: myGroupButtonOptions2(physicalWidth),
+              isRadio: true,
+              onSelected: (index, isSelected) => print('$index button is selected'),
+              buttons: const ["W", "\u03A9"],
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0),
               child: Card(

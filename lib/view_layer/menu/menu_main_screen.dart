@@ -27,9 +27,7 @@ class MenuScreen extends StatelessWidget {
 
           const SizedBox(height: 20.0),
           Image.asset('assets/images/general/sepapka-logo.png', height: 100,),
-          const SizedBox(height: 10.0),
-          Text('v. ${context.read<Manager>().appVersion} (beta)'),
-          const SizedBox(height: 10.0),
+          const SizedBox(height: 20.0),
           Container(
             height: 3,
             width: 20,

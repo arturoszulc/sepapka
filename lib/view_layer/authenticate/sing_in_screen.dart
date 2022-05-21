@@ -28,35 +28,40 @@ class SignInScreen extends StatelessWidget {
               key: _authFormKey,
               child: Column(
                 children: [
-                  const SizedBox(height: 20.0),
                   //pole EMAIL
-                  TextFormField(
-                    initialValue: manager.email.value,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      labelText: 'Adres e-mail',
-                      errorText: manager.email.error,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: TextFormField(
+                      initialValue: manager.email.value,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        labelText: 'Adres e-mail',
+                        errorText: manager.email.error,
+                      ),
+                      onChanged: (String val) {
+                        manager.validateEmail(val);
+                      },
+                      onTap: () => manager.setError(null),
                     ),
-                    onChanged: (String val) {
-                      manager.validateEmail(val);
-                    },
-                    onTap: () => manager.setError(null),
                   ),
 
                   //pole PASSWORD
-                  TextFormField(
-                    initialValue: manager.password.value,
-                    obscureText: true,
-                    textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
-                      labelText: 'Hasło',
-                      errorText: manager.password.error,
-                      errorMaxLines: 2,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: TextFormField(
+                      initialValue: manager.password.value,
+                      obscureText: true,
+                      textInputAction: TextInputAction.next,
+                      decoration: InputDecoration(
+                        labelText: 'Hasło',
+                        errorText: manager.password.error,
+                        errorMaxLines: 2,
+                      ),
+                      onChanged: (String val) {
+                        manager.validatePassword(val);
+                      },
+                      onTap: () => manager.setError(null),
                     ),
-                    onChanged: (String val) {
-                      manager.validatePassword(val);
-                    },
-                    onTap: () => manager.setError(null),
                   ),
                 ],
               ),
