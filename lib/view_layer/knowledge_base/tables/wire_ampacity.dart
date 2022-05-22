@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 import 'package:sepapka/utils/tabels/table_wire_ampacity.dart';
 
 import '../../../utils/consts/nav.dart';
@@ -80,7 +81,7 @@ class _WireAmpacityState extends State<WireAmpacity> {
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 20.0),
-                              child: Image.asset(
+                              child: buildQuestionImage(context,
                                 layingWiresMethods[index].assetPath,
                               ),
                             ),

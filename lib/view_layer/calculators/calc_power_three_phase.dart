@@ -54,7 +54,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
           ),
           body: TabBarView(children: [
             buildPowerCalculator(context, calcManager),
-            buildResistanceCalculator(calcManager),
+            buildResistanceCalculator(context, calcManager),
             // buildRankTop(context),
             // buildRankUser(context),
           ]),
@@ -110,32 +110,46 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
                   unfocus(context);
                   calcManager.calculateHeatingPowerThreePhase();
                 },
-                child: const Text('Calculate power')),
+                child: const Text('Oblicz moc')),
           ),
           const SizedBox(
             height: 20,
           ),
           calcManager.isResultVisible
-              ? Center(
-                child: Card(
+              ? Expanded(
+                child: SingleChildScrollView(
+                  child: Card(
                     child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        children: [
-                          const Text(
-                            'Wynik:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Row(
-                              children: [buildQuestionImage(context, 'asd'),]
-                          ),
-                          Row(),
-                          Text('W układzie gwiazdy: ${calcManager.hptpCalc.starPower} W'),
-                          Text('W układzie trójkąta: ${calcManager.hptpCalc.deltaPower} W'),
-                        ],
-                      ),
-                    ),
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          children: [
+                            const Text(
+                              'Wynik:',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Row(
+                                children: [
+                                  Expanded(child: buildQuestionImage(context, 'assets/images/knowledge_base/three_phase_power/star.png')),
+                                  Expanded(child: Column(children: [
+                                    Text('Ip = ${calcManager.hptpCalc.starPhaseCurrent}'),
+                                    Text('Pr = ${calcManager.hptpCalc.starPowerSingle}'),
+                                    Text('Pstar = ${calcManager.hptpCalc.starPowerTotal}'),
+                                  ],),),
+                                ]
+                            ),
+                            Row(children: [
+                              Expanded(child: buildQuestionImage(context, 'assets/images/knowledge_base/three_phase_power/delta.png')),
+                              Expanded(child: Column(children: [
+                                Text('Ip = ${calcManager.hptpCalc.deltaPhaseCurrent} A'),
+                                Text('Pr = ${calcManager.hptpCalc.deltaPowerSingle} W'),
+                                Text('Pdelta = ${calcManager.hptpCalc.deltaPowerTotal} W'),
+                              ],),),
+                            ],),
+                          ],
+                        ),
+                      )
                   ),
+                ),
               )
               : Container(),
         ],
@@ -143,10 +157,22 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
     );
   }
 
-  Widget buildResistanceCalculator(CalcManager calcManager) {
-    return AnimatedContainer(
-      color: Colors.green,
-      duration: const Duration(seconds: 1),
+  Widget buildResistanceCalculator(BuildContext context, CalcManager calcManager) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15.0),
+            child: Text(
+              'Kalkulator w przygotowaniu...',
+              textAlign: TextAlign.left,
+              style: Theme.of(context).textTheme.labelLarge,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

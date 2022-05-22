@@ -1,27 +1,38 @@
 import 'dart:math';
 
+import '../../utils/consts/numbers.dart';
 
 class HeatingPowerThreePhaseCalc {
-
-  final double voltagePhaseToNeutral = 230.0;
-  final double voltagePhaseToPhase = 398.37;
 
   String errorMsg = '';
   bool mode = false;
   double heaterResistance = 0;
 
-  String deltaPower = '';
-  String starPower = '';
+  String starPowerTotal = '';
+  String deltaPowerTotal = '';
+  String starPowerSingle = '';
+  String deltaPowerSingle = '';
+  String starPhaseCurrent = '';
+  String deltaPhaseCurrent = '';
 
   bool calcPower() {
     if (heaterResistance == 0) {
       errorMsg = 'Wprowadź rezystancję grzałki';
       return false;
     }
-    num power = 3 * (pow(voltagePhaseToNeutral, 2)/heaterResistance);
-    starPower = power.toStringAsFixed(2);
-    num power2 = 3 * (pow(voltagePhaseToPhase, 2)/heaterResistance);
-    deltaPower = power2.toStringAsFixed(2);
+    //calculate star
+    num currentStar = voltagePhaseToNeutral / heaterResistance;
+    starPhaseCurrent = currentStar.toStringAsFixed(2);
+    num powerStar = (pow(voltagePhaseToNeutral, 2)/heaterResistance);
+    starPowerSingle = powerStar.toStringAsFixed(2);
+    starPowerTotal = (3 * powerStar).toStringAsFixed(2);
+
+    //calculate delta
+    num currentDelta = (voltagePhaseToPhase) / heaterResistance;
+    deltaPhaseCurrent = (currentStar* sqrt(3)).toStringAsFixed(2);
+    num powerDelta = (pow(voltagePhaseToPhase, 2)/heaterResistance);
+    deltaPowerSingle = powerDelta.toStringAsFixed(2);
+    deltaPowerTotal = (3*powerDelta).toStringAsFixed(2);
     return true;
   }
 
