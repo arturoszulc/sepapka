@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:group_button/group_button.dart';
-import 'package:provider/provider.dart';
-import 'package:sepapka/utils/consts/colors.dart';
-import 'package:sepapka/utils/custom_widgets/groupbutton_options.dart';
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import '../../utils/consts/nav.dart';
+import '../../utils/custom_widgets/build_question_image.dart';
 import '../../viewmodel_layer/manager.dart';
 import '../../viewmodel_layer/manager_calc.dart';
 
@@ -35,113 +34,30 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
       onTap: () {
         unfocus(context);
       },
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              context.read<Manager>().navigate(Screen.menu);
-            },
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                context.read<Manager>().navigate(Screen.menu);
+              },
+            ),
+            title: const Text('Moc grzania 3-f'),
+            centerTitle: true,
+            bottom: const TabBar(tabs: [
+              Tab(text: '[W]'),
+              Tab(text: '[\u03A9]'),
+            ]),
           ),
-          title: const Text('Moc grzania 3-f'),
-          centerTitle: true,
-        ),
-        body: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      Radio(
-                          value: 1, groupValue: 'null', onChanged: (index) {}),
-                      Expanded(
-                        child: Text('Radio button 1'),
-                      )
-                    ],
-                  ),
-                  flex: 1,
-                ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      Radio(
-                          value: 1, groupValue: 'null', onChanged: (index) {}),
-                      Expanded(child: Text('Radio 2'))
-                    ],
-                  ),
-                  flex: 1,
-                ),
-              ],
-            ),
-            GroupButton(
-              options: myGroupButtonOptions2(physicalWidth),
-              isRadio: true,
-              onSelected: (index, isSelected) => print('$index button is selected'),
-              buttons: const ["W", "\u03A9"],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: Card(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            flex: 1,
-                              child: FloatingActionButton.small(
-                                  onPressed: () {
-                                    calcManager.setHeatingPowerCalcMode(false);
-                                  },
-                                  child: const Icon(
-                                    Icons.arrow_left,
-                                    size: 36,
-                                  ))),
-                          Expanded(
-                            flex: 2,
-                            child: Text(
-                              calcMode ? 'Dobierz grzałki' : 'Oblicz moc',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                            ),
-                          ),
-                          Expanded(
-                              flex: 1,
-                              child: FloatingActionButton.small(
-                                  onPressed: () {
-                                    calcManager.setHeatingPowerCalcMode(true);
-                                  },
-                                  child: const Icon(
-                                    Icons.arrow_right,
-                                    size: 36,
-                                  ))),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: calcMode
-                          ? const Text('Znam moc, chcę obliczyć potrzebną rezystancję grzałek')
-                          : const Text('Mam już grzałki, chcę obliczyć ich moc'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: calcMode
-                    ? buildResistanceCalculator(calcManager)
-                    : buildPowerCalculator(context, calcManager),
-            ),
-          ],
+          body: TabBarView(children: [
+            buildPowerCalculator(context, calcManager),
+            buildResistanceCalculator(calcManager),
+            // buildRankTop(context),
+            // buildRankUser(context),
+          ]),
         ),
       ),
     );
@@ -149,16 +65,16 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
 
   Widget buildPowerCalculator(BuildContext context, CalcManager calcManager) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40.0),
+      padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15.0),
-            child: const Text(
+            child: Text(
               'Podaj rezystancję jednej grzałki [\u03A9]',
               textAlign: TextAlign.left,
-              // style: TextStyle(color: mySecondary),
+              style: Theme.of(context).textTheme.labelLarge,
             ),
           ),
           Padding(
@@ -188,24 +104,40 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
               ),
             ),
           ),
-          ElevatedButton(
-              onPressed: () {
-                unfocus(context);
-                calcManager.calculateHeatingPowerThreePhase();
-              },
-              child: const Text('Calculate power')),
-
-          const SizedBox(height: 20,),
-          calcManager.isResultVisible ? Card(
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(children: [
-              const Text('Wynik:', style: TextStyle(fontWeight: FontWeight.bold),),
-              Text('W układzie gwiazdy: ${calcManager.hptpCalc.starPower} W'),
-              Text('W układzie trójkąta: ${calcManager.hptpCalc.deltaPower} W'),
-            ],),
-            ),
-          ) : Container(),
+          Center(
+            child: ElevatedButton(
+                onPressed: () {
+                  unfocus(context);
+                  calcManager.calculateHeatingPowerThreePhase();
+                },
+                child: const Text('Calculate power')),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          calcManager.isResultVisible
+              ? Center(
+                child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            'Wynik:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Row(
+                              children: [buildQuestionImage(context, 'asd'),]
+                          ),
+                          Row(),
+                          Text('W układzie gwiazdy: ${calcManager.hptpCalc.starPower} W'),
+                          Text('W układzie trójkąta: ${calcManager.hptpCalc.deltaPower} W'),
+                        ],
+                      ),
+                    ),
+                  ),
+              )
+              : Container(),
         ],
       ),
     );
