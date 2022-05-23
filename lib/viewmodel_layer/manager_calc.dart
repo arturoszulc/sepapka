@@ -46,12 +46,17 @@ class CalcManager extends ChangeNotifier {
         setCalcError(hptpCalc.errorMsg);
       } else {
         showResult();
-        // notifyListeners();
       }
 
     }
     else {
       //calculate heater resistance
+      bool isSuccess = hptpCalc.calcResistance();
+      if (!isSuccess) {
+        setCalcError(hptpCalc.errorMsg);
+      } else {
+        showResult();
+      }
     }
   }
 
