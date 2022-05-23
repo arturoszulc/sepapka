@@ -13,31 +13,36 @@ class CalculatorsMenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     debugPrint('*** CalculatorsMenu Screen built ***');
 
-    return Scaffold(
-    // backgroundColor: myPrimaryLight,
-    appBar: AppBar(
-    leading: IconButton(
-    icon: const Icon(Icons.arrow_back),
-    onPressed: () {
-    context.read<Manager>().navigate(Screen.menu);
-    },
-    ),
-      title: Text('Kalkulatory'),
-      centerTitle: true,
-    ),
-    body: Center(
-      child: Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 50.0),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        MenuButton(
-            label: 'Moc grzania w obwodach 3-fazowych',
-            onPressed: () {
-              context.read<Manager>().navigate(Screen.calcHeatingPowerThreePhase);
-            }),
-    ],),
+    return WillPopScope(
+      onWillPop: () {
+        return context.read<Manager>().navigate(Screen.menu);
+      },
+      child: Scaffold(
+      // backgroundColor: myPrimaryLight,
+      appBar: AppBar(
+      leading: IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+      context.read<Manager>().navigate(Screen.menu);
+      },
       ),
-    ));
+        title: Text('Kalkulatory'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          MenuButton(
+              label: 'Moc grzania w obwodach 3-fazowych',
+              onPressed: () {
+                context.read<Manager>().navigate(Screen.calcHeatingPowerThreePhase);
+              }),
+      ],),
+        ),
+      )),
+    );
   }
 }

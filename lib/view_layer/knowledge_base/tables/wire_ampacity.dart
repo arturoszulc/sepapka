@@ -40,6 +40,7 @@ class _WireAmpacityState extends State<WireAmpacity> {
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Padding(
                 padding: const EdgeInsets.all(12.0),

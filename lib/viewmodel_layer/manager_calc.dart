@@ -18,48 +18,31 @@ class CalcManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  hideResult() {
-    isResultVisible = false;
-    // notifyListeners();
-  }
-
-  showResult() {
-    isResultVisible = true;
-  }
+  // hideResult() {
+  //   // isResultVisible = false;
+  //   hptpCalc.clear();
+  //   // notifyListeners();
+  // }
+  //
+  // showResult() {
+  //   isResultVisible = true;
+  // }
 
 
   //HEATING POWER THREE PHASE - HPTP
 
   HeatingPowerThreePhaseCalc hptpCalc = HeatingPowerThreePhaseCalc();
 
-  void setHeatingPowerCalcMode(bool mode) {
-    hptpCalc.mode = mode;
+  void hptpCalcPower() {
+    //calculate power
+    hptpCalc.calcPower();
     notifyListeners();
   }
 
-  void calculateHeatingPowerThreePhase() {
-    setCalcError(null);
-    if (!hptpCalc.mode) {
-      //calculate power
-      bool isSuccess = hptpCalc.calcPower();
-      if (!isSuccess) {
-        setCalcError(hptpCalc.errorMsg);
-      } else {
-        showResult();
-      }
-
-    }
-    else {
-      //calculate heater resistance
-      bool isSuccess = hptpCalc.calcResistance();
-      if (!isSuccess) {
-        setCalcError(hptpCalc.errorMsg);
-      } else {
-        showResult();
-      }
-    }
+  void hptpCalcResistance() {
+    //calculate heater resistance
+    hptpCalc.calcResistance();
+    notifyListeners();
   }
-
-
 
 }

@@ -112,7 +112,7 @@ class Wrapper extends StatelessWidget {
         return const WireColors();
       case Screen.tableWireAmpacity:
         return WireAmpacity();
-      case Screen.calculators:
+      case Screen.calcMenu:
         return const CalculatorsMenuScreen();
         break;
       case Screen.calcHeatingPowerThreePhase:

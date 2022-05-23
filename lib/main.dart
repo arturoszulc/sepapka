@@ -97,7 +97,7 @@ class MyApp extends StatelessWidget {
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,
 
-themeMode: ThemeMode.light,
+themeMode: ThemeMode.system,
 
         // theme: lightTheme(),
         // darkTheme: darkTheme(),

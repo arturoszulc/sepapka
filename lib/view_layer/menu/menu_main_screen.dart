@@ -56,7 +56,7 @@ class MenuScreen extends StatelessWidget {
                 MenuButton(
                     label: 'Kalkulatory',
                     onPressed: () {
-                      context.read<Manager>().navigate(Screen.calculators);
+                      context.read<Manager>().navigate(Screen.calcMenu);
                     }),
                 MenuButton(label: 'Wyloguj się', onPressed: () async {
                   await context.read<Manager>().signOut();
