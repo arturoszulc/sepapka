@@ -26,7 +26,6 @@ class _WireAmpacityState extends State<WireAmpacity> {
         return context.read<Manager>().navigate(Screen.knowledgeBase);
       },
       child: Scaffold(
-        // backgroundColor: myPrimaryLight,
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
@@ -51,28 +50,27 @@ class _WireAmpacityState extends State<WireAmpacity> {
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Expanded(
-                                child: FloatingActionButton.small(
-                                    onPressed: (index == 0) ? null : () {
-                                      setState(() {
-                                        if (index > 0) index -= 1;
-                                      });
-                                    },
-                                    child: const Icon(Icons.arrow_left, size: 36,))),
-                            Expanded(
-                                child: Text(
+                            FloatingActionButton.small(
+                                onPressed: (index == 0) ? null : () {
+                                  setState(() {
+                                    if (index > 0) index -= 1;
+                                  });
+                                },
+                                child: const Icon(Icons.arrow_left, size: 36,)),
+                            Text(
                               layingWiresMethods[index].symbol,
                               textAlign: TextAlign.center,
-                                  textScaleFactor: 2,
-                            )),
-                            Expanded(child: FloatingActionButton.small(onPressed:
+                              textScaleFactor: 2,
+                            ),
+                            FloatingActionButton.small(onPressed:
                             (index == layingWiresMethods.length-1) ? null : () {
 
                               setState(() {
                               if (index < layingWiresMethods.length-1) index += 1;
                               });
-                            }, child: const Icon(Icons.arrow_right, size: 36,))),
+                            }, child: const Icon(Icons.arrow_right, size: 36,)),
                           ],
                         ),
                       ),
@@ -99,6 +97,7 @@ class _WireAmpacityState extends State<WireAmpacity> {
               FittedBox(
                 fit: BoxFit.fitWidth,
                 child: DataTable(
+                  headingRowHeight: 70,
                     // columnSpacing: 15.0,
                     columns: const <DataColumn>[
                       DataColumn(label: Text('Przekrój\nprzewodów\n[mm\u00B2]')),

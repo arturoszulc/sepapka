@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/custom_widgets/menu_button.dart';
+import 'package:sepapka/utils/custom_widgets/unlock_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 
@@ -57,9 +58,8 @@ class MenuChooseLevel extends StatelessWidget {
                           ),
                           MenuButton(
                             hasBadge: true,
-                            badgeNum: countLevels[2],
                             proOnly: true,
-                            isUserPro: isUserPro,
+                            badgeNum: countLevels[2],
                             label: 'poziom 2',
                             onPressed: () async {
                               await context.read<Manager>().chooseQuestionLevel(2);
@@ -67,9 +67,8 @@ class MenuChooseLevel extends StatelessWidget {
                           ),
                           MenuButton(
                             hasBadge: true,
-                            badgeNum: countLevels[3],
                             proOnly: true,
-                            isUserPro: isUserPro,
+                            badgeNum: countLevels[3],
                             label: 'poziom 3',
                             onPressed: () async {
                               await context.read<Manager>().chooseQuestionLevel(3);
@@ -85,15 +84,7 @@ class MenuChooseLevel extends StatelessWidget {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: isUserPro ? null : FloatingActionButton.extended(onPressed: () {
-          context.read<Manager>().navigate(Screen.purchasePatronite);
-        }, label: Row(
-          children: const [
-            Text('Odblokuj pytania'),
-            SizedBox(width: 5),
-            Icon(Icons.lock_open, size: 16, color: Colors.black,),
-          ],
-        ),),
+        floatingActionButton: unlockButton(context),
       ),
     );
   }

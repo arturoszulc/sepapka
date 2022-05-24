@@ -4,6 +4,7 @@ import 'package:sepapka/viewmodel_layer/manager_calc.dart';
 import '../../utils/consts/nav.dart';
 
 import '../../utils/custom_widgets/menu_button.dart';
+import '../../utils/custom_widgets/unlock_button.dart';
 import '../../viewmodel_layer/manager.dart';
 
 class CalculatorsMenuScreen extends StatelessWidget {
@@ -26,7 +27,7 @@ class CalculatorsMenuScreen extends StatelessWidget {
       context.read<Manager>().navigate(Screen.menu);
       },
       ),
-        title: Text('Kalkulatory'),
+        title: const Text('Kalkulatory'),
         centerTitle: true,
       ),
       body: Center(
@@ -36,13 +37,17 @@ class CalculatorsMenuScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           MenuButton(
+            proOnly: true,
               label: 'Moc grzania w obwodach 3-fazowych',
               onPressed: () {
                 context.read<Manager>().navigate(Screen.calcHeatingPowerThreePhase);
               }),
       ],),
         ),
-      )),
+      ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: unlockButton(context),
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../utils/consts/nav.dart';
 import '../../utils/custom_widgets/menu_button.dart';
+import '../../utils/custom_widgets/unlock_button.dart';
 import '../../viewmodel_layer/manager.dart';
 
 class KnowledgeBaseMenu extends StatelessWidget {
@@ -10,6 +11,7 @@ class KnowledgeBaseMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isUserPro = context.read<Manager>().loggedUser!.isPro;
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.menu),
       child: Scaffold(
@@ -40,12 +42,14 @@ class KnowledgeBaseMenu extends StatelessWidget {
                           // crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             MenuButton(
+                              proOnly: true,
                               label: 'Kolory przewodów',
                               onPressed: () async {
                                 await context.read<Manager>().navigate(Screen.tableWireColors);
                               },
                             ),
                             MenuButton(
+                                proOnly: true,
                               label: 'Obciążalność przewodów',
                               onPressed: () async {
                                 await context.read<Manager>().navigate(Screen.tableWireAmpacity);
@@ -60,6 +64,10 @@ class KnowledgeBaseMenu extends StatelessWidget {
                 ),
               ],
             ),
-          )),);
+          ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: unlockButton(context),
+      ),
+    );
   }
 }

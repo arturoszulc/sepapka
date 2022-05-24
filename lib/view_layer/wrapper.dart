@@ -65,7 +65,7 @@ class Wrapper extends StatelessWidget {
 
     //if there's a message to show, do it
     String msg = context.read<Manager>().infoMsg;
-    if (msg.isNotEmpty) WidgetsBinding.instance!.addPostFrameCallback((_)  => buildMessageDialog(context, msg));
+    if (msg.isNotEmpty) WidgetsBinding.instance.addPostFrameCallback((_)  => buildMessageDialog(context, msg));
 
     switch (currentScreen) {
       case Screen.loading:
