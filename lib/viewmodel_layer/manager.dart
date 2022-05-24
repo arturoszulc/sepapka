@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart'; //iconData is from here
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:purchases_flutter/models/product_wrapper.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
@@ -18,7 +20,6 @@ import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/consts/question.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class Manager extends ChangeNotifier {
   //Services Injection
@@ -81,7 +82,6 @@ class Manager extends ChangeNotifier {
 
   List<Question> get qListGlobalFiltered => _questionService.qListGlobalFiltered;
 
-
   List<int> get countQuestionsByLevel => _questionService.countQuestionsByLevel();
 
   List<int> get countQuestionsByCategories => _questionService.countQuestionsByCategory();
@@ -95,14 +95,16 @@ class Manager extends ChangeNotifier {
 
   // Stream<List<RankUser>?> get userRankUser => _databaseService.userRankUser;
 
-
   //ValidationService
   ValidationModel get email => _validationService.email;
-  ValidationModel get emailRemind => _validationService.emailRemind;
-  ValidationModel get password => _validationService.password;
-  ValidationModel get remark => _validationService.remark;
-  bool get isEmailAndPasswordValid => _validationService.isEmailAndPasswordValid;
 
+  ValidationModel get emailRemind => _validationService.emailRemind;
+
+  ValidationModel get password => _validationService.password;
+
+  ValidationModel get remark => _validationService.remark;
+
+  bool get isEmailAndPasswordValid => _validationService.isEmailAndPasswordValid;
 
   Manager() {
     //get app version
@@ -182,11 +184,9 @@ class Manager extends ChangeNotifier {
     navigate(Screen.menu);
   }
 
-
   ////////////////////////
   //        AUTH        //
   ////////////////////////
-
 
   signIn({required String email, required String password}) async {
     //start loading app
@@ -204,7 +204,8 @@ class Manager extends ChangeNotifier {
     //start loading app
     navigate(Screen.loading);
     //register user
-    Object registerResult = await _authService.registerWithEmailAndPassword(email.toLowerCase(), password);
+    Object registerResult =
+        await _authService.registerWithEmailAndPassword(email.toLowerCase(), password);
     if (registerResult is Failure) {
       setError(registerResult);
       navigate(Screen.signIn);
@@ -270,7 +271,6 @@ class Manager extends ChangeNotifier {
   ////////////////////////
   //     QUESTIONS      //
   ////////////////////////
-
 
   chooseQuestionLevel(int level) async {
     await _questionService.setQuestionLevel(level);
@@ -424,14 +424,17 @@ class Manager extends ChangeNotifier {
     _validationService.validateEmail(val);
     notifyListeners();
   }
+
   void validatePassword(String val) {
     _validationService.validatePassword(val);
     notifyListeners();
   }
+
   void validateEmailRemind(String val) {
     _validationService.validateEmailRemind(val);
     notifyListeners();
   }
+
   void validateRemark(String val) {
     _validationService.validateRemark(val);
     notifyListeners();
@@ -441,25 +444,45 @@ class Manager extends ChangeNotifier {
   //      PURCHASE      //
   ////////////////////////
 
+  Product? get product => _purchaseService.product;
+  String? purchaseError;
 
   revenueCatStart() async {
-    await _purchaseService.init();
-    await _purchaseService.getOffers();
+      navigate(Screen.loading);
+
+      Object initResult = await _purchaseService.init();
+      if (initResult is Failure) {
+        debugPrint(initResult.errorString);
+        purchaseError = initResult.errorString;
+        navigate(Screen.purchaseError);
+        return;
+      }
+      Object getOffersResult = await _purchaseService.getOffers();
+      if (getOffersResult is Failure) {
+        debugPrint(getOffersResult.errorString);
+        purchaseError = getOffersResult.errorString;
+        navigate(Screen.purchaseError);
+        return;
+      }
+      navigate(Screen.purchase);
   }
+
+  buyProduct() {
+    _purchaseService.buyProduct();
+  }
+
 
   purchasePatronite(String email) async {
     String? verifyEmailResult = await _databaseService.verifyPatroniteEmail(email);
     if (verifyEmailResult == null) {
       setError(Failure('Nie znaleziono Patrona z takim adresem e-mail'));
       navigate(Screen.purchasePatronite);
-    }
-    else {
+    } else {
       setError(null);
       goPro();
       navigate(Screen.purchaseSuccess);
     }
   }
-
 
   // bool get isAvailable => _purchaseService.isStoreAvailable;
   // String get productName => _purchaseService.productName;
@@ -467,7 +490,6 @@ class Manager extends ChangeNotifier {
   // PurchaseStatus? get purchaseStatus => _purchaseService.purchaseDetails?.status;
   // Stream<bool> get hasPurchased => _purchaseService.purchaseStream;
   // StreamSubscription<bool>? purchaseListener;
-
 
   // openStore() async {
   //   debugPrint('*** Opening Store ***');
@@ -516,13 +538,9 @@ class Manager extends ChangeNotifier {
   //   _purchaseService.buyProduct();
   // }
 
-
-
   Widget getQuestionIcon(String qId) {
     return _userService.getQListIcon(qId);
   }
-
-
 
 // String getBadgePath({int? rankLevel}) {
 //   String badge = '0';

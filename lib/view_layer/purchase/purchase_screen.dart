@@ -10,7 +10,7 @@ class PurchaseScreen extends StatelessWidget {
 
   static const TextStyle featuresTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
   static const double iconSize = 45.0;
-  // static const Color iconColor = myComplementary;
+  static const Color iconColor = purchaseButtonColor;
   static const EdgeInsetsGeometry tilePadding = EdgeInsets.symmetric(horizontal: 40, vertical: 10);
 
   @override
@@ -56,12 +56,12 @@ class PurchaseScreen extends StatelessWidget {
                       ListTile(
                         contentPadding: tilePadding,
                         leading: Icon(
-                          Icons.question_mark_rounded,
+                          Icons.calculate,
                           size: iconSize,
-                          // color: iconColor,
+                          color: iconColor,
                         ),
                         title: Text(
-                          'odblokuj wszystkie pytania',
+                          'odblokuj kalkulatory i tablice',
                           style: featuresTextStyle,
                         ),
                       ),
@@ -70,7 +70,7 @@ class PurchaseScreen extends StatelessWidget {
                         leading: Icon(
                           Icons.settings,
                           size: iconSize,
-                          // color: iconColor,
+                          color: iconColor,
                         ),
                         title: Text(
                           'uzyskaj dostęp do nadchodzących funkcji',
@@ -82,7 +82,7 @@ class PurchaseScreen extends StatelessWidget {
                         leading: Icon(
                           Icons.rocket_launch,
                           size: iconSize,
-                          // color: iconColor,
+                          color: iconColor,
                         ),
                         title: Text(
                           'wspieraj dalszy rozwój aplikacji',
@@ -98,19 +98,19 @@ class PurchaseScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // FloatingActionButton.extended(
-                      //   backgroundColor: myComplementary,
-                      //   label: Padding(
-                      //     padding: const EdgeInsets.symmetric(vertical: 18.0),
-                      //     child: Text(
-                      //       'Kup za ${manager.productPrice} zł',
-                      //       style: const TextStyle(color: Colors.white),
-                      //     ),
-                      //   ),
-                      //   onPressed: () {
-                      //         manager.buyProduct();
-                      //   },
-                      // ),
+                      FloatingActionButton.extended(
+                        backgroundColor: purchaseButtonColor,
+                        label: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 18.0),
+                          child: Text('Kup za ${manager.product?.priceString}',
+                            // 'Kup za ${manager.productPrice} zł',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        onPressed: () {
+                              manager.buyProduct();
+                        },
+                      ),
                       const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Text(

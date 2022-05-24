@@ -31,7 +31,7 @@ const String errorRollBackUser = 'Coś poszło nie tak. Spróbuj zalogować się
 
 
 //AuthService errors
-const String errorSignInGoogle = 'Błąd logowania przez Google. Spróbuj ponownie';
+const String errorSignInGoogle = 'Błąd logowania przez Google. Sprwadź połączenie z internetem.';
 
 //Validation errors
 const String errorValEmail = 'Wprowadź prawidłowy adres e-mail';

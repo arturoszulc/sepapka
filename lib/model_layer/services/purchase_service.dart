@@ -1,56 +1,62 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:sepapka/utils/api_status.dart';
 
 class PurchaseService {
-
   static const String _googleApiKey = 'goog_BqkJbAyuNBMUrdkvOSXpxakljWH';
-  List<Package>? packages;
+  List<Package> packages = [];
+  Package? package;
+  Product? product;
 
-  Future<void> init() async {
-    await Purchases.setDebugLogsEnabled(true);
-    await Purchases.setup(_googleApiKey);
+  Future<Object> init() async {
+    try {
+      await Purchases.setDebugLogsEnabled(true);
+      await Purchases.setup(_googleApiKey);
+      return Success();
+    }
+    // catch (e) {
+    //   return Failure('### PurchaseService init ERROR: ${e.toString()} ###');
+    // }
+    on PlatformException catch (e) {
+      return Failure('${e.code}, ${e.message}');
+    }
   }
 
-  Future<void> getOffers() async {
-    debugPrint('*** GETTING OFFERRS ***');
+  Future<Object> getOffers() async {
+    debugPrint('*** _purchaseService getOffers() deployed ***');
     try {
       final Offerings offerings = await Purchases.getOfferings();
-      if (offerings.current != null) {
-        //print offerings
-        packages = offerings.current?.availablePackages;
-      }
-      // final Offering? current = offerings.current;
-      // return current == null ? [] : [current];
-    // } on PlatformException catch (e) {
-    //   debugPrint('getOffers() error: ${e.toString()}');
-    //   // return [];
-    // } on Error catch (e) {
-    //   debugPrint('**CATCHED ERROR**: ${e.toString()}');
-    } catch (e) {
-        debugPrint('getOffers() error: ${e.toString()}');
+      if (offerings.current == null) return Failure('### No offers found ###');
+      //print offerings
+      packages = offerings.current?.availablePackages ?? [];
+      package = packages.firstWhereOrNull((e) => e.product.identifier == 'sepapka_pro_test2');
+      if (package == null) return Failure('36, Nie znaleziono produktu');
+      product = package!.product;
+      return Success;
+    } on PlatformException catch (e) {
+      return Failure('${e.code}, ${e.message}');
     }
   }
 
   Future<void> buyProduct() async {
-    // try {
-    //   PurchaserInfo purchaserInfo = await Purchases.purchasePackage(package);
-    //   if (purchaserInfo.entitlements.all["my_entitlement_identifier"].isActive) {
-    //     // Unlock that great "pro" content
-    //   }
-    // } on PlatformException catch (e) {
-    //   var errorCode = PurchasesErrorHelper.getErrorCode(e);
-    //   if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
-    //     showError(e);
-    //   }
-    // }
+    try {
+      PurchaserInfo purchaserInfo = await Purchases.purchasePackage(package!);
+      if (purchaserInfo.entitlements.all["my_entitlement_identifier"]!.isActive) {
+        // Unlock that great "pro" content
+      }
+    } on PlatformException catch (e) {
+      debugPrint('### BuyError: ${e.toString()}');
+      var errorCode = PurchasesErrorHelper.getErrorCode(e);
+      if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
+        debugPrint('purchase cancelled');
+      }
+    }
   }
 
-
-
-  // OLD IN APP PURCHASES
+// OLD IN APP PURCHASES
 //
 //   //main instance
 //   final InAppPurchase _iap = InAppPurchase.instance;
@@ -174,6 +180,5 @@ class PurchaseService {
 //     final PurchaseParam purchaseParam = PurchaseParam(productDetails: _products[0]);
 //     _iap.buyConsumable(purchaseParam: purchaseParam, autoConsume: true);
 //   }
-
 
 }

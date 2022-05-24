@@ -7,7 +7,7 @@ import '../../utils/consts/nav.dart';
 Widget? unlockButton(BuildContext context) {
   bool isUserPro = context.read<Manager>().loggedUser!.isPro;
   return isUserPro ? null : FloatingActionButton.extended(onPressed: () {
-    context.read<Manager>().navigate(Screen.purchase);
+    context.read<Manager>().revenueCatStart();
   }, label: Row(
     children: const [
       Text('Odblokuj wszystko'),
