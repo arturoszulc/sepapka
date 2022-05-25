@@ -31,12 +31,11 @@ class PurchaseService {
     try {
       final Offerings offerings = await Purchases.getOfferings();
       if (offerings.current == null) return Failure('### No offers found ###');
-      //print offerings
       packages = offerings.current?.availablePackages ?? [];
       package = packages.firstWhereOrNull((e) => e.product.identifier == productId);
       if (package == null) return Failure('36, Nie znaleziono produktu');
       product = package!.product;
-      return Success;
+      return Success();
     } on PlatformException catch (e) {
       return Failure('${e.code}, ${e.message}');
     }
@@ -46,10 +45,12 @@ class PurchaseService {
     try {
       PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
       debugPrint('### Purchaser info:: ${purchaserInfo.entitlements}');
-      // if (purchaserInfo.entitlements.all["Pro"].isActive) {
-      //   debugPrint('@@@ PURCHASE CONFIRMED @@@');
-      //   return Success();
-      // }
+      bool? isPurchased = purchaserInfo.entitlements.active["Pro"]?.isActive;
+      if (isPurchased != null && isPurchased){
+        debugPrint('@@@ PURCHASE CONFIRMED @@@');
+
+        return purchaserInfo;
+      }
       return Failure();
     } on PlatformException catch (e) {
       // Error restoring purchases
@@ -59,11 +60,19 @@ class PurchaseService {
   }
 
   Future<Object> buyProduct() async {
+    //some users may stay on the PurchaseScreen and try to click on buy button
+    //in order to disable user from buying same product again, I am checking if the previous
+    //payment was finished (just in case)
+    Object wasPurchaseMade = checkIfPurchaseWasMade();
+    if (wasPurchaseMade is PurchaserInfo) {
+      return wasPurchaseMade;
+    }
+    //if there was no payment earlier, procceed
     try {
       PurchaserInfo purchaserInfo = await Purchases.purchasePackage(package!);
       if (purchaserInfo.entitlements.all["Pro"]!.isActive) {
-        // Unlock that great "pro" content
-        return Success();
+        debugPrint('@@@ PURCHASE CONFIRMED @@@');
+        return purchaserInfo;
       }
       else {
         return Failure('### Nie znaleziono entitlement ID ###');

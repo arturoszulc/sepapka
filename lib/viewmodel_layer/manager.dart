@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart'; //iconData is from here
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:purchases_flutter/errors.dart';
 import 'package:purchases_flutter/models/product_wrapper.dart';
+import 'package:purchases_flutter/models/purchaser_info_wrapper.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
@@ -466,9 +467,10 @@ class Manager extends ChangeNotifier {
         return;
       }
 
-      Object isPurchaseFinished = _purchaseService.checkIfPurchaseWasMade();
-      if (isPurchaseFinished is Success) {
-        navigate(Screen.purchaseSuccess);
+      Object isPurchaseFinished = await _purchaseService.checkIfPurchaseWasMade();
+      if (isPurchaseFinished is PurchaserInfo) {
+        debugPrint('@@@ PURCHASE CONFIRMED @@@');
+        finishPurchase(isPurchaseFinished);
         return;
       }
       navigate(Screen.purchase);
@@ -476,13 +478,60 @@ class Manager extends ChangeNotifier {
 
   buyProduct() async {
     Object buyResult = await _purchaseService.buyProduct();
-    if (buyResult is Success) {
+    if (buyResult is PurchaserInfo) {
       debugPrint('### Buy product SUCCEEDED! ###');
-      //enable purchase
+      finishPurchase(buyResult);
     } else {
       debugPrint('### PURCHASE ERROR ###');
       handlePurchaseError(buyResult);
     }
+
+  }
+
+  //DATA OF PURCHASER INFO
+  //I/flutter (15692): ### Purchaser info::
+  // EntitlementInfos(
+  // all: {
+  // Pro: EntitlementInfo(
+  // identifier: Pro,
+  // isActive: true,
+  // willRenew: false,
+  // latestPurchaseDate: 2022-05-25T11:14:24.000Z,
+  // originalPurchaseDate: 2022-05-25T11:14:24.000Z,
+  // productIdentifier: sepapka_pro_v1,
+  // isSandbox: true,
+  // ownershipType: OwnershipType.unknown,
+  // store: Store.playStore,
+  // periodType: PeriodType.normal,
+  // expirationDate: null,
+  // unsubscribeDetectedAt: null,
+  // billingIssueDetectedAt: null)},
+  // active: {
+  // Pro: EntitlementInfo(
+  // identifier: Pro,
+  // isActive: true,
+  // willRenew: false,
+  // latestPurchaseDate: 2022-05-25T11:14:24.000Z,
+  // originalPurchaseDate: 2022-05-25T11:14:24.000Z,
+  // productIdentifier: sepapka_pro_v1,
+  // isSandbox: true,
+  // ownershipType: OwnershipType.unknown,
+  // store: Store.playStore,
+  // periodType: PeriodType.normal,
+  // expirationDate: null,
+  // unsubscribeDetectedAt: null,
+  // billingIssueDetectedAt: null)})
+
+
+  finishPurchase(PurchaserInfo purchaserInfo) async {
+    navigate(Screen.loading);
+    //save purchase details
+    // _databaseService.savePurchaseDetails(purchaserInfo, loggedUser!.documentId)
+    //give user pro permission
+    setError(null);
+    await goPro();
+    //navigate to PurchaseSuccess screen
+    navigate(Screen.purchaseSuccess);
 
   }
 
@@ -510,7 +559,7 @@ class Manager extends ChangeNotifier {
       navigate(Screen.purchasePatronite);
     } else {
       setError(null);
-      goPro();
+      await goPro();
       navigate(Screen.purchaseSuccess);
     }
   }

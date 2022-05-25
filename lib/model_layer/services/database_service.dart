@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:sepapka/model_layer/models/global_data.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
@@ -176,13 +177,13 @@ class DatabaseService {
   }
 
 
-  Future<void> savePurchaseDetails(PurchaseDetails purchaseDetails, String userID) {
+  Future<void> savePurchaseDetails(PurchaserInfo purchaserInfo, String userID) {
     debugPrint('/// DB: writing PurchaseDetails doc... ///');
     return purchaseCollection
         .doc()
         .set({
           purchaseUserID: userID,
-          purchasePurchaseID: purchaseDetails.purchaseID,
+          purchasePurchaseID: purchaserInfo.entitlements.active['Pro']!.identifier,
           purchaseProductID: purchaseDetails.productID,
           purchaseVerificationDataLocal: purchaseDetails.verificationData.localVerificationData,
           purchaseVerificationDataServer: purchaseDetails.verificationData.serverVerificationData,
