@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart'; //iconData is from here
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:purchases_flutter/errors.dart';
 import 'package:purchases_flutter/models/product_wrapper.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
@@ -464,11 +465,41 @@ class Manager extends ChangeNotifier {
         navigate(Screen.purchaseError);
         return;
       }
+
+      Object isPurchaseFinished = _purchaseService.checkIfPurchaseWasMade();
+      if (isPurchaseFinished is Success) {
+        navigate(Screen.purchaseSuccess);
+        return;
+      }
       navigate(Screen.purchase);
   }
 
-  buyProduct() {
-    _purchaseService.buyProduct();
+  buyProduct() async {
+    Object buyResult = await _purchaseService.buyProduct();
+    if (buyResult is Success) {
+      debugPrint('### Buy product SUCCEEDED! ###');
+      //enable purchase
+    } else {
+      debugPrint('### PURCHASE ERROR ###');
+      handlePurchaseError(buyResult);
+    }
+
+  }
+
+  handlePurchaseError(Object errorCode) {
+    if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+      debugPrint('### purchase cancelled');
+    }
+    if (errorCode == PurchasesErrorCode.paymentPendingError) {
+      debugPrint('### payment pending');
+      navigate(Screen.purchasePending);
+    }
+    if (errorCode == PurchasesErrorCode.networkError) {
+      debugPrint('### network error');
+    }
+    if (errorCode == PurchasesErrorCode.storeProblemError) {
+      debugPrint('### store problem error');
+    }
   }
 
 

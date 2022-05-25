@@ -7,6 +7,7 @@ import 'package:sepapka/utils/api_status.dart';
 
 class PurchaseService {
   static const String _googleApiKey = 'goog_BqkJbAyuNBMUrdkvOSXpxakljWH';
+  final String productId = 'sepapka_pro_v1';
   List<Package> packages = [];
   Package? package;
   Product? product;
@@ -32,7 +33,7 @@ class PurchaseService {
       if (offerings.current == null) return Failure('### No offers found ###');
       //print offerings
       packages = offerings.current?.availablePackages ?? [];
-      package = packages.firstWhereOrNull((e) => e.product.identifier == 'sepapka_pro_test2');
+      package = packages.firstWhereOrNull((e) => e.product.identifier == productId);
       if (package == null) return Failure('36, Nie znaleziono produktu');
       product = package!.product;
       return Success;
@@ -41,18 +42,36 @@ class PurchaseService {
     }
   }
 
-  Future<void> buyProduct() async {
+  Future<Object> checkIfPurchaseWasMade() async {
+    try {
+      PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
+      debugPrint('### Purchaser info:: ${purchaserInfo.entitlements}');
+      // if (purchaserInfo.entitlements.all["Pro"].isActive) {
+      //   debugPrint('@@@ PURCHASE CONFIRMED @@@');
+      //   return Success();
+      // }
+      return Failure();
+    } on PlatformException catch (e) {
+      // Error restoring purchases
+      debugPrint('### RestorPurchases Error: ${e.toString()}');
+      return Failure();
+    }
+  }
+
+  Future<Object> buyProduct() async {
     try {
       PurchaserInfo purchaserInfo = await Purchases.purchasePackage(package!);
-      if (purchaserInfo.entitlements.all["my_entitlement_identifier"]!.isActive) {
+      if (purchaserInfo.entitlements.all["Pro"]!.isActive) {
         // Unlock that great "pro" content
+        return Success();
+      }
+      else {
+        return Failure('### Nie znaleziono entitlement ID ###');
       }
     } on PlatformException catch (e) {
       debugPrint('### BuyError: ${e.toString()}');
       var errorCode = PurchasesErrorHelper.getErrorCode(e);
-      if (errorCode != PurchasesErrorCode.purchaseCancelledError) {
-        debugPrint('purchase cancelled');
-      }
+      return errorCode;
     }
   }
 

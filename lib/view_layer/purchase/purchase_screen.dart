@@ -112,7 +112,7 @@ class PurchaseScreen extends StatelessWidget {
                         },
                       ),
                       const Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(15.0),
                         child: Text(
                           'licencja dożywotnia',
                           style: TextStyle(fontSize: 12),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_tex/flutter_tex.dart';
 import 'package:provider/provider.dart';
 import '../../utils/consts/colors.dart';
 import '../../utils/consts/nav.dart';
@@ -25,6 +26,8 @@ class PurchasePending extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
+              Text('Transakcja jest przetwarzana', style: Theme.of(context).textTheme.headline5,),
+              const SizedBox(height: 30),
               SpinKitFadingCircle(
                 color: Theme.of(context).colorScheme.primary,
                 size: 50.0,
@@ -32,15 +35,20 @@ class PurchasePending extends StatelessWidget {
               const SizedBox(height: 10,),
               const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text('Twoja transakcja jest przetwarzana\nMoże to zająć kilka minut.', textAlign: TextAlign.center,),
+                child: Text('Czekamy, aż sklep Play potwierdzi płatność...', style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
               ),
-            ],),),
-          // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-          // floatingActionButton: FloatingActionButton.extended(
-          //   icon: const Icon(Icons.exit_to_app),
-          //   onPressed: () {
-          //     context.read<Manager>().navigate(Screen.menu);
-          //   }, label: const Text('Powrót do menu'),),
+            const SizedBox(height: 30),
+            const Text('Wróć tutaj, gdy płatność zostanie zakończona. Wtedy automatycznie otrzymasz dostęp do SEPapka Pro.', textAlign: TextAlign.center,),
+
+              ],),),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: FloatingActionButton.extended(
+            icon: const Icon(Icons.exit_to_app),
+            onPressed: () {
+              context.read<Manager>().navigate(Screen.menu);
+            },
+            label: const Text('Powrót do menu'),
+          ),
 
         ));
   }
