@@ -30,7 +30,7 @@ class ImageFullScreen extends StatelessWidget {
                   clipBehavior: Clip.none,
                   minScale: minScale,
                   maxScale: maxScale,
-                  child: buildQuestionImage(context, imagePath)),
+                  child: buildQuestionImage(context, 'assets/images/questions/$imagePath')),
             ),
           ),
           floatingActionButton: FloatingActionButton(

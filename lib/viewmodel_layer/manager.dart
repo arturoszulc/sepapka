@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart'; //iconData is from here
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:purchases_flutter/errors.dart';
+import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
 import 'package:purchases_flutter/models/product_wrapper.dart';
 import 'package:purchases_flutter/models/purchaser_info_wrapper.dart';
 import 'package:sepapka/locator.dart';
@@ -452,7 +453,7 @@ class Manager extends ChangeNotifier {
   revenueCatStart() async {
       navigate(Screen.loading);
 
-      Object initResult = await _purchaseService.init();
+      Object initResult = await _purchaseService.init(loggedUser!.documentId);
       if (initResult is Failure) {
         debugPrint(initResult.errorString);
         purchaseError = initResult.errorString;
@@ -468,7 +469,7 @@ class Manager extends ChangeNotifier {
       }
 
       Object isPurchaseFinished = await _purchaseService.checkIfPurchaseWasMade();
-      if (isPurchaseFinished is PurchaserInfo) {
+      if (isPurchaseFinished is EntitlementInfo) {
         debugPrint('@@@ PURCHASE CONFIRMED @@@');
         finishPurchase(isPurchaseFinished);
         return;
@@ -478,7 +479,7 @@ class Manager extends ChangeNotifier {
 
   buyProduct() async {
     Object buyResult = await _purchaseService.buyProduct();
-    if (buyResult is PurchaserInfo) {
+    if (buyResult is EntitlementInfo) {
       debugPrint('### Buy product SUCCEEDED! ###');
       finishPurchase(buyResult);
     } else {
@@ -523,10 +524,13 @@ class Manager extends ChangeNotifier {
   // billingIssueDetectedAt: null)})
 
 
-  finishPurchase(PurchaserInfo purchaserInfo) async {
+  finishPurchase(EntitlementInfo info) async {
     navigate(Screen.loading);
+    //add userID to revenueCat
+    // _purchaseService.addIdToRevenueCat(loggedUser!.documentId);
+
     //save purchase details
-    // _databaseService.savePurchaseDetails(purchaserInfo, loggedUser!.documentId)
+    _databaseService.savePurchaseDetails(info, loggedUser!.documentId);
     //give user pro permission
     setError(null);
     await goPro();

@@ -12,10 +12,10 @@ class PurchaseService {
   Package? package;
   Product? product;
 
-  Future<Object> init() async {
+  Future<Object> init(String userId) async {
     try {
       await Purchases.setDebugLogsEnabled(true);
-      await Purchases.setup(_googleApiKey);
+      await Purchases.setup(_googleApiKey, appUserId: userId);
       return Success();
     }
     // catch (e) {
@@ -44,12 +44,11 @@ class PurchaseService {
   Future<Object> checkIfPurchaseWasMade() async {
     try {
       PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
-      debugPrint('### Purchaser info:: ${purchaserInfo.entitlements}');
+      // debugPrint('### Purchaser info:: ${purchaserInfo.originalAppUserId}');
       bool? isPurchased = purchaserInfo.entitlements.active["Pro"]?.isActive;
       if (isPurchased != null && isPurchased){
-        debugPrint('@@@ PURCHASE CONFIRMED @@@');
+        return purchaserInfo.entitlements.all['Pro']!;
 
-        return purchaserInfo;
       }
       return Failure();
     } on PlatformException catch (e) {
@@ -60,11 +59,11 @@ class PurchaseService {
   }
 
   Future<Object> buyProduct() async {
-    //some users may stay on the PurchaseScreen and try to click on buy button
-    //in order to disable user from buying same product again, I am checking if the previous
+    //some users may stay on the PurchaseScreen and try to click on buy button.
+    //In order to prevent user from buying the same product again, I am checking if the previous
     //payment was finished (just in case)
     Object wasPurchaseMade = checkIfPurchaseWasMade();
-    if (wasPurchaseMade is PurchaserInfo) {
+    if (wasPurchaseMade is EntitlementInfo) {
       return wasPurchaseMade;
     }
     //if there was no payment earlier, procceed
@@ -72,7 +71,7 @@ class PurchaseService {
       PurchaserInfo purchaserInfo = await Purchases.purchasePackage(package!);
       if (purchaserInfo.entitlements.all["Pro"]!.isActive) {
         debugPrint('@@@ PURCHASE CONFIRMED @@@');
-        return purchaserInfo;
+        return purchaserInfo.entitlements.all['Pro']!;
       }
       else {
         return Failure('### Nie znaleziono entitlement ID ###');
@@ -82,6 +81,11 @@ class PurchaseService {
       var errorCode = PurchasesErrorHelper.getErrorCode(e);
       return errorCode;
     }
+  }
+
+  addIdToRevenueCat(String userId) {
+    debugPrint('*** Adding ID to RevenueCat... ***');
+    Purchases.setAttributes({ 'userId' : userId});
   }
 
 // OLD IN APP PURCHASES

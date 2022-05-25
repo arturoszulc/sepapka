@@ -39,11 +39,14 @@ const String remarkText = 'text';
 const String purchaseUserID = 'userID';
 const String purchasePurchaseID = 'purchaseID';
 const String purchaseProductID = 'productID';
+const String purchaseDate = 'purchaseDate';
+const String purchaseStore = 'store';
+
+const String purchaseDocumentCreationDate = 'documentCreationDate';
 const String purchaseVerificationDataLocal = 'verificationDataLocal';
 const String purchaseVerificationDataServer = 'verificationDataServer';
 const String purchaseVerificationDataSource = 'verificationDataSource';
 const String purchaseTimestamp = 'transactionTimestamp';
-const String purchaseDate = 'purchaseDate';
 const String purchaseStatus = 'status';
 
 //JSON fileNames

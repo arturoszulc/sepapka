@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:sepapka/model_layer/models/global_data.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
@@ -8,7 +8,6 @@ import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/model_layer/models/remark.dart';
 import 'package:sepapka/utils/consts/strings.dart';
 import 'package:sepapka/utils/methods.dart';
-import 'package:collection/collection.dart';
 
 class DatabaseService {
   final CollectionReference dataCollection = FirebaseFirestore.instance.collection('data');
@@ -161,7 +160,7 @@ class DatabaseService {
     return remarksCollection
         .doc()
         .set({
-      remarkUserId: remark.userId,
+          remarkUserId: remark.userId,
           remarkAppVersion: remark.appV,
           remarkDate: remark.date,
           remarkQuestion: remark.question,
@@ -176,21 +175,17 @@ class DatabaseService {
     return List<String>.from(doc.get('patronite')).firstWhereOrNull((e) => e == email);
   }
 
-
-  Future<void> savePurchaseDetails(PurchaserInfo purchaserInfo, String userID) {
+  Future<void> savePurchaseDetails(EntitlementInfo info, String userID) {
     debugPrint('/// DB: writing PurchaseDetails doc... ///');
     return purchaseCollection
         .doc()
         .set({
+          purchaseDocumentCreationDate: DateTime.now().toString(),
           purchaseUserID: userID,
-          purchasePurchaseID: purchaserInfo.entitlements.active['Pro']!.identifier,
-          purchaseProductID: purchaseDetails.productID,
-          purchaseVerificationDataLocal: purchaseDetails.verificationData.localVerificationData,
-          purchaseVerificationDataServer: purchaseDetails.verificationData.serverVerificationData,
-          purchaseVerificationDataSource: purchaseDetails.verificationData.source,
-          purchaseTimestamp: purchaseDetails.transactionDate ?? 'null',
-          purchaseDate: DateTime.now().toString(),
-          purchaseStatus: purchaseDetails.status.toString(),
+          purchasePurchaseID: info.identifier,
+          purchaseProductID: info.productIdentifier,
+          purchaseDate: info.latestPurchaseDate,
+          purchaseStore: info.store.name,
         })
         .then((value) => debugPrint('/// DB: PurchaseDetails sent ///'))
         .catchError((error) => debugPrint("DB: Error saving PurchaseDetails: $error"));

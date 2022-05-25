@@ -20,7 +20,7 @@ class AnswerButton extends StatelessWidget {
       ),
       child: SizedBox(
         width: MediaQuery.of(context).size.width*0.7,
-        height: 55.0,
+        height: 65.0,
         child: MaterialButton(
           onPressed: () {
             if (qStatus == QuestionStatus.noAnswer) {
