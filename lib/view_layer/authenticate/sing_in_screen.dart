@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/custom_widgets/sign_in_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
@@ -13,6 +14,7 @@ class SignInScreen extends StatelessWidget {
     debugPrint('*** SignInScreen built ***');
 
     final manager = Provider.of<Manager>(context);
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -75,7 +77,7 @@ class SignInScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10.0, bottom: 5.0),
                 child: Text(
                   manager.errorMsg.toString(),
-                  style: const TextStyle(color: Colors.red),
+                  style: TextStyle(color: isDarkMode ? flexSchemeDark.error : flexSchemeLight.error),
                   textAlign: TextAlign.left,
                 ),
               ),

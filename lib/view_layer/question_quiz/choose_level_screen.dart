@@ -58,7 +58,6 @@ class MenuChooseLevel extends StatelessWidget {
                           ),
                           MenuButton(
                             hasBadge: true,
-                            proOnly: true,
                             badgeNum: countLevels[2],
                             label: 'poziom 2',
                             onPressed: () async {
@@ -67,7 +66,6 @@ class MenuChooseLevel extends StatelessWidget {
                           ),
                           MenuButton(
                             hasBadge: true,
-                            proOnly: true,
                             badgeNum: countLevels[3],
                             label: 'poziom 3',
                             onPressed: () async {
@@ -83,8 +81,6 @@ class MenuChooseLevel extends StatelessWidget {
             ],
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: unlockButton(context),
       ),
     );
   }

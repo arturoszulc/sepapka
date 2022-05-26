@@ -4,6 +4,8 @@ import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/custom_widgets/sign_in_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
+import '../../utils/consts/colors.dart';
+
 class ResetPasswordScreen extends StatelessWidget {
   ResetPasswordScreen({Key? key}) : super(key: key);
 
@@ -18,6 +20,8 @@ class ResetPasswordScreen extends StatelessWidget {
     // emailFieldController.clear();
     final manager = Provider.of<Manager>(context);
     final errorMsg = manager.errorMsg;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     // final error = context.read<Manager>().errorMsg;
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.signIn),
@@ -28,16 +32,13 @@ class ResetPasswordScreen extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
             onPressed: () => context.read<Manager>().navigate(Screen.signIn),
           ),
-          title: const Text('Zresetuj hasło'),
+          title: const Text('Reset hasła'),
           centerTitle: true,
-          // title: const Text('Sign In Screen'),
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
           child: Column(
             children: [
-              const Text(
-                  'Na podany niżej adres e-mail zostanie wysłany link do zresetowania hasła'),
               Form(
                 key: _resetForm,
                 child: Column(
@@ -62,11 +63,13 @@ class ResetPasswordScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20.0),
+              // const Text(
+              //     'Na podany niżej adres e-mail zostanie wysłany link do zresetowania hasła'),
               Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(5.0),
                 child: Text(
                   errorMsg,
-                  style: const TextStyle(color: Colors.red),
+                  style: TextStyle(color: isDarkMode ? flexSchemeDark.error : flexSchemeLight.error),
                   textAlign: TextAlign.left,
                 ),
               ),

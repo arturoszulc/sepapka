@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sepapka/utils/consts/colors.dart';
 
 
-Widget buildQuestionImage(BuildContext context, String path) {
+Widget buildImage(BuildContext context, String path) {
   final isDarkMode = Theme.of(context).brightness == Brightness.dark;
   //if question has no image, return null
   if (!path.endsWith('.png')) return Container();

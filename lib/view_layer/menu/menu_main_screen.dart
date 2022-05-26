@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
+import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 import 'package:sepapka/utils/custom_widgets/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
@@ -26,6 +27,7 @@ class MenuScreen extends StatelessWidget {
         children: [
 
           const SizedBox(height: 20.0),
+          // buildImage(context, 'assets/images/general/sepapka-logo.png'),
           Image.asset('assets/images/general/sepapka-logo.png', height: 100,),
           const SizedBox(height: 20.0),
           Container(
@@ -60,6 +62,7 @@ class MenuScreen extends StatelessWidget {
                     }),
                 MenuButton(label: 'Wyloguj się', onPressed: () async {
                   await context.read<Manager>().signOut();
+                  // await context.read<Manager>().navigate(Screen.purchase);
                 }),
               ],
             ),

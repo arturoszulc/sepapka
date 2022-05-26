@@ -24,17 +24,14 @@ class KnowledgeBaseMenu extends StatelessWidget {
             centerTitle: true,
           ),
           body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                SizedBox(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.5,
-                  child: Row(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
@@ -43,7 +40,7 @@ class KnowledgeBaseMenu extends StatelessWidget {
                           children: [
                             MenuButton(
                               proOnly: true,
-                              label: 'Kolory przewodów',
+                              label: 'Kodowanie barw przewodów',
                               onPressed: () async {
                                 await context.read<Manager>().navigate(Screen.tableWireColors);
                               },
@@ -61,8 +58,8 @@ class KnowledgeBaseMenu extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

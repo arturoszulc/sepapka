@@ -80,12 +80,13 @@ class MyApp extends StatelessWidget {
           surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
           blendLevel: 15,
           appBarOpacity: 0.0,
-          darkIsTrueBlack: false,
+          darkIsTrueBlack: true,
           subThemesData: const FlexSubThemesData(
             textButtonSchemeColor: SchemeColor.inverseSurface,
             outlinedButtonSchemeColor: SchemeColor.inverseSurface,
             fabUseShape: false,
             fabSchemeColor: SchemeColor.primaryContainer,
+            dialogBackgroundSchemeColor: SchemeColor.secondary,
           ),
           useMaterial3ErrorColors: true,
           visualDensity: FlexColorScheme.comfortablePlatformDensity,
@@ -97,7 +98,7 @@ class MyApp extends StatelessWidget {
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,
 
-themeMode: ThemeMode.system,
+themeMode: ThemeMode.dark,
 
         // theme: lightTheme(),
         // darkTheme: darkTheme(),

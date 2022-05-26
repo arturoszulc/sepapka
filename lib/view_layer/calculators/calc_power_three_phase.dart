@@ -46,8 +46,8 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
                 title: const Text('Moc grzania 3-f'),
                 centerTitle: true,
                 bottom: const TabBar(tabs: [
-                  Tab(text: '[W]'),
-                  Tab(text: '[\u03A9]'),
+                  Tab(text: 'Moc [W]'),
+                  Tab(text: 'Rezystancja [\u03A9]'),
                 ]),
               ),
               body: TabBarView(children: [
@@ -69,8 +69,10 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Text('Masz już grzałki? Oblicz jaką wygenerują moc!', style: Theme.of(context).textTheme.headlineSmall, textAlign: TextAlign.center,),
+          // const SizedBox(height: 30,),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15.0),
+            padding: const EdgeInsets.symmetric(vertical: 15.0,),
             child: Text(
               'Podaj rezystancję jednej grzałki [\u03A9]',
               textAlign: TextAlign.left,
@@ -121,6 +123,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
               ? Expanded(
                   child: SingleChildScrollView(
                     child: Card(
+                      elevation: 5,
                         child: Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
@@ -137,7 +140,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
                                 ),
                                 Expanded(
                                     flex: 1,
-                                    child: buildQuestionImage(context,
+                                    child: buildImage(context,
                                         'assets/images/knowledge_base/three_phase_power/star.png')),
                               ],
                             ),
@@ -179,7 +182,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
                               ),
                               Expanded(
                                   flex: 1,
-                                  child: buildQuestionImage(context,
+                                  child: buildImage(context,
                                       'assets/images/knowledge_base/three_phase_power/delta.png')),
                             ],
                           ),
@@ -223,6 +226,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Text('Nie masz jeszcze grzałek? Oblicz jakich potrzebujesz!', style: Theme.of(context).textTheme.headlineSmall, textAlign: TextAlign.center,),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             child: Text(
@@ -291,7 +295,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
                               ),
                               Expanded(
                                   flex: 1,
-                                  child: buildQuestionImage(context,
+                                  child: buildImage(context,
                                       'assets/images/knowledge_base/three_phase_power/star.png')),
                             ],
                           ),
@@ -328,7 +332,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
                             ),
                             Expanded(
                                 flex: 1,
-                                child: buildQuestionImage(context,
+                                child: buildImage(context,
                                     'assets/images/knowledge_base/three_phase_power/delta.png')),
                           ],
                         ),

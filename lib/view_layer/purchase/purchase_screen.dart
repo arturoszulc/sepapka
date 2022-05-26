@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/utils/consts/nav.dart';
+import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 
 import '../../viewmodel_layer/manager.dart';
 
@@ -10,17 +11,20 @@ class PurchaseScreen extends StatelessWidget {
 
   static const TextStyle featuresTextStyle = TextStyle(fontWeight: FontWeight.bold, fontSize: 16);
   static const double iconSize = 45.0;
-  static const Color iconColor = purchaseButtonColor;
+  static const Color iconColor = proColor;
   static const EdgeInsetsGeometry tilePadding = EdgeInsets.symmetric(horizontal: 40, vertical: 10);
+
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final String logoName = isDarkMode ? 'sepapka_pro_dark.png' : 'sepapka_pro.png';
     debugPrint('*** Purchase Screen built');
     final manager = Provider.of<Manager>(context);
     return WillPopScope(
       onWillPop: () {
         // context.read<Manager>().closeStore();
-        return context.read<Manager>().navigate(Screen.chooseLevel);
+        return context.read<Manager>().navigate(Screen.menu);
       },
       child: Scaffold(
         // backgroundColor: myPrimaryLight,
@@ -29,7 +33,7 @@ class PurchaseScreen extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               // context.read<Manager>().closeStore();
-              context.read<Manager>().navigate(Screen.chooseLevel);
+              context.read<Manager>().navigate(Screen.menu);
             },
           ),
           // title: const Text('Odblokuj pytania'),
@@ -44,7 +48,8 @@ class PurchaseScreen extends StatelessWidget {
                 flex: 1,
                 child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.5,
-                    child: Image.asset('assets/images/general/sepapka_pro.png')),
+                    // child: buildImage(context, 'assets/images/general/$logoName')),
+                    child: Image.asset('assets/images/general/$logoName')),
               ),
               Expanded(
                 flex: 2,
@@ -99,12 +104,12 @@ class PurchaseScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       FloatingActionButton.extended(
-                        backgroundColor: purchaseButtonColor,
+                        backgroundColor: proColor,
                         label: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 18.0),
                           child: Text('Kup za ${manager.product?.priceString}',
                             // 'Kup za ${manager.productPrice} zł',
-                            style: const TextStyle(color: Colors.white),
+                            // style: const TextStyle(color: Colors.white),
                           ),
                         ),
                         onPressed: () {

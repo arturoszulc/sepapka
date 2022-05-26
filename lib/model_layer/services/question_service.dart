@@ -72,34 +72,18 @@ class QuestionService {
 
     qListGlobal.clear();
     qListGlobalFiltered.clear();
-    if (_userService.loggedUser!.isPro) {
+    // if (_userService.loggedUser!.isPro) {
       qListGlobal = List<Question>.from(questionList);
-    } else {
-      for (Question question in questionList) {
-        if (question.level == 1) {
-          qListGlobal.add(question);
-        }
-      }
-    }
+    // } else {
+    //   for (Question question in questionList) {
+    //     if (question.level == 1) {
+    //       qListGlobal.add(question);
+    //     }
+    //   }
+    // }
 
     debugPrint('qListGlobalLength: ${qListGlobal.length}');
 
-    // //compare questionVersion from DB with those in LoggedUser object
-    // //retrieve list of outdated QuestionLists
-    // List<int> outdatedQLists = _userService.compareQVersion(globalData!.qVersions);
-    //
-    // //get Question List based on compareResult
-    // Object getQuestionResult = await getGlobalQuestionLists(outdatedQLists);
-    // if (getQuestionResult is Failure) return getQuestionResult;
-    //
-    // //update qListGlobal and count number of questions by level
-    // qListGlobal = getQuestionResult as List<Question>;
-    //
-    // //also update qListFiltered, so it won't be empty
-    // qListGlobalFiltered = List<Question>.from(qListGlobal!);
-
-//    // update local user question version and qNewList (if there any any new questions)
-    // _userService.updateQVersion(globalData!.qVersions);
 
     //Sort qListGlobal alphabetically
     qListGlobal.sort((a, b) => a.q.compareTo(b.q));
@@ -109,41 +93,6 @@ class QuestionService {
     debugPrint('/// QuestionService: Finished preparing GlobalData ///');
     return Success();
   }
-
-  // Future<Object> getGlobalQuestionLists(List<int> outdatedQLists) async {
-  //   // if all question lists are up to date, try to take questions from local JSON files
-  //   if (outdatedQLists.isEmpty) {
-  //     Object getLocalQuestionResult = await _fileService.getQuestionListFromFile();
-  //     if (getLocalQuestionResult is List<Question>) {
-  //       return getLocalQuestionResult;
-  //     }
-  //     //if reading file failed, then new lists from DB has to be downloaded
-  //     //to do this, fill outdatedQList with lists to download
-  //     else {
-  //       outdatedQLists.add(1);
-  //       if (_userService.loggedUser!.isPro) {
-  //         outdatedQLists.addAll([2, 3]);
-  //       }
-  //
-  //     }
-  //   }
-  //
-  //   //Initializing list that will allow merging couple of lists from DB
-  //   List<Question> questionListFromDB = [];
-  //
-  //   for (int outdatedList in outdatedQLists) {
-  //     List<Question>? questionList = await _databaseService.getQuestionList(list: outdatedList);
-  //     //if failed to download, interrupt whole method
-  //     if (questionList == null) return Failure(errorGetQListFromDB);
-  //     //if succeeded, add it to main list
-  //     questionListFromDB += questionList;
-  //   }
-  //
-  //   //after downloading all question lists, save questions to local JSON file
-  //   Object saveQuestionToFileResult = await _fileService.saveQuestionListToFile(questionListFromDB);
-  //   if (saveQuestionToFileResult is Failure) return saveQuestionToFileResult;
-  //   return questionListFromDB;
-  // }
 
   setQuestionLevel(int level) {
     qLevel = level;
@@ -267,11 +216,6 @@ class QuestionService {
       qStatus = QuestionStatus.noAnswer;
     }
   }
-
-  // doNotShowThisQuestionAnymore() async {
-  //   await _userService.moveQMapToNotShown(currentQuestion!.id);
-  //   _userService.updateLoggedUserInDb();
-  // }
 
   moveQuestionBackToShown(String qId) async {
     await _userService.moveQMapToNew(qId);
