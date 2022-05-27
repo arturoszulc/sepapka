@@ -46,8 +46,8 @@ class WireColors extends StatelessWidget {
       columns.map((String column) => DataColumn(label: Text(column))).toList();
 }
 
-List<DataRow> getRows(List<Przewod> rows) =>
-    rows.map((Przewod przewod) {
+List<DataRow> getRows(List<Wire> rows) =>
+    rows.map((Wire przewod) {
       final cells = [przewod.namePL, przewod.nameENG, przewod.colorCode, przewod.color];
       return DataRow(cells: getCells(cells));
     }).toList();

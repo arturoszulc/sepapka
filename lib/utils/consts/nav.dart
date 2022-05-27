@@ -27,6 +27,7 @@ enum Screen {
   knowledgeBase,
   tableWireColors,
   tableWireAmpacity,
+  tableWireSymbols,
 
   calcMenu,
   calcHeatingPowerThreePhase,

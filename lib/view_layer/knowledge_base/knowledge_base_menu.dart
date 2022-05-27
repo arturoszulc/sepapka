@@ -46,6 +46,13 @@ class KnowledgeBaseMenu extends StatelessWidget {
                               },
                             ),
                             MenuButton(
+                              proOnly: true,
+                              label: 'Symbole przewodów',
+                              onPressed: () async {
+                                await context.read<Manager>().navigate(Screen.tableWireSymbols);
+                              },
+                            ),
+                            MenuButton(
                                 proOnly: true,
                               label: 'Obciążalność przewodów',
                               onPressed: () async {
