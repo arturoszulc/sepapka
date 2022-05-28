@@ -34,8 +34,8 @@ class WireSymbols extends StatelessWidget {
             ]),
           ),
           body: TabBarView(children: [
-            buildPolishSymbolsTable(context),
-            buildHarmonizedSymbolsTable(context),
+            buildSymbolTable(context, wireSymbolsPolish),
+            buildSymbolTable(context, wireSymbolsHarmonized),
             // buildRankTop(context),
             // buildRankUser(context),
           ]),
@@ -44,125 +44,63 @@ class WireSymbols extends StatelessWidget {
     );
   }
 
-  Widget buildPolishSymbolsTable(BuildContext context) {
-    debugPrint('*** buildPolishSymbolsTable rebuilt ***');
-    return SingleChildScrollView();
-  }
-
-  Widget buildHarmonizedSymbolsTable(BuildContext context) {
-    double width = MediaQuery.of(context).size.width*0.5;
+  Widget buildSymbolTable(BuildContext context, Map<String, List<WireSymbol>> data) {
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    const double globalPadding = 10.0;
+    const double tablePadding = 15.0;
+    double firstCellWidth = (width - (2*globalPadding) - (2*tablePadding))*0.7;
+    double secondCellWidth = (width - (2*globalPadding) - (2*tablePadding))*0.3;
     return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        children:
+        scrollDirection: Axis.vertical,
+        child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
+          children:
           // for (String key in wireSymbolsHarmonized.keys) buildWireSymbolTable()
-      wireSymbolsHarmonized.entries.map<Widget>((data) => Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Card(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+          data.entries.map<Widget>((data) =>
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(data.key, style: const TextStyle(fontWeight: FontWeight.bold)),
+                padding: const EdgeInsets.all(globalPadding),
+
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(data.key, style: const TextStyle(fontWeight: FontWeight.bold)),
+                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: tablePadding),
+              child: DataTable(
+                horizontalMargin: 0,
+                columnSpacing: 0,
+                headingRowHeight: 0,
+                columns: const [
+                  DataColumn(label: Text('')),
+                  DataColumn(label: Text(''))
+                ],
+                rows: data.value.map<DataRow>((e) =>
+                (DataRow(cells: [
+                  DataCell(Container(
+                      // color: Colors.red,
+                      width: firstCellWidth,
+                      child: Text(e.description,))),
+                  DataCell(Container(
+                      // color: Colors.green,
+                      width: secondCellWidth,
+                      child: Text(e.symbol, textAlign: TextAlign.right,)))
+                ]
+                )),
+                ).toList(),
               ),
-              getTable(width, data.value),
+            ),
             ],
           ),
-        ),
-      )).toList(),
 
-        // Text(wireSymbolsHarmonized.keys.single[0]),
-        // FittedBox(
-        //     fit: BoxFit.fitWidth,
-        //     child: DataTable(
-        //       columns: const [],
-        //         rows:  [
-        //           DataRow(cells: [
-        //             DataCell(Text('haha')),
-        //           ]),
-        //         ])),
-
-      ),
+        )).toList(),),
     );
   }
 
-  List<Widget> buildWireSymbolTable(double width, Map<String, List<WireSymbolHarmonized>> map) {
-    return map.entries.map<Widget>((data) => Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(data.key),
-          FittedBox(child: getTable(width, data.value)),
-        ],
-      ),
-    )).toList();
 
-    // return Column(
-    //   children: [
-    //     DataTable(columns: [], rows: []),
-    //   ],
-    // );
-  }
-
-  DataTable getTable(double width, List<WireSymbolHarmonized> symbolList) {
-    return DataTable(
-      horizontalMargin: 0,
-      columnSpacing: 0,
-      headingRowHeight: 0,
-      columns: [
-        DataColumn(label: Text('')),
-        DataColumn(label: Text(''))
-      ],
-      rows: symbolList.map<DataRow>((e) => (DataRow(cells: [
-      DataCell(Container(
-          // color: Colors.red,
-          width: width,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Text(e.description,),
-          ))),
-      DataCell(Container(
-          // width: width,
-          // color: Colors.green,
-          child: Text(e.symbol, textAlign: TextAlign.center)))
-    ]
-      )),
-      ).toList(),
-    );
-  }
-
-//
-// List<Widget> buildWireSymbolTables(Map<String, List<WireSymbolHarmonized>> map) {
-//   for (var i = 0; i < 5; i++) {
-//     return Column();
-//   }
-//
-//   return [Column()];
-// }
-// if (map.isEmpty) return [Container()];
-//   for (String key in map.keys) {
-//     return Column();
-//     debugPrint(key);
-//     for (WireSymbolHarmonized item in map[key]!) {
-//       debugPrint('[${item.description}, ${item.symbol}]');
-//     }
-//   }
-
-
-//   List<DataRow> getRows(List<WireSymbolHarmonized> wireSymbols) {
-//     List<DataRow> rows = [];
-//     for (String key in wireNumber.twoWires.keys) {
-//       final cells = [key, wireNumber.twoWires[key], wireNumber.threeWires[key]];
-//       rows.add(DataRow(cells: getCells(cells)));
-//     }
-//     return rows;
-//
-//     // final cells = [wireNumber.twoWires.keys, wireNumber.twoWires.values, wireNumber.threeWires.values];
-//     // return DataRow(cells: getCells(cells));
-//   }
-//
-//   List<DataCell> getCells(List<dynamic> cells) => cells.map((data) => DataCell(Text('$data'))).toList();
 }
