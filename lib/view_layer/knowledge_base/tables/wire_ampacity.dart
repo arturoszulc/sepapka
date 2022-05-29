@@ -14,7 +14,6 @@ class WireAmpacity extends StatefulWidget {
 }
 
 class _WireAmpacityState extends State<WireAmpacity> {
-  final _tableKey = GlobalKey<PaginatedDataTableState>();
 
   int index = 0;
 
@@ -43,55 +42,53 @@ class _WireAmpacityState extends State<WireAmpacity> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Card(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            FloatingActionButton.small(
-                                onPressed: (index == 0) ? null : () {
-                                  setState(() {
-                                    if (index > 0) index -= 1;
-                                  });
-                                },
-                                child: const Icon(Icons.arrow_left, size: 36,)),
-                            Text(
-                              layingWiresMethods[index].symbol,
-                              textAlign: TextAlign.center,
-                              textScaleFactor: 2,
-                            ),
-                            FloatingActionButton.small(onPressed:
-                            (index == layingWiresMethods.length-1) ? null : () {
-
-                              setState(() {
-                              if (index < layingWiresMethods.length-1) index += 1;
-                              });
-                            }, child: const Icon(Icons.arrow_right, size: 36,)),
-                          ],
-                        ),
-                      ),
-                      // const SizedBox(height: 10,),
-                      Row(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 20.0),
-                              child: buildImage(context,
-                                layingWiresMethods[index].assetPath,
-                              ),
-                            ),
+                          FloatingActionButton.small(
+                              onPressed: (index == 0) ? null : () {
+                                setState(() {
+                                  if (index > 0) index -= 1;
+                                });
+                              },
+                              child: const Icon(Icons.arrow_left, size: 36,)),
+                          Text(
+                            layingWiresMethods[index].symbol,
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 2,
                           ),
-                          Expanded(
-                            child: Text(layingWiresMethods[index].description),
-                          ),
+                          FloatingActionButton.small(onPressed:
+                          (index == layingWiresMethods.length-1) ? null : () {
+
+                            setState(() {
+                            if (index < layingWiresMethods.length-1) index += 1;
+                            });
+                          }, child: const Icon(Icons.arrow_right, size: 36,)),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    // const SizedBox(height: 10,),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            child: buildImage(context,
+                              layingWiresMethods[index].assetPath,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(layingWiresMethods[index].description),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               FittedBox(

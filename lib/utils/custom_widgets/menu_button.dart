@@ -1,7 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/utils/consts/colors.dart';
 
 import '../../viewmodel_layer/manager.dart';
 

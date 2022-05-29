@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../viewmodel_layer/manager.dart';
-import '../../utils/consts/nav.dart';
 
 Widget? unlockButton(BuildContext context) {
   bool isUserPro = context.read<Manager>().loggedUser!.isPro;

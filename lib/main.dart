@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/locator.dart';
-import 'package:sepapka/utils/theme_data.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:flutter/services.dart';
@@ -98,7 +97,7 @@ class MyApp extends StatelessWidget {
 // to let the device system mode control the theme mode:
 // themeMode: ThemeMode.system,
 
-themeMode: ThemeMode.dark,
+themeMode: ThemeMode.system,
 
         // theme: lightTheme(),
         // darkTheme: darkTheme(),

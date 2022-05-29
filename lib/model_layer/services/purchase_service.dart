@@ -44,7 +44,6 @@ class PurchaseService {
   Future<Object> checkIfPurchaseWasMade() async {
     try {
       PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
-      debugPrint('### Purchaser info:: ${purchaserInfo}');
       bool? isPurchased = purchaserInfo.entitlements.active["Pro"]?.isActive;
       if (isPurchased != null && isPurchased){
         return purchaserInfo.entitlements.all['Pro']!;

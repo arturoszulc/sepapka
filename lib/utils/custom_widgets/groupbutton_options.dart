@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:group_button/group_button.dart';
-import 'dart:ui';
-import '../../utils/consts/colors.dart';
 
 GroupButtonOptions myGroupButtonOptions() {
   return const GroupButtonOptions(

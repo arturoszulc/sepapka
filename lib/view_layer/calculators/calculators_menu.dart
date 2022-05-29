@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/viewmodel_layer/manager_calc.dart';
 import '../../utils/consts/nav.dart';
 
 import '../../utils/custom_widgets/menu_button.dart';

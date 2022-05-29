@@ -1,15 +1,19 @@
 
 const Map<String, List<WireSymbol>> wireSymbolsPolish = {
-  '1. Budowa żyły': [
+  'Budowa żyły': [
     WireSymbol('drut', 'D'),
     WireSymbol('linka', 'L'),
     WireSymbol('linka giętka', 'Lg'),
   ],
-  '2. Materiał żyły': [
+  'Materiał żyły': [
     WireSymbol('miedź', 'brak'),
     WireSymbol('aluminium', 'A'),
   ],
-  '3. Materiał izolacji lub powłoki': [
+  'Typ': [
+    WireSymbol('przewód', 'brak'),
+    WireSymbol('kabel', 'K'),
+  ],
+  'Materiał izolacji lub powłoki': [
     WireSymbol('polwinit', 'Y'),
     WireSymbol('polwinit samogasnący', 'Yn'),
     WireSymbol('polwinit benzenopodobny', 'Yb'),
@@ -19,13 +23,13 @@ const Map<String, List<WireSymbol>> wireSymbolsPolish = {
     WireSymbol('polietylen piankowy', 'Xp'),
     WireSymbol('guma (opona)', 'O'),
   ],
-  '4. Pancerz': [
+  'Pancerz': [
     WireSymbol('taśma stalowa', 'Ft'),
     WireSymbol('taśma stalowa lakierowana', 'Ftl'),
     WireSymbol('taśma z drutów stalowych okrągłych', 'Fo'),
     WireSymbol('taśma z drutów stalowych płaskich', 'Fp'),
   ],
-  '5. Ekran': [
+  'Ekran': [
     WireSymbol('wspólny', 'ekw'),
     WireSymbol('pary indywidualnie ekranowane', 'ekp'),
     WireSymbol('taśma', 'ekt'),
@@ -93,10 +97,12 @@ const Map<String, List<WireSymbol>> wireSymbolsHarmonized = {
     WireSymbol('guma z kauczku naturalnego lub syntetycznego', 'R'),
     WireSymbol('guma silikonowa', 'S'),
     WireSymbol('polwinit (PVC)', 'V'),
-    WireSymbol('polwinit (PVC) ciepłoodporny', 'V2'),
+    WireSymbol('polwinit (PVC) ciepłoodporny (90\u00B0C)', 'V2'),
     WireSymbol('polwinit (PVC) mrozoodporny', 'V3'),
     WireSymbol('polwinit (PVC) usieciowany', 'V4'),
     WireSymbol('polietylen usieciowany (XLPE)', 'X'),
+    WireSymbol('usieciowana mieszanka poliolefinowa (PHC-AH)', 'Z'),
+    WireSymbol('termoplastyczna mieszanka poliolefinowa (PHC-AH)', 'Z1'),
   ],
   '4. Materiał powłoki': [
     WireSymbol('guma etylenowo-propylenowa (EPR)', 'B'),
@@ -107,10 +113,12 @@ const Map<String, List<WireSymbol>> wireSymbolsHarmonized = {
     WireSymbol('oplot z włókna szklanego (GFB)', 'J'),
     WireSymbol('oplot bawełniany', 'T'),
     WireSymbol('polwinit (PVC)', 'V'),
-    WireSymbol('polwinit (PVC) ciepłoodporny', 'V2'),
+    WireSymbol('polwinit (PVC) ciepłoodporny (90\u00B0C)', 'V2'),
     WireSymbol('polwinit (PVC) mrozoodporny', 'V3'),
     WireSymbol('polwinit (PVC) usieciowany', 'V4'),
     WireSymbol('polwinit (PVC) olejoodporny', 'V5'),
+    WireSymbol('usieciowana mieszanka poliolefinowa (PHC-AH)', 'Z'),
+    WireSymbol('termoplastyczna mieszanka poliolefinowa (PHC-AH)', 'Z1'),
   ],
   '5. Budowa zewnętrzna': [
     WireSymbol('przewód okrągły', 'brak'),
@@ -119,6 +127,7 @@ const Map<String, List<WireSymbol>> wireSymbolsHarmonized = {
     WireSymbol('dwa lub więcej rdzeni skręconych ze sobą', 'H5'),
     WireSymbol('izolacja dwuwarstwowa', 'H7'),
     WireSymbol('przewód spiralny', 'H8'),
+    WireSymbol('oplot ekranujący z drutu miedzianego', 'C4'),
   ],
   '6. Budowa żyły': [
     WireSymbol('drut', 'U'),

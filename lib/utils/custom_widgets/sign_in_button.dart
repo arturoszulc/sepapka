@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../consts/colors.dart';
 
 
 class SignInButton extends StatelessWidget {
@@ -13,8 +12,7 @@ class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ButtonStyle(
-        // backgroundColor: MaterialStateProperty.all<Color>(myPrimary),
+      style: const ButtonStyle(
       ),
       onPressed: onPressed,
       child: Text(label),

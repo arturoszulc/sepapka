@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
-import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 import 'package:sepapka/utils/custom_widgets/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
@@ -29,13 +28,12 @@ class MenuScreen extends StatelessWidget {
           const SizedBox(height: 20.0),
           // buildImage(context, 'assets/images/general/sepapka-logo.png'),
           Image.asset('assets/images/general/sepapka-logo.png', height: 100,),
-          const SizedBox(height: 20.0),
           Container(
+            margin: const EdgeInsets.only(top: 20, bottom: 20),
             height: 3,
             width: 20,
             color: Colors.grey[300],
           ),
-          const SizedBox(height: 20.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: Column(

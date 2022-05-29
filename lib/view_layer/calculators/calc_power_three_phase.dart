@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -148,7 +146,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Prąd przewodowy:',
                               ),
                               Text('${calcManager.hptpCalc.starPhaseCurrent} A',
@@ -189,7 +187,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Prąd przewodowy:',
                               ),
                               Text('${calcManager.hptpCalc.deltaPhaseCurrent} A',
@@ -303,7 +301,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'Prąd przewodowy:',
                             ),
                             Text('${calcManager.hptpCalc.starPhaseCurrent2} A',

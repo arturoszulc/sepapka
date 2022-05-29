@@ -11,7 +11,6 @@ class KnowledgeBaseMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isUserPro = context.read<Manager>().loggedUser!.isPro;
     return WillPopScope(
       onWillPop: () => context.read<Manager>().navigate(Screen.menu),
       child: Scaffold(
