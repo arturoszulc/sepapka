@@ -34,12 +34,14 @@ class QuestionListSingle extends StatelessWidget {
             isQuestionHidden ?
             IconButton(
                 onPressed: () async {
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
                   await context.read<Manager>().moveQuestionBackToShown();
                   ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie będzie widoczne'));
                 },
                 icon: const Icon(Icons.visibility_off)) :
                 IconButton(
                     onPressed: () async {
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
                       await context.read<Manager>().doNotShowThisQuestionAnymore();
                       ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie zostało ukryte'));
                     },
@@ -97,7 +99,6 @@ class QuestionListSingle extends StatelessWidget {
                 onPressed: index == 0
                     ? null
                     : () {
-                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
                   context.read<Manager>().showSingleFilteredQuestion(index - 1);
                       },
               ),
@@ -109,7 +110,6 @@ class QuestionListSingle extends StatelessWidget {
                 onPressed: index == filteredListLength
                     ? null
                     : () {
-                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
                   context.read<Manager>().showSingleFilteredQuestion(index + 1);
                       },
               ),

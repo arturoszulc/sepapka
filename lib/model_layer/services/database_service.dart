@@ -31,8 +31,6 @@ class DatabaseService {
           // userQVersions: user.qVersions,
           userUsername: user.username,
           userIsPro: user.isPro,
-          // userRankLevel: user.rankLevel,
-          // userRankTotalPoints: user.rankTotalPoints,
           userQListNew: user.qListNew.map((e) => e.convertToMap()).toList(),
           userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
           userQListNotShown: user.qListNotShown.map((e) => e.convertToMap()).toList(),

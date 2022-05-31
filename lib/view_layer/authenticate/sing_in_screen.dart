@@ -38,7 +38,7 @@ class SignInScreen extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         labelText: 'Adres e-mail',
-                        errorText: manager.email.error ?? '', //?? '' is for field not to cause jumping buttons when error shows up
+                        errorText: manager.email.error,
                       ),
                       onChanged: (String val) {
                         manager.validateEmail(val);
@@ -56,7 +56,7 @@ class SignInScreen extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         labelText: 'Hasło',
-                        errorText: manager.password.error ?? '', //?? '' is for field not to cause jumping buttons when error shows up
+                        errorText: manager.password.error,
                         errorMaxLines: 2,
                       ),
                       onChanged: (String val) {

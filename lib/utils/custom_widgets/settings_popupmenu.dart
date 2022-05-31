@@ -9,7 +9,9 @@ Widget buildSettingsMenu() {
     icon: const Icon(Icons.settings),
     itemBuilder: (context) => [
       PopupMenuItem(
-        onTap: () async => await context.read<Manager>().doNotShowThisQuestionAnymore(),
+        onTap: () async {
+          await context.read<Manager>().doNotShowThisQuestionAnymore();
+        },
         child: Row(
           children: const [
             Icon(Icons.visibility_off),

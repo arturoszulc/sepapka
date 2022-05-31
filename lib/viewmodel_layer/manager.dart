@@ -184,6 +184,9 @@ class Manager extends ChangeNotifier {
       navigate(Screen.signIn);
       return;
     }
+    //reset data entered in sign in screen forms
+    email.value = null;
+    password.value = null;
     navigate(Screen.menu);
   }
 
@@ -338,7 +341,7 @@ class Manager extends ChangeNotifier {
     //1. User calls this method during quiz
     if (_currentScreen == Screen.quizQuestionSingle) {
       await _userService.moveQMapToNotShown(currentQuestion!.id);
-      _userService.updateLoggedUserInDb();
+      await _userService.updateLoggedUserInDb();
       _questionService.removeCurrentQuestionFromSession();
       getNextQuizQuestion();
     }

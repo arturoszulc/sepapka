@@ -37,7 +37,7 @@ class QuestionListFilter extends StatelessWidget {
                   ),
                 ),
                 GroupButton(
-                  options: myGroupButtonOptions(),
+                  options: myGroupButtonOptions(context),
                   onSelected: (index, isSelected) => manager.setListFilter(fType: index),
                   buttons: qTypeList,
                   controller: GroupButtonController(
@@ -51,7 +51,7 @@ class QuestionListFilter extends StatelessWidget {
                   ),
                 ),
                 GroupButton(
-                  options: myGroupButtonOptions(),
+                  options: myGroupButtonOptions(context),
                   // isRadio: true,
                   onSelected: (index, isSelected) => manager.setListFilter(fLevel: index),
                   buttons: qLevelList,
@@ -66,7 +66,7 @@ class QuestionListFilter extends StatelessWidget {
                   ),
                 ),
                 GroupButton(
-                  options: myGroupButtonOptions(),
+                  options: myGroupButtonOptions(context),
                   isRadio: true,
                   onSelected: (index, isSelected) => manager.setListFilter(fCategory: index),
                   buttons: qCategoryList,

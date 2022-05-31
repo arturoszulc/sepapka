@@ -21,14 +21,17 @@ class AnswerButton extends StatelessWidget {
       child: SizedBox(
         width: MediaQuery.of(context).size.width*0.7,
         height: 65.0,
-        child: MaterialButton(
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: color,
+          ),
           onPressed: () {
             if (qStatus == QuestionStatus.noAnswer) {
               onSelected();
             }
           },
           // minWidth: 300,
-          color: color,
+          // color: color,
           child: Text(answer!, textAlign: TextAlign.center,),
         ),
       ),
