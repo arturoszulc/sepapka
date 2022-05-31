@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/utils/consts/nav.dart';
-import 'package:sepapka/utils/custom_widgets/buttons/sign_in_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class SignInScreen extends StatelessWidget {

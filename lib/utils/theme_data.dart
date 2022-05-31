@@ -1,13 +1,13 @@
 // import 'package:flutter/material.dart';
-
+//
 // import 'consts/colors.dart';
 //
 // ThemeData lightTheme() {
 //   return ThemeData(
-//     useMaterial3: true,
+//     // useMaterial3: true,
 //     brightness: Brightness.light,
 //     colorScheme: ColorScheme.fromSwatch().copyWith(
-//       primary: myPrimary,
+//       primary: flexSchemeLight.primary,
 //       // secondary: const Color(0xff383838),
 //       // onSurface:  const Color(0xff383838),
 //       // background:  const Color(0xff383838),
@@ -20,8 +20,8 @@
 //     // primarySwatch: Colors.yellow,
 //
 //     //appBar Theme
-//     appBarTheme: const AppBarTheme(
-//       foregroundColor: mySecondary,
+//     appBarTheme: AppBarTheme(
+//       foregroundColor: flexSchemeLight.onPrimary,
 //       elevation: 0,
 //       color: Colors.transparent,
 //     ),
@@ -35,15 +35,15 @@
 //     //elevatedButton style
 //     elevatedButtonTheme: ElevatedButtonThemeData(
 //       style: ElevatedButton.styleFrom(
-//         primary: myPrimary, //button color
-//         onPrimary: mySecondary, //text button color
+//         primary: flexSchemeLight.primary, //button color
+//         onPrimary: flexSchemeLight.onPrimary, //text button color
 //
 //       ),
 //     ),
 //
-//     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-//       backgroundColor: myPrimary,
-//       foregroundColor: mySecondary,
+//     floatingActionButtonTheme: FloatingActionButtonThemeData(
+//       backgroundColor: flexSchemeLight.tertiary,
+//       foregroundColor: flexSchemeLight.onTertiary,
 //       disabledElevation: 0,
 //     ),
 //
@@ -57,25 +57,25 @@
 //     // ),,
 //
 //     //text form input style
-//     textSelectionTheme: const TextSelectionThemeData(cursorColor: mySecondary),
-//     inputDecorationTheme: const InputDecorationTheme(
+//     // textSelectionTheme: const TextSelectionThemeData(cursorColor: mySecondary),
+//     inputDecorationTheme: InputDecorationTheme(
 //       focusedBorder: UnderlineInputBorder(
 //           borderSide: BorderSide(
-//         color: mySecondary,
+//         color: flexSchemeLight.onPrimary,
 //       )),
 //       // focusColor: mySecondary,
 //
 //       labelStyle: TextStyle(
-//         color: mySecondary,
+//         color: flexSchemeLight.onPrimary,
 //       ),
 //     ),
 //   );
 // }
-//
+// //
 // ThemeData darkTheme() {
 //   return ThemeData(
 //       brightness: Brightness.dark,
-//     primaryColor: myPrimary,
+//     primaryColor: flexSchemeDark.primary,
 //
 //   );
 // }

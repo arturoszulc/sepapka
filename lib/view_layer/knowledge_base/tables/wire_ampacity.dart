@@ -50,25 +50,27 @@ class _WireAmpacityState extends State<WireAmpacity> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          FloatingActionButton.small(
+                          IconButton(
+                              padding: const EdgeInsets.all(0),
                               onPressed: (index == 0) ? null : () {
                                 setState(() {
                                   if (index > 0) index -= 1;
                                 });
                               },
-                              child: const Icon(Icons.arrow_left, size: 36,)),
+                              icon: const Icon(Icons.navigate_before_outlined, size: 48,)),
                           Text(
                             layingWiresMethods[index].symbol,
                             textAlign: TextAlign.center,
                             textScaleFactor: 2,
                           ),
-                          FloatingActionButton.small(onPressed:
+                          IconButton(
+                            padding: const EdgeInsets.all(0),
+                              onPressed:
                           (index == layingWiresMethods.length-1) ? null : () {
-
                             setState(() {
                             if (index < layingWiresMethods.length-1) index += 1;
                             });
-                          }, child: const Icon(Icons.arrow_right, size: 36,)),
+                          }, icon: const Icon(Icons.navigate_next_outlined, size: 48,)),
                         ],
                       ),
                     ),
@@ -97,7 +99,7 @@ class _WireAmpacityState extends State<WireAmpacity> {
                   headingRowHeight: 70,
                     // columnSpacing: 15.0,
                     columns: const <DataColumn>[
-                      DataColumn(label: Text('Przekrój\nprzewodów\n[mm\u00B2]')),
+                      DataColumn(label: Text('Przekrój żył\n[mm\u00B2]')),
                       DataColumn(label: Text('Obciążalność\nobwodu 1-f [A]')),
                       DataColumn(label: Text('Obciążalność\nobwodu 3-f [A]')),
                     ],

@@ -11,7 +11,6 @@ Widget buildImage(BuildContext context, String path) {
     colorFilter: ColorFilter.matrix(isDarkMode ? matrixInverse : matrixIdentity),
     child: Image.asset(
       path,
-      // fit:BoxFit.fitWidth,
       errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
         //on fail return default error image
         return Image.asset('assets/images/questions/error.png');

@@ -84,25 +84,11 @@ class QuestionQuizSingle extends StatelessWidget {
                     ]),
                   ),
             Expanded(flex: 2, child: Container(),),
-            // Expanded(
-            //   flex: 1,
-            //   child: Padding(
-            //     padding: const EdgeInsets.all(8.0),
-            //     child: manager.qStatus == QuestionStatus.noAnswer ? null : FloatingActionButton.extended(
-            //       heroTag: 'next',
-            //       onPressed: () async {
-            //         await context.read<Manager>().getNextQuizQuestion();
-            //       },
-            //       label: const Text('Dalej >'),
-            //     ),
-            //   ),
-            // ),
                 ]),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           floatingActionButton: Visibility(
             visible: manager.qStatus == QuestionStatus.noAnswer ? false : true,
             child: FloatingActionButton.extended(
-              heroTag: 'next',
               onPressed: () async {
                 await context.read<Manager>().getNextQuizQuestion();
               },

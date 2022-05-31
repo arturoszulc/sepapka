@@ -5,7 +5,9 @@ import 'package:sepapka/utils/consts/nav.dart';
 
 
 Widget buildSettingsMenu() {
+  double appBarHeight = AppBar().preferredSize.height;
   return PopupMenuButton(
+    offset: Offset(0.0, appBarHeight),
     icon: const Icon(Icons.settings),
     itemBuilder: (context) => [
       PopupMenuItem(
