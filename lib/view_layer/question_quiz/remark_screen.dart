@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/utils/consts/nav.dart';
-import 'package:sepapka/utils/custom_widgets/sign_in_button.dart';
+import 'package:sepapka/utils/custom_widgets/buttons/sign_in_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class RemarkScreen extends StatelessWidget {
@@ -92,11 +92,11 @@ class RemarkScreen extends StatelessWidget {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: SignInButton(
+                  child: ElevatedButton(
                     onPressed: (manager.remark.value == null)
                         ? null
                         : () => manager.sendQuestionRemark(),
-                    label: 'Wyślij uwagę',
+                    child: const Text('Wyślij uwagę'),
                   ),
                 ),
               ],

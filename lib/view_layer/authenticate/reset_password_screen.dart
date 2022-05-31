@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
-import 'package:sepapka/utils/custom_widgets/sign_in_button.dart';
+import 'package:sepapka/utils/custom_widgets/buttons/sign_in_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import '../../utils/consts/colors.dart';
@@ -74,13 +74,13 @@ class ResetPasswordScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10.0),
-              SignInButton(
+              ElevatedButton(
                   onPressed: (manager.emailRemind.value == null)
                       ? null
                       : () async {
                           await manager.resetPassword(manager.emailRemind.value!);
                         },
-                  label: 'Resetuj hasło'),
+                  child: const Text('Resetuj hasło')),
               const SizedBox(height: 100),
             ],
           ),

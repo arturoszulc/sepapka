@@ -105,8 +105,6 @@ class Wrapper extends StatelessWidget {
         return PurchaseSuccess();
       case Screen.purchasePending:
         return PurchasePending();
-      case Screen.purchasePatronite:
-        return PurchasePatronite();
       case Screen.knowledgeBase:
         return const KnowledgeBaseMenu();
       case Screen.tableWireColors:

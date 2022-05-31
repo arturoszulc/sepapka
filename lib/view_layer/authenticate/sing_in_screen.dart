@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/utils/consts/nav.dart';
-import 'package:sepapka/utils/custom_widgets/sign_in_button.dart';
+import 'package:sepapka/utils/custom_widgets/buttons/sign_in_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -38,7 +38,7 @@ class SignInScreen extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         labelText: 'Adres e-mail',
-                        errorText: manager.email.error,
+                        errorText: manager.email.error ?? '', //?? '' is for field not to cause jumping buttons when error shows up
                       ),
                       onChanged: (String val) {
                         manager.validateEmail(val);
@@ -56,7 +56,7 @@ class SignInScreen extends StatelessWidget {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         labelText: 'Hasło',
-                        errorText: manager.password.error,
+                        errorText: manager.password.error ?? '', //?? '' is for field not to cause jumping buttons when error shows up
                         errorMaxLines: 2,
                       ),
                       onChanged: (String val) {
@@ -68,13 +68,10 @@ class SignInScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 5.0),
+                padding: const EdgeInsets.only(top: 0, bottom: 5.0),
                 child: Text(
                   manager.errorMsg.toString(),
                   style: TextStyle(color: isDarkMode ? flexSchemeDark.error : flexSchemeLight.error),
@@ -82,25 +79,25 @@ class SignInScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // const SizedBox(height: 10),
+            const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                    child: SignInButton(onPressed: (!manager.isEmailAndPasswordValid)
+                    child: ElevatedButton(onPressed: (!manager.isEmailAndPasswordValid)
                         ? null : () =>
                         manager.signIn(
                             email: manager.email.value!, password: manager.password.value!),
-                        label: 'Zaloguj się')
+                        child: const Text('Zaloguj się'))
                 ),
                 const SizedBox(width: 20),
                 Expanded(
-                  child: SignInButton(
+                  child: ElevatedButton(
                     onPressed: (!manager.isEmailAndPasswordValid)
                         ? null : () =>
                         manager.register(
                             email: manager.email.value!, password: manager.password.value!),
-                    label: 'Utwórz konto',
+                    child: const Text('Utwórz konto'),
                   ),
                 ),
               ],

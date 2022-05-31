@@ -6,7 +6,7 @@ import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/utils/custom_widgets/dialog_leave_session.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
-import '../../utils/custom_widgets/answer_button.dart';
+import '../../utils/custom_widgets/buttons/answer_button.dart';
 import '../../utils/custom_widgets/build_question.dart';
 import '../../utils/custom_widgets/single_question_top_bar.dart';
 

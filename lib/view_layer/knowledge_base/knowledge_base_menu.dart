@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/consts/nav.dart';
-import '../../utils/custom_widgets/menu_button.dart';
+import '../../utils/custom_widgets/buttons/menu_button.dart';
 import '../../utils/custom_widgets/unlock_button.dart';
 import '../../viewmodel_layer/manager.dart';
 

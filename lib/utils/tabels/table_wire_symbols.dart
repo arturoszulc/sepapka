@@ -35,7 +35,7 @@ const Map<String, List<WireSymbol>> wireSymbolsPolish = {
     WireSymbol('taśma', 'ekt'),
     WireSymbol('drut', 'eko'),
   ],
-  '6. Oznaczenie dodatkowe': [
+  'Oznaczenie dodatkowe': [
     WireSymbol('wtynkowy', 't'),
     WireSymbol('wzmocniona izolacja', 'd'),
     WireSymbol('ciepłoodporny', 'c'),
@@ -48,7 +48,7 @@ const Map<String, List<WireSymbol>> wireSymbolsPolish = {
     WireSymbol('sygnalizacyjny', 'S'),
     WireSymbol('spawalniczy', 'OS'),
   ],
-  '7. Do odbiorników ruchomych i przenośnych': [
+  'Do odbiorników ruchomych i przenośnych': [
     WireSymbol('sznur mieszkaniowy', 'SM'),
     WireSymbol('przewód oponowy warsztatowy', 'OW'),
     WireSymbol('przewód oponowy mieszkaniowy', 'OM'),
@@ -56,20 +56,20 @@ const Map<String, List<WireSymbol>> wireSymbolsPolish = {
     WireSymbol('przewód radiofoniczny', 'RP'),
     WireSymbol('przewód do instalacji samochodowych', '-S'),
   ],
-  '8. Telekomunikacyjne': [
+  'Telekomunikacyjne': [
     WireSymbol('stacyjny', 'TKS'),
     WireSymbol('miejscowy', 'TKM'),
     WireSymbol('instalacyjny', 'J-'),
     WireSymbol('słąboprądowy', 'T'),
     WireSymbol('do sygnałów alarmowych', 'TKS'),
   ],
-  '9. Komputerowe': [
+  'Komputerowe': [
     WireSymbol('skrętka nieekranowana', 'UTP'),
     WireSymbol('skrętka ekranowana', 'FTP'),
     WireSymbol('skrętka ekranowana parami', 'STP'),
     WireSymbol('skrętka ekranowana parami + ekran wspólny', 'S-STP'),
   ],
-  '10. Optotelekomunikacyjne': [
+  'Optotelekomunikacyjne': [
     WireSymbol('rozetowy', 'OTKr'),
     WireSymbol('tubowy', 'OTKt'),
   ],

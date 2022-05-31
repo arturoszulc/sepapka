@@ -556,70 +556,16 @@ class Manager extends ChangeNotifier {
   }
 
 
-  purchasePatronite(String email) async {
-    String? verifyEmailResult = await _databaseService.verifyPatroniteEmail(email);
-    if (verifyEmailResult == null) {
-      setError(Failure('Nie znaleziono Patrona z takim adresem e-mail'));
-      navigate(Screen.purchasePatronite);
-    } else {
-      setError(null);
-      await goPro();
-      navigate(Screen.purchaseSuccess);
-    }
-  }
-
-  // bool get isAvailable => _purchaseService.isStoreAvailable;
-  // String get productName => _purchaseService.productName;
-  // String get productPrice => _purchaseService.productPrice;
-  // PurchaseStatus? get purchaseStatus => _purchaseService.purchaseDetails?.status;
-  // Stream<bool> get hasPurchased => _purchaseService.purchaseStream;
-  // StreamSubscription<bool>? purchaseListener;
-
-  // openStore() async {
-  //   debugPrint('*** Opening Store ***');
-  //   Object initializeResult = await _purchaseService.initialize();
-  //   if (initializeResult is Failure) {
-  //     debugPrint(initializeResult.errorString);
-  //     navigate(Screen.purchaseError);
-  //     return;
-  //   }
-  //   listenStore();
-  //   if (purchaseStatus != null && purchaseStatus == PurchaseStatus.pending) {
-  //     navigate(Screen.purchasePending);
+  // purchasePatronite(String email) async {
+  //   String? verifyEmailResult = await _databaseService.verifyPatroniteEmail(email);
+  //   if (verifyEmailResult == null) {
+  //     setError(Failure('Nie znaleziono Patrona z takim adresem e-mail'));
+  //     navigate(Screen.purchasePatronite);
   //   } else {
-  //     navigate(Screen.purchase);
+  //     setError(null);
+  //     await goPro();
+  //     navigate(Screen.purchaseSuccess);
   //   }
-  // }
-  //
-  // listenStore() {
-  //   purchaseListener = hasPurchased.listen((purchaseCompleted) async {
-  //     if (purchaseCompleted) {
-  //       navigate(Screen.loading);
-  //       debugPrint('&&&& PURCHASE COMPLETED &&&&');
-  //       _databaseService.savePurchaseDetails(_purchaseService.purchaseDetails!, loggedUser!.documentId);
-  //       await closeStore();
-  //       await goPro();
-  //       navigate(Screen.purchaseSuccess);
-  //     }
-  //   }, onError: ((_) {
-  //     debugPrint('purchaseListener ERROR');
-  //     navigate(Screen.purchaseError);
-  //   }),);
-  // }
-  //
-  // closeStore() async {
-  //   debugPrint('*** closing store... ***');
-  //   await purchaseListener!.cancel();
-  //   _purchaseService.closeStore();
-  // }
-  //
-  // getUserProducts() async {
-  //   await _purchaseService.getUserProducts();
-  //   notifyListeners();
-  // }
-  //
-  // buyProduct() {
-  //   _purchaseService.buyProduct();
   // }
 
   Widget getQuestionIcon(String qId) {

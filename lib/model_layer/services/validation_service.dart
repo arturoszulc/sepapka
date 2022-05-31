@@ -8,14 +8,11 @@ class ValidationService {
   ValidationModel _password = ValidationModel(null, null);
   ValidationModel _remark = ValidationModel(null, null);
 
-  // bool _isEmailAndPasswordValid = false;
 
   final String emailPattern =
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
 
-  // final String passwordPatternLength = r'^(?=.*?[0-9])(?=.*?[!@#\$&*~+-]).{8,}$';
   final String passwordPatternLength = r'.{6,}';
-  // final String passwordPatternComplexity = r'(.*?[a-zA-Z])(.*?[0-9])(.*?[!@#\$&*~+-%,./])';
   final String remarkPattern = r'^[\s.,!?a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9-]+$';
 
   bool get isEmailAndPasswordValid {
@@ -56,10 +53,6 @@ class ValidationService {
     bool passwordValidLength = RegExp(passwordPatternLength).hasMatch(val);
     if (!passwordValidLength) {
       _password = ValidationModel(null, errorValPasswordLength);
-    // } else {
-    //   bool passwordValidComplexity = RegExp(passwordPatternComplexity).hasMatch(val);
-    //   if (!passwordValidComplexity) {
-    //     _password = ValidationModel(null, errorValPasswordComplexity);
       } else {
         _password = ValidationModel(val, null);
       }

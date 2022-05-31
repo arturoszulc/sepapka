@@ -27,7 +27,7 @@ class WireColors extends StatelessWidget {
               context.read<Manager>().navigate(Screen.knowledgeBase);
             },
           ),
-          title: const Text('Kolory przewodów'),
+          title: const Text('Barwy przewodów'),
           centerTitle: true,
         ),
         body: SingleChildScrollView(

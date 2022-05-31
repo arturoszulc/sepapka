@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../utils/consts/question.dart';
 import '../../viewmodel_layer/manager.dart';
-import '../../utils/custom_widgets/groupbutton_options.dart';
+import '../../utils/custom_widgets/buttons/groupbutton_options.dart';
 
 class QuestionListFilter extends StatelessWidget {
   const QuestionListFilter({Key? key}) : super(key: key);

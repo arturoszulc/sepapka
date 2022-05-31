@@ -23,15 +23,18 @@ class ImageFullScreen extends StatelessWidget {
           //     onPressed: () => Navigator.pop(context),
           //   ),
           // ),
-          body: Center(
-            child: Hero(
-              tag: 'imageHero',
-              child: InteractiveViewer(
-                  clipBehavior: Clip.none,
-                  minScale: minScale,
-                  maxScale: maxScale,
-                  child: buildImage(context, 'assets/images/questions/$imagePath')),
-            ),
+          body: Hero(
+            tag: 'imageHero',
+            child: InteractiveViewer(
+                clipBehavior: Clip.none,
+                minScale: minScale,
+                maxScale: maxScale,
+                // boundaryMargin: const EdgeInsets.all(double.infinity),
+                constrained: false,
+                child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: buildImage(context, 'assets/images/questions/$imagePath'))),
           ),
           floatingActionButton: FloatingActionButton(
               child: const Icon(Icons.clear),
