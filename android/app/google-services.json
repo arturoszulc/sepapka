@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "249525063892",
+    "project_id": "sepapka-516c1",
+    "storage_bucket": "sepapka-516c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249525063892:android:e290b36770d515d6142b41",
+        "android_client_info": {
+          "package_name": "teoriaelektryki.pl.sepapka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249525063892-escjvv0drq9uliq7e6010haq93m5ad7t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "teoriaelektryki.pl.sepapka",
+            "certificate_hash": "daaf524a0b8b7b4802bbdda6f75ae1720abf71d9"
+          }
+        },
+        {
+          "client_id": "249525063892-qqfrohtk2075iqonidcqri9i2b6itcrt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "teoriaelektryki.pl.sepapka",
+            "certificate_hash": "7f37477cc6f624a7e0168ec9ad0e3304550c778e"
+          }
+        },
+        {
+          "client_id": "249525063892-t0qucodoi78ilhr17mkqea0jrkt012m1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "teoriaelektryki.pl.sepapka",
+            "certificate_hash": "eeea4200867633b23fd35d19bfc821b9d2c7da32"
+          }
+        },
+        {
+          "client_id": "249525063892-lhqjuupfhupttijhfrkjgueejh6gtcr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeMTuCxJHS3ObzOIzoR7ZRh2eos1wnMIs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249525063892-lhqjuupfhupttijhfrkjgueejh6gtcr0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
