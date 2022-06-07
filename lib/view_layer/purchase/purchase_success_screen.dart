@@ -70,7 +70,7 @@ class PurchaseSuccess extends StatelessWidget {
                 Expanded(
                   child: Column(
                     children: [
-                      Text('A jeśli masz pomysł na przydatną funkcjonalność, to pisz śmiało na:',textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyText1),
+                      Text('Masz pomysł na przydatną funkcjonalność? Pisz śmiało na:',textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyText1),
                       const SizedBox(height: 10,),
                       Text('kontakt@teoriaelektryki.pl', style: Theme.of(context).textTheme.headline6,),
                     ],
