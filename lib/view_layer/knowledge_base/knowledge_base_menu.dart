@@ -58,6 +58,13 @@ class KnowledgeBaseMenu extends StatelessWidget {
                                 await context.read<Manager>().navigate(Screen.tableWireAmpacity);
                               },
                             ),
+                            MenuButton(
+                              proOnly: true,
+                              label: 'Jednostki i wielkości',
+                              onPressed: () async {
+                                await context.read<Manager>().navigate(Screen.units);
+                              },
+                            ),
 
                           ],
                         ),

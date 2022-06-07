@@ -68,15 +68,15 @@ class DatabaseService {
   // }
 
   //Get GlobalData document
-  Future<GlobalData> getGlobalData() async {
-    debugPrint('/// DB: reading DATA doc... ///');
-    var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
-    return GlobalData(
-      qVersions: List<int>.from(doc.get(globalDataQVersions)),
-      rankNames: List<String>.from(doc.get(globalDataRankNames)),
-      rankThresholds: List<int>.from(doc.get(globalDataRankThresholds)),
-    );
-  }
+  // Future<GlobalData> getGlobalData() async {
+  //   debugPrint('/// DB: reading DATA doc... ///');
+  //   var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();
+  //   return GlobalData(
+  //     qVersions: List<int>.from(doc.get(globalDataQVersions)),
+  //     rankNames: List<String>.from(doc.get(globalDataRankNames)),
+  //     rankThresholds: List<int>.from(doc.get(globalDataRankThresholds)),
+  //   );
+  // }
 
   // //Get question version
   // Future<int?> getQuestionVersion({required bool isPro}) async {

@@ -25,7 +25,7 @@ class QuestionService {
   // final _fileService = serviceLocator.get<FileService>();
 
   //Properties
-  GlobalData? globalData; //downloaded from DB
+  // GlobalData? globalData; //downloaded from DB
   List<Question> qListGlobal = []; //all questions
   List<Question> qListSession = []; //questions based on chosen Category and Level
   // List<Question> qListSession = []; //10 questions cut out from qListLocal for current session

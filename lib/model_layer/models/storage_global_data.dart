@@ -1,0 +1,3 @@
+class StorageGlobalData {
+  String? version;
+}

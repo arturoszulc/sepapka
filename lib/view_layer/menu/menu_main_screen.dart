@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/nav.dart';
 import 'package:sepapka/utils/custom_widgets/buttons/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/viewmodel_layer/manager_academy.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -47,6 +48,11 @@ class MenuScreen extends StatelessWidget {
                     label: 'Lista pytań',
                     onPressed: () {
                       context.read<Manager>().getFilteredQuestionList();
+                    }),
+                MenuButton(
+                    label: 'Akademia',
+                    onPressed: () {
+                      context.read<AcademyManager>().getFileName();
                     }),
                 MenuButton(
                     label: 'Tablice',

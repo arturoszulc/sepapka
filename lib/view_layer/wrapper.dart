@@ -6,6 +6,7 @@ import 'package:sepapka/utils/custom_widgets/app_loading.dart';
 import 'package:sepapka/view_layer/calculators/calc_power_three_phase.dart';
 import 'package:sepapka/view_layer/calculators/calculators_menu.dart';
 import 'package:sepapka/view_layer/knowledge_base/knowledge_base_menu.dart';
+import 'package:sepapka/view_layer/knowledge_base/tables/units.dart';
 import 'package:sepapka/view_layer/knowledge_base/tables/wire_symbols.dart';
 import 'package:sepapka/view_layer/purchase/purchase_error_screen.dart';
 import 'package:sepapka/view_layer/purchase/purchase_patronite.dart';
@@ -119,6 +120,8 @@ class Wrapper extends StatelessWidget {
       case Screen.calcHeatingPowerThreePhase:
         return CalcHeatingPowerThreePhase();
 
+      case Screen.units:
+        return UnitsScreen();
     }
   }
 }

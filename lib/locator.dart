@@ -4,6 +4,7 @@ import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/file_service.dart';
 import 'package:sepapka/model_layer/services/purchase_service.dart';
 import 'package:sepapka/model_layer/services/question_service.dart';
+import 'package:sepapka/model_layer/services/storage_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 
 import 'model_layer/services/validation_service.dart';
@@ -25,4 +26,6 @@ void setupGetIt(){
           () => ValidationService());
   serviceLocator.registerLazySingleton<PurchaseService>(
           () => PurchaseService());
+  serviceLocator.registerLazySingleton<StorageService>(
+          () => StorageService());
 }

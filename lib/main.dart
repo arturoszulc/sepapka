@@ -6,6 +6,7 @@ import 'package:sepapka/utils/theme_data.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:flutter/services.dart';
+import 'package:sepapka/viewmodel_layer/manager_academy.dart';
 import 'package:sepapka/viewmodel_layer/manager_calc.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 
@@ -31,6 +32,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<CalcManager>(
         create: (context) => CalcManager(),
+          lazy: true,
+        ),
+        ChangeNotifierProvider<AcademyManager>(
+          create: (context) => AcademyManager(),
           lazy: true,
         ),
       ],
