@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/utils/consts/nav.dart';
@@ -121,7 +122,8 @@ class SignInScreen extends StatelessWidget {
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                context.read<Manager>().navigate(Screen.resetPassword);
+                context.goNamed(Screen.resetPassword.name);
+                // context.read<Manager>().navigate(Screen.resetPassword);
               },
               child: const Text(
                 'Nie pamiętasz hasła?',

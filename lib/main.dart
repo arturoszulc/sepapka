@@ -4,12 +4,16 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/utils/theme_data.dart';
+import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
+import 'package:sepapka/view_layer/authenticate/sing_in_screen.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:flutter/services.dart';
 import 'package:sepapka/viewmodel_layer/manager_academy.dart';
 import 'package:sepapka/viewmodel_layer/manager_calc.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:sepapka/utils/consts/nav.dart';
+
 
 void main() async {
   WidgetsFlutterBinding
@@ -135,26 +139,24 @@ themeMode: ThemeMode.system,
     );
   }
   final _router = GoRouter(
-    initialLocation: '/',
+    initialLocation: '/signIn',
     routes: <GoRoute>[
-      GoRoute(path: '/', pageBuilder: (context, state) => MaterialPage(
+      GoRoute(
+        name: Screen.signIn.name,
+        path: '/signIn', pageBuilder: (context, state) => MaterialPage(
         key: state.pageKey,
-        child: Scaffold(body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text('home page'),
-              ElevatedButton(onPressed: () => GoRouter.of(context).go('/page2'), child: const Text('Go to second page')),
-            ],
+        child: SignInScreen()),
+        routes: [
+          GoRoute(
+            name: Screen.resetPassword.name,
+            path: 'reset-password', pageBuilder: (context, state) => MaterialPage(
+            key: state.pageKey,
+            child: ResetPasswordScreen(),
           ),
-        ),),
+          ),
+        ],
       ),
-      ),
-      GoRoute(path: '/page2', pageBuilder: (context, state) => MaterialPage(
-        key: state.pageKey,
-        child: const Scaffold(body: Center(child: Text('page2')),),
-      ),
-      ),
+
     ],
     errorBuilder: (context, state) => Scaffold(body: Center(child: Text(state.error.toString())
     ),
