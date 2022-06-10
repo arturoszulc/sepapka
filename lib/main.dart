@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/utils/theme_data.dart';
@@ -16,11 +17,11 @@ void main() async {
   await Firebase.initializeApp(); // wymagane do inicjalizacji Firebase
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   setupGetIt();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -39,7 +40,9 @@ class MyApp extends StatelessWidget {
           lazy: true,
         ),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
+        routeInformationParser: _router.routeInformationParser,
+        routerDelegate: _router.routerDelegate,
         title: 'SEPapka',
         theme: FlexThemeData.light(
           colors: const FlexSchemeColor(
@@ -115,7 +118,7 @@ themeMode: ThemeMode.system,
         // darkTheme: darkTheme(),
         // themeMode: ThemeMode.dark,
         // // themeMode: ThemeMode.system,
-        home: const Wrapper(),
+        // home: const Wrapper(),
         // routes: {
         //   '/wrapper': (context) => const Wrapper(),
         //   '/sign-in': (context) => SignInScreen(),
@@ -131,4 +134,31 @@ themeMode: ThemeMode.system,
       ),
     );
   }
+  final _router = GoRouter(
+    initialLocation: '/',
+    routes: <GoRoute>[
+      GoRoute(path: '/', pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: Scaffold(body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('home page'),
+              ElevatedButton(onPressed: () => GoRouter.of(context).go('/page2'), child: const Text('Go to second page')),
+            ],
+          ),
+        ),),
+      ),
+      ),
+      GoRoute(path: '/page2', pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: const Scaffold(body: Center(child: Text('page2')),),
+      ),
+      ),
+    ],
+    errorBuilder: (context, state) => Scaffold(body: Center(child: Text(state.error.toString())
+    ),
+    ),
+
+  );
 }
