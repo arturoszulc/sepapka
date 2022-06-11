@@ -2,7 +2,7 @@
 // import 'package:provider/src/provider.dart';
 // import 'package:sepapka/utils/consts/colors.dart';
 // import 'package:sepapka/viewmodel_layer/manager.dart';
-// import 'package:sepapka/utils/consts/nav.dart';
+// import 'package:sepapka/utils/consts/my_screens.dart';
 //
 // class SetUsernameScreen extends StatelessWidget {
 //   SetUsernameScreen({Key? key}) : super(key: key);

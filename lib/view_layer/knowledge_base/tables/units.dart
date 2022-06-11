@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/tabels/table_units.dart';
 
-import '../../../utils/consts/nav.dart';
+import '../../../utils/consts/my_screens.dart';
 import '../../../viewmodel_layer/manager.dart';
 
 

@@ -1,10 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/utils/consts/theme_data.dart';
-import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/view_layer/authenticate/sing_in_screen.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
@@ -12,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:sepapka/viewmodel_layer/manager_academy.dart';
 import 'package:sepapka/viewmodel_layer/manager_calc.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:sepapka/utils/consts/nav.dart';
+import 'package:sepapka/utils/consts/my_screens.dart';
 
 
 void main() async {
@@ -35,10 +33,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<Manager>(
           create: (context) => Manager(),
         ),
-        ChangeNotifierProvider<CalcManager>(
-        create: (context) => CalcManager(),
-          lazy: true,
-        ),
+        // ChangeNotifierProvider<CalcManager>(
+        // create: (context) => CalcManager(),
+        //   lazy: true,
+        // ),
         ChangeNotifierProvider<AcademyManager>(
           create: (context) => AcademyManager(),
           lazy: true,
@@ -46,7 +44,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) {
-          final _router = Provider.of<Manager>(context).router;
+          final _router = Provider.of<Manager>(context, listen: false).router;
           return MaterialApp.router(
             routeInformationParser: _router.routeInformationParser,
             routerDelegate: _router.routerDelegate,

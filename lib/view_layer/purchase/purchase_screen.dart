@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/colors.dart';
-import 'package:sepapka/utils/consts/nav.dart';
+import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 
 import '../../viewmodel_layer/manager.dart';

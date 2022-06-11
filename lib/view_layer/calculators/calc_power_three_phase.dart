@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../utils/consts/nav.dart';
+import '../../utils/consts/my_screens.dart';
 import '../../utils/custom_widgets/build_question_image.dart';
 import '../../viewmodel_layer/manager.dart';
 import '../../viewmodel_layer/manager_calc.dart';
@@ -28,33 +28,22 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
         },
         child: DefaultTabController(
           length: 2,
-          child: WillPopScope(
-            onWillPop: () {
-              return context.read<Manager>().navigate(MyScreen.calcMenu);
-            },
-            child: Scaffold(
-              resizeToAvoidBottomInset: true,
-              appBar: AppBar(
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    context.read<Manager>().navigate(MyScreen.calcMenu);
-                  },
-                ),
-                title: const Text('Moc grzania 3-f'),
-                centerTitle: true,
-                bottom: const TabBar(tabs: [
-                  Tab(text: 'Moc [W]'),
-                  Tab(text: 'Rezystancja [\u03A9]'),
-                ]),
-              ),
-              body: TabBarView(children: [
-                buildPowerCalculator(context, calcManager),
-                buildResistanceCalculator(context, calcManager),
-                // buildRankTop(context),
-                // buildRankUser(context),
+          child: Scaffold(
+            resizeToAvoidBottomInset: true,
+            appBar: AppBar(
+              title: const Text('Moc grzania 3-f'),
+              centerTitle: true,
+              bottom: const TabBar(tabs: [
+                Tab(text: 'Moc [W]'),
+                Tab(text: 'Rezystancja [\u03A9]'),
               ]),
             ),
+            body: TabBarView(children: [
+              buildPowerCalculator(context, calcManager),
+              buildResistanceCalculator(context, calcManager),
+              // buildRankTop(context),
+              // buildRankUser(context),
+            ]),
           ),
         ),
       );

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 import 'package:sepapka/utils/tabels/table_wire_ampacity.dart';
 
-import '../../../utils/consts/nav.dart';
+import '../../../utils/consts/my_screens.dart';
 import '../../../viewmodel_layer/manager.dart';
 
 class WireAmpacity extends StatefulWidget {

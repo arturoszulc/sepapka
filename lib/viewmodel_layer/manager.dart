@@ -22,7 +22,7 @@ import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/model_layer/services/validation_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
-import 'package:sepapka/utils/consts/nav.dart';
+import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/consts/question.dart';
 
 class Manager extends ChangeNotifier {
@@ -109,7 +109,7 @@ class Manager extends ChangeNotifier {
     });
 
     //on initialize, subscribe to stream that checks if user is logged in or not
-    // watchAuthUser();
+    watchAuthUser();
   }
 
   // internal Manager methods affecting UI
@@ -577,13 +577,14 @@ class Manager extends ChangeNotifier {
 
 
 
-  navigateNew(MyScreen screen) {
-    debugPrint('NAVIGATING to: $screen');
-    _routeService.navigate(screen);
-
-  }
+  // navigateNew(MyScreen screen) {
+  //   debugPrint('NAVIGATING to: $screen');
+  //
+  // }
   navigate(MyScreen screen) {
     debugPrint('NAVIGATING to: $screen');
+      _routeService.navigate(screen);
+
     // _currentScreen = screen;
     // if (errorMsg.isNotEmpty) setError(null);
     // notifyListeners();

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 import 'package:sepapka/utils/tabels/table_wire_symbols.dart';
 
-import '../../../utils/consts/nav.dart';
+import '../../../utils/consts/my_screens.dart';
 import '../../../utils/custom_widgets/line_spacing.dart';
 import '../../../viewmodel_layer/manager.dart';
 

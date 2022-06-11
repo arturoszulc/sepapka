@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sepapka/utils/custom_widgets/build_question.dart';
 
 import '../../model_layer/models/question.dart';
-import '../../utils/consts/nav.dart';
+import '../../utils/consts/my_screens.dart';
 import '../../viewmodel_layer/manager.dart';
 import '../../utils/custom_widgets/snackbar_hide_question.dart';
 

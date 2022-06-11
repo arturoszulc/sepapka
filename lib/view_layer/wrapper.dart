@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:sepapka/utils/consts/nav.dart';
+import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/utils/custom_widgets/app_loading.dart';
 import 'package:sepapka/view_layer/calculators/calc_power_three_phase.dart';

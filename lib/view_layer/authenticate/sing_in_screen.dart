@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/colors.dart';
-import 'package:sepapka/utils/consts/nav.dart';
+import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -122,7 +122,7 @@ class SignInScreen extends StatelessWidget {
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                context.read<Manager>().navigateNew(MyScreen.resetPassword);
+                context.read<Manager>().navigate(MyScreen.resetPassword);
                 // context.read<Manager>().navigate(Screen.resetPassword);
               },
               child: const Text(

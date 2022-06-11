@@ -4,6 +4,10 @@ import 'package:sepapka/model_layer/calcs/heating_power_three_phase_calc_model.d
 
 class CalcManager extends ChangeNotifier {
 
+  CalcManager() {
+    debugPrint('&&& CalcManager deployed &&&');
+  }
+
   final bool calcIsReady = true;
   String calcError = '';
   bool isResultVisible = false;

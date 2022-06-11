@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:provider/src/provider.dart';
 // import 'package:sepapka/viewmodel_layer/manager.dart';
-// import 'package:sepapka/utils/consts/nav.dart';
+// import 'package:sepapka/utils/consts/my_screens.dart';
 //
 // class ChangeUserData extends StatelessWidget {
 //   ChangeUserData({Key? key}) : super(key: key);

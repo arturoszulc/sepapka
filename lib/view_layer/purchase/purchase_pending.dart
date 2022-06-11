@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import '../../utils/consts/nav.dart';
+import '../../utils/consts/my_screens.dart';
 import '../../viewmodel_layer/manager.dart';
 
 class PurchasePending extends StatelessWidget {
