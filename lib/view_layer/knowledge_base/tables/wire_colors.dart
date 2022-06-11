@@ -16,7 +16,7 @@ class WireColors extends StatelessWidget {
     return WillPopScope(
       onWillPop: () {
         // context.read<Manager>().closeStore();
-        return context.read<Manager>().navigate(Screen.knowledgeBase);
+        return context.read<Manager>().navigate(MyScreen.knowledgeBase);
       },
       child: Scaffold(
         // backgroundColor: myPrimaryLight,
@@ -24,7 +24,7 @@ class WireColors extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              context.read<Manager>().navigate(Screen.knowledgeBase);
+              context.read<Manager>().navigate(MyScreen.knowledgeBase);
             },
           ),
           title: const Text('Barwy przewodów'),

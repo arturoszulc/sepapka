@@ -16,7 +16,7 @@ class DebugScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.read<Manager>().navigate(Screen.menu),
+          onPressed: () => context.read<Manager>().navigate(MyScreen.menu),
         ),
         title: const Text('DEBUG'),
         centerTitle: true,

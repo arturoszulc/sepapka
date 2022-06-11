@@ -15,12 +15,12 @@ class QuestionListScreen extends StatelessWidget {
     List<Question> qListGlobalFiltered = manager.qListGlobalFiltered;
 
     return WillPopScope(
-      onWillPop: () => context.read<Manager>().navigate(Screen.menu),
+      onWillPop: () => context.read<Manager>().navigate(MyScreen.menu),
       child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => context.read<Manager>().navigate(Screen.menu),
+              onPressed: () => context.read<Manager>().navigate(MyScreen.menu),
             ),
             // actions: [
             //   IconButton(
@@ -35,7 +35,7 @@ class QuestionListScreen extends StatelessWidget {
           body: Column(
             children: [
               InkWell(
-                onTap: () => context.read<Manager>().navigate(Screen.listQuestionFilter),
+                onTap: () => context.read<Manager>().navigate(MyScreen.listQuestionFilter),
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Row(

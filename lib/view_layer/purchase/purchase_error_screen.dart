@@ -10,12 +10,12 @@ class PurchaseError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () => context.read<Manager>().navigate(Screen.menu),
+        onWillPop: () => context.read<Manager>().navigate(MyScreen.menu),
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => context.read<Manager>().navigate(Screen.menu),
+              onPressed: () => context.read<Manager>().navigate(MyScreen.menu),
             ),
             // title: const Text('Purchase Error'),
             // centerTitle: true,
@@ -59,7 +59,7 @@ class PurchaseError extends StatelessWidget {
           floatingActionButton: FloatingActionButton.extended(
             icon: const Icon(Icons.exit_to_app),
             onPressed: () {
-              context.read<Manager>().navigate(Screen.menu);
+              context.read<Manager>().navigate(MyScreen.menu);
             },
             label: const Text('Powrót do menu'),
           ),

@@ -15,7 +15,7 @@ class CalculatorsMenuScreen extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () {
-        return context.read<Manager>().navigate(Screen.menu);
+        return context.read<Manager>().navigate(MyScreen.menu);
       },
       child: Scaffold(
       // backgroundColor: myPrimaryLight,
@@ -23,7 +23,7 @@ class CalculatorsMenuScreen extends StatelessWidget {
       leading: IconButton(
       icon: const Icon(Icons.arrow_back),
       onPressed: () {
-      context.read<Manager>().navigate(Screen.menu);
+      context.read<Manager>().navigate(MyScreen.menu);
       },
       ),
         title: const Text('Kalkulatory'),
@@ -39,7 +39,7 @@ class CalculatorsMenuScreen extends StatelessWidget {
             proOnly: true,
               label: 'Moc grzania w obwodach 3-fazowych',
               onPressed: () {
-                context.read<Manager>().navigate(Screen.calcHeatingPowerThreePhase);
+                context.read<Manager>().navigate(MyScreen.calcHeatingPowerThreePhase);
               }),
       ],),
         ),

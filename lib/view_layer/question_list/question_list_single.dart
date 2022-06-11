@@ -21,12 +21,12 @@ class QuestionListSingle extends StatelessWidget {
     final bool isQuestionHidden = context.read<Manager>().isQuestionHidden(question?.id);
 
     return WillPopScope(
-      onWillPop: () => context.read<Manager>().navigate(Screen.listQuestion),
+      onWillPop: () => context.read<Manager>().navigate(MyScreen.listQuestion),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () => context.read<Manager>().navigate(Screen.listQuestion),
+            onPressed: () => context.read<Manager>().navigate(MyScreen.listQuestion),
           ),
           title: Text('Pytanie ${index + 1} / ${filteredListLength + 1}'),
           centerTitle: true,

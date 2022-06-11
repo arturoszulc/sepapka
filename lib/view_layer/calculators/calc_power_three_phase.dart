@@ -30,7 +30,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
           length: 2,
           child: WillPopScope(
             onWillPop: () {
-              return context.read<Manager>().navigate(Screen.calcMenu);
+              return context.read<Manager>().navigate(MyScreen.calcMenu);
             },
             child: Scaffold(
               resizeToAvoidBottomInset: true,
@@ -38,7 +38,7 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
                 leading: IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
-                    context.read<Manager>().navigate(Screen.calcMenu);
+                    context.read<Manager>().navigate(MyScreen.calcMenu);
                   },
                 ),
                 title: const Text('Moc grzania 3-f'),

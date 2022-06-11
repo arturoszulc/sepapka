@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/locator.dart';
-import 'package:sepapka/utils/theme_data.dart';
+import 'package:sepapka/utils/consts/theme_data.dart';
 import 'package:sepapka/view_layer/authenticate/reset_password_screen.dart';
 import 'package:sepapka/view_layer/authenticate/sing_in_screen.dart';
 import 'package:sepapka/view_layer/wrapper.dart';
@@ -44,123 +44,23 @@ class MyApp extends StatelessWidget {
           lazy: true,
         ),
       ],
-      child: MaterialApp.router(
-        routeInformationParser: _router.routeInformationParser,
-        routerDelegate: _router.routerDelegate,
-        title: 'SEPapka',
-        theme: FlexThemeData.light(
-          colors: const FlexSchemeColor(
-            primary: Color(0xffffe375),
-            primaryContainer: Color(0xffd0e4ff),
-            secondary: Color(0xff383838),
-            secondaryContainer: Color(0xffffdbcf),
-            tertiary: Color(0xff7591ff),
-            tertiaryContainer: Color(0xff95f0ff),
-            appBarColor: Color(0xffffdbcf),
-            error: Color(0xffb00020),
-          ),
-          usedColors: 2,
-          surfaceMode: FlexSurfaceMode.highSurfaceLowScaffold,
-          blendLevel: 20,
-          appBarOpacity: 0.00,
-          subThemesData: const FlexSubThemesData(
-            elevatedButtonRadius: 10.0,
-            outlinedButtonRadius: 10.0,
-            blendOnLevel: 20,
-            blendOnColors: false,
-            textButtonSchemeColor: SchemeColor.inverseSurface,
-            outlinedButtonSchemeColor: SchemeColor.inverseSurface,
-            fabUseShape: false,
-            fabSchemeColor: SchemeColor.primary,
-            dialogRadius: 10.0,
-          ),
-          useMaterial3ErrorColors: true,
-          visualDensity: FlexColorScheme.comfortablePlatformDensity,
-          useMaterial3: false,
-          // To use the playground font, add GoogleFonts package and uncomment
-          // fontFamily: GoogleFonts.notoSans().fontFamily,
-        ),
-        darkTheme: FlexThemeData.dark(
-          colors: const FlexSchemeColor(
-            primary: Color(0xffffe375),
-            primaryContainer: Color(0xffd0e4ff),
-            secondary: Color(0xff383838),
-            secondaryContainer: Color(0xffffdbcf),
-            tertiary: Color(0xff7591ff),
-            tertiaryContainer: Color(0xff95f0ff),
-            appBarColor: Color(0xffffdbcf),
-            error: Color(0xffb00020),
-          ).defaultError.toDark(0, false),
-          usedColors: 2,
-          surfaceMode: FlexSurfaceMode.highScaffoldLowSurface,
-          blendLevel: 15,
-          appBarOpacity: 0.0,
-          darkIsTrueBlack: true,
-          subThemesData: const FlexSubThemesData(
-            elevatedButtonRadius: 10.0,
-            outlinedButtonRadius: 10.0,
-            textButtonSchemeColor: SchemeColor.inverseSurface,
-            outlinedButtonSchemeColor: SchemeColor.inverseSurface,
-            fabUseShape: false,
-            fabSchemeColor: SchemeColor.primary,
-            dialogBackgroundSchemeColor: SchemeColor.secondary,
-            dialogRadius: 10.0,
-          ),
-          useMaterial3ErrorColors: true,
-          visualDensity: FlexColorScheme.comfortablePlatformDensity,
-          useMaterial3: false,
-          // To use the playground font, add GoogleFonts package and uncomment
-          // fontFamily: GoogleFonts.notoSans().fontFamily,
-        ),
-// If you do not have a themeMode switch, uncomment this line
-// to let the device system mode control the theme mode:
-// themeMode: ThemeMode.system,
+      child: Builder(
+        builder: (context) {
+          final _router = Provider.of<Manager>(context).router;
+          return MaterialApp.router(
+            routeInformationParser: _router.routeInformationParser,
+            routerDelegate: _router.routerDelegate,
+            title: 'SEPapka',
+            theme: myLightTheme,
+            darkTheme: myDarkTHeme,
+            themeMode: ThemeMode.system,
 
-themeMode: ThemeMode.system,
 
-        // theme: lightTheme(),
-        // darkTheme: darkTheme(),
-        // themeMode: ThemeMode.dark,
-        // // themeMode: ThemeMode.system,
-        // home: const Wrapper(),
-        // routes: {
-        //   '/wrapper': (context) => const Wrapper(),
-        //   '/sign-in': (context) => SignInScreen(),
-        //   '/reset-password': (context) => ResetPasswordScreen(),
-        //   '/menu-main-screen': (context) => MenuScreen(),
-        //   '/menu-choose-level': (context) => MenuChooseLevel(),
-        //   '/settings-screen': (context) => SettingsScreen(),
-        //   '/settings-change-user-data': (context) => ChangeUserData(),
-        //   '/question-single': (context) => QuestionSingleScreen(),
-        //
-        // },
+          );
+        },
 
       ),
     );
   }
-  final _router = GoRouter(
-    initialLocation: '/signIn',
-    routes: <GoRoute>[
-      GoRoute(
-        name: Screen.signIn.name,
-        path: '/signIn', pageBuilder: (context, state) => MaterialPage(
-        key: state.pageKey,
-        child: SignInScreen()),
-        routes: [
-          GoRoute(
-            name: Screen.resetPassword.name,
-            path: 'reset-password', pageBuilder: (context, state) => MaterialPage(
-            key: state.pageKey,
-            child: ResetPasswordScreen(),
-          ),
-          ),
-        ],
-      ),
 
-    ],
-    errorBuilder: (context, state) => Scaffold(body: Center(child: Text(state.error.toString())
-    ),
-    ),
-
-  );
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart'; //iconData is from here
+import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:purchases_flutter/errors.dart';
 import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
@@ -16,6 +17,7 @@ import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/purchase_service.dart';
 import 'package:sepapka/model_layer/services/question_service.dart';
+import 'package:sepapka/model_layer/services/route_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/model_layer/services/validation_service.dart';
 import 'package:sepapka/utils/api_status.dart';
@@ -31,6 +33,7 @@ class Manager extends ChangeNotifier {
   DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
   ValidationService _validationService = serviceLocator.get<ValidationService>();
   PurchaseService _purchaseService = serviceLocator.get<PurchaseService>();
+  RouteService _routeService = serviceLocator.get<RouteService>();
 
   //Manager properties
   bool _loading = false;
@@ -41,12 +44,12 @@ class Manager extends ChangeNotifier {
   String _infoMsg = '';
   String appVersion = '';
 
-  Screen _currentScreen = Screen.loading;
+  MyScreen _currentScreen = MyScreen.loading;
 
   //Manager getters
   bool get loading => _loading;
 
-  Screen get currentScreen => _currentScreen;
+  MyScreen get currentScreen => _currentScreen;
 
   // bool get newUser => _newUser;
   String get errorMsg => _errorMsg;
@@ -55,14 +58,8 @@ class Manager extends ChangeNotifier {
 
   //External Getters
 
-  //UserService
-  LoggedUser? get loggedUser => _userService.loggedUser;
 
-  int get qNewLeft => _userService.loggedUser!.qListNew.length;
 
-  bool get isSessionFinished => _questionService.isSessionFinished;
-
-  // String get userRankName => _userService.userRankName;
 
   //Question Service
 
@@ -88,9 +85,6 @@ class Manager extends ChangeNotifier {
 
   List<int> get countQuestionsByCategories => _questionService.countQuestionsByCategory();
 
-  //AuthService
-
-  Stream<User?> get authUser => _authService.auth.authStateChanges();
 
   //DatabaseService
   // Stream<List<RankUser>> get userRankTop => _databaseService.usersRankTop;
@@ -115,17 +109,12 @@ class Manager extends ChangeNotifier {
     });
 
     //on initialize, subscribe to stream that checks if user is logged in or not
-    watchAuthUser();
+    // watchAuthUser();
   }
 
   // internal Manager methods affecting UI
 
-  navigate(Screen screen) {
-    debugPrint('NAVIGATING to: $screen');
-    _currentScreen = screen;
-    // if (errorMsg.isNotEmpty) setError(null);
-    notifyListeners();
-  }
+
 
   setError(Failure? failure) {
     if (failure == null) {
@@ -159,20 +148,20 @@ class Manager extends ChangeNotifier {
       if (user == null) {
         debugPrint('/// User signed out ///');
         await _userService.logOutUser();
-        if (_currentScreen != Screen.signIn) navigate(Screen.signIn);
+        if (_currentScreen != MyScreen.signIn) navigate(MyScreen.signIn);
       }
     });
   }
 
   prepareData(String userId) async {
     // keep the app in loading state
-    if (_currentScreen != Screen.loading) navigate(Screen.loading);
+    if (_currentScreen != MyScreen.loading) navigate(MyScreen.loading);
 
     // download user data and create local user object
     Object createUserResult = await _userService.createUserLocal(userId);
     if (createUserResult is Failure) {
       setError(createUserResult);
-      navigate(Screen.signIn);
+      navigate(MyScreen.signIn);
       return;
     }
 
@@ -180,40 +169,43 @@ class Manager extends ChangeNotifier {
     Object prepareDataResult = await _questionService.prepareGlobalData();
     if (prepareDataResult is Failure) {
       setError(prepareDataResult);
-      navigate(Screen.signIn);
+      navigate(MyScreen.signIn);
       return;
     }
     //reset data entered in sign in screen forms
     email.value = null;
     password.value = null;
-    navigate(Screen.menu);
+    navigate(MyScreen.menu);
   }
 
   ////////////////////////
   //        AUTH        //
   ////////////////////////
 
+  Stream<User?> get authUser => _authService.auth.authStateChanges();
+
+
   signIn({required String email, required String password}) async {
     //start loading app
-    navigate(Screen.loading);
+    navigate(MyScreen.loading);
     //Try to sign in
     Object signInResult = await _authService.signInEmail(email.toLowerCase(), password);
     if (signInResult is Failure) {
       setError(signInResult);
-      navigate(Screen.signIn);
+      navigate(MyScreen.signIn);
     }
     if (signInResult is Success) setError(null);
   }
 
   register({required String email, required String password}) async {
     //start loading app
-    navigate(Screen.loading);
+    navigate(MyScreen.loading);
     //register user
     Object registerResult =
         await _authService.registerWithEmailAndPassword(email.toLowerCase(), password);
     if (registerResult is Failure) {
       setError(registerResult);
-      navigate(Screen.signIn);
+      navigate(MyScreen.signIn);
     }
     if (registerResult is Success) {
       setError(null);
@@ -224,7 +216,7 @@ class Manager extends ChangeNotifier {
     Object signInGoogleResult = await _authService.signInGoogle();
     if (signInGoogleResult is Failure) {
       setError(signInGoogleResult);
-      navigate(Screen.signIn);
+      navigate(MyScreen.signIn);
     }
     if (signInGoogleResult is Success) setError(null);
   }
@@ -233,30 +225,36 @@ class Manager extends ChangeNotifier {
     Object signOutResult = await _authService.signOut();
     if (signOutResult is Failure) {
       setError(signOutResult);
-      navigate(Screen.settings);
+      navigate(MyScreen.settings);
     }
-    navigate(Screen.signIn);
+    navigate(MyScreen.signIn);
   }
 
   resetPassword(String email) async {
     debugPrint('/// manager ResetPassword deployed');
-    navigate(Screen.loading);
+    navigate(MyScreen.loading);
     Object resetPassResult = await _authService.resetPassword(email.toLowerCase());
     if (resetPassResult is Failure) {
       await setError(resetPassResult);
-      navigate(Screen.resetPassword);
+      navigate(MyScreen.resetPassword);
     }
     if (resetPassResult is Success) {
       await setError(null);
       // setLoading(true);
       setMessage(msgResetSent);
-      navigate(Screen.signIn);
+      navigate(MyScreen.signIn);
     }
   }
 
   ////////////////////////
   //        USER        //
   ////////////////////////
+
+  LoggedUser? get loggedUser => _userService.loggedUser;
+
+  int get qNewLeft => _userService.loggedUser!.qListNew.length;
+
+  bool get isSessionFinished => _questionService.isSessionFinished;
 
   goPro() async {
     Object goProResult = await _userService.goPro();
@@ -270,7 +268,7 @@ class Manager extends ChangeNotifier {
       setError(prepareDataResult);
       return;
     }
-    navigate(Screen.purchaseSuccess);
+    navigate(MyScreen.purchaseSuccess);
   }
 
   ////////////////////////
@@ -280,7 +278,7 @@ class Manager extends ChangeNotifier {
   chooseQuestionLevel(int level) async {
     await _questionService.setQuestionLevel(level);
     //after choosing Level, choose category
-    navigate(Screen.chooseCategory);
+    navigate(MyScreen.chooseCategory);
   }
 
   chooseQuestionCategory(int catNumber) {
@@ -303,7 +301,7 @@ class Manager extends ChangeNotifier {
   getNextQuizQuestion() async {
     Object nextQuestionResult = await _questionService.getNextQuestion();
     if (nextQuestionResult is Success) {
-      navigate(Screen.quizQuestionSingle);
+      navigate(MyScreen.quizQuestionSingle);
     }
     if (nextQuestionResult is Failure) {
       //if failure, then no more questions left. End session.
@@ -312,12 +310,12 @@ class Manager extends ChangeNotifier {
         setMessage(endResult.errorString.toString());
         return;
       }
-      navigate(Screen.sessionFinished);
+      navigate(MyScreen.sessionFinished);
     }
   }
 
   interruptSession() async {
-    navigate(Screen.menu);
+    navigate(MyScreen.menu);
   }
 
   moveQuestionBackToShown() async {
@@ -338,14 +336,14 @@ class Manager extends ChangeNotifier {
 
     //there are two use cases
     //1. User calls this method during quiz
-    if (_currentScreen == Screen.quizQuestionSingle) {
+    if (_currentScreen == MyScreen.quizQuestionSingle) {
       await _userService.moveQMapToNotShown(currentQuestion!.id);
       await _userService.updateLoggedUserInDb();
       _questionService.removeCurrentQuestionFromSession();
       getNextQuizQuestion();
     }
     //2. User calls this method during question list
-    if (_currentScreen == Screen.listQuestionSingle) {
+    if (_currentScreen == MyScreen.listQuestionSingle) {
       await _userService.moveQMapToNotShown(qListGlobalFiltered[qListGlobalFilteredIndex].id);
       _userService.updateLoggedUserInDb();
       await _questionService.getFilteredQuestionList();
@@ -383,9 +381,9 @@ class Manager extends ChangeNotifier {
   }
 
   getFilteredQuestionList() async {
-    navigate(Screen.loading);
+    navigate(MyScreen.loading);
     await _questionService.getFilteredQuestionList();
-    navigate(Screen.listQuestion);
+    navigate(MyScreen.listQuestion);
   }
 
   Question? getSingleFilteredQuestion() {
@@ -402,10 +400,10 @@ class Manager extends ChangeNotifier {
     //update isQuestionHidden
     if (qListGlobalFiltered.isEmpty) {
       debugPrint('QListGlobalFiltered IS EMPTY');
-      navigate(Screen.listQuestion);
+      navigate(MyScreen.listQuestion);
     } else {
       //refresh screen
-      navigate(Screen.listQuestionSingle);
+      navigate(MyScreen.listQuestionSingle);
     }
   }
 
@@ -413,11 +411,11 @@ class Manager extends ChangeNotifier {
     Object sendResult = await _questionService.sendQuestionRemark(remark.value!, appVersion);
     if (sendResult is Failure) {
       setError(sendResult);
-      navigate(Screen.remark);
+      navigate(MyScreen.remark);
     } else {
       setError(null);
       setMessage(msgThanksForRemark);
-      navigate(Screen.quizQuestionSingle);
+      navigate(MyScreen.quizQuestionSingle);
     }
   }
 
@@ -453,20 +451,20 @@ class Manager extends ChangeNotifier {
   String? purchaseError;
 
   revenueCatStart() async {
-      navigate(Screen.loading);
+      navigate(MyScreen.loading);
 
       Object initResult = await _purchaseService.init(loggedUser!.documentId);
       if (initResult is Failure) {
         debugPrint(initResult.errorString);
         purchaseError = initResult.errorString;
-        navigate(Screen.purchaseError);
+        navigate(MyScreen.purchaseError);
         return;
       }
       Object getOffersResult = await _purchaseService.getOffers();
       if (getOffersResult is Failure) {
         debugPrint(getOffersResult.errorString);
         purchaseError = getOffersResult.errorString;
-        navigate(Screen.purchaseError);
+        navigate(MyScreen.purchaseError);
         return;
       }
 
@@ -476,7 +474,7 @@ class Manager extends ChangeNotifier {
         finishPurchase(isPurchaseFinished);
         return;
       }
-      navigate(Screen.purchase);
+      navigate(MyScreen.purchase);
   }
 
   buyProduct() async {
@@ -527,7 +525,7 @@ class Manager extends ChangeNotifier {
 
 
   finishPurchase(EntitlementInfo info) async {
-    navigate(Screen.loading);
+    navigate(MyScreen.loading);
     //add userID to revenueCat
     // _purchaseService.addIdToRevenueCat(loggedUser!.documentId);
 
@@ -537,7 +535,7 @@ class Manager extends ChangeNotifier {
     setError(null);
     await goPro();
     //navigate to PurchaseSuccess screen
-    navigate(Screen.purchaseSuccess);
+    navigate(MyScreen.purchaseSuccess);
 
   }
 
@@ -547,7 +545,7 @@ class Manager extends ChangeNotifier {
     }
     if (errorCode == PurchasesErrorCode.paymentPendingError) {
       debugPrint('### payment pending');
-      navigate(Screen.purchasePending);
+      navigate(MyScreen.purchasePending);
     }
     if (errorCode == PurchasesErrorCode.networkError) {
       debugPrint('### network error');
@@ -569,6 +567,29 @@ class Manager extends ChangeNotifier {
   //     navigate(Screen.purchaseSuccess);
   //   }
   // }
+
+
+  ////////////////////////
+  //      ROUTING       //
+  ////////////////////////
+
+  GoRouter get router => _routeService.router;
+
+
+
+  navigateNew(MyScreen screen) {
+    debugPrint('NAVIGATING to: $screen');
+    _routeService.navigate(screen);
+
+  }
+  navigate(MyScreen screen) {
+    debugPrint('NAVIGATING to: $screen');
+    // _currentScreen = screen;
+    // if (errorMsg.isNotEmpty) setError(null);
+    // notifyListeners();
+  }
+
+
 
   Widget getQuestionIcon(String qId) {
     return _userService.getQListIcon(qId);

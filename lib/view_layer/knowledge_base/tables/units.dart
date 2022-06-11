@@ -18,14 +18,14 @@ class _UnitsScreenState extends State<UnitsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-    return context.read<Manager>().navigate(Screen.knowledgeBase);
+    return context.read<Manager>().navigate(MyScreen.knowledgeBase);
     },
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              context.read<Manager>().navigate(Screen.knowledgeBase);
+              context.read<Manager>().navigate(MyScreen.knowledgeBase);
             },
           ),
           title: const Text('Jednostki i wielkości'),

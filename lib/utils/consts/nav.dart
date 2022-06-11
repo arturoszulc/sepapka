@@ -1,29 +1,25 @@
 
 
-enum Screen {
+enum MyScreen {
 
   loading,
   signIn,
   resetPassword,
-  // setUsername,
   menu,
   chooseLevel,
   chooseCategory,
   settings,
-  // changeUserName,
   quizQuestionSingle,
   listQuestionSingle,
   listQuestionFilter,
   listQuestion,
   sessionFinished,
-  // userRank,
   remark,
   debug,
   purchase,
   purchasePending,
   purchaseError,
   purchaseSuccess,
-  // purchasePatronite,
   knowledgeBase,
   tableWireColors,
   tableWireAmpacity,
@@ -32,5 +28,9 @@ enum Screen {
 
   calcMenu,
   calcHeatingPowerThreePhase,
+
+
+///UNUSED
+  // purchasePatronite,
 
 }

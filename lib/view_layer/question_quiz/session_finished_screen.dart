@@ -13,7 +13,7 @@ class SessionFinished extends StatelessWidget {
     String userScore = context.read<Manager>().userScore;
     return WillPopScope(
       onWillPop: () async {
-        await context.read<Manager>().navigate(Screen.menu);
+        await context.read<Manager>().navigate(MyScreen.menu);
         return false;
       },
       child: SafeArea(
@@ -67,7 +67,7 @@ class SessionFinished extends StatelessWidget {
           floatingActionButton: FloatingActionButton.extended(
               icon: const Icon(Icons.exit_to_app),
               onPressed: () {
-            context.read<Manager>().navigate(Screen.menu);
+            context.read<Manager>().navigate(MyScreen.menu);
           }, label: const Text('Powrót do menu'),),
         ),
       ),

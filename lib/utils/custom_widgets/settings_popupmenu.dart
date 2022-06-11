@@ -23,7 +23,7 @@ Widget buildSettingsMenu() {
         ),
       ),
       PopupMenuItem(
-        onTap: () => context.read<Manager>().navigate(Screen.remark),
+        onTap: () => context.read<Manager>().navigate(MyScreen.remark),
         child: Row(
           children: const [
             Icon(Icons.message),

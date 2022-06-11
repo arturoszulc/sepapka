@@ -122,7 +122,7 @@ class SignInScreen extends StatelessWidget {
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                context.goNamed(Screen.resetPassword.name);
+                context.read<Manager>().navigateNew(MyScreen.resetPassword);
                 // context.read<Manager>().navigate(Screen.resetPassword);
               },
               child: const Text(

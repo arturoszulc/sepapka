@@ -42,7 +42,7 @@ class MenuScreen extends StatelessWidget {
                 MenuButton(
                     label: 'Quiz',
                     onPressed: () {
-                      context.read<Manager>().navigate(Screen.chooseLevel);
+                      context.read<Manager>().navigate(MyScreen.chooseLevel);
                     }),
                 MenuButton(
                     label: 'Lista pytań',
@@ -57,12 +57,12 @@ class MenuScreen extends StatelessWidget {
                 MenuButton(
                     label: 'Tablice',
                     onPressed: () {
-                      context.read<Manager>().navigate(Screen.knowledgeBase);
+                      context.read<Manager>().navigate(MyScreen.knowledgeBase);
                     }),
                 MenuButton(
                     label: 'Kalkulatory',
                     onPressed: () {
-                      context.read<Manager>().navigate(Screen.calcMenu);
+                      context.read<Manager>().navigate(MyScreen.calcMenu);
                     }),
                 MenuButton(label: 'Wyloguj się', onPressed: () async {
                   await context.read<Manager>().signOut();

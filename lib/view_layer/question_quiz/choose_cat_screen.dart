@@ -15,12 +15,12 @@ class ChooseCategory extends StatelessWidget {
 
     List<int> countQuestionsByCategories = context.read<Manager>().countQuestionsByCategories;
     return WillPopScope(
-        onWillPop: () => context.read<Manager>().navigate(Screen.chooseLevel),
+        onWillPop: () => context.read<Manager>().navigate(MyScreen.chooseLevel),
         child: Scaffold(
         appBar: AppBar(
         leading: IconButton(
         icon: const Icon(Icons.arrow_back),
-    onPressed: () => context.read<Manager>().navigate(Screen.chooseLevel),
+    onPressed: () => context.read<Manager>().navigate(MyScreen.chooseLevel),
     ),
     title: const Text('Wybierz kategorię'),
     centerTitle: true,

@@ -14,12 +14,12 @@ class MenuChooseLevel extends StatelessWidget {
 
     List<int> countLevels = context.read<Manager>().countQuestionsByLevel;
     return WillPopScope(
-      onWillPop: () => context.read<Manager>().navigate(Screen.menu),
+      onWillPop: () => context.read<Manager>().navigate(MyScreen.menu),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () => context.read<Manager>().navigate(Screen.menu),
+            onPressed: () => context.read<Manager>().navigate(MyScreen.menu),
           ),
           title: const Text('Wybierz poziom trudności'),
           centerTitle: true,

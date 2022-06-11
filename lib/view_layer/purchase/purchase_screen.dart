@@ -24,7 +24,7 @@ class PurchaseScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () {
         // context.read<Manager>().closeStore();
-        return context.read<Manager>().navigate(Screen.menu);
+        return context.read<Manager>().navigate(MyScreen.menu);
       },
       child: Scaffold(
         // backgroundColor: myPrimaryLight,
@@ -33,7 +33,7 @@ class PurchaseScreen extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               // context.read<Manager>().closeStore();
-              context.read<Manager>().navigate(Screen.menu);
+              context.read<Manager>().navigate(MyScreen.menu);
             },
           ),
           // title: const Text('Odblokuj pytania'),

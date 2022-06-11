@@ -12,12 +12,12 @@ class KnowledgeBaseMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () => context.read<Manager>().navigate(Screen.menu),
+      onWillPop: () => context.read<Manager>().navigate(MyScreen.menu),
       child: Scaffold(
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => context.read<Manager>().navigate(Screen.menu),
+              onPressed: () => context.read<Manager>().navigate(MyScreen.menu),
             ),
             title: const Text('Tablice'),
             centerTitle: true,
@@ -41,28 +41,28 @@ class KnowledgeBaseMenu extends StatelessWidget {
                               proOnly: true,
                               label: 'Kodowanie barw przewodów',
                               onPressed: () async {
-                                await context.read<Manager>().navigate(Screen.tableWireColors);
+                                await context.read<Manager>().navigate(MyScreen.tableWireColors);
                               },
                             ),
                             MenuButton(
                               proOnly: true,
                               label: 'Symbole przewodów',
                               onPressed: () async {
-                                await context.read<Manager>().navigate(Screen.tableWireSymbols);
+                                await context.read<Manager>().navigate(MyScreen.tableWireSymbols);
                               },
                             ),
                             MenuButton(
                                 proOnly: true,
                               label: 'Obciążalność przewodów',
                               onPressed: () async {
-                                await context.read<Manager>().navigate(Screen.tableWireAmpacity);
+                                await context.read<Manager>().navigate(MyScreen.tableWireAmpacity);
                               },
                             ),
                             MenuButton(
                               proOnly: true,
                               label: 'Jednostki i wielkości',
                               onPressed: () async {
-                                await context.read<Manager>().navigate(Screen.units);
+                                await context.read<Manager>().navigate(MyScreen.units);
                               },
                             ),
 

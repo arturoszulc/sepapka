@@ -49,7 +49,7 @@ class Wrapper extends StatelessWidget {
 
 
 
-    return Selector<Manager, Screen>(
+    return Selector<Manager, MyScreen>(
       selector: (_, manager) => manager.currentScreen,
       builder: (_, currentScreen, __) => AnimatedSwitcher(
         duration: const Duration(milliseconds: 200),
@@ -72,64 +72,64 @@ class Wrapper extends StatelessWidget {
   }
 
 
-  Widget getWidget(Screen currentScreen, BuildContext context) {
+  Widget getWidget(MyScreen currentScreen, BuildContext context) {
 
     //if there's a message to show, do it
     String msg = context.read<Manager>().infoMsg;
     if (msg.isNotEmpty) WidgetsBinding.instance.addPostFrameCallback((_)  => buildMessageDialog(context, msg));
 
     switch (currentScreen) {
-      case Screen.loading:
+      case MyScreen.loading:
         return const LoadingScreen();
-      case Screen.signIn:
+      case MyScreen.signIn:
         return SignInScreen();
-      case Screen.menu:
+      case MyScreen.menu:
         return const MenuScreen();
-      case Screen.resetPassword:
+      case MyScreen.resetPassword:
         return ResetPasswordScreen();
-      case Screen.settings:
+      case MyScreen.settings:
         return const SettingsScreen();
-      case Screen.chooseLevel:
+      case MyScreen.chooseLevel:
         return const MenuChooseLevel();
-      case Screen.quizQuestionSingle:
+      case MyScreen.quizQuestionSingle:
         return QuestionQuizSingle();
-      case Screen.sessionFinished:
+      case MyScreen.sessionFinished:
         return SessionFinished();
-      case Screen.listQuestion:
+      case MyScreen.listQuestion:
         return QuestionListScreen();
-      case Screen.remark:
+      case MyScreen.remark:
         return RemarkScreen();
-      case Screen.debug:
+      case MyScreen.debug:
         return DebugScreen();
-      case Screen.chooseCategory:
+      case MyScreen.chooseCategory:
         return ChooseCategory();
-      case Screen.listQuestionSingle:
+      case MyScreen.listQuestionSingle:
         return QuestionListSingle();
-      case Screen.listQuestionFilter:
+      case MyScreen.listQuestionFilter:
         return QuestionListFilter();
-      case Screen.purchase:
+      case MyScreen.purchase:
         return PurchaseScreen();
-      case Screen.purchaseError:
+      case MyScreen.purchaseError:
         return PurchaseError();
-      case Screen.purchaseSuccess:
+      case MyScreen.purchaseSuccess:
         return PurchaseSuccess();
-      case Screen.purchasePending:
+      case MyScreen.purchasePending:
         return PurchasePending();
-      case Screen.knowledgeBase:
+      case MyScreen.knowledgeBase:
         return const KnowledgeBaseMenu();
-      case Screen.tableWireColors:
+      case MyScreen.tableWireColors:
         return const WireColors();
-      case Screen.tableWireAmpacity:
+      case MyScreen.tableWireAmpacity:
         return WireAmpacity();
-      case Screen.tableWireSymbols:
+      case MyScreen.tableWireSymbols:
       return WireSymbols();
-      case Screen.calcMenu:
+      case MyScreen.calcMenu:
         return const CalculatorsMenuScreen();
         break;
-      case Screen.calcHeatingPowerThreePhase:
+      case MyScreen.calcHeatingPowerThreePhase:
         return CalcHeatingPowerThreePhase();
 
-      case Screen.units:
+      case MyScreen.units:
         return UnitsScreen();
     }
   }
