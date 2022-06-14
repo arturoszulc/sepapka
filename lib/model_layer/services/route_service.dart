@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:sepapka/model_layer/calcs/heating_power_three_phase_calc_model.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
 import '';
@@ -49,9 +47,7 @@ class RouteService {
          name: MyScreen.calcMenu.name,
          path: MyScreen.calcMenu.path, pageBuilder: (context, state) => MaterialPage(
            key: state.pageKey,
-           child: ChangeNotifierProvider<CalcManager>(
-               create: (context) => CalcManager(),
-               builder: (context, _) => const CalculatorsMenuScreen())),
+           child: const CalculatorsMenuScreen()),
          routes: [
            GoRoute(
              name: MyScreen.calcHeatingPowerThreePhase.name,

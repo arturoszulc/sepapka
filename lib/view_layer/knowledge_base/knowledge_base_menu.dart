@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../utils/consts/my_screens.dart';
 import '../../utils/custom_widgets/buttons/menu_button.dart';
 import '../../utils/custom_widgets/unlock_button.dart';
 import '../../viewmodel_layer/manager.dart';
 
-class KnowledgeBaseMenu extends StatelessWidget {
+class KnowledgeBaseMenu extends ConsumerWidget {
   const KnowledgeBaseMenu({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Tablice'),
@@ -33,29 +33,29 @@ class KnowledgeBaseMenu extends StatelessWidget {
                           MenuButton(
                             proOnly: true,
                             label: 'Kodowanie barw przewodów',
-                            onPressed: () async {
-                              await context.read<Manager>().navigate(MyScreen.tableWireColors);
+                            onPressed: ()  {
+                               ref.read(manager).navigate(MyScreen.tableWireColors);
                             },
                           ),
                           MenuButton(
                             proOnly: true,
                             label: 'Symbole przewodów',
-                            onPressed: () async {
-                              await context.read<Manager>().navigate(MyScreen.tableWireSymbols);
+                            onPressed: () {
+                              ref.read(manager).navigate(MyScreen.tableWireSymbols);
                             },
                           ),
                           MenuButton(
                               proOnly: true,
                             label: 'Obciążalność przewodów',
-                            onPressed: () async {
-                              await context.read<Manager>().navigate(MyScreen.tableWireAmpacity);
+                            onPressed: ()  {
+                              ref.read(manager).navigate(MyScreen.tableWireAmpacity);
                             },
                           ),
                           MenuButton(
                             proOnly: true,
                             label: 'Jednostki i wielkości',
-                            onPressed: () async {
-                              await context.read<Manager>().navigate(MyScreen.units);
+                            onPressed: ()  {
+                               ref.read(manager).navigate(MyScreen.units);
                             },
                           ),
 

@@ -87,8 +87,8 @@ class Wrapper extends StatelessWidget {
         return const MenuScreen();
       case MyScreen.resetPassword:
         return ResetPasswordScreen();
-      case MyScreen.settings:
-        return const SettingsScreen();
+      // case MyScreen.settings:
+      //   return const SettingsScreen();
       case MyScreen.chooseLevel:
         return const MenuChooseLevel();
       case MyScreen.quizQuestionSingle:

@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/utils/consts/theme_data.dart';
 import 'package:sepapka/view_layer/authenticate/sing_in_screen.dart';
@@ -19,7 +19,7 @@ void main() async {
   await Firebase.initializeApp(); // wymagane do inicjalizacji Firebase
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   setupGetIt();
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -28,23 +28,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<Manager>(
-          create: (context) => Manager(),
-        ),
-        // ChangeNotifierProvider<CalcManager>(
-        // create: (context) => CalcManager(),
-        //   lazy: true,
-        // ),
-        ChangeNotifierProvider<AcademyManager>(
-          create: (context) => AcademyManager(),
-          lazy: true,
-        ),
-      ],
-      child: Builder(
-        builder: (context) {
-          final _router = Provider.of<Manager>(context, listen: false).router;
+    return Consumer(
+        builder: (context, WidgetRef ref, child) {
+          final _router = ref.read(manager).router;
           return MaterialApp.router(
             routeInformationParser: _router.routeInformationParser,
             routerDelegate: _router.routerDelegate,
@@ -57,8 +43,8 @@ class MyApp extends StatelessWidget {
           );
         },
 
-      ),
-    );
+      );
+
   }
 
 }

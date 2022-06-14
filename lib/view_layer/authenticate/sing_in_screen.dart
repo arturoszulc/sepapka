@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends ConsumerWidget {
   SignInScreen({Key? key}) : super(key: key);
   final _authFormKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** SignInScreen built ***');
 
-    final manager = Provider.of<Manager>(context);
+    final myManager = ref.read(manager);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
@@ -34,16 +33,16 @@ class SignInScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: TextFormField(
-                      initialValue: manager.email.value,
+                      initialValue: myManager.email.value,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         labelText: 'Adres e-mail',
-                        errorText: manager.email.error,
+                        errorText: myManager.email.error,
                       ),
                       onChanged: (String val) {
-                        manager.validateEmail(val);
+                        myManager.validateEmail(val);
                       },
-                      onTap: () => manager.setError(null),
+                      onTap: () => myManager.setError(null),
                     ),
                   ),
 
@@ -51,18 +50,18 @@ class SignInScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: TextFormField(
-                      initialValue: manager.password.value,
+                      initialValue: myManager.password.value,
                       obscureText: true,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         labelText: 'Hasło',
-                        errorText: manager.password.error,
+                        errorText: myManager.password.error,
                         errorMaxLines: 2,
                       ),
                       onChanged: (String val) {
-                        manager.validatePassword(val);
+                        myManager.validatePassword(val);
                       },
-                      onTap: () => manager.setError(null),
+                      onTap: () => myManager.setError(null),
                     ),
                   ),
                 ],
@@ -73,7 +72,7 @@ class SignInScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(top: 0, bottom: 5.0),
                 child: Text(
-                  manager.errorMsg.toString(),
+                  myManager.errorMsg.toString(),
                   style: TextStyle(color: isDarkMode ? flexSchemeDark.error : flexSchemeLight.error),
                   textAlign: TextAlign.left,
                 ),
@@ -84,19 +83,19 @@ class SignInScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                    child: ElevatedButton(onPressed: (!manager.isEmailAndPasswordValid)
+                    child: ElevatedButton(onPressed: (!myManager.isEmailAndPasswordValid)
                         ? null : () =>
-                        manager.signIn(
-                            email: manager.email.value!, password: manager.password.value!),
+                        myManager.signIn(
+                            email: myManager.email.value!, password: myManager.password.value!),
                         child: const Text('Zaloguj się'))
                 ),
                 const SizedBox(width: 20),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: (!manager.isEmailAndPasswordValid)
+                    onPressed: (!myManager.isEmailAndPasswordValid)
                         ? null : () =>
-                        manager.register(
-                            email: manager.email.value!, password: manager.password.value!),
+                        myManager.register(
+                            email: myManager.email.value!, password: myManager.password.value!),
                     child: const Text('Utwórz konto'),
                   ),
                 ),
@@ -110,7 +109,7 @@ class SignInScreen extends StatelessWidget {
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
               onPressed: () {
-                manager.signInWithGoogle();
+                myManager.signInWithGoogle();
               },
               icon: Image.asset(
                 'assets/images/general/g-logo.png',
@@ -122,7 +121,7 @@ class SignInScreen extends StatelessWidget {
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                context.read<Manager>().navigate(MyScreen.resetPassword);
+                myManager.navigate(MyScreen.resetPassword);
                 // context.read<Manager>().navigate(Screen.resetPassword);
               },
               child: const Text(

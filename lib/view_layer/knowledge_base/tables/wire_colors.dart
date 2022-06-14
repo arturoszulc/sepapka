@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 
 import '../../../utils/tabels/table_wire_colors.dart';
@@ -13,31 +12,19 @@ class WireColors extends StatelessWidget {
     final columns = TableWireColors().headers;
     final rows = TableWireColors().rows;
 
-    return WillPopScope(
-      onWillPop: () {
-        // context.read<Manager>().closeStore();
-        return context.read<Manager>().navigate(MyScreen.knowledgeBase);
-      },
-      child: Scaffold(
-        // backgroundColor: myPrimaryLight,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              context.read<Manager>().navigate(MyScreen.knowledgeBase);
-            },
-          ),
-          title: const Text('Barwy przewodów'),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: FittedBox(
-              fit: BoxFit.fitWidth,
-              child: DataTable(
-                  columnSpacing: 25,
-                  columns: getColumns(columns), rows: getRows(rows))),
-        ),
+    return Scaffold(
+      // backgroundColor: myPrimaryLight,
+      appBar: AppBar(
+        title: const Text('Barwy przewodów'),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: DataTable(
+                columnSpacing: 25,
+                columns: getColumns(columns), rows: getRows(rows))),
       ),
     );
   }

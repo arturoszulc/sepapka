@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../utils/consts/my_screens.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../utils/custom_widgets/build_question_image.dart';
-import '../../viewmodel_layer/manager.dart';
 import '../../viewmodel_layer/manager_calc.dart';
 
-class CalcHeatingPowerThreePhase extends StatelessWidget {
+class CalcHeatingPowerThreePhase extends ConsumerWidget {
   const CalcHeatingPowerThreePhase({Key? key}) : super(key: key);
 
   void unFocus(BuildContext context) {
@@ -18,9 +15,9 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** CalcHeatingPowerThreePhase built ***');
-    final CalcManager calcManager = Provider.of<CalcManager>(context);
+    final CalcManager myCalcManager = ref.read(calcManager);
     return GestureDetector(
         onTap: () {
           debugPrint('gesture detector tapped');
@@ -39,8 +36,8 @@ class CalcHeatingPowerThreePhase extends StatelessWidget {
               ]),
             ),
             body: TabBarView(children: [
-              buildPowerCalculator(context, calcManager),
-              buildResistanceCalculator(context, calcManager),
+              buildPowerCalculator(context, myCalcManager),
+              buildResistanceCalculator(context, myCalcManager),
               // buildRankTop(context),
               // buildRankUser(context),
             ]),

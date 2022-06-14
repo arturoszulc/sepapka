@@ -1,10 +1,10 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../viewmodel_layer/manager.dart';
 
-class MenuButton extends StatelessWidget {
+class MenuButton extends ConsumerWidget {
   const MenuButton({
     Key? key,
     this.proOnly = false,
@@ -21,8 +21,8 @@ class MenuButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
   @override
-  Widget build(BuildContext context) {
-    bool isUserPro = context.read<Manager>().loggedUser!.isPro;
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool isUserPro = ref.read(manager).loggedUser!.isPro;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Badge(

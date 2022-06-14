@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 
 
-class DebugScreen extends StatelessWidget {
+class DebugScreen extends ConsumerWidget {
   const DebugScreen({Key? key}) : super(key: key);
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** Debug Screen built ***');
 
+    final myManager = ref.read(manager);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.read<Manager>().navigate(MyScreen.menu),
+          onPressed: () => myManager.navigate(MyScreen.menu),
         ),
         title: const Text('DEBUG'),
         centerTitle: true,
@@ -27,19 +29,16 @@ class DebugScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 50,),
 
-            Text('LoggedUser ID: ${context
-                .read<Manager>()
+            Text('LoggedUser ID: ${myManager
                 .loggedUser!
                 .documentId}'),
             const SizedBox(height: 10),
-            Text('Widoczne pytania: ${context
-                .read<Manager>()
+            Text('Widoczne pytania: ${myManager
                 .loggedUser!
                 .qListNew
                 .length}'),
             Text(
-                'Ukryte pytania: ${context
-                    .read<Manager>()
+                'Ukryte pytania: ${myManager
                     .loggedUser!
                     .qListNotShown
                     .length}'),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sepapka/utils/tabels/table_units.dart';
 
 import '../../../utils/consts/my_screens.dart';
@@ -16,35 +15,24 @@ class UnitsScreen extends StatefulWidget {
 class _UnitsScreenState extends State<UnitsScreen> {
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-    return context.read<Manager>().navigate(MyScreen.knowledgeBase);
-    },
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              context.read<Manager>().navigate(MyScreen.knowledgeBase);
-            },
-          ),
-          title: const Text('Jednostki i wielkości'),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          child: ExpansionPanelList.radio(
-            children: unitGroups.map((unitGroup) => ExpansionPanelRadio(
-                  value: unitGroup.name,
-                  canTapOnHeader: true,
-                  headerBuilder: (context, isExpanded) => buildHeader(unitGroup),
-                  body: Column(
-                    children: <Widget>[
-                      ...unitGroup.tiles.map(buildUnitTile).toList()],
-                  ),
-              ))
-                  .toList(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Jednostki i wielkości'),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: ExpansionPanelList.radio(
+          children: unitGroups.map((unitGroup) => ExpansionPanelRadio(
+                value: unitGroup.name,
+                canTapOnHeader: true,
+                headerBuilder: (context, isExpanded) => buildHeader(unitGroup),
+                body: Column(
+                  children: <Widget>[
+                    ...unitGroup.tiles.map(buildUnitTile).toList()],
+                ),
+            ))
+                .toList(),
 
-          ),
         ),
       ),
     );

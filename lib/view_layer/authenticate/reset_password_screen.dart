@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import '../../utils/consts/colors.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
+class ResetPasswordScreen extends ConsumerWidget {
   ResetPasswordScreen({Key? key}) : super(key: key);
 
   // final TextEditingController emailFieldController = TextEditingController();
   final _resetForm = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** ResetPasswordScreen build ***');
 
     //clear field on rebuild
     // emailFieldController.clear();
-    final manager = Provider.of<Manager>(context);
-    final errorMsg = manager.errorMsg;
+    final myManager = ref.read(manager);
+
+    final errorMsg = myManager.errorMsg;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     // final error = context.read<Manager>().errorMsg;
@@ -44,17 +45,17 @@ class ResetPasswordScreen extends StatelessWidget {
 
                   //pole EMAIL
                   TextFormField(
-                    initialValue: manager.emailRemind.value,
+                    initialValue: myManager.emailRemind.value,
                     // controller: emailFieldController,
                     textInputAction: TextInputAction.done,
                     decoration: InputDecoration(
                       labelText: 'Adres e-mail',
-                      errorText: manager.emailRemind.error,
+                      errorText: myManager.emailRemind.error,
                     ),
                     onChanged: (val) {
-                      manager.validateEmailRemind(val);
+                      myManager.validateEmailRemind(val);
                     },
-                    onTap: () => manager.setError(null),
+                    onTap: () => myManager.setError(null),
                   ),
                 ],
               ),
@@ -72,10 +73,10 @@ class ResetPasswordScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10.0),
             ElevatedButton(
-                onPressed: (manager.emailRemind.value == null)
+                onPressed: (myManager.emailRemind.value == null)
                     ? null
                     : () async {
-                        await manager.resetPassword(manager.emailRemind.value!);
+                        await myManager.resetPassword(myManager.emailRemind.value!);
                       },
                 child: const Text('Resetuj hasło')),
             const SizedBox(height: 100),

@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../utils/consts/my_screens.dart';
-
 import '../../utils/custom_widgets/buttons/menu_button.dart';
 import '../../utils/custom_widgets/unlock_button.dart';
 import '../../viewmodel_layer/manager.dart';
-import '../../viewmodel_layer/manager_calc.dart';
 
-class CalculatorsMenuScreen extends StatelessWidget {
+class CalculatorsMenuScreen extends ConsumerWidget {
   const CalculatorsMenuScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** CalculatorsMenu Screen built ***');
 
 
@@ -33,7 +30,7 @@ class CalculatorsMenuScreen extends StatelessWidget {
         label: 'Moc grzania w obwodach 3-fazowych',
         onPressed: () {
           // context.go(MyScreen.calcHeatingPowerThreePhase.path);
-        context.read<Manager>().navigate(MyScreen.calcHeatingPowerThreePhase);
+        ref.read(manager).navigate(MyScreen.calcHeatingPowerThreePhase);
         }),
         ],),
         ),

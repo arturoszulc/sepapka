@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 import 'package:sepapka/utils/tabels/table_wire_symbols.dart';
 
@@ -17,35 +16,24 @@ class WireSymbols extends StatelessWidget {
     debugPrint('*** WireSymbols built ***');
     return DefaultTabController(
       length: 2,
-      child: WillPopScope(
-        onWillPop: () {
-          return context.read<Manager>().navigate(MyScreen.knowledgeBase);
-        },
-        child: Scaffold(
-          resizeToAvoidBottomInset: true,
-          appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                context.read<Manager>().navigate(MyScreen.knowledgeBase);
-              },
-            ),
-            title: const Text('Symbole przewodów'),
-            centerTitle: true,
-            bottom: const TabBar(tabs: [
-              Tab(text: 'polskie'),
-              Tab(text: 'zharmonizowane'),
-            ]),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: globalPadding),
-            child: TabBarView(children: [
-              tabPolish(context),
-              tabHarmonized(context),
-              // buildRankTop(context),
-              // buildRankUser(context),
-            ]),
-          ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          title: const Text('Symbole przewodów'),
+          centerTitle: true,
+          bottom: const TabBar(tabs: [
+            Tab(text: 'polskie'),
+            Tab(text: 'zharmonizowane'),
+          ]),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: globalPadding),
+          child: TabBarView(children: [
+            tabPolish(context),
+            tabHarmonized(context),
+            // buildRankTop(context),
+            // buildRankUser(context),
+          ]),
         ),
       ),
     );

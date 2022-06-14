@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/custom_widgets/buttons/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/manager_academy.dart';
 
-class MenuScreen extends StatelessWidget {
+class MenuScreen extends ConsumerWidget {
   const MenuScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** Menu Main Screen built ***');
+    final myManager = ref.read(manager);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text('v. ${context.read<Manager>().appVersion} (beta)'),
+            child: Text('v. ${myManager.appVersion} (beta)'),
           ),
         ],
       ),
@@ -42,30 +43,30 @@ class MenuScreen extends StatelessWidget {
                 MenuButton(
                     label: 'Quiz',
                     onPressed: () {
-                      context.read<Manager>().navigate(MyScreen.chooseLevel);
+                      myManager.navigate(MyScreen.chooseLevel);
                     }),
                 MenuButton(
                     label: 'Lista pytań',
                     onPressed: () {
-                      context.read<Manager>().getFilteredQuestionList();
+                      myManager.getFilteredQuestionList();
                     }),
                 MenuButton(
                     label: 'Akademia',
                     onPressed: () {
-                      context.read<AcademyManager>().getFileName();
+                      // context.read<AcademyManager>().getFileName();
                     }),
                 MenuButton(
                     label: 'Tablice',
                     onPressed: () {
-                      context.read<Manager>().navigate(MyScreen.knowledgeBase);
+                      myManager.navigate(MyScreen.knowledgeBase);
                     }),
                 MenuButton(
                     label: 'Kalkulatory',
                     onPressed: () {
-                      context.read<Manager>().navigate(MyScreen.calcMenu);
+                      myManager.navigate(MyScreen.calcMenu);
                     }),
                 MenuButton(label: 'Wyloguj się', onPressed: () async {
-                  await context.read<Manager>().signOut();
+                  await myManager.signOut();
                   // await context.read<Manager>().navigate(Screen.purchase);
                 }),
               ],
