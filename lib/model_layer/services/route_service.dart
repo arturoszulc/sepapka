@@ -14,6 +14,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   final router = RouterNotifier(ref);
 
   return GoRouter(
+    initialLocation: MyScreen.signIn.path,
     debugLogDiagnostics: true, // For demo purposes
     refreshListenable: router, // This notifiies `GoRouter` for refresh events
     redirect: router._redirectLogic, // All the logic is centralized here
@@ -41,21 +42,41 @@ class RouterNotifier extends ChangeNotifier {
   /// We don't want to trigger a rebuild of the surrounding provider.
   String? _redirectLogic(GoRouterState state) {
            debugPrint('@@@ GoRouter redirect function deployed @@@');
-           debugPrint('@@@ GoRouter current location: ${state.location} @@@');
-           debugPrint('@@@ GoRouter current path: ${state.path} @@@');
+           debugPrint('@@@ GoRouter state.location: ${state.location} @@@');
+           debugPrint('@@@ GoRouter state.subloc: ${state.subloc} @@@');
+           debugPrint('@@@ GoRouter state.name: ${state.name} @@@');
     //get path of current screen
-    MyScreen nextScreen = _ref
-        .read(routerStateProvider);
-           debugPrint('@@@ NextPath: ${nextScreen.toString()} @@@');
-final isRedirectManual =
-           final bool isSameScreen = state.location.endsWith(nextScreen.path);
-    if (isSameScreen) return null;
-       return state.namedLocation(nextScreen.name);
+    final MyScreen nextScreenManual = _ref.read(routerStateProvider);
+    final bool isTheSame = state.location == state.subloc;
+           debugPrint('@@@ NextScreen: ${nextScreenManual.toString()} @@@');
+           final bool isSameScreen = state.location.endsWith(nextScreenManual.path);
+    if (isSameScreen) {
+      debugPrint('The Screen is the same');
+      return null;
+    }
+    final location = state.namedLocation(nextScreenManual.name);
+       debugPrint('@@@ Resolved new location name');
+       return location;
   }
+
+  //po wywołaniu navigate(menu) jest:
+// Gorouter location: /menu
+  //Gorouter name: null
+  //NextScreeN: menu
+
 
 
   List<GoRoute> get _routes =>
       <GoRoute>[
+        GoRoute(
+          name: MyScreen.loading.name,
+          path: MyScreen.loading.path,
+          pageBuilder: (context, state) =>
+              MaterialPage(
+                key: state.pageKey,
+                child: const LoadingScreen(),
+              )
+        ),
         GoRoute(
             name: MyScreen.menu.name,
             path: MyScreen.menu.path, pageBuilder: (context, state) =>

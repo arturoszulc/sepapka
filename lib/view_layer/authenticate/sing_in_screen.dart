@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+
+import '../../viewmodel_layer/route_controller.dart';
 
 class SignInScreen extends ConsumerWidget {
   SignInScreen({Key? key}) : super(key: key);
@@ -121,8 +124,8 @@ class SignInScreen extends ConsumerWidget {
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                myManager.navigate(MyScreen.resetPassword);
-                // context.read<Manager>().navigate(Screen.resetPassword);
+                ref.read(routerStateProvider.notifier).navigate(MyScreen.resetPassword);
+                // myManager.navigate(MyScreen.resetPassword);
               },
               child: const Text(
                 'Nie pamiętasz hasła?',

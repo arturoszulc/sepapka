@@ -59,8 +59,9 @@ class MenuScreen extends ConsumerWidget {
                 MenuButton(
                     label: 'Tablice',
                     onPressed: () {
-                      context.goNamed(MyScreen.knowledgeBase.name);
-                      // ref.read(routerStateProvider.notifier).navigate(MyScreen.knowledgeBase);
+                      // context.go(MyScreen.knowledgeBase.name);
+                      // context.pop();
+                      ref.read(routerStateProvider.notifier).navigate(MyScreen.knowledgeBase);
                     }),
                 MenuButton(
                     label: 'Kalkulatory',

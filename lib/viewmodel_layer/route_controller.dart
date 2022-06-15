@@ -12,6 +12,7 @@ class RouterState extends StateNotifier<MyScreen> {
 
   void navigate(MyScreen screen) {
     debugPrint('@@@### RouterState.navigate deployed ###@@@');
+    if (state == screen) state = MyScreen.loading;
     state = screen;
   }
 }
