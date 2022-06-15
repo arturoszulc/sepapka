@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/custom_widgets/buttons/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 class MenuScreen extends ConsumerWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -57,7 +59,8 @@ class MenuScreen extends ConsumerWidget {
                 MenuButton(
                     label: 'Tablice',
                     onPressed: () {
-                      myManager.navigate(MyScreen.knowledgeBase);
+                      context.goNamed(MyScreen.knowledgeBase.name);
+                      // ref.read(routerStateProvider.notifier).navigate(MyScreen.knowledgeBase);
                     }),
                 MenuButton(
                     label: 'Kalkulatory',

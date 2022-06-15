@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/locator.dart';
+import 'package:sepapka/model_layer/services/route_service.dart';
 import 'package:sepapka/utils/consts/theme_data.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
         builder: (context, WidgetRef ref, child) {
-          final _router = ref.read(manager).router;
+          final _router = ref.watch(routerProvider);
           return MaterialApp.router(
             routeInformationParser: _router.routeInformationParser,
             routerDelegate: _router.routerDelegate,

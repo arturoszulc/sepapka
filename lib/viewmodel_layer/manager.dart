@@ -25,13 +25,26 @@ import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/consts/question.dart';
+import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 
 final manager = ChangeNotifierProvider<Manager>((ref) {
-  return Manager();
+  return Manager(ref);
 });
 
 class Manager extends ChangeNotifier {
+  final Ref _ref;
+
+  Manager(this._ref) {
+    //get app version
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      appVersion = packageInfo.version;
+    });
+
+    //on initialize, subscribe to stream that checks if user is logged in or not
+    watchAuthUser();
+  }
+
   //Services Injection
   AuthService _authService = serviceLocator.get<AuthService>();
   UserService _userService = serviceLocator.get<UserService>();
@@ -39,7 +52,7 @@ class Manager extends ChangeNotifier {
   DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
   ValidationService _validationService = serviceLocator.get<ValidationService>();
   PurchaseService _purchaseService = serviceLocator.get<PurchaseService>();
-  RouteService _routeService = serviceLocator.get<RouteService>();
+  // RouteService _routeService = serviceLocator.get<RouteService>();
 
   //Manager properties
   bool _loading = false;
@@ -108,15 +121,7 @@ class Manager extends ChangeNotifier {
 
   bool get isEmailAndPasswordValid => _validationService.isEmailAndPasswordValid;
 
-  Manager() {
-    //get app version
-    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-      appVersion = packageInfo.version;
-    });
 
-    //on initialize, subscribe to stream that checks if user is logged in or not
-    watchAuthUser();
-  }
 
   // internal Manager methods affecting UI
 
@@ -579,7 +584,7 @@ class Manager extends ChangeNotifier {
   //      ROUTING       //
   ////////////////////////
 
-  GoRouter get router => _routeService.router;
+  // GoRouter get router => _routeService.router;
 
 
 
@@ -588,9 +593,8 @@ class Manager extends ChangeNotifier {
   //
   // }
   navigate(MyScreen screen) {
-    debugPrint('NAVIGATING to: $screen');
-      _routeService.navigate(screen);
-
+    // debugPrint('NAVIGATING to: $screen');
+    _ref.read(routerStateProvider.notifier).navigate(screen);
     // _currentScreen = screen;
     // if (errorMsg.isNotEmpty) setError(null);
     // notifyListeners();

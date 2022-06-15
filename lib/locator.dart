@@ -29,6 +29,6 @@ void setupGetIt(){
           () => PurchaseService());
   serviceLocator.registerLazySingleton<StorageService>(
           () => StorageService());
-  serviceLocator.registerLazySingleton<RouteService>(
-          () => RouteService());
+  // serviceLocator.registerLazySingleton<RouteService>(
+  //         () => RouteService());
 }
