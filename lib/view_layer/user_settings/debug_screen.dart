@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 
@@ -43,8 +42,7 @@ class DebugScreen extends ConsumerWidget {
                     .qListNotShown
                     .length}'),
             const SizedBox(height: 10),
-            Text('LoggedUser.isPro: ${context
-                .read<Manager>()
+            Text('LoggedUser.isPro: ${myManager
                 .loggedUser!
                 .isPro
                 .toString()}'),

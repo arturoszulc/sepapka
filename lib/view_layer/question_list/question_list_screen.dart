@@ -1,6 +1,6 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/consts/question.dart';
@@ -24,7 +24,7 @@ class QuestionListScreen extends ConsumerWidget {
         body: Column(
           children: [
             InkWell(
-              onTap: () => context.read<Manager>().navigate(MyScreen.listQuestionFilter),
+              onTap: () => myManager.navigate(MyScreen.listQuestionFilter),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
@@ -109,10 +109,12 @@ Widget buildTitle(BuildContext context, Question q) {
       children: [
         Expanded(flex: 7, child: Text(q.q, style: const TextStyle())),
         Expanded(
-          child: Container(
-              alignment: Alignment.centerRight,
-              // color: Colors.grey,
-              child: context.read<Manager>().getQuestionIcon(q.id)),
+          child: Consumer(
+            builder: (BuildContext context, WidgetRef ref, Widget? child) => Container(
+                alignment: Alignment.centerRight,
+                // color: Colors.grey,
+                child: ref.read(manager).getQuestionIcon(q.id)),
+          ),
         ),
       ],
     ),

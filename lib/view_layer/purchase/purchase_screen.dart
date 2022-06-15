@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 import 'package:sepapka/utils/consts/colors.dart';
-import 'package:sepapka/utils/consts/my_screens.dart';
-import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 
 import '../../viewmodel_layer/manager.dart';
 
@@ -97,7 +94,7 @@ class PurchaseScreen extends StatelessWidget {
                         backgroundColor: proColor,
                         label: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 18.0),
-                          child: Text('Kup za ${manager.product?.priceString}',
+                          child: Text('Kup za ${ref.read(manager).product?.priceString}',
                             // 'Kup za ${manager.productPrice} zł',
                             // style: const TextStyle(color: Colors.white),
                           ),

@@ -3,14 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/utils/consts/theme_data.dart';
-import 'package:sepapka/view_layer/authenticate/sing_in_screen.dart';
-import 'package:sepapka/view_layer/wrapper.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:flutter/services.dart';
-import 'package:sepapka/viewmodel_layer/manager_academy.dart';
-import 'package:sepapka/viewmodel_layer/manager_calc.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:sepapka/utils/consts/my_screens.dart';
 
 
 void main() async {

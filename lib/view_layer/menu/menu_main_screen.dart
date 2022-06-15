@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/custom_widgets/buttons/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
-import 'package:sepapka/viewmodel_layer/manager_academy.dart';
 
 class MenuScreen extends ConsumerWidget {
   const MenuScreen({Key? key}) : super(key: key);

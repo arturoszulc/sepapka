@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
 import 'package:sepapka/utils/custom_widgets/build_question.dart';
 
 import '../../model_layer/models/question.dart';
@@ -30,14 +29,14 @@ class QuestionListSingle extends ConsumerWidget {
           IconButton(
               onPressed: () async {
                 ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                await context.read<Manager>().moveQuestionBackToShown();
+                await myManager.moveQuestionBackToShown();
                 ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie będzie widoczne'));
               },
               icon: const Icon(Icons.visibility_off)) :
               IconButton(
                   onPressed: () async {
                     ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                    await context.read<Manager>().doNotShowThisQuestionAnymore();
+                    await myManager.doNotShowThisQuestionAnymore();
                     ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie zostało ukryte'));
                   },
                   icon: const Icon(Icons.visibility)),
@@ -94,7 +93,7 @@ class QuestionListSingle extends ConsumerWidget {
               onPressed: index == 0
                   ? null
                   : () {
-                context.read<Manager>().showSingleFilteredQuestion(index - 1);
+                myManager.showSingleFilteredQuestion(index - 1);
                     },
             ),
             IconButton(
@@ -105,7 +104,7 @@ class QuestionListSingle extends ConsumerWidget {
               onPressed: index == filteredListLength
                   ? null
                   : () {
-                context.read<Manager>().showSingleFilteredQuestion(index + 1);
+                myManager.showSingleFilteredQuestion(index + 1);
                     },
             ),
           ],

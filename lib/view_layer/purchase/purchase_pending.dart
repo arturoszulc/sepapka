@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../viewmodel_layer/manager.dart';
@@ -33,12 +34,14 @@ class PurchasePending extends StatelessWidget {
 
           ],),),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        icon: const Icon(Icons.exit_to_app),
-        onPressed: () {
-          context.read<Manager>().navigate(MyScreen.menu);
-        },
-        label: const Text('Powrót do menu'),
+      floatingActionButton: Consumer(
+        builder: (BuildContext context, WidgetRef ref, Widget? child) => FloatingActionButton.extended(
+          icon: const Icon(Icons.exit_to_app),
+          onPressed: () {
+            ref.read(manager).navigate(MyScreen.menu);
+          },
+          label: const Text('Powrót do menu'),
+        ),
       ),
 
     );
