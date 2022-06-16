@@ -6,8 +6,8 @@ enum MyScreen {
   signIn('/sign-in'),
   resetPassword('reset-password'),
   menu('/menu'),
-  chooseLevel('choose-level'),
-  chooseCategory('choose-category'),
+  quizChooseLevel('choose-level'),
+  quizChooseCategory('choose-category'),
   settings('settings'),
   quizQuestionSingle('quiz-question-single'),
   listQuestionSingle('list-question-single'),
@@ -20,13 +20,13 @@ enum MyScreen {
   purchasePending('/purchase-pending'),
   purchaseError('/purchases-error'),
   purchaseSuccess('purchase-success'),
-  knowledgeBase('knowledge-base'),
+  academyMenu('academy'),
   tableWireColors('/table-wire-colors'),
   tableWireAmpacity('/table-wire-ampacity'),
   tableWireSymbols('/table-wire-symbols'),
   units('/units'),
 
-  calcMenu('calc-menu'),
+  calcMenu('calc'),
   calcHeatingPowerThreePhase('calc-heating-power-three-phase');
 
   final String path;

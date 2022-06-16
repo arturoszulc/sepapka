@@ -36,6 +36,7 @@ class Manager extends ChangeNotifier {
   final Ref _ref;
 
   Manager(this._ref) {
+    debugPrint('*** Manager inits...');
     //get app version
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       appVersion = packageInfo.version;
@@ -289,7 +290,7 @@ class Manager extends ChangeNotifier {
   chooseQuestionLevel(int level) async {
     await _questionService.setQuestionLevel(level);
     //after choosing Level, choose category
-    navigate(MyScreen.chooseCategory);
+    navigate(MyScreen.quizChooseCategory);
   }
 
   chooseQuestionCategory(int catNumber) {
@@ -593,9 +594,9 @@ class Manager extends ChangeNotifier {
   //
   // }
   navigate(MyScreen screen) {
-    // debugPrint('NAVIGATING to: $screen');
+    debugPrint('NAVIGATING to: $screen');
     _ref.read(routerStateProvider.notifier).navigate(screen);
-    // _currentScreen = screen;
+    _currentScreen = screen;
     // if (errorMsg.isNotEmpty) setError(null);
     // notifyListeners();
   }

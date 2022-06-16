@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/services/route_service.dart';
 import 'package:sepapka/utils/consts/theme_data.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:flutter/services.dart';
 
 

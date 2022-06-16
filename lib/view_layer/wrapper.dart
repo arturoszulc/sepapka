@@ -6,9 +6,9 @@
 // import 'package:sepapka/utils/custom_widgets/app_loading.dart';
 // import 'package:sepapka/view_layer/calculators/calc_power_three_phase.dart';
 // import 'package:sepapka/view_layer/calculators/calculators_menu.dart';
-// import 'package:sepapka/view_layer/knowledge_base/knowledge_base_menu.dart';
-// import 'package:sepapka/view_layer/knowledge_base/tables/units.dart';
-// import 'package:sepapka/view_layer/knowledge_base/tables/wire_symbols.dart';
+// import 'package:sepapka/view_layer/knowledge_base/academy_menu.dart';
+// import 'package:sepapka/view_layer/knowledge_base/tables/table_units.dart';
+// import 'package:sepapka/view_layer/knowledge_base/tables/table_wire_symbols.dart';
 // import 'package:sepapka/view_layer/purchase/purchase_error_screen.dart';
 // import 'package:sepapka/view_layer/purchase/purchase_patronite.dart';
 // import 'package:sepapka/view_layer/purchase/purchase_pending.dart';
@@ -28,8 +28,8 @@
 //
 // import 'authenticate/sing_in_screen.dart';
 // import '../../utils/custom_widgets/dialog_message.dart';
-// import 'knowledge_base/tables/wire_ampacity.dart';
-// import 'knowledge_base/tables/wire_colors.dart';
+// import 'knowledge_base/tables/table_wire_ampacity.dart';
+// import 'knowledge_base/tables/table_wire_colors.dart';
 // import 'menu/menu_main_screen.dart';
 //
 // class Wrapper extends StatelessWidget {

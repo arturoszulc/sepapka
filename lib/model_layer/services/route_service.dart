@@ -7,56 +7,56 @@ import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
 
-
-
 /// Caches and Exposes a [GoRouter]
 final routerProvider = Provider<GoRouter>((ref) {
   final router = RouterNotifier(ref);
 
   return GoRouter(
     initialLocation: MyScreen.signIn.path,
-    debugLogDiagnostics: true, // For demo purposes
-    refreshListenable: router, // This notifiies `GoRouter` for refresh events
-    redirect: router._redirectLogic, // All the logic is centralized here
-    routes: router._routes, // All the routes can be found there
-      errorBuilder: (context, state) => Scaffold(body: Center(child: Text(state.error.toString()))),
+    debugLogDiagnostics: true,
+    // For demo purposes
+    refreshListenable: router,
+    // This notifiies `GoRouter` for refresh events
+    redirect: router._redirectLogic,
+    // All the logic is centralized here
+    routes: router._topLevelRoutes,
+    // All the routes can be found there
+    errorBuilder: (context, state) => Scaffold(body: Center(child: Text(state.error.toString()))),
   );
 });
 
 /// This notifier exists only for notifying GoRouter refreshListenable
 class RouterNotifier extends ChangeNotifier {
   final Ref _ref;
+  MyScreen lastScreenAuto = MyScreen.signIn;
 
   /// This implementation exploits `ref.listen()` to add a simple callback that
   /// calls `notifyListeners()` whenever there's change onto a desider provider.
   RouterNotifier(this._ref) {
-    _ref.listen<MyScreen>(
+    _ref.listen<bool>(
       routerStateProvider, // In our case, we're interested in the log in / log out events.
-          (_, __) => notifyListeners(), // Obviously more logic can be added here
+      (_, __) => notifyListeners(), // Obviously more logic can be added here
     );
   }
-
 
   /// IMPORTANT: conceptually, we want to use `ref.read` to read providers, here.
   /// GoRouter is already aware of state changes through `refreshListenable`
   /// We don't want to trigger a rebuild of the surrounding provider.
   String? _redirectLogic(GoRouterState state) {
-           debugPrint('@@@ GoRouter redirect function deployed @@@');
-           debugPrint('@@@ GoRouter state.location: ${state.location} @@@');
-           debugPrint('@@@ GoRouter state.subloc: ${state.subloc} @@@');
-           debugPrint('@@@ GoRouter state.name: ${state.name} @@@');
+    final lastScreenManual = _ref.read(currentScreen);
+    // debugPrint('@@@ GoRouter redirect function deployed @@@');
+    // debugPrint('@@@ GoRouter state.location: ${state.location} @@@');
+    // debugPrint('@@@ GoRouter LastScreenManual: $lastScreenManual @@@');
+    // debugPrint('@@@ GoRouter state.name: ${state.name} @@@');
     //get path of current screen
-    final MyScreen nextScreenManual = _ref.read(routerStateProvider);
-    final bool isTheSame = state.location == state.subloc;
-           debugPrint('@@@ NextScreen: ${nextScreenManual.toString()} @@@');
-           final bool isSameScreen = state.location.endsWith(nextScreenManual.path);
-    if (isSameScreen) {
-      debugPrint('The Screen is the same');
+    final bool isSameScreenManual = state.location.endsWith(lastScreenManual.path);
+    if (isSameScreenManual) {
+      // debugPrint('The Screen is the same');
       return null;
     }
-    final location = state.namedLocation(nextScreenManual.name);
-       debugPrint('@@@ Resolved new location name');
-       return location;
+    final location = state.namedLocation(lastScreenManual.name);
+    // debugPrint('@@@ Resolved new location name');
+    return location;
   }
 
   //po wywołaniu navigate(menu) jest:
@@ -64,73 +64,79 @@ class RouterNotifier extends ChangeNotifier {
   //Gorouter name: null
   //NextScreeN: menu
 
-
-
-  List<GoRoute> get _routes =>
-      <GoRoute>[
+  List<GoRoute> get _topLevelRoutes => <GoRoute>[
         GoRoute(
-          name: MyScreen.loading.name,
-          path: MyScreen.loading.path,
-          pageBuilder: (context, state) =>
-              MaterialPage(
-                key: state.pageKey,
-                child: const LoadingScreen(),
-              )
-        ),
+            name: MyScreen.loading.name,
+            path: MyScreen.loading.path,
+            pageBuilder: (context, state) => MaterialPage(
+                  key: state.pageKey,
+                  child: const LoadingScreen(),
+                )),
         GoRoute(
-            name: MyScreen.menu.name,
-            path: MyScreen.menu.path, pageBuilder: (context, state) =>
-            MaterialPage(
-                key: state.pageKey,
-                child: const MenuScreen()),
-            routes: <GoRoute>[
-              GoRoute(
-                name: MyScreen.knowledgeBase.name,
-                path: MyScreen.knowledgeBase.path, pageBuilder: (context, state) =>
-                  MaterialPage(
-                      key: state.pageKey,
-                      child: const KnowledgeBaseMenu()),
-              ),
-              GoRoute(
-                  name: MyScreen.calcMenu.name,
-                  path: MyScreen.calcMenu.path, pageBuilder: (context, state) =>
-                  MaterialPage(
-                      key: state.pageKey,
-                      child: const CalculatorsMenuScreen()),
-                  routes: [
-                    GoRoute(
-                      name: MyScreen.calcHeatingPowerThreePhase.name,
-                      path: MyScreen.calcHeatingPowerThreePhase.path,
-                      pageBuilder: (context, state) =>
-                          MaterialPage(
-                              key: state.pageKey,
-                              child: const CalcHeatingPowerThreePhase()),
-                    ),
-                  ]
-              ),
-            ]
+          name: MyScreen.menu.name,
+          path: MyScreen.menu.path,
+          pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const MenuScreen()),
+          routes: _menuSubRoutes,
         ),
         GoRoute(
           name: MyScreen.signIn.name,
-          path: MyScreen.signIn.path, pageBuilder: (context, state) =>
-            MaterialPage(
-                key: state.pageKey,
-                child: SignInScreen()),
-          routes: [
-            GoRoute(
-              name: MyScreen.resetPassword.name,
-              path: MyScreen.resetPassword.path, pageBuilder: (context, state) =>
-                MaterialPage(
-                  key: state.pageKey,
-                  child: ResetPasswordScreen(),
-                ),
-            ),
-          ],
+          path: MyScreen.signIn.path,
+          pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: SignInScreen()),
+          routes: _authSubRoutes,
         ),
-
-
       ];
 
+  List<GoRoute> get _menuSubRoutes {
+    return <GoRoute>[
+      GoRoute(
+        name: MyScreen.quizChooseLevel.name,
+        path: MyScreen.quizChooseLevel.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const MenuChooseLevel()),
+        routes: <GoRoute>[
+          GoRoute(
+            name: MyScreen.quizChooseCategory.name,
+            path: MyScreen.quizChooseCategory.path,
+            pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const ChooseCategory()),
+          ),
+        ],
+      ),
+      GoRoute(
+        name: MyScreen.academyMenu.name,
+        path: MyScreen.academyMenu.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const AcademyMenu()),
+      ),
+      GoRoute(
+        name: MyScreen.calcMenu.name,
+        path: MyScreen.calcMenu.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const CalculatorsMenuScreen()),
+        routes: _calcSubRoutes,
+      ),
+    ];
+  }
+
+  List<GoRoute> get _academySubRoutes {
+    return <GoRoute>[];
+  }
+
+  List<GoRoute> get _calcSubRoutes {
+    return <GoRoute>[
+      GoRoute(
+        name: MyScreen.calcHeatingPowerThreePhase.name,
+        path: MyScreen.calcHeatingPowerThreePhase.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const CalcHeatingPowerThreePhase()),
+      ),
+    ];
+  }
+
+  List<GoRoute> get _authSubRoutes {
+    return <GoRoute>[
+      GoRoute(
+        name: MyScreen.resetPassword.name,
+        path: MyScreen.resetPassword.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: ResetPasswordScreen()),
+      ),
+    ];
+  }
 }
 
 // @immutable

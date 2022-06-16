@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sepapka/utils/tabels/table_units.dart';
+import 'package:sepapka/utils/tables_data/table_units_data.dart';
 
 import '../../../utils/consts/my_screens.dart';
 import '../../../viewmodel_layer/manager.dart';

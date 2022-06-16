@@ -44,7 +44,7 @@ class MenuScreen extends ConsumerWidget {
                 MenuButton(
                     label: 'Quiz',
                     onPressed: () {
-                      myManager.navigate(MyScreen.chooseLevel);
+                      myManager.navigate(MyScreen.quizChooseLevel);
                     }),
                 MenuButton(
                     label: 'Lista pytań',
@@ -61,7 +61,7 @@ class MenuScreen extends ConsumerWidget {
                     onPressed: () {
                       // context.go(MyScreen.knowledgeBase.name);
                       // context.pop();
-                      ref.read(routerStateProvider.notifier).navigate(MyScreen.knowledgeBase);
+                      ref.read(routerStateProvider.notifier).navigate(MyScreen.academyMenu);
                     }),
                 MenuButton(
                     label: 'Kalkulatory',

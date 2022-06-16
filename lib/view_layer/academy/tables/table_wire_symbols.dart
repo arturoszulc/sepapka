@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
-import 'package:sepapka/utils/tabels/table_wire_symbols.dart';
+import 'package:sepapka/utils/tables_data/table_wire_symbols_data.dart';
 
-import '../../../utils/consts/my_screens.dart';
 import '../../../utils/custom_widgets/line_spacing.dart';
-import '../../../viewmodel_layer/manager.dart';
 
 class WireSymbols extends StatelessWidget {
   const WireSymbols({Key? key}) : super(key: key);

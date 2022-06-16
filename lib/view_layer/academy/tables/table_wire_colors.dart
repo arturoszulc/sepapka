@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/tabels/table_wire_colors.dart';
+import '../../../utils/tables_data/table_wire_colors_data.dart';
 
 class WireColors extends StatelessWidget {
   const WireColors({Key? key}) : super(key: key);
