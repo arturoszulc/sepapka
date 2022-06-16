@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/tables_data/table_wire_colors_data.dart';
 
-class WireColors extends StatelessWidget {
-  const WireColors({Key? key}) : super(key: key);
+class TableWireColors extends StatelessWidget {
+  const TableWireColors({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final columns = TableWireColors().headers;
-    final rows = TableWireColors().rows;
-
     return Scaffold(
       // backgroundColor: myPrimaryLight,
       appBar: AppBar(
@@ -22,7 +19,7 @@ class WireColors extends StatelessWidget {
             fit: BoxFit.fitWidth,
             child: DataTable(
                 columnSpacing: 25,
-                columns: getColumns(columns), rows: getRows(rows))),
+                columns: getColumns(tableWireColorDataHeaders), rows: getRows(tableWireColorDataRows))),
       ),
     );
   }
@@ -32,8 +29,8 @@ class WireColors extends StatelessWidget {
 }
 
 List<DataRow> getRows(List<Wire> rows) =>
-    rows.map((Wire przewod) {
-      final cells = [przewod.namePL, przewod.nameENG, przewod.colorCode, przewod.color];
+    rows.map((Wire wire) {
+      final cells = [wire.namePL, wire.nameENG, wire.colorCode, wire.color];
       return DataRow(cells: getCells(cells));
     }).toList();
 
@@ -66,25 +63,5 @@ List<DataCell> getCells(List<dynamic> cells) =>
       }
       return DataCell(Text('$data'));
     }
-// DataCell(
-//     // data is Color
-//     //     ? Container(
-//     //         width: 25,
-//     //         height: 15,
-//     //         color: data,
-//     //       )
-//         : Text('$data')
-// )
     )
         .toList();
-
-// List<DataCell> getCells2(List<dynamic> cells) => cells.map((data) {
-//       switch (data) {
-//         case Color:
-//           return DataCell(Container());
-//         case String:
-//           return DataCell(Text(data),);
-//         default:
-//           return DataCell(Container());
-//       }
-//     }).toList();

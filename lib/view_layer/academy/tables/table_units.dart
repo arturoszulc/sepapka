@@ -5,14 +5,14 @@ import '../../../utils/consts/my_screens.dart';
 import '../../../viewmodel_layer/manager.dart';
 
 
-class UnitsScreen extends StatefulWidget {
-  const UnitsScreen({Key? key}) : super(key: key);
+class TableUnits extends StatefulWidget {
+  const TableUnits({Key? key}) : super(key: key);
 
   @override
-  State<UnitsScreen> createState() => _UnitsScreenState();
+  State<TableUnits> createState() => _TableUnitsState();
 }
 
-class _UnitsScreenState extends State<UnitsScreen> {
+class _TableUnitsState extends State<TableUnits> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

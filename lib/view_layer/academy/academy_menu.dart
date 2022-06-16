@@ -6,8 +6,8 @@ import '../../utils/custom_widgets/buttons/menu_button.dart';
 import '../../utils/custom_widgets/unlock_button.dart';
 import '../../viewmodel_layer/manager.dart';
 
-class KnowledgeBaseMenu extends ConsumerWidget {
-  const KnowledgeBaseMenu({Key? key}) : super(key: key);
+class AcademyMenu extends ConsumerWidget {
+  const AcademyMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -32,30 +32,9 @@ class KnowledgeBaseMenu extends ConsumerWidget {
                         children: [
                           MenuButton(
                             proOnly: true,
-                            label: 'Kodowanie barw przewodów',
+                            label: 'Tablice',
                             onPressed: ()  {
-                               ref.read(manager).navigate(MyScreen.tableWireColors);
-                            },
-                          ),
-                          MenuButton(
-                            proOnly: true,
-                            label: 'Symbole przewodów',
-                            onPressed: () {
-                              ref.read(manager).navigate(MyScreen.tableWireSymbols);
-                            },
-                          ),
-                          MenuButton(
-                              proOnly: true,
-                            label: 'Obciążalność przewodów',
-                            onPressed: ()  {
-                              ref.read(manager).navigate(MyScreen.tableWireAmpacity);
-                            },
-                          ),
-                          MenuButton(
-                            proOnly: true,
-                            label: 'Jednostki i wielkości',
-                            onPressed: ()  {
-                               ref.read(manager).navigate(MyScreen.units);
+                               ref.read(manager).navigate(MyScreen.tablesMenu);
                             },
                           ),
 

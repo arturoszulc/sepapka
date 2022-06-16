@@ -10,8 +10,8 @@ import '../../utils/custom_widgets/buttons/answer_button.dart';
 import '../../utils/custom_widgets/build_question.dart';
 import '../../utils/custom_widgets/single_question_top_bar.dart';
 
-class QuestionQuizSingle extends ConsumerWidget {
-  const QuestionQuizSingle({Key? key}) : super(key: key);
+class QuizSingleQuestion extends ConsumerWidget {
+  const QuizSingleQuestion({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

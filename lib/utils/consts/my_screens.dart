@@ -21,6 +21,7 @@ enum MyScreen {
   purchaseError('/purchases-error'),
   purchaseSuccess('purchase-success'),
   academyMenu('academy'),
+  tablesMenu('tables'),
   tableWireColors('/table-wire-colors'),
   tableWireAmpacity('/table-wire-ampacity'),
   tableWireSymbols('/table-wire-symbols'),

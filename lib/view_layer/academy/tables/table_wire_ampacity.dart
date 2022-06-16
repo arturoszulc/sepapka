@@ -5,14 +5,14 @@ import 'package:sepapka/utils/tables_data/table_wire_ampacity_data.dart';
 import '../../../utils/consts/my_screens.dart';
 import '../../../viewmodel_layer/manager.dart';
 
-class WireAmpacity extends StatefulWidget {
-  WireAmpacity({Key? key}) : super(key: key);
+class TableWireAmpacity extends StatefulWidget {
+  const TableWireAmpacity({Key? key}) : super(key: key);
 
   @override
-  State<WireAmpacity> createState() => _WireAmpacityState();
+  State<TableWireAmpacity> createState() => _TableWireAmpacityState();
 }
 
-class _WireAmpacityState extends State<WireAmpacity> {
+class _TableWireAmpacityState extends State<TableWireAmpacity> {
 
   int index = 0;
 

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '';
+import '';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
@@ -13,7 +15,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     initialLocation: MyScreen.signIn.path,
-    debugLogDiagnostics: true,
+    // debugLogDiagnostics: true,
     // For demo purposes
     refreshListenable: router,
     // This notifiies `GoRouter` for refresh events
@@ -84,6 +86,11 @@ class RouterNotifier extends ChangeNotifier {
           pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: SignInScreen()),
           routes: _authSubRoutes,
         ),
+        GoRoute(
+          name: MyScreen.quizQuestionSingle.name,
+          path: MyScreen.quizQuestionSingle.path,
+          pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizSingleQuestion()),
+        ),
       ];
 
   List<GoRoute> get _menuSubRoutes {
@@ -104,6 +111,7 @@ class RouterNotifier extends ChangeNotifier {
         name: MyScreen.academyMenu.name,
         path: MyScreen.academyMenu.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const AcademyMenu()),
+        routes: _academySubRoutes,
       ),
       GoRoute(
         name: MyScreen.calcMenu.name,
@@ -115,7 +123,14 @@ class RouterNotifier extends ChangeNotifier {
   }
 
   List<GoRoute> get _academySubRoutes {
-    return <GoRoute>[];
+    return <GoRoute>[
+      GoRoute(
+        name: MyScreen.tablesMenu.name,
+        path: MyScreen.tablesMenu.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TablesMenu()),
+        routes: _tablesSubRoutes,
+      ),
+    ];
   }
 
   List<GoRoute> get _calcSubRoutes {
@@ -137,99 +152,29 @@ class RouterNotifier extends ChangeNotifier {
       ),
     ];
   }
+
+  List<GoRoute> get _tablesSubRoutes {
+    return <GoRoute>[
+      GoRoute(
+        name: MyScreen.tableWireAmpacity.name,
+        path: MyScreen.tableWireAmpacity.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireAmpacity()),
+      ),
+      GoRoute(
+        name: MyScreen.tableWireColors.name,
+        path: MyScreen.tableWireColors.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireColors()),
+      ),
+      GoRoute(
+        name: MyScreen.tableWireSymbols.name,
+        path: MyScreen.tableWireSymbols.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireSymbols()),
+      ),
+    ];
+  }
 }
 
-// @immutable
-// class RouteService {
-//   late final GoRouter router;
-//   // MyScreen currentScreen = MyScreen.signIn;
-//   // ValueNotifier<MyScreen> _myString = ValueNotifier<MyScreen>(MyScreen.loading);
-//   final StreamController<MyScreen> streamScreenController = StreamController<MyScreen>();
-//
-//  RouteService() {
-//    debugPrint('@@@ RouteService Initialized @@@');
-//    initRouter();
-//
-//  }
-//
-//  navigate(MyScreen screen) {
-//    debugPrint('@@@ Called NAVIGATE method in routeService');
-//    // currentScreen = screen;
-//    streamScreenController.add(screen);
-//  }
-//
-//
-//  initRouter() {
-//    router = GoRouter(
-//        debugLogDiagnostics: true,
-//      refreshListenable: GoRouterRefreshStream(streamScreenController.stream),
-//      initialLocation: MyScreen.signIn.path,
-//      routes: <GoRoute>[
-//    GoRoute(
-//    name: MyScreen.menu.name,
-//        path: MyScreen.menu.path, pageBuilder: (context, state) => MaterialPage(
-//        key: state.pageKey,
-//        child: const MenuScreen()),
-//      routes: [
-//        GoRoute(
-//            name: MyScreen.knowledgeBase.name,
-//            path: MyScreen.knowledgeBase.path, pageBuilder: (context, state) => MaterialPage(
-//            key: state.pageKey,
-//            child: const KnowledgeBaseMenu()),
-//        ),
-//        GoRoute(
-//          name: MyScreen.calcMenu.name,
-//          path: MyScreen.calcMenu.path, pageBuilder: (context, state) => MaterialPage(
-//            key: state.pageKey,
-//            child: const CalculatorsMenuScreen()),
-//          routes: [
-//            GoRoute(
-//              name: MyScreen.calcHeatingPowerThreePhase.name,
-//              path: MyScreen.calcHeatingPowerThreePhase.path, pageBuilder: (context, state) => MaterialPage(
-//                key: state.pageKey,
-//                child: const CalcHeatingPowerThreePhase()),
-//            ),
-//          ]
-//        ),
-//      ]
-//    ),
-//        GoRoute(
-//          name: MyScreen.signIn.name,
-//          path: MyScreen.signIn.path, pageBuilder: (context, state) => MaterialPage(
-//            key: state.pageKey,
-//            child: SignInScreen()),
-//          routes: [
-//            GoRoute(
-//              name: MyScreen.resetPassword.name,
-//              path: MyScreen.resetPassword.path, pageBuilder: (context, state) => MaterialPage(
-//              key: state.pageKey,
-//              child: ResetPasswordScreen(),
-//            ),
-//            ),
-//          ],
-//        ),
-//
-//      ],
-//      errorBuilder: (context, state) => Scaffold(body: Center(child: Text(state.error.toString())
-//      ),
-//      ),
-//
-//      redirect: (state) {
-//        // debugPrint('@@@ GoRouter redirect function deployed @@@');
-//        // debugPrint('@@@ stateLocation: ${state.location} @@@');
-//        // debugPrint('@@@ stateSubloc: ${state.subloc} @@@');
-//        // debugPrint('@@@ stateName: ${state.name} @@@');
-//        // debugPrint('@@@ state.Path: ${state.path} @@@');
-//        // debugPrint('@@@ state.namedLocation: ${state.namedLocation(currentScreen.name)} @@@');
-//         final currentScreen = streamScreenController.stream.listen((event) => event.path);
-//        final bool goingToSignIn = state.location.endsWith(currentScreen);
-//        if (goingToSignIn) {
-//          debugPrint('### TEN SAM EKRAN! Nie robię nic...');
-//          return null;
-//        } else {
-//          debugPrint('### IDĘ ${currentScreen.name}');
-//          return state.namedLocation(currentScreen.name);
-//          // return MyScreen.signIn.name;
+
 //        // switch (currentScreen) {
 //        //   // case MyScreen.loading:
 //        //     // return MyScreen.loading.name;

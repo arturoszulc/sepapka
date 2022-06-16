@@ -4,8 +4,8 @@ import 'package:sepapka/utils/tables_data/table_wire_symbols_data.dart';
 
 import '../../../utils/custom_widgets/line_spacing.dart';
 
-class WireSymbols extends StatelessWidget {
-  const WireSymbols({Key? key}) : super(key: key);
+class TableWireSymbols extends StatelessWidget {
+  const TableWireSymbols({Key? key}) : super(key: key);
   static const double globalPadding = 10.0;
   static const double tablePadding = 15.0;
 
