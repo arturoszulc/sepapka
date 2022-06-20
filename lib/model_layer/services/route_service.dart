@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sepapka/model_layer/services/auth_service.dart';
 import '';
 import '';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
@@ -36,7 +37,7 @@ class RouterNotifier extends ChangeNotifier {
   /// calls `notifyListeners()` whenever there's change onto a desider provider.
   RouterNotifier(this._ref) {
     _ref.listen<bool>(
-      routerStateProvider, // In our case, we're interested in the log in / log out events.
+      routeController, // In our case, we're interested in the log in / log out events.
       (_, __) => notifyListeners(), // Obviously more logic can be added here
     );
   }
@@ -45,18 +46,19 @@ class RouterNotifier extends ChangeNotifier {
   /// GoRouter is already aware of state changes through `refreshListenable`
   /// We don't want to trigger a rebuild of the surrounding provider.
   String? _redirectLogic(GoRouterState state) {
-    final lastScreenManual = _ref.read(currentScreen);
+    final lastScreen = _ref.read(screenState);
+    final isAuthenticated = _ref.read(authStateProvider);
     // debugPrint('@@@ GoRouter redirect function deployed @@@');
     // debugPrint('@@@ GoRouter state.location: ${state.location} @@@');
     // debugPrint('@@@ GoRouter LastScreenManual: $lastScreenManual @@@');
     // debugPrint('@@@ GoRouter state.name: ${state.name} @@@');
     //get path of current screen
-    final bool isSameScreenManual = state.location.endsWith(lastScreenManual.path);
-    if (isSameScreenManual) {
+    final bool isSameScreen = state.location.endsWith(lastScreen.path);
+    if (isSameScreen) {
       // debugPrint('The Screen is the same');
       return null;
     }
-    final location = state.namedLocation(lastScreenManual.name);
+    final location = state.namedLocation(lastScreen.name);
     // debugPrint('@@@ Resolved new location name');
     return location;
   }

@@ -2,17 +2,33 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
 
+
+final authStateProvider = StreamProvider<User?>((ref) {
+  return ref.read(authServiceProvider).authStateChange;
+});
+
+final authServiceProvider = Provider<AuthService>((ref) {
+  return AuthService();
+});
+
+
+
 class AuthService {
   //Properties
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _googleSignIn = GoogleSignIn();
 
+  //  This getter will be returning a Stream of User object.
+  //  It will be used to check if the user is logged in or not.
+  Stream<User?> get authStateChange => _auth.authStateChanges();
+
   //Constructor - default
-  AuthService();
+  // AuthService();
 
   //Getters
   FirebaseAuth get auth => _auth;
@@ -20,10 +36,6 @@ class AuthService {
   // register with e-mail and password
 
   Future<Object> registerWithEmailAndPassword(String email, String password) async {
-    // Object valEmailResult = validateEmail(email);
-    // if (valEmailResult is Failure) return valEmailResult;
-    // Object valPasswordResult = validatePassword(password);
-    // if (valPasswordResult is Failure) return valPasswordResult;
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password).timeout(
             const Duration(seconds: 5),
@@ -82,8 +94,6 @@ class AuthService {
   }
 
   Future<Object> resetPassword(String email) async {
-    // Object valEmailResult = validateEmail(email);
-    // if (valEmailResult is Failure) return valEmailResult;
     try {
       await _auth.sendPasswordResetEmail(email: email);
       return Success();
@@ -93,37 +103,6 @@ class AuthService {
       return Failure(getMessageFromErrorCode(e.code));
     }
   }
-
-  // void _changePassword(String currentPassword, String newPassword) async {
-  //   final user = await FirebaseAuth.instance.currentUser;
-  //   final cred = EmailAuthProvider.credential(
-  //       email: user.email, password: currentPassword);
-  //
-  //   user.reauthenticateWithCredential(cred).then((value) {
-  //     user.updatePassword(newPassword).then((_) {
-  //       //Success, do something
-  //     }).catchError((error) {
-  //       //Error, show something
-  //     });
-  //   }).catchError((err) {
-  //
-  //   });}
-
-  // Object validateEmailAndPassword({String? email, String? password}) {
-  //   //validate e-mail
-  //   if (email != null) {
-  //     Object valEmailResult = validateEmail(email);
-  //     // if (email.isEmpty || !email.contains('@')) return Failure(errorValEmail);
-  //   }
-  //   //validate password
-  //   if (password != null) {
-  //     bool validated = validatePassword(password);
-  //     if (!validated) {
-  //       return Failure(errorValPassword);
-  //     }
-  //   }
-  //   return Success();
-  // }
 
   String getMessageFromErrorCode(String code) {
     switch (code) {
@@ -154,9 +133,9 @@ class AuthService {
         return "Błąd logowania, spróbuj ponownie";
     }
   }
-
-  // Constructor - only for test
-  AuthService.mocked(arg) {
-    _auth = arg;
-  }
+  //
+  // // Constructor - only for test
+  // AuthService.mocked(arg) {
+  //   _auth = arg;
+  // }
 }

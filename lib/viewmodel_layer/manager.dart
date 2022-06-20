@@ -43,7 +43,7 @@ class Manager extends ChangeNotifier {
     });
 
     //on initialize, subscribe to stream that checks if user is logged in or not
-    watchAuthUser();
+    // watchAuthUser();
   }
 
   //Services Injection
@@ -595,7 +595,7 @@ class Manager extends ChangeNotifier {
   // }
   navigate(MyScreen screen) {
     debugPrint('NAVIGATING to: $screen');
-    _ref.read(routerStateProvider.notifier).navigate(screen);
+    _ref.read(routeController.notifier).navigate(screen);
     _currentScreen = screen;
     // if (errorMsg.isNotEmpty) setError(null);
     // notifyListeners();
