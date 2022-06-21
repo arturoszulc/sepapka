@@ -88,11 +88,11 @@ class RouterNotifier extends ChangeNotifier {
           pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: SignInScreen()),
           routes: _authSubRoutes,
         ),
-        GoRoute(
-          name: MyScreen.quizQuestionSingle.name,
-          path: MyScreen.quizQuestionSingle.path,
-          pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizSingleQuestion()),
-        ),
+        // GoRoute(
+        //   name: MyScreen.quizQuestionSingle.name,
+        //   path: MyScreen.quizQuestionSingle.path,
+        //   pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizSingleQuestion()),
+        // ),
       ];
 
   List<GoRoute> get _menuSubRoutes {
