@@ -5,6 +5,9 @@ import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/services/route_service.dart';
 import 'package:sepapka/utils/consts/theme_data.dart';
 import 'package:flutter/services.dart';
+import 'package:sepapka/viewmodel_layer/app_controller.dart';
+import 'package:sepapka/viewmodel_layer/auth_controller.dart';
+import 'package:sepapka/viewmodel_layer/manager.dart';
 
 
 void main() async {
@@ -13,11 +16,11 @@ void main() async {
   await Firebase.initializeApp(); // wymagane do inicjalizacji Firebase
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   setupGetIt();
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -25,6 +28,9 @@ class MyApp extends StatelessWidget {
     return Consumer(
         builder: (context, WidgetRef ref, child) {
           final _router = ref.read(routerProvider);
+          Future.delayed(Duration.zero, (){
+            ref.read(manager);
+          });
           return MaterialApp.router(
             routeInformationParser: _router.routeInformationParser,
             routerDelegate: _router.routerDelegate,

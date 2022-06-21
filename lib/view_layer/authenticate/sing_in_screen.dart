@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sepapka/model_layer/models/input_validation_model.dart';
 import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
+import 'package:sepapka/viewmodel_layer/auth_controller.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import '../../viewmodel_layer/route_controller.dart';
@@ -15,7 +17,12 @@ class SignInScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** SignInScreen built ***');
 
-    final myManager = ref.read(manager);
+    final _authController = ref.read(authController);
+    final _authError = ref.watch(authErrorState);
+    final InputValidationModel _email = ref.watch(emailState);
+    final InputValidationModel _password = ref.watch(passwordState);
+    final bool isEmailAndPasswordValid = ref.watch(authController).isEmailAndPasswordValid;
+    // final myManager = ref.read(manager);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
@@ -36,16 +43,16 @@ class SignInScreen extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: TextFormField(
-                      initialValue: myManager.email.value,
+                      initialValue: _email.value,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         labelText: 'Adres e-mail',
-                        errorText: myManager.email.error,
+                        errorText: _email.error,
                       ),
                       onChanged: (String val) {
-                        myManager.validateEmail(val);
+                        _authController.validateEmail(val);
                       },
-                      onTap: () => myManager.setError(null),
+                      onTap: () => _authController.setAuthError(null),
                     ),
                   ),
 
@@ -53,29 +60,31 @@ class SignInScreen extends ConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: TextFormField(
-                      initialValue: myManager.password.value,
+                      initialValue: _password.value,
                       obscureText: true,
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         labelText: 'Hasło',
-                        errorText: myManager.password.error,
+                        errorText: _password.error,
                         errorMaxLines: 2,
                       ),
                       onChanged: (String val) {
-                        myManager.validatePassword(val);
+                        _authController.validatePassword(val);
                       },
-                      onTap: () => myManager.setError(null),
+                      onTap: () => _authController.setAuthError(null),
                     ),
                   ),
                 ],
               ),
             ),
+
+            //Auth error display
             Align(
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: const EdgeInsets.only(top: 0, bottom: 5.0),
                 child: Text(
-                  myManager.errorMsg.toString(),
+                  _authError,
                   style: TextStyle(color: isDarkMode ? flexSchemeDark.error : flexSchemeLight.error),
                   textAlign: TextAlign.left,
                 ),
@@ -86,19 +95,17 @@ class SignInScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                    child: ElevatedButton(onPressed: (!myManager.isEmailAndPasswordValid)
+                    child: ElevatedButton(onPressed: (!isEmailAndPasswordValid)
                         ? null : () =>
-                        myManager.signIn(
-                            email: myManager.email.value!, password: myManager.password.value!),
+                        _authController.signIn(),
                         child: const Text('Zaloguj się'))
                 ),
                 const SizedBox(width: 20),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: (!myManager.isEmailAndPasswordValid)
+                    onPressed: (!isEmailAndPasswordValid)
                         ? null : () =>
-                        myManager.register(
-                            email: myManager.email.value!, password: myManager.password.value!),
+                        _authController.register(),
                     child: const Text('Utwórz konto'),
                   ),
                 ),
@@ -112,7 +119,7 @@ class SignInScreen extends ConsumerWidget {
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
               onPressed: () {
-                myManager.signInWithGoogle();
+                _authController.signInWithGoogle();
               },
               icon: Image.asset(
                 'assets/images/general/g-logo.png',

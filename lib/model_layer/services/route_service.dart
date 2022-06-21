@@ -1,11 +1,10 @@
-import 'dart:async';
+
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sepapka/model_layer/services/auth_service.dart';
-import '';
-import '';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
@@ -16,7 +15,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     // initialLocation: MyScreen.signIn.path,
-    // debugLogDiagnostics: true,
+    debugLogDiagnostics: true,
     // For demo purposes
     refreshListenable: router,
     // This notifiies `GoRouter` for refresh events
@@ -31,7 +30,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 /// This notifier exists only for notifying GoRouter refreshListenable
 class RouterNotifier extends ChangeNotifier {
   final Ref _ref;
-  MyScreen lastScreenAuto = MyScreen.signIn;
+  // MyScreen lastScreenAuto = MyScreen.loading;
 
   /// This implementation exploits `ref.listen()` to add a simple callback that
   /// calls `notifyListeners()` whenever there's change onto a desider provider.
@@ -46,27 +45,35 @@ class RouterNotifier extends ChangeNotifier {
   /// GoRouter is already aware of state changes through `refreshListenable`
   /// We don't want to trigger a rebuild of the surrounding provider.
   String? _redirectLogic(GoRouterState state) {
+    log('&&& GoRouter redirect method deployed &&&');
     final lastScreen = _ref.read(screenState);
-    final isAuthenticated = _ref.read(authStateProvider);
+    // final isAuthenticated = _ref.read(authStateProvider).value != null;
     // debugPrint('@@@ GoRouter redirect function deployed @@@');
     // debugPrint('@@@ GoRouter state.location: ${state.location} @@@');
     // debugPrint('@@@ GoRouter LastScreenManual: $lastScreenManual @@@');
     // debugPrint('@@@ GoRouter state.name: ${state.name} @@@');
     //get path of current screen
+
+
+
+
     final bool isSameScreen = state.location.endsWith(lastScreen.path);
     if (isSameScreen) {
       // debugPrint('The Screen is the same');
       return null;
     }
+    // //auth permission
+    //
+    // if (!isAuthenticated && !isSameScreen) {
+    //   log('%^&*(%^ USER NOT AUTHENTICATED');
+    //   return state.namedLocation(MyScreen.signIn.name);
+    // }
+
     final location = state.namedLocation(lastScreen.name);
     // debugPrint('@@@ Resolved new location name');
     return location;
   }
 
-  //po wywołaniu navigate(menu) jest:
-// Gorouter location: /menu
-  //Gorouter name: null
-  //NextScreeN: menu
 
   List<GoRoute> get _topLevelRoutes => <GoRoute>[
         GoRoute(

@@ -1,12 +1,18 @@
-import 'package:sepapka/model_layer/models/validation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sepapka/model_layer/models/input_validation_model.dart';
 
 import '../../utils/consts/errors_messages.dart';
 
+
+final validationService = Provider<ValidationService>((ref) {
+  return ValidationService();
+});
+
 class ValidationService {
-  ValidationModel _email = ValidationModel(null, null);
-  ValidationModel _emailRemind = ValidationModel(null, null);
-  ValidationModel _password = ValidationModel(null, null);
-  ValidationModel _remark = ValidationModel(null, null);
+  // InputValidationModel _email = InputValidationModel(null, null);
+  InputValidationModel _emailRemind = const InputValidationModel(null, null);
+  // InputValidationModel _password = InputValidationModel(null, null);
+  InputValidationModel _remark = const InputValidationModel(null, null);
 
 
   final String emailPattern =
@@ -15,46 +21,46 @@ class ValidationService {
   final String passwordPatternLength = r'.{6,}';
   final String remarkPattern = r'^[\s.,!?a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9-]+$';
 
-  bool get isEmailAndPasswordValid {
-    if (_email.value != null && _password.value != null) {
+  bool isEmailAndPasswordValid(InputValidationModel email, InputValidationModel password) {
+    if (email.value != null && password.value != null) {
       return true;
     } else {
       return false;
     }
   }
 
-  ValidationModel get email => _email;
+  // InputValidationModel get email => _email;
 
-  ValidationModel get emailRemind => _emailRemind;
+  InputValidationModel get emailRemind => _emailRemind;
 
-  ValidationModel get password => _password;
+  // InputValidationModel get password => _password;
 
-  ValidationModel get remark => _remark;
+  InputValidationModel get remark => _remark;
 
-  void validateEmail(String val) {
+  InputValidationModel validateEmail(String val) {
     bool emailValid = RegExp(emailPattern).hasMatch(val);
     if (!emailValid) {
-      _email = ValidationModel(null, errorValEmail);
+      return const InputValidationModel(null, errorValEmail);
     } else {
-      _email = ValidationModel(val, null);
+      return InputValidationModel(val, null);
     }
   }
 
   void validateEmailRemind(String val) {
     bool emailValid = RegExp(emailPattern).hasMatch(val);
     if (!emailValid) {
-      _emailRemind = ValidationModel(null, errorValEmail);
+      _emailRemind = InputValidationModel(null, errorValEmail);
     } else {
-      _emailRemind = ValidationModel(val, null);
+      _emailRemind = InputValidationModel(val, null);
     }
   }
 
-  void validatePassword(String val) {
+  InputValidationModel validatePassword(String val) {
     bool passwordValidLength = RegExp(passwordPatternLength).hasMatch(val);
     if (!passwordValidLength) {
-      _password = ValidationModel(null, errorValPasswordLength);
+      return const InputValidationModel(null, errorValPasswordLength);
       } else {
-        _password = ValidationModel(val, null);
+      return InputValidationModel(val, null);
       }
     }
 
@@ -63,13 +69,13 @@ class ValidationService {
     bool remarkValid = RegExp(remarkPattern).hasMatch(val);
     if (!remarkValid) {
       if (val.isEmpty) {
-        _remark = ValidationModel(null, null);
+        _remark = InputValidationModel(null, null);
       } else {
-        _remark = ValidationModel(null, errorRemarkChars);
+        _remark = InputValidationModel(null, errorRemarkChars);
       }
     }
     else {
-      _remark = ValidationModel(val, null);
+      _remark = InputValidationModel(val, null);
     }
   }
 }

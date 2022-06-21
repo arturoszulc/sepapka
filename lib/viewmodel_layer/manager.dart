@@ -1,10 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart'; //iconData is from here
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:purchases_flutter/errors.dart';
 import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
@@ -13,12 +12,11 @@ import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question.dart';
-import 'package:sepapka/model_layer/models/validation.dart';
+import 'package:sepapka/model_layer/models/input_validation_model.dart';
 import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/purchase_service.dart';
 import 'package:sepapka/model_layer/services/question_service.dart';
-import 'package:sepapka/model_layer/services/route_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/model_layer/services/validation_service.dart';
 import 'package:sepapka/utils/api_status.dart';
@@ -36,14 +34,14 @@ class Manager extends ChangeNotifier {
   final Ref _ref;
 
   Manager(this._ref) {
-    debugPrint('*** Manager inits...');
+    log('^^^ Manager initialized ^^^');
     //get app version
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       appVersion = packageInfo.version;
     });
 
     //on initialize, subscribe to stream that checks if user is logged in or not
-    // watchAuthUser();
+    watchAuthUser();
   }
 
   //Services Injection
@@ -112,15 +110,15 @@ class Manager extends ChangeNotifier {
   // Stream<List<RankUser>?> get userRankUser => _databaseService.userRankUser;
 
   //ValidationService
-  ValidationModel get email => _validationService.email;
+  // ValidationModel get email => _validationService.email;
 
-  ValidationModel get emailRemind => _validationService.emailRemind;
+  InputValidationModel get emailRemind => _validationService.emailRemind;
 
-  ValidationModel get password => _validationService.password;
+  // ValidationModel get password => _validationService.password;
 
-  ValidationModel get remark => _validationService.remark;
+  InputValidationModel get remark => _validationService.remark;
 
-  bool get isEmailAndPasswordValid => _validationService.isEmailAndPasswordValid;
+  // bool get isEmailAndPasswordValid => _validationService.isEmailAndPasswordValid;
 
 
 
@@ -154,11 +152,11 @@ class Manager extends ChangeNotifier {
   watchAuthUser() {
     authUser.listen((User? user) async {
       if (user != null) {
-        debugPrint('/// User signed in ///');
+        log('/// User signed in ///');
         await prepareData(user.uid);
       }
       if (user == null) {
-        debugPrint('/// User signed out ///');
+        log('/// User signed out ///');
         await _userService.logOutUser();
         if (_currentScreen != MyScreen.signIn) navigate(MyScreen.signIn);
       }
@@ -185,8 +183,8 @@ class Manager extends ChangeNotifier {
       return;
     }
     //reset data entered in sign in screen forms
-    email.value = null;
-    password.value = null;
+    // email.value = null;
+    // password.value = null;
     navigate(MyScreen.menu);
   }
 
@@ -197,50 +195,50 @@ class Manager extends ChangeNotifier {
   Stream<User?> get authUser => _authService.auth.authStateChanges();
 
 
-  signIn({required String email, required String password}) async {
-    //start loading app
-    navigate(MyScreen.loading);
-    //Try to sign in
-    Object signInResult = await _authService.signInEmail(email.toLowerCase(), password);
-    if (signInResult is Failure) {
-      setError(signInResult);
-      navigate(MyScreen.signIn);
-    }
-    if (signInResult is Success) setError(null);
-  }
-
-  register({required String email, required String password}) async {
-    //start loading app
-    navigate(MyScreen.loading);
-    //register user
-    Object registerResult =
-        await _authService.registerWithEmailAndPassword(email.toLowerCase(), password);
-    if (registerResult is Failure) {
-      setError(registerResult);
-      navigate(MyScreen.signIn);
-    }
-    if (registerResult is Success) {
-      setError(null);
-    }
-  }
-
-  signInWithGoogle() async {
-    Object signInGoogleResult = await _authService.signInGoogle();
-    if (signInGoogleResult is Failure) {
-      setError(signInGoogleResult);
-      navigate(MyScreen.signIn);
-    }
-    if (signInGoogleResult is Success) setError(null);
-  }
-
-  signOut() async {
-    Object signOutResult = await _authService.signOut();
-    if (signOutResult is Failure) {
-      setError(signOutResult);
-      navigate(MyScreen.settings);
-    }
-    navigate(MyScreen.signIn);
-  }
+  // signIn({required String email, required String password}) async {
+  //   //start loading app
+  //   navigate(MyScreen.loading);
+  //   //Try to sign in
+  //   Object signInResult = await _authService.signInEmail(email.toLowerCase(), password);
+  //   if (signInResult is Failure) {
+  //     setError(signInResult);
+  //     navigate(MyScreen.signIn);
+  //   }
+  //   if (signInResult is Success) setError(null);
+  // }
+  //
+  // register({required String email, required String password}) async {
+  //   //start loading app
+  //   navigate(MyScreen.loading);
+  //   //register user
+  //   Object registerResult =
+  //       await _authService.registerWithEmailAndPassword(email.toLowerCase(), password);
+  //   if (registerResult is Failure) {
+  //     setError(registerResult);
+  //     navigate(MyScreen.signIn);
+  //   }
+  //   if (registerResult is Success) {
+  //     setError(null);
+  //   }
+  // }
+  //
+  // signInWithGoogle() async {
+  //   Object signInGoogleResult = await _authService.signInGoogle();
+  //   if (signInGoogleResult is Failure) {
+  //     setError(signInGoogleResult);
+  //     navigate(MyScreen.signIn);
+  //   }
+  //   if (signInGoogleResult is Success) setError(null);
+  // }
+  //
+  // signOut() async {
+  //   Object signOutResult = await _authService.signOut();
+  //   if (signOutResult is Failure) {
+  //     setError(signOutResult);
+  //     navigate(MyScreen.settings);
+  //   }
+  //   navigate(MyScreen.signIn);
+  // }
 
   resetPassword(String email) async {
     debugPrint('/// manager ResetPassword deployed');
@@ -435,15 +433,15 @@ class Manager extends ChangeNotifier {
   //     VALIDATION     //
   ////////////////////////
 
-  void validateEmail(String val) {
-    _validationService.validateEmail(val);
-    notifyListeners();
-  }
-
-  void validatePassword(String val) {
-    _validationService.validatePassword(val);
-    notifyListeners();
-  }
+  // void validateEmail(String val) {
+  //   _validationService.validateEmail(val);
+  //   notifyListeners();
+  // }
+  //
+  // void validatePassword(String val) {
+  //   _validationService.validatePassword(val);
+  //   notifyListeners();
+  // }
 
   void validateEmailRemind(String val) {
     _validationService.validateEmailRemind(val);

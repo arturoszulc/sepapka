@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:sepapka/utils/consts/errors_messages.dart';
 
 
 final authStateProvider = StreamProvider<User?>((ref) {
+  log('^^^ authStateProvider initialized ^^^');
   return ref.watch(authServiceProvider).authStateChange;
 });
 

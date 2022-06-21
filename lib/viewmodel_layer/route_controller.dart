@@ -6,7 +6,7 @@ import '../utils/consts/my_screens.dart';
 // import 'package:flutter/material.dart';
 
 
-final screenState = StateProvider<MyScreen>((ref) => MyScreen.signIn);
+final screenState = StateProvider<MyScreen>((ref) => MyScreen.loading);
 
 
 //the routerState only purpose is to notify GoRouter that screen was switched
@@ -16,7 +16,7 @@ final routeController = Provider<RouteController>((ref) {
 
 class RouteController {
   RouteController(this._ref) {
-    // log('^^^ RouterController initialized ^^^');
+    log('^^^ RouterController initialized ^^^');
   }
 
   final Ref _ref;

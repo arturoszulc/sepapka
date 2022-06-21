@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/custom_widgets/buttons/menu_button.dart';
+import 'package:sepapka/viewmodel_layer/auth_controller.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
@@ -69,7 +70,7 @@ class MenuScreen extends ConsumerWidget {
                       myManager.navigate(MyScreen.calcMenu);
                     }),
                 MenuButton(label: 'Wyloguj się', onPressed: () async {
-                  await myManager.signOut();
+                  await ref.read(authController).signOut();
                   // await context.read<Manager>().navigate(Screen.purchase);
                 }),
               ],
