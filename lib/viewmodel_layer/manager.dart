@@ -595,7 +595,7 @@ class Manager extends ChangeNotifier {
   // }
   navigate(MyScreen screen) {
     debugPrint('NAVIGATING to: $screen');
-    _ref.read(routeController.notifier).navigate(screen);
+    _ref.read(routeController).navigate(screen);
     _currentScreen = screen;
     // if (errorMsg.isNotEmpty) setError(null);
     // notifyListeners();

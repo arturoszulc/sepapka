@@ -9,7 +9,7 @@ import 'package:sepapka/utils/consts/errors_messages.dart';
 
 
 final authStateProvider = StreamProvider<User?>((ref) {
-  return ref.read(authServiceProvider).authStateChange;
+  return ref.watch(authServiceProvider).authStateChange;
 });
 
 final authServiceProvider = Provider<AuthService>((ref) {

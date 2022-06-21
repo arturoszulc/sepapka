@@ -15,7 +15,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   final router = RouterNotifier(ref);
 
   return GoRouter(
-    initialLocation: MyScreen.signIn.path,
+    // initialLocation: MyScreen.signIn.path,
     // debugLogDiagnostics: true,
     // For demo purposes
     refreshListenable: router,
@@ -36,8 +36,8 @@ class RouterNotifier extends ChangeNotifier {
   /// This implementation exploits `ref.listen()` to add a simple callback that
   /// calls `notifyListeners()` whenever there's change onto a desider provider.
   RouterNotifier(this._ref) {
-    _ref.listen<bool>(
-      routeController, // In our case, we're interested in the log in / log out events.
+    _ref.listen<MyScreen>(
+      screenState,
       (_, __) => notifyListeners(), // Obviously more logic can be added here
     );
   }
