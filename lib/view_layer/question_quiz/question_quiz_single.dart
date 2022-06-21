@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/question.dart';
+import 'package:sepapka/model_layer/models/quiz_state_model.dart';
 import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/utils/custom_widgets/dialog_leave_session.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
 
 import '../../utils/custom_widgets/buttons/answer_button.dart';
 import '../../utils/custom_widgets/build_question.dart';
@@ -17,8 +19,10 @@ class QuizSingleQuestion extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** QuestionSingleScreen built ***');
     final myManager = ref.read(manager);
-    Question? question = myManager.currentQuestion;
-    List<BMap> aMapList = myManager.bMapList;
+    final myQuizController = ref.watch(quizController);
+    Question question = ref.read(quizController.notifier).currentQuestion;
+    List<BMap> bMapList = ref.watch(bMapProvider);
+
 
     return WillPopScope(
       onWillPop: () async {
@@ -48,49 +52,61 @@ class QuizSingleQuestion extends ConsumerWidget {
                     flex: 8,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      AnswerButton(
-                        qStatus: myManager.qStatus,
-                        answer: aMapList[0].answer,
-                        color: aMapList[0].color,
-                        onSelected: () {
-                          myManager.checkAnswer(aMapList[0].answer);
-                        },
-                      ),
-                      AnswerButton(
-                        qStatus: myManager.qStatus,
-                        answer: aMapList[1].answer,
-                        color: aMapList[1].color,
-                        onSelected: () {
-                          myManager.checkAnswer(aMapList[1].answer);
-                        },
-                      ),
-                      AnswerButton(
-                        qStatus: myManager.qStatus,
-                        answer: aMapList[2].answer,
-                        color: aMapList[2].color,
-                        onSelected: () {
-                          myManager.checkAnswer(aMapList[2].answer);
-                        },
-                      ),
-                      AnswerButton(
-                        qStatus: myManager.qStatus,
-                        answer: aMapList[3].answer,
-                        color: aMapList[3].color,
-                        onSelected: () {
-                          myManager.checkAnswer(aMapList[3].answer);
-                        },
-                      ),
-                    ]),
+                        children: bMapList.map((e) =>
+                        AnswerButton(
+                            qStatus: myManager.qStatus,
+                            answer: e.answer,
+                            color: e.color,
+                            onSelected: () {
+                              ref.read(quizController.notifier).checkAnswer(e.answer);
+                            })
+                        ).toList(),
+                        
+                    //   children:  [
+                    //   AnswerButton(
+                    //     qStatus: myManager.qStatus,
+                    //     answer: bMapList[0].answer,
+                    //     color: bMapList[0].color,
+                    //     onSelected: () {
+                    //       myManager.checkAnswer(bMapList[0].answer);
+                    //     },
+                    //   ),
+                    //   AnswerButton(
+                    //     qStatus: myManager.qStatus,
+                    //     answer: bMapList[1].answer,
+                    //     color: bMapList[1].color,
+                    //     onSelected: () {
+                    //       myManager.checkAnswer(bMapList[1].answer);
+                    //     },
+                    //   ),
+                    //   AnswerButton(
+                    //     qStatus: myManager.qStatus,
+                    //     answer: bMapList[2].answer,
+                    //     color: bMapList[2].color,
+                    //     onSelected: () {
+                    //       myManager.checkAnswer(bMapList[2].answer);
+                    //     },
+                    //   ),
+                    //   AnswerButton(
+                    //     qStatus: myManager.qStatus,
+                    //     answer: bMapList[3].answer,
+                    //     color: bMapList[3].color,
+                    //     onSelected: () {
+                    //       myManager.checkAnswer(bMapList[3].answer);
+                    //     },
+                    //   ),
+                    // ]
+                    
+                    ),
                   ),
             Expanded(flex: 2, child: Container(),),
                 ]),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           floatingActionButton: Visibility(
-            visible: myManager.qStatus == QuestionStatus.noAnswer ? false : true,
+            visible: myQuizController.status == QuizStatus.answered ? true : false,
             child: FloatingActionButton.extended(
-              onPressed: () async {
-                await myManager.getNextQuizQuestion();
+              onPressed: () {
+                ref.read(quizController.notifier).nextQuestion();
               },
               label: const Text('Dalej >'),
             ),

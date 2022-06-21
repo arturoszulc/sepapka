@@ -5,8 +5,6 @@ import 'package:sepapka/locator.dart';
 import 'package:sepapka/model_layer/services/route_service.dart';
 import 'package:sepapka/utils/consts/theme_data.dart';
 import 'package:flutter/services.dart';
-import 'package:sepapka/viewmodel_layer/app_controller.dart';
-import 'package:sepapka/viewmodel_layer/auth_controller.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 
@@ -28,6 +26,7 @@ class MyApp extends StatelessWidget {
     return Consumer(
         builder: (context, WidgetRef ref, child) {
           final _router = ref.read(routerProvider);
+          //manager initialization to check if user is signed in
           Future.delayed(Duration.zero, (){
             ref.read(manager);
           });

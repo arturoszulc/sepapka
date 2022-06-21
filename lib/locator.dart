@@ -3,7 +3,7 @@ import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/file_service.dart';
 import 'package:sepapka/model_layer/services/purchase_service.dart';
-import 'package:sepapka/model_layer/services/question_service.dart';
+import 'package:sepapka/model_layer/services/quiz_service.dart';
 import 'package:sepapka/model_layer/services/storage_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 
@@ -18,8 +18,8 @@ void setupGetIt(){
           () => UserService());
   serviceLocator.registerLazySingleton<DatabaseService>(
           () => DatabaseService());
-  serviceLocator.registerLazySingleton<QuestionService>(
-          () => QuestionService());
+  serviceLocator.registerLazySingleton<QuizService>(
+          () => QuizService());
   serviceLocator.registerLazySingleton<FileService>(
           () => FileService());
   serviceLocator.registerLazySingleton<ValidationService>(

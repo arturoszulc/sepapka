@@ -16,7 +16,6 @@ class SignInScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** SignInScreen built ***');
-
     final _authController = ref.read(authController);
     final _authError = ref.watch(authErrorState);
     final InputValidationModel _email = ref.watch(emailState);

@@ -1,13 +1,13 @@
 class Question {
-  String id;
-  String q;
-  String a1;
-  String a2;
-  String a3;
-  String a4;
-  int label;
-  int level;
-  String assetPath;
+  final String id;
+  final String q;
+  final String a1;
+  final String a2;
+  final String a3;
+  final String a4;
+  final int label;
+  final int level;
+  final String assetPath;
 
   Question({
     required this.id,

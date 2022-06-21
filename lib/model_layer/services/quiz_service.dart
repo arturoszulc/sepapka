@@ -1,9 +1,9 @@
 import 'dart:math';
-
+import 'dart:developer' as log;
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
-import 'package:sepapka/model_layer/models/global_data.dart';
 import 'package:sepapka/model_layer/models/remark.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
@@ -17,7 +17,13 @@ import '../../locator.dart';
 import '../../utils/question_list.dart';
 import '../models/question.dart';
 
-class QuestionService {
+
+final quizService = Provider.autoDispose<QuizService>((ref) {
+  return QuizService();
+});
+
+class QuizService {
+
   //Services Injection
   final _userService = serviceLocator.get<UserService>();
   final _databaseService = serviceLocator.get<DatabaseService>();
@@ -59,6 +65,34 @@ class QuestionService {
 
   //Methods
 
+  //////// NEW ////////
+  List<Question> getQuizQuestions(int qLevel, int qCategory) {
+    final List<Question> filteredList = questionListGlobal;
+    filteredList.removeWhere((q) => q.level != qLevel); //filter by level
+    filteredList.removeWhere((q) => q.label != qCategory); //filter by category
+    filteredList.removeWhere((e) => _userService.isQuestionInNotShownList(e.id) != null); //remove if on NotShownList
+    filteredList.shuffle(); //shuffle the list
+    return filteredList;
+  }
+
+  List<BMap> getShuffledBMap(Question question) {
+    final bMapList = [
+      BMap(answer: question.a1, color: flexSchemeLight.primary),
+      BMap(answer: question.a2, color: flexSchemeLight.primary),
+      BMap(answer: question.a3, color: flexSchemeLight.primary),
+      BMap(answer: question.a4, color: flexSchemeLight.primary),
+    ];
+    //shuffle buttons
+    bMapList.shuffle();
+  return bMapList;
+  }
+  List<BMap> updateBMap(List<BMap> bMap, String answer) {
+    log.log('*** BMap updated ***');
+    bMapList.firstWhere((element) => element.answer == answer).copyWith(color: rightButtonColor);
+    return bMapList;
+  }
+
+
   Future<Object> prepareGlobalData() async {
     //Get GlobalData from DB
     // try {
@@ -73,7 +107,7 @@ class QuestionService {
     qListGlobal.clear();
     qListGlobalFiltered.clear();
     // if (_userService.loggedUser!.isPro) {
-      qListGlobal = List<Question>.from(questionList);
+      qListGlobal = List<Question>.from(questionListGlobal);
     // } else {
     //   for (Question question in questionList) {
     //     if (question.level == 1) {
@@ -143,7 +177,7 @@ class QuestionService {
       //set QuestionStatus
       qStatus = QuestionStatus.rightAnswer;
       //set button color
-      bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
+      // bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
       //add one to countRightAnswers
       numberOfRightAnswers += 1;
     }
@@ -151,10 +185,10 @@ class QuestionService {
     else {
       qStatus = QuestionStatus.wrongAnswer;
       //color wrong button
-      bMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
-      //color right button
-      bMapList.firstWhere((element) => element.answer == currentQuestion!.a1).color =
-          rightButtonColor;
+      // bMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
+      // //color right button
+      // bMapList.firstWhere((element) => element.answer == currentQuestion!.a1).color =
+      //     rightButtonColor;
     }
   }
 
@@ -243,8 +277,8 @@ class QuestionService {
 
   List<int> countQuestionsByLevel() {
     debugPrint('*** countQuestionsByLevel() deployed ***');
-    numOfQuestionsByLevel = [0, 0, 0, 0];
-    for (Question question in qListGlobal) {
+    final List<int> numOfQuestionsByLevel = [0, 0, 0, 0];
+    for (Question question in questionListGlobal) {
       if (_userService.isQuestionInNotShownList(question.id) == null) {
         if (question.level == 1) numOfQuestionsByLevel[1] += 1;
         if (question.level == 2) numOfQuestionsByLevel[2] += 1;
@@ -258,9 +292,9 @@ class QuestionService {
   }
 
   List<int> countQuestionsByCategory() {
-    numOfQuestionsByCategory = [0, 0, 0, 0, 0];
+    final List<int> numOfQuestionsByCategory = [0, 0, 0, 0, 0];
     if (qLevel == 0) {
-      for (Question question in qListGlobal) {
+      for (Question question in questionListGlobal) {
         if (_userService.isQuestionInNotShownList(question.id) == null) {
           if (question.label == 1) numOfQuestionsByCategory[1] += 1;
           if (question.label == 2) numOfQuestionsByCategory[2] += 1;
@@ -269,7 +303,7 @@ class QuestionService {
         }
       }
     } else {
-      for (Question question in qListGlobal) {
+      for (Question question in questionListGlobal) {
         if (_userService.isQuestionInNotShownList(question.id) == null) {
           if (question.level == qLevel) {
             if (question.label == 1) numOfQuestionsByCategory[1] += 1;

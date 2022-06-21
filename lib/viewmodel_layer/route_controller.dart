@@ -7,6 +7,7 @@ import '../utils/consts/my_screens.dart';
 
 
 final screenState = StateProvider<MyScreen>((ref) => MyScreen.loading);
+final screenSwitched = StateProvider<bool>((ref) => false);
 
 
 //the routerState only purpose is to notify GoRouter that screen was switched
@@ -20,9 +21,10 @@ class RouteController {
   }
 
   final Ref _ref;
-
   void navigate(MyScreen screen) {
     _ref.read(screenState.notifier).state = screen;
+    final bool switchStatus = _ref.read(screenSwitched.notifier).state;
+    _ref.read(screenSwitched.notifier).state = !switchStatus; //just a simple flag to switch screen
     // log('@@@### RouterState.navigate deployed ###@@@');
     // if (state == screen) state = MyScreen.loading;
     // state = screen;

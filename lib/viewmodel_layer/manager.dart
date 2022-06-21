@@ -16,7 +16,7 @@ import 'package:sepapka/model_layer/models/input_validation_model.dart';
 import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/purchase_service.dart';
-import 'package:sepapka/model_layer/services/question_service.dart';
+import 'package:sepapka/model_layer/services/quiz_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/model_layer/services/validation_service.dart';
 import 'package:sepapka/utils/api_status.dart';
@@ -47,7 +47,7 @@ class Manager extends ChangeNotifier {
   //Services Injection
   AuthService _authService = serviceLocator.get<AuthService>();
   UserService _userService = serviceLocator.get<UserService>();
-  QuestionService _questionService = serviceLocator.get<QuestionService>();
+  QuizService _questionService = serviceLocator.get<QuizService>();
   DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
   ValidationService _validationService = serviceLocator.get<ValidationService>();
   PurchaseService _purchaseService = serviceLocator.get<PurchaseService>();

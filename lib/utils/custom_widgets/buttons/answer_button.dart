@@ -20,7 +20,7 @@ class AnswerButton extends StatelessWidget {
       ),
       child: SizedBox(
         width: MediaQuery.of(context).size.width*0.7,
-        height: 65.0,
+        height: 55.0,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: color,

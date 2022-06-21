@@ -19,11 +19,7 @@ final authErrorState = StateProvider<String>((ref) => '');
 final emailState = StateProvider<InputValidationModel>((ref) => const InputValidationModel(null, null));
 final passwordState = StateProvider<InputValidationModel>((ref) => const InputValidationModel(null, null));
 
-final authController =
-Provider((ref) =>
-    AuthController(ref
-
-    ));
+final authController = Provider((ref) => AuthController(ref));
 
 class AuthController {
 

@@ -35,8 +35,8 @@ class RouterNotifier extends ChangeNotifier {
   /// This implementation exploits `ref.listen()` to add a simple callback that
   /// calls `notifyListeners()` whenever there's change onto a desider provider.
   RouterNotifier(this._ref) {
-    _ref.listen<MyScreen>(
-      screenState,
+    _ref.listen<bool>(
+      screenSwitched,
       (_, __) => notifyListeners(), // Obviously more logic can be added here
     );
   }
@@ -95,11 +95,11 @@ class RouterNotifier extends ChangeNotifier {
           pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: SignInScreen()),
           routes: _authSubRoutes,
         ),
-        // GoRoute(
-        //   name: MyScreen.quizQuestionSingle.name,
-        //   path: MyScreen.quizQuestionSingle.path,
-        //   pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizSingleQuestion()),
-        // ),
+        GoRoute(
+          name: MyScreen.quizQuestionSingle.name,
+          path: MyScreen.quizQuestionSingle.path,
+          pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizSingleQuestion()),
+        ),
       ];
 
   List<GoRoute> get _menuSubRoutes {
