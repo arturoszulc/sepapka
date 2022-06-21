@@ -5,7 +5,8 @@ import 'package:sepapka/utils/consts/question.dart';
 enum QuizStatus {
   initial,
   notAnswered,
-  answered,
+  rightAnswer,
+  wrongAnswer,
   complete,
 }
 
@@ -24,6 +25,8 @@ class QuizState {
   final int totalQuestions;
   final int totalQuestionsCorrect;
   final String selectedAnswer;
+
+    bool get isAnswered => status == QuestionStatus.rightAnswer || status == QuestionStatus.wrongAnswer;
 
 
   const QuizState({
