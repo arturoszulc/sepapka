@@ -11,7 +11,7 @@ import '../model_layer/models/quiz_state_model.dart';
 import '../utils/consts/colors.dart';
 
 
-
+final sessionPercentIndicator = StateProvider<double>((ref) => 0.5);
 final bMapProvider = StateProvider<List<BMap>>((ref) => []);
 final quizController = StateNotifierProvider.autoDispose<QuizController, QuizState>((ref) => QuizController(ref));
 
@@ -24,7 +24,7 @@ class QuizController extends StateNotifier<QuizState> {
   List<int> get numOfQuestionsByLevel => _ref.read(quizService).countQuestionsByLevel();
   List<int> get numOfQuestionsByCategory => _ref.read(quizService).countQuestionsByCategory();
   Question get currentQuestion => state.questions[state.currentQuestionIndex];
-  double get progressPercentSession => state.currentQuestionIndex+1 / state.totalQuestions+1;
+  double get progressPercentSession => _ref.read(sessionPercentIndicator);
   void setLevel(int lvl) {
     state = state.copyWith(qLevel: lvl);
     _ref.read(routeController).navigate(MyScreen.quizChooseCategory);
@@ -34,6 +34,7 @@ class QuizController extends StateNotifier<QuizState> {
     log('Category: $cat');
     state = state.copyWith(category: cat);
     getQuestions();
+    log('Passed getQuestions');
     prepareBMap();
     _ref.read(routeController).navigate(MyScreen.quizQuestionSingle);
   }
@@ -48,6 +49,8 @@ class QuizController extends StateNotifier<QuizState> {
   }
 
   void checkAnswer(String answer) {
+    log('BMap before');
+    log(_ref.read(bMapProvider.notifier).state.toString());
     if (state.status == QuizStatus.answered) return; //if user already answered, do nothing
     if (currentQuestion.a1 == answer) {
       //right answer
@@ -56,14 +59,22 @@ class QuizController extends StateNotifier<QuizState> {
         // selectedAnswer: answer,
         totalQuestionsCorrect: state.totalQuestionsCorrect+1,
       );
+      _ref.read(bMapProvider.notifier).state.firstWhere((element) => element.answer == answer).copyWith(color: rightButtonColor);
+
     } else {
       //wrong answer
       state = state.copyWith(
         status: QuizStatus.answered,
       );
+      //color wrong button
+      _ref.read(bMapProvider.notifier).state.firstWhere((element) => element.answer == answer)) = .copyWith(color: wrongButtonColor);
+      // //color right button
+      _ref.read(bMapProvider.notifier).state.firstWhere((element) => element.answer == currentQuestion.a1).copyWith(color: rightButtonColor);
     }
-    _ref.read(bMapProvider.notifier).state =
-        _ref.read(quizService).updateBMap(_ref.read(bMapProvider.notifier).state, answer);
+    log('BMap after');
+    log(_ref.read(bMapProvider.notifier).state.toString());
+    // _ref.read(bMapProvider.notifier).state =
+    //     _ref.read(quizService).updateBMap(_ref.read(bMapProvider.notifier).state, answer);
   }
 
   void nextQuestion() {
