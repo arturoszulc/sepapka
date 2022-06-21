@@ -24,6 +24,7 @@ class QuizController extends StateNotifier<QuizState> {
   List<int> get numOfQuestionsByLevel => _ref.read(quizService).countQuestionsByLevel();
   List<int> get numOfQuestionsByCategory => _ref.read(quizService).countQuestionsByCategory();
   Question get currentQuestion => state.questions[state.currentQuestionIndex];
+  double get progressPercentSession => state.currentQuestionIndex+1 / state.totalQuestions+1;
   void setLevel(int lvl) {
     state = state.copyWith(qLevel: lvl);
     _ref.read(routeController).navigate(MyScreen.quizChooseCategory);
@@ -41,6 +42,9 @@ class QuizController extends StateNotifier<QuizState> {
     state = state.copyWith(
       questions: _ref.read(quizService).getQuizQuestions(state.qLevel, state.category)
     );
+    state = state.copyWith(
+      totalQuestions: state.questions.length
+    );
   }
 
   void checkAnswer(String answer) {
@@ -50,7 +54,6 @@ class QuizController extends StateNotifier<QuizState> {
       state = state.copyWith(
         status: QuizStatus.answered,
         // selectedAnswer: answer,
-        currentQuestionIndex: state.currentQuestionIndex+1,
         totalQuestionsCorrect: state.totalQuestionsCorrect+1,
       );
     } else {
@@ -65,6 +68,7 @@ class QuizController extends StateNotifier<QuizState> {
 
   void nextQuestion() {
     if (state.status == QuizStatus.answered) {
+      state.questions.removeAt(0);
       state = state.copyWith(
           status: QuizStatus.notAnswered,
         currentQuestionIndex: state.currentQuestionIndex+1,

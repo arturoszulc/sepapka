@@ -86,9 +86,11 @@ class QuizService {
     bMapList.shuffle();
   return bMapList;
   }
-  List<BMap> updateBMap(List<BMap> bMap, String answer) {
-    log.log('*** BMap updated ***');
+  List<BMap> updateBMap(List<BMap> bMapList, String answer) {
+    debugPrint('BMap before update $bMapList');
     bMapList.firstWhere((element) => element.answer == answer).copyWith(color: rightButtonColor);
+    debugPrint('BMap after update $bMapList');
+
     return bMapList;
   }
 

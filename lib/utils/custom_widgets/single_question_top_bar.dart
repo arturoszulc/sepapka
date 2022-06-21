@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:sepapka/utils/custom_widgets/settings_popupmenu.dart';
+import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
 
 
 import '../../viewmodel_layer/manager.dart';
@@ -39,7 +40,7 @@ Widget singleQuestionTopBar(BuildContext context) {
             lineHeight: 10.0,
             animationDuration: 800,
             animateFromLastPercent: true,
-            percent: ref.read(manager).progressPercentSession,
+            percent: ref.read(quizController.notifier).progressPercentSession,
             linearStrokeCap: LinearStrokeCap.roundAll,
             progressColor: Colors.yellow,
           ),
