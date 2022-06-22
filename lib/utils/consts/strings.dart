@@ -16,7 +16,7 @@ const String userQListNotShown = 'qListNotShown';
 const String appUserConstId = 'id';
 const String appUserConstUsername = 'username';
 const String appUserConstIsPro = 'isPro';
-const String appUserConstHiddenQuestionId = 'hiddenQuestionIds';
+const String appUserConstHiddenQuestionIds = 'hiddenQuestionIds';
 
 //Question model properties
 const String questionQ = 'q';

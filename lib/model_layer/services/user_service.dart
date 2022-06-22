@@ -124,14 +124,15 @@ class UserService extends StateNotifier<AppUser> {
       // state = response.value!;
       log(response.value.toString());
     } else {
-      log('EEEEERRRRROOOOORRRRR getting user from DB ${response.toString()}');
+      //if error, then assume that user is new and wasn't yet created
+      log('Have to fetch a new user to DB...');
     }
     //if error, create new one
   }
 
   Future<Object> updateUserInDb() async {
     try {
-      await _ref.read(databaseService).updateUserDb(state);
+      // await _ref.read(databaseService).updateUserDb(state);
       return Success();
     } catch (e) {
       debugPrint(errorUpdateUserInDb);
