@@ -50,7 +50,7 @@ class MenuScreen extends ConsumerWidget {
                 MenuButton(
                     label: 'Lista pytań',
                     onPressed: () {
-                      myManager.getFilteredQuestionList();
+                      ref.read(routeController).navigate(MyScreen.listQuestion);
                     }),
                 MenuButton(
                     label: 'Akademia',

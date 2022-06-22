@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:group_button/group_button.dart';
+import 'package:sepapka/viewmodel_layer/question_list_controller.dart';
 
 import '../../utils/consts/question.dart';
 import '../../viewmodel_layer/manager.dart';
@@ -12,7 +15,7 @@ class QuestionListFilter extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** QuestionListFilter Screen built ***');
-    final myManager = ref.read(manager);
+    // final myManager = ref.read(manager);
 
     return Scaffold(
       appBar: AppBar(
@@ -32,10 +35,12 @@ class QuestionListFilter extends ConsumerWidget {
             ),
             GroupButton(
               options: myGroupButtonOptions(context),
-              onSelected: (index, isSelected) => myManager.setListFilter(fType: index),
+              onSelected: (index, isSelected)
+              { log('clicked $index');
+                ref.read(questionListFilterType.notifier).state = index;},
               buttons: qTypeList,
               controller: GroupButtonController(
-                selectedIndex: myManager.filterType,
+                selectedIndex: ref.read(questionListFilterType),
               ),
             ),
             const SizedBox(height: 20,),
@@ -47,10 +52,10 @@ class QuestionListFilter extends ConsumerWidget {
             GroupButton(
               options: myGroupButtonOptions(context),
               // isRadio: true,
-              onSelected: (index, isSelected) => myManager.setListFilter(fLevel: index),
+              onSelected: (index, isSelected) => ref.read(questionListFilterLevel.notifier).state = index,
               buttons: qLevelList,
               controller: GroupButtonController(
-                selectedIndex: myManager.filterLevel,
+                selectedIndex: ref.read(questionListFilterLevel),
               ),
             ),
             const SizedBox(height: 20,),
@@ -62,10 +67,10 @@ class QuestionListFilter extends ConsumerWidget {
             GroupButton(
               options: myGroupButtonOptions(context),
               isRadio: true,
-              onSelected: (index, isSelected) => myManager.setListFilter(fCategory: index),
+              onSelected: (index, isSelected) => ref.read(questionListFilterCategory.notifier).state = index,
               buttons: qCategoryList,
               controller: GroupButtonController(
-                selectedIndex: myManager.filterCategory,
+                selectedIndex: ref.read(questionListFilterCategory),
               ),
             ),
 

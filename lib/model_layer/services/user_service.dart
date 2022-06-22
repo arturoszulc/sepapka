@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
@@ -16,6 +17,11 @@ import 'package:sepapka/utils/methods.dart';
 import '../../locator.dart';
 import '../models/question.dart';
 import 'database_service.dart';
+
+
+final userService = Provider<UserService>((ref) {
+  return UserService();
+});
 
 class UserService {
   //Services injection

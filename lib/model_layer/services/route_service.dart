@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sepapka/model_layer/services/auth_service.dart';
+import 'package:sepapka/view_layer/question_list/question_list_filter.dart';
+import 'package:sepapka/view_layer/question_list/question_list_screen.dart';
+import 'package:sepapka/view_layer/question_list/question_list_single.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
@@ -15,7 +18,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     // initialLocation: MyScreen.signIn.path,
-    debugLogDiagnostics: true,
+    // debugLogDiagnostics: true,
     // For demo purposes
     refreshListenable: router,
     // This notifiies `GoRouter` for refresh events
@@ -73,8 +76,6 @@ class RouterNotifier extends ChangeNotifier {
     // debugPrint('@@@ Resolved new location name');
     return location;
   }
-
-
   List<GoRoute> get _topLevelRoutes => <GoRoute>[
         GoRoute(
             name: MyScreen.loading.name,
@@ -100,6 +101,12 @@ class RouterNotifier extends ChangeNotifier {
           path: MyScreen.quizQuestionSingle.path,
           pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizSingleQuestion()),
         ),
+    GoRoute(
+      name: MyScreen.listQuestion.name,
+      path: MyScreen.listQuestion.path,
+      pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuestionListScreen()),
+      routes: _listQuestionSubRoutes,
+    ),
       ];
 
   List<GoRoute> get _menuSubRoutes {
@@ -127,6 +134,21 @@ class RouterNotifier extends ChangeNotifier {
         path: MyScreen.calcMenu.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const CalculatorsMenuScreen()),
         routes: _calcSubRoutes,
+      ),
+    ];
+  }
+
+  List<GoRoute> get _listQuestionSubRoutes {
+    return <GoRoute>[
+      GoRoute(
+        name: MyScreen.listQuestionFilter.name,
+        path: MyScreen.listQuestionFilter.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuestionListFilter()),
+      ),
+      GoRoute(
+        name: MyScreen.listQuestionSingle.name,
+        path: MyScreen.listQuestionSingle.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuestionListSingle()),
       ),
     ];
   }

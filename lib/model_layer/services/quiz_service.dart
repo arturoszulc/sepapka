@@ -48,15 +48,6 @@ class QuizService {
   int qLevel = 0;
   int qCategoryNum = 0; //int corresponds to index of qList
 
-  //Question List filters
-  // FilterQuestion qFilter = FilterQuestion.all;
-  int filterType = 0; //0 = all, 1 = visible 2 = hidden
-  int filterLevel = 0; // 0 = all, 1 = lvl1, 2 = lvl2, 3 = lvl3
-  int filterCategory = 0; //corresponds to qCategories
-  bool filterTypeChanged = false;
-  bool filterLevelChanged = false;
-  bool filterCategoryChanged = false;
-
   List<int> numOfQuestionsByLevel = [];
   List<int> numOfQuestionsByCategory = [];
 
@@ -67,7 +58,7 @@ class QuizService {
 
   //////// NEW ////////
   List<Question> getQuizQuestions(int qLevel, int qCategory) {
-    final List<Question> filteredList = questionListGlobal;
+    final List<Question> filteredList = questionListGlobalConst;
     filteredList.removeWhere((q) => q.level != qLevel); //filter by level
     filteredList.removeWhere((q) => q.label != qCategory); //filter by category
     filteredList.removeWhere((e) => _userService.isQuestionInNotShownList(e.id) != null); //remove if on NotShownList
@@ -109,7 +100,7 @@ class QuizService {
     qListGlobal.clear();
     qListGlobalFiltered.clear();
     // if (_userService.loggedUser!.isPro) {
-      qListGlobal = List<Question>.from(questionListGlobal);
+      qListGlobal = List<Question>.from(questionListGlobalConst);
     // } else {
     //   for (Question question in questionList) {
     //     if (question.level == 1) {
@@ -280,7 +271,7 @@ class QuizService {
   List<int> countQuestionsByLevel() {
     debugPrint('*** countQuestionsByLevel() deployed ***');
     final List<int> numOfQuestionsByLevel = [0, 0, 0, 0];
-    for (Question question in questionListGlobal) {
+    for (Question question in questionListGlobalConst) {
       if (_userService.isQuestionInNotShownList(question.id) == null) {
         if (question.level == 1) numOfQuestionsByLevel[1] += 1;
         if (question.level == 2) numOfQuestionsByLevel[2] += 1;
@@ -296,7 +287,7 @@ class QuizService {
   List<int> countQuestionsByCategory() {
     final List<int> numOfQuestionsByCategory = [0, 0, 0, 0, 0];
     if (qLevel == 0) {
-      for (Question question in questionListGlobal) {
+      for (Question question in questionListGlobalConst) {
         if (_userService.isQuestionInNotShownList(question.id) == null) {
           if (question.label == 1) numOfQuestionsByCategory[1] += 1;
           if (question.label == 2) numOfQuestionsByCategory[2] += 1;
@@ -305,7 +296,7 @@ class QuizService {
         }
       }
     } else {
-      for (Question question in questionListGlobal) {
+      for (Question question in questionListGlobalConst) {
         if (_userService.isQuestionInNotShownList(question.id) == null) {
           if (question.level == qLevel) {
             if (question.label == 1) numOfQuestionsByCategory[1] += 1;
@@ -323,48 +314,5 @@ class QuizService {
         numOfQuestionsByCategory[4];
 
     return numOfQuestionsByCategory;
-  }
-
-  getFilteredQuestionList() {
-    //calling this function means that some filter changed
-    // so start with clearing the old one
-    qListGlobalFiltered = List<Question>.from(qListGlobal);
-    debugPrint('qListGlobalLength: ${qListGlobal.length}');
-    debugPrint('qListFiltered: ${qListGlobalFiltered.length}');
-    //apply three filters
-    filterListByType();
-    filterListByLevel();
-    filterListByCategory();
-
-    //reset all flags
-    // filterTypeChanged = false;
-    // filterLevelChanged = false;
-    // filterCategoryChanged = false;
-  }
-
-  filterListByType() {
-    //filter only if type is different than 0 (0 = all)
-    if (filterType != 0) {
-      if (filterType == 1) {
-        qListGlobalFiltered.removeWhere((e) => _userService.isQuestionInQListNew(e.id) == null);
-      }
-      if (filterType == 2) {
-        qListGlobalFiltered.removeWhere((e) => _userService.isQuestionInNotShownList(e.id) == null);
-      }
-    }
-  }
-
-  filterListByLevel() {
-    //filter only if level was chosen (0 = all)
-    if (filterLevel != 0) {
-      qListGlobalFiltered.removeWhere((e) => e.level != filterLevel);
-    }
-  }
-
-  filterListByCategory() {
-    //filter only if category was chosen (0 = all)
-    if (filterCategory != 0) {
-      qListGlobalFiltered.removeWhere((e) => e.label != filterCategory);
-    }
   }
 }

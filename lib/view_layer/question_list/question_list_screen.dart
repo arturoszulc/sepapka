@@ -5,6 +5,8 @@ import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/viewmodel_layer/question_list_controller.dart';
+import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 class QuestionListScreen extends ConsumerWidget {
   const QuestionListScreen({Key? key}) : super(key: key);
@@ -12,8 +14,7 @@ class QuestionListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** QuestionListScreen built ***');
-    final myManager = ref.read(manager);
-    List<Question> qListGlobalFiltered = myManager.qListGlobalFiltered;
+    List<Question> qListGlobalFiltered = ref.watch(filteredQuestionList);
 
     return Scaffold(
         appBar: AppBar(
@@ -24,7 +25,7 @@ class QuestionListScreen extends ConsumerWidget {
         body: Column(
           children: [
             InkWell(
-              onTap: () => myManager.navigate(MyScreen.listQuestionFilter),
+              onTap: () => ref.read(routeController).navigate(MyScreen.listQuestionFilter),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
@@ -38,7 +39,7 @@ class QuestionListScreen extends ConsumerWidget {
                           'Typ',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(qTypeList[myManager.filterType]),
+                        Text(qTypeList[ref.read(questionListFilterType)]),
                       ],
                     ),
                     Column(
@@ -48,7 +49,7 @@ class QuestionListScreen extends ConsumerWidget {
                           'Poz. trudności',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(qLevelList[myManager.filterLevel]),
+                        Text(qLevelList[ref.read(questionListFilterLevel)]),
                       ],
                     ),
                     Column(
@@ -58,7 +59,7 @@ class QuestionListScreen extends ConsumerWidget {
                           'Kategoria',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(qCategoryList[myManager.filterCategory]),
+                        Text(qCategoryList[ref.read(questionListFilterCategory)]),
                       ],
                     ),
                     const Icon(Icons.filter_list),
@@ -87,7 +88,7 @@ class QuestionListScreen extends ConsumerWidget {
                             title: buildTitle(context, qListGlobalFiltered[index]),
                             subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
                             onTap: () {
-                              myManager.showSingleFilteredQuestion(index);
+                              ref.read(manager).showSingleFilteredQuestion(index);
                               // context.read<Manager>().navigate(Screen.listQuestionSingle);
                             },
                           ),

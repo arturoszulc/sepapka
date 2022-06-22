@@ -89,11 +89,11 @@ class Manager extends ChangeNotifier {
 
   QuestionStatus get qStatus => _questionService.qStatus;
 
-  int get filterType => _questionService.filterType;
+  // int get filterType => _questionService.filterType;
 
-  int get filterLevel => _questionService.filterLevel;
+  // int get filterLevel => _questionService.filterLevel;
 
-  int get filterCategory => _questionService.filterCategory;
+  // int get filterCategory => _questionService.filterCategory;
 
   List<BMap> get bMapList => _questionService.bMapList;
 
@@ -330,39 +330,39 @@ class Manager extends ChangeNotifier {
 
   moveQuestionBackToShown() async {
     debugPrint('moveQuestionBackToShown deployed');
-    await _userService.moveQMapToNew(qListGlobalFiltered[qListGlobalFilteredIndex].id);
-    _userService.updateLoggedUserInDb();
-    //this method is available only in Question List Screen, so you always have to update
-    //filtered question list
-    await _questionService.getFilteredQuestionList();
-    if (qListGlobalFilteredIndex == qListGlobalFiltered.length && qListGlobalFilteredIndex > 0) {
-      qListGlobalFilteredIndex -= 1;
-    }
-    showSingleFilteredQuestion(qListGlobalFilteredIndex);
+    // await _userService.moveQMapToNew(qListGlobalFiltered[qListGlobalFilteredIndex].id);
+    // _userService.updateLoggedUserInDb();
+    // //this method is available only in Question List Screen, so you always have to update
+    // //filtered question list
+    // await _questionService.getFilteredQuestionList();
+    // if (qListGlobalFilteredIndex == qListGlobalFiltered.length && qListGlobalFilteredIndex > 0) {
+    //   qListGlobalFilteredIndex -= 1;
+    // }
+    // showSingleFilteredQuestion(qListGlobalFilteredIndex);
   }
 
   doNotShowThisQuestionAnymore() async {
     debugPrint('doNotShowThisQuestionAnymore() deployed');
-
-    //there are two use cases
-    //1. User calls this method during quiz
-    if (_currentScreen == MyScreen.quizQuestionSingle) {
-      await _userService.moveQMapToNotShown(currentQuestion!.id);
-      await _userService.updateLoggedUserInDb();
-      _questionService.removeCurrentQuestionFromSession();
-      getNextQuizQuestion();
-    }
-    //2. User calls this method during question list
-    if (_currentScreen == MyScreen.listQuestionSingle) {
-      await _userService.moveQMapToNotShown(qListGlobalFiltered[qListGlobalFilteredIndex].id);
-      _userService.updateLoggedUserInDb();
-      await _questionService.getFilteredQuestionList();
-      if (qListGlobalFilteredIndex == qListGlobalFiltered.length && qListGlobalFilteredIndex > 0) {
-        debugPrint('Entered IF loop');
-        qListGlobalFilteredIndex -= 1;
-      }
-      showSingleFilteredQuestion(qListGlobalFilteredIndex);
-    }
+    //
+    // //there are two use cases
+    // //1. User calls this method during quiz
+    // if (_currentScreen == MyScreen.quizQuestionSingle) {
+    //   await _userService.moveQMapToNotShown(currentQuestion!.id);
+    //   await _userService.updateLoggedUserInDb();
+    //   _questionService.removeCurrentQuestionFromSession();
+    //   getNextQuizQuestion();
+    // }
+    // //2. User calls this method during question list
+    // if (_currentScreen == MyScreen.listQuestionSingle) {
+    //   await _userService.moveQMapToNotShown(qListGlobalFiltered[qListGlobalFilteredIndex].id);
+    //   _userService.updateLoggedUserInDb();
+    //   await _questionService.getFilteredQuestionList();
+    //   if (qListGlobalFilteredIndex == qListGlobalFiltered.length && qListGlobalFilteredIndex > 0) {
+    //     debugPrint('Entered IF loop');
+    //     qListGlobalFilteredIndex -= 1;
+    //   }
+    //   showSingleFilteredQuestion(qListGlobalFilteredIndex);
+    // }
   }
 
   bool isQuestionHidden(String? qId) {
@@ -372,33 +372,33 @@ class Manager extends ChangeNotifier {
     return true;
   }
 
-  setListFilter({int? fType, int? fLevel, int? fCategory}) {
-    if (fType != null) {
-      debugPrint('fType: $fType');
-      _questionService.filterType = fType;
-      // _questionService.filterTypeChanged = true;
-    }
-    if (fLevel != null) {
-      debugPrint('fLevel: $fLevel');
-      _questionService.filterLevel = fLevel;
-      // _questionService.filterLevelChanged = true;
-    }
-    if (fCategory != null) {
-      debugPrint('fCategory: $fCategory');
-      _questionService.filterCategory = fCategory;
-      // _questionService.filterCategoryChanged = true;
-    }
-  }
+  // setListFilter({int? fType, int? fLevel, int? fCategory}) {
+  //   if (fType != null) {
+  //     debugPrint('fType: $fType');
+  //     _questionService.filterType = fType;
+  //     // _questionService.filterTypeChanged = true;
+  //   }
+  //   if (fLevel != null) {
+  //     debugPrint('fLevel: $fLevel');
+  //     _questionService.filterLevel = fLevel;
+  //     // _questionService.filterLevelChanged = true;
+  //   }
+  //   if (fCategory != null) {
+  //     debugPrint('fCategory: $fCategory');
+  //     _questionService.filterCategory = fCategory;
+  //     // _questionService.filterCategoryChanged = true;
+  //   }
+  // }
 
   getFilteredQuestionList() async {
-    navigate(MyScreen.loading);
-    await _questionService.getFilteredQuestionList();
-    navigate(MyScreen.listQuestion);
+    // navigate(MyScreen.loading);
+    // await _questionService.getFilteredQuestionList();
+    // navigate(MyScreen.listQuestion);
   }
 
   Question? getSingleFilteredQuestion() {
-    if (qListGlobalFiltered.isEmpty) return null;
-    return qListGlobalFiltered[qListGlobalFilteredIndex];
+    // if (qListGlobalFiltered.isEmpty) return null;
+    // return qListGlobalFiltered[qListGlobalFilteredIndex];
   }
 
   showSingleFilteredQuestion(int index) {
