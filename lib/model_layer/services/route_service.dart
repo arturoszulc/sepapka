@@ -101,12 +101,7 @@ class RouterNotifier extends ChangeNotifier {
           path: MyScreen.quizQuestionSingle.path,
           pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizSingleQuestion()),
         ),
-    GoRoute(
-      name: MyScreen.listQuestion.name,
-      path: MyScreen.listQuestion.path,
-      pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuestionListScreen()),
-      routes: _listQuestionSubRoutes,
-    ),
+
       ];
 
   List<GoRoute> get _menuSubRoutes {
@@ -122,6 +117,12 @@ class RouterNotifier extends ChangeNotifier {
             pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const ChooseCategory()),
           ),
         ],
+      ),
+      GoRoute(
+        name: MyScreen.listQuestion.name,
+        path: MyScreen.listQuestion.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuestionListScreen()),
+        routes: _listQuestionSubRoutes,
       ),
       GoRoute(
         name: MyScreen.academyMenu.name,

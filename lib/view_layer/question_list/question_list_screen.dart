@@ -39,7 +39,7 @@ class QuestionListScreen extends ConsumerWidget {
                           'Typ',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(qTypeList[ref.read(questionListFilterType)]),
+                        Text(qTypeList[ref.watch(questionListFilterType)]),
                       ],
                     ),
                     Column(
@@ -49,7 +49,7 @@ class QuestionListScreen extends ConsumerWidget {
                           'Poz. trudności',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(qLevelList[ref.read(questionListFilterLevel)]),
+                        Text(qLevelList[ref.watch(questionListFilterLevel)]),
                       ],
                     ),
                     Column(
@@ -59,7 +59,7 @@ class QuestionListScreen extends ConsumerWidget {
                           'Kategoria',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(qCategoryList[ref.read(questionListFilterCategory)]),
+                        Text(qCategoryList[ref.watch(questionListFilterCategory)]),
                       ],
                     ),
                     const Icon(Icons.filter_list),

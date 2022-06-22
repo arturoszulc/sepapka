@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/locator.dart';
+import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/route_service.dart';
 import 'package:sepapka/utils/consts/theme_data.dart';
 import 'package:flutter/services.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           final _router = ref.read(routerProvider);
           //manager initialization to check if user is signed in
           Future.delayed(Duration.zero, (){
-            ref.read(manager);
+            ref.read(authServiceProvider);
           });
           return MaterialApp.router(
             routeInformationParser: _router.routeInformationParser,

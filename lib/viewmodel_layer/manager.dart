@@ -41,7 +41,7 @@ class Manager extends ChangeNotifier {
     });
 
     //on initialize, subscribe to stream that checks if user is logged in or not
-    watchAuthUser();
+    // watchAuthUser();
   }
 
   //Services Injection
@@ -168,12 +168,12 @@ class Manager extends ChangeNotifier {
     if (_currentScreen != MyScreen.loading) navigate(MyScreen.loading);
 
     // download user data and create local user object
-    Object createUserResult = await _userService.createUserLocal(userId);
-    if (createUserResult is Failure) {
-      setError(createUserResult);
-      navigate(MyScreen.signIn);
-      return;
-    }
+    // Object createUserResult = await _userService.createUserLocal(userId);
+    // if (createUserResult is Failure) {
+    //   setError(createUserResult);
+    //   navigate(MyScreen.signIn);
+    //   return;
+    // }
 
     //next prepare questions
     Object prepareDataResult = await _questionService.prepareGlobalData();
@@ -260,7 +260,7 @@ class Manager extends ChangeNotifier {
   //        USER        //
   ////////////////////////
 
-  LoggedUser? get loggedUser => _userService.loggedUser;
+  LoggedUser? get loggedUser => _ref.read(userService.notifier).loggedUser;
 
   int get qNewLeft => _userService.loggedUser!.qListNew.length;
 
@@ -418,15 +418,15 @@ class Manager extends ChangeNotifier {
   }
 
   sendQuestionRemark() async {
-    Object sendResult = await _questionService.sendQuestionRemark(remark.value!, appVersion);
-    if (sendResult is Failure) {
-      setError(sendResult);
-      navigate(MyScreen.remark);
-    } else {
-      setError(null);
-      setMessage(msgThanksForRemark);
-      navigate(MyScreen.quizQuestionSingle);
-    }
+    // Object sendResult = await _questionService.sendQuestionRemark(remark.value!, appVersion);
+    // if (sendResult is Failure) {
+    //   setError(sendResult);
+    //   navigate(MyScreen.remark);
+    // } else {
+    //   setError(null);
+    //   setMessage(msgThanksForRemark);
+    //   navigate(MyScreen.quizQuestionSingle);
+    // }
   }
 
   ////////////////////////

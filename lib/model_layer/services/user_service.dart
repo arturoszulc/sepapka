@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:math';
+import 'dart:developer';
 
 import 'package:collection/collection.dart';
 
@@ -13,28 +13,33 @@ import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/utils/methods.dart';
+import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 import '../../locator.dart';
 import '../models/question.dart';
 import 'database_service.dart';
 
 
-final userService = Provider<UserService>((ref) {
-  return UserService();
-});
+// final appUserProvider = StateProvider<AppUser>((ref) => AppUser.empty());
 
-class UserService {
+final userService = StateNotifierProvider<UserService, AppUser>((ref) => UserService(ref)
+);
+
+class UserService extends StateNotifier<AppUser> {
+  UserService(this._ref) : super(AppUser.empty());
+
+  final Ref _ref;
   //Services injection
-  final DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
+  // final DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
 
   //Properties
-  bool _loggedUserChanged = false;
+  // bool _loggedUserChanged = false;
   // bool _userLeveledUp = false;
   // List<String> _rankNames = [];
   // List<int> _rankThresholds = [];
 
   //parsing subString to get rid of time
-  final DateTime _today = DateTime.parse(DateTime.now().toString().substring(0, 10));
+  // final DateTime _today = DateTime.parse(DateTime.now().toString().substring(0, 10));
 
   //Models
   LoggedUser? _loggedUser;
@@ -42,7 +47,7 @@ class UserService {
   //Getters
   LoggedUser? get loggedUser => _loggedUser;
 
-  bool get loggedUserChanged => _loggedUserChanged;
+  // bool get loggedUserChanged => _loggedUserChanged;
 
   // bool get userLeveledUp => _userLeveledUp;
 
@@ -79,50 +84,54 @@ class UserService {
   //   }
   // }
 
-  createDefaultLoggedUser(String userId) {
-    _loggedUser = LoggedUser(
-        documentId: userId,
-        username: 'uczeń-' + getRandomString(5),
-        isPro: false,
-        // rankLevel: 0,
-        // rankTotalPoints: 0,
-        // qVersions: [1,1,1],
-        qListNew: [],
-        qListPractice: [],
-        qListNotShown: []);
+  // createDefaultLoggedUser(String userId) {
+  //   _loggedUser = LoggedUser(
+  //       documentId: userId,
+  //       username: 'uczeń-' + getRandomString(5),
+  //       isPro: false,
+  //       // rankLevel: 0,
+  //       // rankTotalPoints: 0,
+  //       // qVersions: [1,1,1],
+  //       qListNew: [],
+  //       qListPractice: [],
+  //       qListNotShown: []);
+  // }
+
+  // setLoggedUserChanged(bool status) {
+  //   //some flag to keep track if user has changed (helpful in some loops)
+  //   _loggedUserChanged = status;
+  // }
+
+  //////// NEW ////////
+
+  void createUser(String uid) {
+    log('User created');
+    state = state.copyWith(id: uid);
+    log(state.toString());
   }
 
-  setLoggedUserChanged(bool status) {
-    //some flag to keep track if user has changed (helpful in some loops)
-    _loggedUserChanged = status;
-  }
-
-  Future<Object> createUserLocal(String userId) async {
-    try {
-      _loggedUser = await _databaseService.getUserData(userId);
-      // loggedUserStreamController.add(_loggedUser);
-      return Success();
-    } catch (e) {
-      debugPrint(errorGetUserDataFromDB);
-      //if there's an error, assume that user was not yet created
-      await createDefaultLoggedUser(userId);
-      return Success();
+  void getUserFromDb(String uid) async {
+      // try {
+      //   final response = await _databaseService.getUserData(state.id);
+      // } catch (e) {
+      //   //     debugPrint(errorGetUserDataFromDB);
+      //   //if there's an error, assume that user was not yet created
+      //   await updateUserToDb();
+      // }
+    //try to fetch from db
+    final response = await AsyncValue.guard(() => _ref.read(databaseService).getUserDataFromDb(uid));
+    if (response.value is AppUser) {
+      // state = response.value!;
+      log(response.value.toString());
+    } else {
+      log('EEEEERRRRROOOOORRRRR getting user from DB ${response.toString()}');
     }
+    //if error, create new one
   }
 
-  Future<Object> rollUserBack() async {
+  Future<Object> updateUserInDb() async {
     try {
-      _loggedUser = await _databaseService.getUserData(_loggedUser!.documentId);
-      return Success();
-    } catch (e) {
-      debugPrint(errorRollBackUser);
-      return Failure(errorRollBackUser);
-    }
-  }
-
-  Future<Object> updateLoggedUserInDb() async {
-    try {
-      await _databaseService.updateUser(_loggedUser!);
+      await _ref.read(databaseService).updateUserDb(state);
       return Success();
     } catch (e) {
       debugPrint(errorUpdateUserInDb);
@@ -130,8 +139,44 @@ class UserService {
     }
   }
 
+  void addQuestionToHidden() {
+
+  }
+
+  void removeQuestionFromHidden() {
+
+  }
+
+  //////// END NEW ////////
+
+
+  // Future<Object> createUserLocal(String userId) async {
+  //   try {
+  //     _loggedUser = await _databaseService.getUserData(userId);
+  //     // loggedUserStreamController.add(_loggedUser);
+  //     return Success();
+  //   } catch (e) {
+  //     debugPrint(errorGetUserDataFromDB);
+  //     //if there's an error, assume that user was not yet created
+  //     await createDefaultLoggedUser(userId);
+  //     return Success();
+  //   }
+  // }
+
+  // Future<Object> rollUserBack() async {
+  //   try {
+  //     _loggedUser = await _databaseService.getUserData(_loggedUser!.documentId);
+  //     return Success();
+  //   } catch (e) {
+  //     debugPrint(errorRollBackUser);
+  //     return Failure(errorRollBackUser);
+  //   }
+  // }
+
+
+
   logOutUser() {
-    _loggedUser = null;
+    // _loggedUser = null;
     // loggedUserStreamController.add(_loggedUser);
   }
 
@@ -159,25 +204,25 @@ class UserService {
   //   return outdatedQLists;
   // }
 
-  Future<void> updateQNewList(List<Question> qListGlobal) async {
-    for (var question in qListGlobal) {
-      //check if question is on any list
-      bool isOnAnyList = isQuestionOnAnyList(question.id);
-
-      if (!isOnAnyList) {
-        //jeśli nie, stwórz jego mapę i zapisz do qNewList
-        QMap qMap = createDefaultQMap(question.id);
-        addQMapToNew(qMap);
-        //set flag, that user object was changed
-        setLoggedUserChanged(true);
-      }
-    }
-    //if loggedUser changed, update it on DB at the end
-    if (_loggedUserChanged) {
-      await _databaseService.updateUser(_loggedUser!);
-      setLoggedUserChanged(false);
-    }
-  }
+  // Future<void> updateQNewList(List<Question> qListGlobal) async {
+  //   for (var question in qListGlobal) {
+  //     //check if question is on any list
+  //     bool isOnAnyList = isQuestionOnAnyList(question.id);
+  //
+  //     if (!isOnAnyList) {
+  //       //jeśli nie, stwórz jego mapę i zapisz do qNewList
+  //       QMap qMap = createDefaultQMap(question.id);
+  //       addQMapToNew(qMap);
+  //       //set flag, that user object was changed
+  //       setLoggedUserChanged(true);
+  //     }
+  //   }
+  //   //if loggedUser changed, update it on DB at the end
+  //   if (_loggedUserChanged) {
+  //     await _databaseService.updateUser(_loggedUser!);
+  //     setLoggedUserChanged(false);
+  //   }
+  // }
 
   // prepareRanks(List<String> rankNames, List<int> rankThresholds) {
   //   debugPrint('/// Preparing ranks data... ///');
@@ -200,31 +245,31 @@ class UserService {
   }
 
   QMap? isQuestionInQListNew(String questionId) {
-    return _loggedUser!.qListNew.firstWhereOrNull((qMap) => qMap.id == questionId);
+    // return _loggedUser!.qListNew.firstWhereOrNull((qMap) => qMap.id == questionId);
   }
 
   QMap? isQuestionInPracticeList(String questionId) {
-    return _loggedUser!.qListPractice.firstWhereOrNull((qMap) => qMap.id == questionId);
+    // return _loggedUser!.qListPractice.firstWhereOrNull((qMap) => qMap.id == questionId);
   }
 
   QMap? isQuestionInNotShownList(String questionId) {
-    return _loggedUser!.qListNotShown.firstWhereOrNull((qMap) => qMap.id == questionId);
+    // return _loggedUser!.qListNotShown.firstWhereOrNull((qMap) => qMap.id == questionId);
   }
 
   removeQuestionFromAnyQList(String questionId) {
-    _loggedUser!.qListNew.removeWhere((e) => e.id == questionId);
-    _loggedUser!.qListPractice.removeWhere((e) => e.id == questionId);
-    _loggedUser!.qListNotShown.removeWhere((e) => e.id == questionId);
+    // _loggedUser!.qListNew.removeWhere((e) => e.id == questionId);
+    // _loggedUser!.qListPractice.removeWhere((e) => e.id == questionId);
+    // _loggedUser!.qListNotShown.removeWhere((e) => e.id == questionId);
   }
 
   QMap createDefaultQMap(String? qId) {
     return QMap(id: qId, dateModified: DateTime.now().toString().substring(0, 10), fibNum: 0);
   }
-
-  List<QMap> getQMapsFromNewList(int qLevel) {
-    //return only first 10 elements
-    return _loggedUser!.qListNew.slice(0, min(9, _loggedUser!.qListNew.length));
-  }
+  //
+  // List<QMap> getQMapsFromNewList(int qLevel) {
+  //   //return only first 10 elements
+  //   // return _loggedUser!.qListNew.slice(0, min(9, _loggedUser!.qListNew.length));
+  // }
 
   // List<QMap> getTodayPracticeQMapList() {
   //   debugPrint('/// UserService: Getting TodayPracticeQMapList... ///');
@@ -300,7 +345,7 @@ class UserService {
   addQMapToNew(QMap qMap) {
     //Before this method, it is checked if qMap is on any map.
     //So there's no need to check it again
-    setLoggedUserChanged(true);
+    // setLoggedUserChanged(true);
     _loggedUser!.qListNew.add(qMap);
 
     // switch (qLevel) {
@@ -334,26 +379,26 @@ class UserService {
   }
 
   Future<Object> goPro() async {
-    _loggedUser!.isPro = true;
-    try {
-      await _databaseService.updateUser(_loggedUser!);
-      return Success();
-    } catch (e) {
-      debugPrint(e.toString());
+    // _loggedUser!.isPro = true;
+    // try {
+    //   await _databaseService.updateUser(_loggedUser!);
+    //   return Success();
+    // } catch (e) {
+    //   debugPrint(e.toString());
       return Failure(errorUpdateUserInDb);
-    }
+    // }
   }
-
-  getDateDifferenceInDays(QMap question) {
-    DateTime parsedDate = DateTime.parse(question.dateModified);
-    DateTime whenToPractice = parsedDate.add(Duration(days: question.fibNum));
-    return whenToPractice.difference(_today).inDays;
-  }
-
-  getNextFibNum(int currentFibNum) {
-    int currentFibNumIndex = fibSeries.indexOf(currentFibNum);
-    return fibSeries[currentFibNumIndex + 1];
-  }
+  //
+  // getDateDifferenceInDays(QMap question) {
+  //   DateTime parsedDate = DateTime.parse(question.dateModified);
+  //   DateTime whenToPractice = parsedDate.add(Duration(days: question.fibNum));
+  //   return whenToPractice.difference(_today).inDays;
+  // }
+  //
+  // getNextFibNum(int currentFibNum) {
+  //   int currentFibNumIndex = fibSeries.indexOf(currentFibNum);
+  //   return fibSeries[currentFibNumIndex + 1];
+  // }
 
   // Future<Object> changeUserName(String username) async {
   //   //check if name was even changed

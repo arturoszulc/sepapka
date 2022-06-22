@@ -115,7 +115,7 @@ class QuizService {
     //Sort qListGlobal alphabetically
     qListGlobal.sort((a, b) => a.q.compareTo(b.q));
     //update user qNewList
-    await _userService.updateQNewList(qListGlobal);
+    // await _userService.updateQNewList(qListGlobal);
 
     debugPrint('/// QuestionService: Finished preparing GlobalData ///');
     return Success();
@@ -245,28 +245,28 @@ class QuizService {
   }
 
   moveQuestionBackToShown(String qId) async {
-    await _userService.moveQMapToNew(qId);
-    _userService.updateLoggedUserInDb();
+    // await _userService.moveQMapToNew(qId);
+    // _userService.updateLoggedUserInDb();
   }
 
-  Future<Object> sendQuestionRemark(String remark, String appVersion) async {
-    //validate data
-    Object validateResult = validateRemark(remark);
-    if (validateResult is Failure) return validateResult;
-    try {
-      _databaseService.sendQuestionRemark(Remark(
-        userId: _userService.loggedUser!.documentId,
-        appV: appVersion,
-        date: DateTime.now(),
-        question: currentQuestion!.id,
-        text: remark,
-      ));
-      return Success();
-    } catch (e) {
-      debugPrint(e.toString());
-      return Failure(errorSendingRemark);
-    }
-  }
+  // Future<Object> sendQuestionRemark(String remark, String appVersion) async {
+  //   //validate data
+  //   Object validateResult = validateRemark(remark);
+  //   if (validateResult is Failure) return validateResult;
+  //   try {
+  //     _databaseService.sendQuestionRemark(Remark(
+  //       userId: _userService.loggedUser!.documentId,
+  //       appV: appVersion,
+  //       date: DateTime.now(),
+  //       question: currentQuestion!.id,
+  //       text: remark,
+  //     ));
+  //     return Success();
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //     return Failure(errorSendingRemark);
+  //   }
+  // }
 
   List<int> countQuestionsByLevel() {
     debugPrint('*** countQuestionsByLevel() deployed ***');

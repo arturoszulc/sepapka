@@ -5,8 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
+import 'package:sepapka/viewmodel_layer/route_controller.dart';
+
+import '../../utils/consts/my_screens.dart';
 
 
 final authStateProvider = StreamProvider<User?>((ref) {
@@ -15,13 +19,14 @@ final authStateProvider = StreamProvider<User?>((ref) {
 });
 
 final authServiceProvider = Provider<AuthService>((ref) {
-  return AuthService();
+  return AuthService(ref);
 });
 
 
 
 class AuthService {
   //Properties
+  final Ref _ref;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final _googleSignIn = GoogleSignIn();
 
@@ -30,7 +35,25 @@ class AuthService {
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
   //Constructor - default
-  // AuthService();
+  AuthService(this._ref) {
+    log('^^^ authService initialized ^^^');
+    watchAuthUser();
+  }
+
+  watchAuthUser() {
+    authStateChange.listen((User? user) async {
+      if (user != null) {
+        log('/// User signed in ///');
+        _ref.read(userService.notifier).getUserFromDb(user.uid);
+        // await prepareData(user.uid);
+      }
+      if (user == null) {
+        log('/// User signed out ///');
+        // await _userService.logOutUser();
+        _ref.read(routeController).navigate(MyScreen.signIn);
+      }
+    });
+  }
 
   //Getters
   FirebaseAuth get auth => _auth;

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
@@ -8,16 +9,59 @@ import 'package:sepapka/model_layer/models/remark.dart';
 import 'package:sepapka/utils/consts/strings.dart';
 import 'package:sepapka/utils/methods.dart';
 
+final databaseService = Provider<DatabaseService>((ref) {
+  return DatabaseService();
+});
+
 class DatabaseService {
   final CollectionReference dataCollection = FirebaseFirestore.instance.collection('data');
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
   final CollectionReference remarksCollection = FirebaseFirestore.instance.collection('remarks');
   final CollectionReference purchaseCollection = FirebaseFirestore.instance.collection('purchases');
 
-  // final Query usersRankQuery = FirebaseFirestore.instance
-  //     .collection('users')
-  //     .orderBy('rankTotalPoints', descending: true)
-  //     .limit(10);
+//artur1111@test.pl id: 9QcFuBrwpHhgSRojxelidsysmnp2
+
+  ///// NEW /////
+  Future<void> updateUserDb(AppUser user) {
+    debugPrint('/// DB: writing USER doc... ///');
+    return usersCollection
+        .doc(user.id)
+        .set({
+      // userQVersions: user.qVersions,
+      appUserConstUsername: user.username,
+      appUserConstIsPro: user.isPro,
+      // userQListNew: user.qListNew.map((e) => e.convertToMap()).toList(),
+      // userQListPractice: user.qListPractice.map((e) => e.convertToMap()).toList(),
+      appUserConstHiddenQuestionId: user.hiddenQuestionIds,
+    })
+        .then((value) => debugPrint('/// DB: User updated ///'))
+        .catchError((error) => debugPrint("DB: Failed to update user: $error"));
+  }
+
+  Future<AppUser> getUserDataFromDb(String uid) async {
+    debugPrint('/// DB: reading USER doc... ///');
+    var doc = await usersCollection.doc(uid).get();
+    return AppUser(
+      // id: doc.id,
+      id: doc.data().toString().contains(appUserConstId) ? doc.get(appUserConstId) : '',
+      // username: doc.get(appUserConstUsername),
+      username: doc.data().toString().contains(appUserConstUsername) ? doc.get(appUserConstUsername) : '',
+      // isPro: doc.get(appUserConstIsPro),
+      isPro: doc.data().toString().contains(appUserConstIsPro) ? doc.get(appUserConstIsPro) : false,
+      // hiddenQuestionIds: doc.get(appUserConstHiddenQuestionId),
+      hiddenQuestionIds: doc.data().toString().contains(appUserConstHiddenQuestionId) ? doc.get(appUserConstHiddenQuestionId) : [],
+      // rankLevel: doc.get(userRankLevel),
+      // rankTotalPoints: doc.get(userRankTotalPoints),
+      // qVersions: List<int>.from(doc.get(userQVersions)),
+      // qListNew: List<QMap>.from(doc.get(userQListNew).map((e) => convertMapToQMap(e))),
+      // qListPractice: List<QMap>.from(doc.get(userQListPractice).map((e) => convertMapToQMap(e))),
+      // qListNotShown: List<QMap>.from(doc.get(userQListNotShown).map((e) => convertMapToQMap(e))),
+    );
+  }
+
+
+
+  ///// END NEW /////
 
   // //UPDATE USER DATA
   // DO NOT USE ASYNC/AWAIT on SET function, because when device is offline, it won't return

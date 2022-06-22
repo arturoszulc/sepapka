@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/question_list.dart';
@@ -23,14 +22,16 @@ final filteredQuestionList = Provider<List<Question>>((ref) {
   final int filterCategory = ref.watch(questionListFilterCategory);
 
   List<Question> qListGlobalFiltered = List.from(questionListGlobalConst);
+
+
   //FILTER BY TYPE
   // 0 = all, 1 = shown, 2 = notShown
   if (filterType != 0) {
     if (filterType == 1) {
-      qListGlobalFiltered.removeWhere((e) => ref.read(userService).isQuestionInQListNew(e.id) == null);
+      qListGlobalFiltered.removeWhere((e) => ref.read(userService.notifier).isQuestionInQListNew(e.id) == null);
     }
     if (filterType == 2) {
-      qListGlobalFiltered.removeWhere((e) => ref.read(userService).isQuestionInNotShownList(e.id) == null);
+      qListGlobalFiltered.removeWhere((e) => ref.read(userService.notifier).isQuestionInNotShownList(e.id) == null);
     }
   }
 
@@ -45,7 +46,8 @@ final filteredQuestionList = Provider<List<Question>>((ref) {
   if (filterCategory != 0) {
     qListGlobalFiltered.removeWhere((e) => e.label != filterCategory);
   }
-
+  //SORT ALPHABETICALLY
+  qListGlobalFiltered.sort((a, b) => a.q.toLowerCase().compareTo(b.q.toLowerCase()));
 
   return qListGlobalFiltered;
 });

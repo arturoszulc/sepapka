@@ -12,6 +12,12 @@ const String userQListNew = 'qListNew';
 const String userQListPractice = 'qListPractice';
 const String userQListNotShown = 'qListNotShown';
 
+//NEW AppUser model props
+const String appUserConstId = 'id';
+const String appUserConstUsername = 'username';
+const String appUserConstIsPro = 'isPro';
+const String appUserConstHiddenQuestionId = 'hiddenQuestionIds';
+
 //Question model properties
 const String questionQ = 'q';
 const String questionA1 = 'a1';
