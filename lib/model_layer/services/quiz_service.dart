@@ -23,7 +23,7 @@ class QuizService {
 
   //Services Injection
   final _userService = serviceLocator.get<UserService>();
-  final _databaseService = serviceLocator.get<DatabaseService>();
+  // final _databaseService = serviceLocator.get<DatabaseService>();
 
   // final _fileService = serviceLocator.get<FileService>();
 
@@ -116,14 +116,6 @@ class QuizService {
 
     debugPrint('/// QuestionService: Finished preparing GlobalData ///');
     return Success();
-  }
-
-  setQuestionLevel(int level) {
-    qLevel = level;
-  }
-
-  setQuestionCategory(int catNumber) {
-    qCategoryNum = catNumber;
   }
 
   prepareSession() async {

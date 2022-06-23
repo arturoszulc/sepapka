@@ -143,6 +143,10 @@ class UserService extends StateNotifier<AppUser> {
     }
   }
 
+  clearUser() { //clearing user after user pressed signOut button
+    state = AppUser.empty();
+  }
+
   void addQuestionToHidden() {
 
   }
@@ -179,10 +183,6 @@ class UserService extends StateNotifier<AppUser> {
 
 
 
-  logOutUser() {
-    // _loggedUser = null;
-    // loggedUserStreamController.add(_loggedUser);
-  }
 
   // List<int> compareQVersion(List<int> qVersions) {
   //   debugPrint('/// Checking if questions are up to date ///');

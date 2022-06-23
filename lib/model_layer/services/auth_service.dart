@@ -45,13 +45,9 @@ class AuthService {
       if (user != null) {
         log('/// AuthService: User signed in ///');
         _ref.read(userService.notifier).getUserFromDb(user.uid);
-        // _ref.read(routeController).navigate(MyScreen.menu);
-
-        // await prepareData(user.uid);
       }
       if (user == null) {
         log('/// AuthService: User signed out ///');
-        // await _userService.logOutUser();
         _ref.read(routeController).navigate(MyScreen.signIn);
       }
     });

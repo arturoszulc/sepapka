@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/utils/custom_widgets/build_question.dart';
+import 'package:sepapka/viewmodel_layer/question_list_controller.dart';
 
 import '../../model_layer/models/question.dart';
 import '../../utils/consts/my_screens.dart';
@@ -13,12 +14,11 @@ class QuestionListSingle extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** QuestionListSingle Screen built ***');
-    // ScaffoldMessenger.of(context).clearSnackBars();
-    final myManager = ref.read(manager);
-    final int index = myManager.qListGlobalFilteredIndex;
-    final int filteredListLength = myManager.qListGlobalFiltered.length - 1;
-    Question? question = myManager.getSingleFilteredQuestion();
-    final bool isQuestionHidden = myManager.isQuestionHidden(question?.id);
+    // final myManager = ref.read(manager);
+    final int index = ref.watch(questionListIndex);
+    final int filteredListLength = ref.watch(filteredQuestionList).length - 1;
+    Question question = ref.watch(filteredQuestionList)[index];
+    final bool isQuestionHidden = ref.watch(questionListController).isQuestionHidden(question.id);
 
     return Scaffold(
       appBar: AppBar(

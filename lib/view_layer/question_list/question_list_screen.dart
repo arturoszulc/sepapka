@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/question.dart';
+import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
@@ -88,7 +89,7 @@ class QuestionListScreen extends ConsumerWidget {
                             title: buildTitle(context, qListGlobalFiltered[index]),
                             subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
                             onTap: () {
-                              ref.read(manager).showSingleFilteredQuestion(index);
+                              ref.read(questionListController).showSingleQuestion(index);
                               // context.read<Manager>().navigate(Screen.listQuestionSingle);
                             },
                           ),
@@ -114,8 +115,11 @@ Widget buildTitle(BuildContext context, Question q) {
             builder: (BuildContext context, WidgetRef ref, Widget? child) => Container(
                 alignment: Alignment.centerRight,
                 // color: Colors.grey,
-                child: ref.read(manager).getQuestionIcon(q.id)),
+                child: ref.read(userService).hiddenQuestionIds.contains(q.id)
+                    ? qListIcons['notShown']! : qListIcons['none']!,
+                //ref.read(manager).getQuestionIcon(q.id)),
           ),
+        ),
         ),
       ],
     ),

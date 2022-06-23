@@ -91,14 +91,6 @@ class Manager extends ChangeNotifier {
 
   QuestionStatus get qStatus => QuestionStatus.noAnswer;//_questionService.qStatus;
 
-  // int get filterType => _questionService.filterType;
-
-  // int get filterLevel => _questionService.filterLevel;
-
-  // int get filterCategory => _questionService.filterCategory;
-
-  // List<BMap> get bMapList => _ref.read(quizController).bMapList;
-
   List<Question> get qListGlobalFiltered => [];//_questionService.qListGlobalFiltered;
 
   // List<int> get countQuestionsByLevel => _questionService.countQuestionsByLevel();
@@ -151,19 +143,19 @@ class Manager extends ChangeNotifier {
   }
 
   // methods deployed automatically after user signs in or signs out //
-  watchAuthUser() {
-    authUser.listen((User? user) async {
-      if (user != null) {
-        log('/// User signed in ///');
-        await prepareData(user.uid);
-      }
-      if (user == null) {
-        log('/// User signed out ///');
-        // await _userService.logOutUser();
-        if (_currentScreen != MyScreen.signIn) navigate(MyScreen.signIn);
-      }
-    });
-  }
+  // watchAuthUser() {
+  //   authUser.listen((User? user) async {
+  //     if (user != null) {
+  //       log('/// User signed in ///');
+  //       await prepareData(user.uid);
+  //     }
+  //     if (user == null) {
+  //       log('/// User signed out ///');
+  //       // await _userService.logOutUser();
+  //       if (_currentScreen != MyScreen.signIn) navigate(MyScreen.signIn);
+  //     }
+  //   });
+  // }
 
   prepareData(String userId) async {
     // keep the app in loading state
@@ -287,48 +279,8 @@ class Manager extends ChangeNotifier {
   //     QUESTIONS      //
   ////////////////////////
 
-  chooseQuestionLevel(int level) async {
-    await _ref.read(quizService).setQuestionLevel(level);
-    //after choosing Level, choose category
-    navigate(MyScreen.quizChooseCategory);
-  }
 
-  chooseQuestionCategory(int catNumber) {
-    _ref.read(quizService).setQuestionCategory(catNumber);
-    //after choosing Category, prepare Session Data
-    startSession();
-  }
 
-  startSession() async {
-    await _ref.read(quizService).prepareSession();
-    getNextQuizQuestion();
-  }
-
-  checkAnswer(String answer) async {
-    ///TODO: LOCK POSSIBILITY OF PUSHING ANOTHER BUTTON BEFORE ANSWER IS CHECKED
-    await _ref.read(quizService).checkAnswer(answer);
-    notifyListeners();
-  }
-
-  getNextQuizQuestion() async {
-    Object nextQuestionResult = await _ref.read(quizService).getNextQuestion();
-    if (nextQuestionResult is Success) {
-      navigate(MyScreen.quizQuestionSingle);
-    }
-    if (nextQuestionResult is Failure) {
-      //if failure, then no more questions left. End session.
-      Object endResult = _ref.read(quizService).endSession();
-      if (endResult is Failure) {
-        setMessage(endResult.errorString.toString());
-        return;
-      }
-      navigate(MyScreen.sessionFinished);
-    }
-  }
-
-  interruptSession() async {
-    navigate(MyScreen.menu);
-  }
 
   moveQuestionBackToShown() async {
     debugPrint('moveQuestionBackToShown deployed');

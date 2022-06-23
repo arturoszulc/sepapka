@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
+import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/question_list.dart';
+import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 import '../model_layer/models/question.dart';
 
@@ -14,7 +16,10 @@ final questionListFilterType = StateProvider<int>((ref) => 0);
 final questionListFilterLevel = StateProvider<int>((ref) => 0);
 final questionListFilterCategory = StateProvider<int>((ref) => 0);
 
-// LIST COMPUTAION
+//FILTERED LIST INDEX
+final questionListIndex = StateProvider<int>((ref) => 0);
+
+// FILTERED LIST COMPUTATION
 final filteredQuestionList = Provider<List<Question>>((ref) {
   log('&&& Filtering question list... &&&');
   final int filterType = ref.watch(questionListFilterType);
@@ -51,3 +56,25 @@ final filteredQuestionList = Provider<List<Question>>((ref) {
 
   return qListGlobalFiltered;
 });
+
+
+final questionListController = Provider<QuestionListController>((ref) {
+  return QuestionListController(ref);
+});
+
+class QuestionListController {
+  final Ref _ref;
+  const QuestionListController(this._ref) {
+    log('^^^ QuestionListController initialized ^^^');
+  }
+
+  void showSingleQuestion(int index) {
+    _ref.read(questionListIndex.notifier).state = index;
+    _ref.read(routeController).navigate(MyScreen.listQuestionSingle);
+  }
+
+  bool isQuestionHidden(String qId) {
+    return false;
+  }
+
+}

@@ -7,6 +7,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/input_validation_model.dart';
+import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
@@ -95,11 +96,12 @@ class AuthController {
     Object signOutResult = await _ref.read(authServiceProvider).signOut();
     if (signOutResult is Failure) {
       setAuthError(signOutResult.errorString);
-      _ref.read(routeController).navigate(MyScreen.settings);
     }
     //reset input data in Sign In Screen
     _ref.read(emailState.notifier).state = const InputValidationModel(null,null);
     _ref.read(passwordState.notifier).state = const InputValidationModel(null,null);
+    //clear user
+    _ref.read(userService.notifier).clearUser();
     _ref.read(routeController).navigate(MyScreen.signIn);
   }
 
