@@ -115,7 +115,7 @@ Widget buildTitle(BuildContext context, Question q) {
             builder: (BuildContext context, WidgetRef ref, Widget? child) => Container(
                 alignment: Alignment.centerRight,
                 // color: Colors.grey,
-                child: ref.read(userService).hiddenQuestionIds.contains(q.id)
+                child: ref.read(questionListController).isQuestionHidden(q.id)
                     ? qListIcons['notShown']! : qListIcons['none']!,
                 //ref.read(manager).getQuestionIcon(q.id)),
           ),

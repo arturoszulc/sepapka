@@ -36,7 +36,7 @@ class QuestionListFilter extends ConsumerWidget {
             GroupButton(
               options: myGroupButtonOptions(context),
               onSelected: (index, isSelected)
-              { log('clicked $index');
+              {
                 ref.read(questionListFilterType.notifier).state = index;},
               buttons: qTypeList,
               controller: GroupButtonController(

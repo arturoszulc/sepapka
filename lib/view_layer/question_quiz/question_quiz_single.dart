@@ -28,7 +28,7 @@ class QuizSingleQuestion extends ConsumerWidget {
       onWillPop: () async {
       bool result = await leaveSessionDialog(context);
       if (result) {
-        myManager.interruptSession();
+        // myManager.interruptSession();
         return false;
       }
         return false;

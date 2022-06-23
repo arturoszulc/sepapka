@@ -147,12 +147,20 @@ class UserService extends StateNotifier<AppUser> {
     state = AppUser.empty();
   }
 
-  void addQuestionToHidden() {
-
+  void moveQuestionToHidden(String qId) {
+    state = state.copyWith(hiddenQuestionIds: [
+      ...state.hiddenQuestionIds,
+      qId,
+    ]);
+    log('HiddenList: ${state.hiddenQuestionIds}');
   }
 
-  void removeQuestionFromHidden() {
-
+  void removeQuestionFromHidden(String qId) {
+    state = state.copyWith(hiddenQuestionIds: [ //create new list using copyWith
+      for (final id in state.hiddenQuestionIds) //check current elements in list
+        if (id != qId) id, //return anything but that one qId
+    ]);
+    log('HiddenList: ${state.hiddenQuestionIds}');
   }
 
   //////// END NEW ////////
@@ -365,9 +373,6 @@ class UserService extends StateNotifier<AppUser> {
     // }
   }
 
-  // addQMapToPractice(QMap qMap) {
-  //   _loggedUser!.qListPractice.add(qMap);
-  // }
 
   addQMapToNotShown(QMap qMap) {
     _loggedUser!.qListNotShown.add(qMap);

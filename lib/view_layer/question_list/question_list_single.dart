@@ -17,30 +17,31 @@ class QuestionListSingle extends ConsumerWidget {
     // final myManager = ref.read(manager);
     final int index = ref.watch(questionListIndex);
     final int filteredListLength = ref.watch(filteredQuestionList).length - 1;
-    Question question = ref.watch(filteredQuestionList)[index];
-    final bool isQuestionHidden = ref.watch(questionListController).isQuestionHidden(question.id);
+    final Question question = ref.watch(questionListCurrentQuestion(index));
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Pytanie ${index + 1} / ${filteredListLength + 1}'),
         centerTitle: true,
         actions: [
-          isQuestionHidden ?
+          Consumer(builder: (context, ref, child) =>
+          ref.watch(questionListController).isQuestionHidden(question.id) ?
           IconButton(
               onPressed: () async {
                 ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                await myManager.moveQuestionBackToShown();
+                ref.read(questionListController).removeQuestionFromHidden();
                 ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie będzie widoczne'));
               },
               icon: const Icon(Icons.visibility_off)) :
               IconButton(
                   onPressed: () async {
                     ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                    await myManager.doNotShowThisQuestionAnymore();
+                    ref.read(questionListController).moveQuestionToHidden();
                     ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie zostało ukryte'));
                   },
                   icon: const Icon(Icons.visibility)),
           // buildSettingsMenu(isQuestionHidden),
+          ),
         ],
       ),
       body: question == null
@@ -93,7 +94,7 @@ class QuestionListSingle extends ConsumerWidget {
               onPressed: index == 0
                   ? null
                   : () {
-                myManager.showSingleFilteredQuestion(index - 1);
+                ref.read(questionListController).previousQuestion();
                     },
             ),
             IconButton(
@@ -104,7 +105,7 @@ class QuestionListSingle extends ConsumerWidget {
               onPressed: index == filteredListLength
                   ? null
                   : () {
-                myManager.showSingleFilteredQuestion(index + 1);
+                ref.read(questionListController).nextQuestion();
                     },
             ),
           ],

@@ -22,7 +22,7 @@ Widget singleQuestionTopBar(BuildContext context) {
               onPressed: () async {
                 bool result = await leaveSessionDialog(context);
                 if (result) {
-                  ref.read(manager).interruptSession();
+                  // ref.read(manager).interruptSession();
                 }
               },
               icon: const Icon(Icons.clear),
