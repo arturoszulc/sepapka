@@ -11,12 +11,9 @@ import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
+import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/consts/question.dart';
-import 'package:sepapka/utils/methods.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
-
-import '../../locator.dart';
-import '../models/question.dart';
 import 'database_service.dart';
 
 
@@ -104,35 +101,41 @@ class UserService extends StateNotifier<AppUser> {
 
   //////// NEW ////////
 
+  // void createUser(String uid) {
+  //   log('User created');
+  //   state = state.copyWith(id: uid);
+  //   log(state.toString());
+  // }
+
+  void getUserFromDb(String uid) async {
+    //try to fetch from db
+    final response = await AsyncValue.guard(() => _ref.read(databaseService).getUser(uid));
+    if (response.value is AppUser) {
+      state = response.value!;
+      log('/// UserService: Got User from DB ///');
+      log(response.value.toString());
+      _ref.read(routeController).navigate(MyScreen.menu);
+    } else {
+      //if error, then assume that user is new and wasn't yet created
+      createUser(uid);
+      final updateResult = updateUserInDb();
+      if (updateResult is Failure) {
+        log('/// UserService: Error updating user ///');
+        return;
+      }
+      _ref.read(routeController).navigate(MyScreen.menu);
+    }
+  }
+
   void createUser(String uid) {
-    log('User created');
+    log('/// UserService: Created emptyUser ///');
     state = state.copyWith(id: uid);
     log(state.toString());
   }
 
-  void getUserFromDb(String uid) async {
-      // try {
-      //   final response = await _databaseService.getUserData(state.id);
-      // } catch (e) {
-      //   //     debugPrint(errorGetUserDataFromDB);
-      //   //if there's an error, assume that user was not yet created
-      //   await updateUserToDb();
-      // }
-    //try to fetch from db
-    final response = await AsyncValue.guard(() => _ref.read(databaseService).getUserDataFromDb(uid));
-    if (response.value is AppUser) {
-      // state = response.value!;
-      log(response.value.toString());
-    } else {
-      //if error, then assume that user is new and wasn't yet created
-      log('Have to fetch a new user to DB...');
-    }
-    //if error, create new one
-  }
-
   Future<Object> updateUserInDb() async {
     try {
-      // await _ref.read(databaseService).updateUserDb(state);
+      await _ref.read(databaseService).updateUser(state);
       return Success();
     } catch (e) {
       debugPrint(errorUpdateUserInDb);

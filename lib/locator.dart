@@ -1,11 +1,9 @@
 import 'package:get_it/get_it.dart';
-import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/file_service.dart';
 import 'package:sepapka/model_layer/services/purchase_service.dart';
 import 'package:sepapka/model_layer/services/quiz_service.dart';
 import 'package:sepapka/model_layer/services/storage_service.dart';
-import 'package:sepapka/model_layer/services/user_service.dart';
 
 import 'model_layer/services/validation_service.dart';
 

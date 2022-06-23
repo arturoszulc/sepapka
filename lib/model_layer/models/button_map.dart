@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
-@immutable
 class BMap {
   final String answer;
   final Color color;

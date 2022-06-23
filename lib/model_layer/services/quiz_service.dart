@@ -4,14 +4,11 @@ import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
-import 'package:sepapka/model_layer/models/remark.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/colors.dart';
-import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/question.dart';
-import 'package:sepapka/utils/methods.dart';
 
 import '../../locator.dart';
 import '../../utils/question_list.dart';

@@ -13,10 +13,10 @@ import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import '../../utils/consts/my_screens.dart';
 
 
-final authStateProvider = StreamProvider<User?>((ref) {
-  log('^^^ authStateProvider initialized ^^^');
-  return ref.watch(authServiceProvider).authStateChange;
-});
+// final authStateProvider = StreamProvider<User?>((ref) {
+//   log('^^^ authStateProvider initialized ^^^');
+//   return ref.watch(authServiceProvider).authStateChange;
+// });
 
 final authServiceProvider = Provider<AuthService>((ref) {
   return AuthService(ref);
@@ -43,12 +43,12 @@ class AuthService {
   watchAuthUser() {
     authStateChange.listen((User? user) async {
       if (user != null) {
-        log('/// User signed in ///');
+        log('/// AuthService: User signed in ///');
         _ref.read(userService.notifier).getUserFromDb(user.uid);
         // await prepareData(user.uid);
       }
       if (user == null) {
-        log('/// User signed out ///');
+        log('/// AuthService: User signed out ///');
         // await _userService.logOutUser();
         _ref.read(routeController).navigate(MyScreen.signIn);
       }

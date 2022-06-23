@@ -6,7 +6,6 @@ import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/route_service.dart';
 import 'package:sepapka/utils/consts/theme_data.dart';
 import 'package:flutter/services.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 
 
 void main() async {

@@ -18,7 +18,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     // initialLocation: MyScreen.signIn.path,
-    // debugLogDiagnostics: true,
+    debugLogDiagnostics: true,
     // For demo purposes
     refreshListenable: router,
     // This notifiies `GoRouter` for refresh events
