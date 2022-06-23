@@ -11,7 +11,7 @@ class RemarkScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** RemarkScreen built ***');
     final myManager = ref.read(manager);
-    Question currentQuestion = myManager.currentQuestion!;
+    Question currentQuestion = Question(id: 'id', q: 'q', a1: 'a1', a2: 'a2', a3: 'a3', a4: 'a4', label: 0, level: 0, assetPath: 'assetPath');//myManager.currentQuestion!;
     final error = myManager.errorMsg;
 
     return SafeArea(

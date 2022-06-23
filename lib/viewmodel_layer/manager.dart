@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart'; //iconData is from here
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -23,6 +24,7 @@ import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/consts/question.dart';
+import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 
@@ -45,11 +47,11 @@ class Manager extends ChangeNotifier {
   }
 
   //Services Injection
-  AuthService _authService = serviceLocator.get<AuthService>();
-  UserService _userService = serviceLocator.get<UserService>();
-  QuizService _questionService = serviceLocator.get<QuizService>();
-  DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
-  ValidationService _validationService = serviceLocator.get<ValidationService>();
+  // AuthService _authService = serviceLocator.get<AuthService>();
+  // UserService _userService = serviceLocator.get<UserService>();
+  // QuizService _questionService = serviceLocator.get<QuizService>();
+  // DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
+  // ValidationService _validationService = serviceLocator.get<ValidationService>();
   PurchaseService _purchaseService = serviceLocator.get<PurchaseService>();
   // RouteService _routeService = serviceLocator.get<RouteService>();
 
@@ -81,13 +83,13 @@ class Manager extends ChangeNotifier {
 
   //Question Service
 
-  double get progressPercentSession => _questionService.getProgressPercentSession();
+  double get progressPercentSession => 0.0;//_questionService.getProgressPercentSession();
 
-  String get userScore => _questionService.getUserScore();
+  String get userScore => _ref.read(quizService).getUserScore();
 
-  Question? get currentQuestion => _questionService.currentQuestion;
+  // Question? get currentQuestion => _questionService.currentQuestion;
 
-  QuestionStatus get qStatus => _questionService.qStatus;
+  QuestionStatus get qStatus => QuestionStatus.noAnswer;//_questionService.qStatus;
 
   // int get filterType => _questionService.filterType;
 
@@ -95,13 +97,13 @@ class Manager extends ChangeNotifier {
 
   // int get filterCategory => _questionService.filterCategory;
 
-  List<BMap> get bMapList => _questionService.bMapList;
+  // List<BMap> get bMapList => _ref.read(quizController).bMapList;
 
-  List<Question> get qListGlobalFiltered => _questionService.qListGlobalFiltered;
+  List<Question> get qListGlobalFiltered => [];//_questionService.qListGlobalFiltered;
 
-  List<int> get countQuestionsByLevel => _questionService.countQuestionsByLevel();
+  // List<int> get countQuestionsByLevel => _questionService.countQuestionsByLevel();
 
-  List<int> get countQuestionsByCategories => _questionService.countQuestionsByCategory();
+  // List<int> get countQuestionsByCategories => _questionService.countQuestionsByCategory();
 
 
   //DatabaseService
@@ -112,11 +114,11 @@ class Manager extends ChangeNotifier {
   //ValidationService
   // ValidationModel get email => _validationService.email;
 
-  InputValidationModel get emailRemind => _validationService.emailRemind;
+  InputValidationModel get emailRemind => _ref.read(validationService).emailRemind;
 
-  // ValidationModel get password => _validationService.password;
+  // InputValidationModel get password => _ref.read(validationService).password;
 
-  InputValidationModel get remark => _validationService.remark;
+  InputValidationModel get remark => _ref.read(validationService).remark;
 
   // bool get isEmailAndPasswordValid => _validationService.isEmailAndPasswordValid;
 
@@ -157,7 +159,7 @@ class Manager extends ChangeNotifier {
       }
       if (user == null) {
         log('/// User signed out ///');
-        await _userService.logOutUser();
+        // await _userService.logOutUser();
         if (_currentScreen != MyScreen.signIn) navigate(MyScreen.signIn);
       }
     });
@@ -176,12 +178,12 @@ class Manager extends ChangeNotifier {
     // }
 
     //next prepare questions
-    Object prepareDataResult = await _questionService.prepareGlobalData();
-    if (prepareDataResult is Failure) {
-      setError(prepareDataResult);
-      navigate(MyScreen.signIn);
-      return;
-    }
+    // Object prepareDataResult = await _questionService.prepareGlobalData();
+    // if (prepareDataResult is Failure) {
+    //   setError(prepareDataResult);
+    //   navigate(MyScreen.signIn);
+    //   return;
+    // }
     //reset data entered in sign in screen forms
     // email.value = null;
     // password.value = null;
@@ -192,7 +194,7 @@ class Manager extends ChangeNotifier {
   //        AUTH        //
   ////////////////////////
 
-  Stream<User?> get authUser => _authService.auth.authStateChanges();
+  Stream<User?> get authUser => _ref.watch(authStateProvider.stream);
 
 
   // signIn({required String email, required String password}) async {
@@ -243,17 +245,17 @@ class Manager extends ChangeNotifier {
   resetPassword(String email) async {
     debugPrint('/// manager ResetPassword deployed');
     navigate(MyScreen.loading);
-    Object resetPassResult = await _authService.resetPassword(email.toLowerCase());
-    if (resetPassResult is Failure) {
-      await setError(resetPassResult);
-      navigate(MyScreen.resetPassword);
-    }
-    if (resetPassResult is Success) {
-      await setError(null);
-      // setLoading(true);
-      setMessage(msgResetSent);
-      navigate(MyScreen.signIn);
-    }
+    // Object resetPassResult = await _authService.resetPassword(email.toLowerCase());
+    // if (resetPassResult is Failure) {
+    //   await setError(resetPassResult);
+    //   navigate(MyScreen.resetPassword);
+    // }
+    // if (resetPassResult is Success) {
+    //   await setError(null);
+    //   setLoading(true);
+    //   setMessage(msgResetSent);
+    //   navigate(MyScreen.signIn);
+    // }
   }
 
   ////////////////////////
@@ -262,22 +264,22 @@ class Manager extends ChangeNotifier {
 
   LoggedUser? get loggedUser => _ref.read(userService.notifier).loggedUser;
 
-  int get qNewLeft => _userService.loggedUser!.qListNew.length;
+  // int get qNewLeft => _userService.loggedUser!.qListNew.length;
 
-  bool get isSessionFinished => _questionService.isSessionFinished;
+  bool get isSessionFinished => _ref.read(quizService).isSessionFinished;
 
   goPro() async {
-    Object goProResult = await _userService.goPro();
-    if (goProResult is Failure) {
-      setError(goProResult);
-      return;
-    }
+    // Object goProResult = await _userService.goPro();
+    // if (goProResult is Failure) {
+    //   setError(goProResult);
+    //   return;
+    // }
     //prepare new global data
-    Object prepareDataResult = await _questionService.prepareGlobalData();
-    if (prepareDataResult is Failure) {
-      setError(prepareDataResult);
-      return;
-    }
+    // Object prepareDataResult = await _questionService.prepareGlobalData();
+    // if (prepareDataResult is Failure) {
+    //   setError(prepareDataResult);
+    //   return;
+    // }
     navigate(MyScreen.purchaseSuccess);
   }
 
@@ -286,36 +288,36 @@ class Manager extends ChangeNotifier {
   ////////////////////////
 
   chooseQuestionLevel(int level) async {
-    await _questionService.setQuestionLevel(level);
+    await _ref.read(quizService).setQuestionLevel(level);
     //after choosing Level, choose category
     navigate(MyScreen.quizChooseCategory);
   }
 
   chooseQuestionCategory(int catNumber) {
-    _questionService.setQuestionCategory(catNumber);
+    _ref.read(quizService).setQuestionCategory(catNumber);
     //after choosing Category, prepare Session Data
     startSession();
   }
 
   startSession() async {
-    await _questionService.prepareSession();
+    await _ref.read(quizService).prepareSession();
     getNextQuizQuestion();
   }
 
   checkAnswer(String answer) async {
     ///TODO: LOCK POSSIBILITY OF PUSHING ANOTHER BUTTON BEFORE ANSWER IS CHECKED
-    await _questionService.checkAnswer(answer);
+    await _ref.read(quizService).checkAnswer(answer);
     notifyListeners();
   }
 
   getNextQuizQuestion() async {
-    Object nextQuestionResult = await _questionService.getNextQuestion();
+    Object nextQuestionResult = await _ref.read(quizService).getNextQuestion();
     if (nextQuestionResult is Success) {
       navigate(MyScreen.quizQuestionSingle);
     }
     if (nextQuestionResult is Failure) {
       //if failure, then no more questions left. End session.
-      Object endResult = _questionService.endSession();
+      Object endResult = _ref.read(quizService).endSession();
       if (endResult is Failure) {
         setMessage(endResult.errorString.toString());
         return;
@@ -367,8 +369,8 @@ class Manager extends ChangeNotifier {
 
   bool isQuestionHidden(String? qId) {
     if (qId == null) return false;
-    var result = _userService.isQuestionInNotShownList(qId);
-    if (result == null) return false;
+    // var result = _userService.isQuestionInNotShownList(qId);
+    // if (result == null) return false;
     return true;
   }
 
@@ -444,13 +446,13 @@ class Manager extends ChangeNotifier {
   // }
 
   void validateEmailRemind(String val) {
-    _validationService.validateEmailRemind(val);
-    notifyListeners();
+    // _validationService.validateEmailRemind(val);
+    // notifyListeners();
   }
 
   void validateRemark(String val) {
-    _validationService.validateRemark(val);
-    notifyListeners();
+    // _validationService.validateRemark(val);
+    // notifyListeners();
   }
 
   ////////////////////////
@@ -540,7 +542,7 @@ class Manager extends ChangeNotifier {
     // _purchaseService.addIdToRevenueCat(loggedUser!.documentId);
 
     //save purchase details
-    _databaseService.savePurchaseDetails(info, loggedUser!.documentId);
+    // _databaseService.savePurchaseDetails(info, loggedUser!.documentId);
     //give user pro permission
     setError(null);
     await goPro();
@@ -602,7 +604,7 @@ class Manager extends ChangeNotifier {
 
 
   Widget getQuestionIcon(String qId) {
-    return _userService.getQListIcon(qId);
+    return Icon(Icons.check);
   }
 
 // String getBadgePath({int? rankLevel}) {

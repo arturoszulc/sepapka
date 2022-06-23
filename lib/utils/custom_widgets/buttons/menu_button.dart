@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sepapka/model_layer/services/user_service.dart';
 
 import '../../../viewmodel_layer/manager.dart';
 
@@ -22,7 +23,7 @@ class MenuButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool isUserPro = ref.read(manager).loggedUser!.isPro;
+    bool isUserPro = ref.read(userService).isPro;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Badge(

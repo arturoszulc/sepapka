@@ -11,7 +11,7 @@ final validationService = Provider<ValidationService>((ref) {
 class ValidationService {
   // InputValidationModel _email = InputValidationModel(null, null);
   InputValidationModel _emailRemind = const InputValidationModel(null, null);
-  // InputValidationModel _password = InputValidationModel(null, null);
+  InputValidationModel _password = InputValidationModel(null, null);
   InputValidationModel _remark = const InputValidationModel(null, null);
 
 
@@ -33,7 +33,7 @@ class ValidationService {
 
   InputValidationModel get emailRemind => _emailRemind;
 
-  // InputValidationModel get password => _password;
+  InputValidationModel get password => _password;
 
   InputValidationModel get remark => _remark;
 

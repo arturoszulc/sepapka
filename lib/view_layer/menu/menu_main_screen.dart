@@ -42,10 +42,9 @@ class MenuScreen extends ConsumerWidget {
             child: Column(
               children: [
                 MenuButton(
-                  key: ,
                     label: 'Quiz',
                     onPressed: () {
-                      myManager.navigate(MyScreen.quizChooseLevel);
+                      ref.read(routeController).navigate(MyScreen.quizChooseLevel);
                     }),
                 MenuButton(
                     label: 'Lista pytań',
@@ -67,7 +66,7 @@ class MenuScreen extends ConsumerWidget {
                 MenuButton(
                     label: 'Kalkulatory',
                     onPressed: () {
-                      myManager.navigate(MyScreen.calcMenu);
+                      ref.read(routeController).navigate(MyScreen.calcMenu);
                     }),
                 MenuButton(label: 'Wyloguj się', onPressed: () async {
                   await ref.read(authController).signOut();
