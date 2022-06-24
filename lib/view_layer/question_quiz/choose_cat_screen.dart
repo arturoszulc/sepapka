@@ -14,7 +14,7 @@ class ChooseCategory extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** ChooseCategory Screen built ***');
 
-    List<int> countQuestionsByCategories = ref.watch(quizController.notifier).numOfQuestionsByCategory;
+    List<int> countCategories = ref.watch(numOfQuestionsByCategory);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Wybierz kategorię'),
@@ -38,9 +38,9 @@ class ChooseCategory extends ConsumerWidget {
                       MenuButton(
                           label: category,
                           hasBadge: true,
-                          badgeNum: countQuestionsByCategories[qCategoryList.indexOf(category)],
+                          badgeNum: countCategories[qCategoryList.indexOf(category)],
                           onPressed: () {
-                            ref.read(quizController.notifier).setCategory(qCategoryList.indexOf(category));
+                            ref.read(quizController).setCategory(qCategoryList.indexOf(category));
                           }),
                       ).toList()
 

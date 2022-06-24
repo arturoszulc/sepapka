@@ -8,70 +8,172 @@ import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import '../model_layer/models/button_map.dart';
 import '../model_layer/models/question.dart';
 import '../model_layer/models/quiz_state_model.dart';
+import '../model_layer/services/user_service.dart';
 import '../utils/consts/colors.dart';
+import '../utils/question_list.dart';
+
+//// Percent progress calculation ////
+final quizTotalQuestions = StateProvider<int>((ref) => ref.watch(quizQuestionList).length);
+final quizCorrectAnswers = StateProvider<int>((ref) => 0);
+
+final quizPercentProgress = Provider<double>((ref) {
+  final int totalNumOfQuestions = ref.watch(quizTotalQuestions);
+  final int currentQuestionIndex = ref.watch(quizCurrentQuestionIndex);
+  log('Quiz totalQuestions: $totalNumOfQuestions');
+  log('Quiz currentIndex: $currentQuestionIndex');
+  if (currentQuestionIndex == 0) return 0.0;
+  return currentQuestionIndex/totalNumOfQuestions;
+  // return 0.5;
+});
+// Quiz final score calculation
+final quizFinalScore = Provider<String>((ref) {
+  final int numberOfQuestions = ref.read(quizTotalQuestions);
+  final int numberOfRightAnswers = ref.read(quizCorrectAnswers);
+  double scoreDouble = (numberOfRightAnswers / numberOfQuestions) * 100;
+  String scoreString = scoreDouble.toStringAsFixed(1);
+  return scoreString;
+});
+
+final quizLevel = StateProvider<int>((ref) => 0);
+final quizCategory = StateProvider<int>((ref) => 0);
+
+//Question list WITHOUT HIDDEN QUESTIONS
+final quizQuestionListGlobal =
+    Provider<List<Question>>((ref) => ref.read(quizService).getQuizQuestionList());
+
+//Count quiz questions by LEVEL
+final numOfQuestionsByLevel = Provider<List<int>>((ref) {
+  final List<Question> qList = ref.read(quizQuestionListGlobal);
+  final List<int> numList = [0, 0, 0, 0];
+  for (Question question in qList) {
+    if (question.level == 1) numList[1] += 1;
+    if (question.level == 2) numList[2] += 1;
+    if (question.level == 3) numList[3] += 1;
+  }
+  numList[0] = numList[1] + numList[2] + numList[3];  //first number is total number of questions
+  return numList;
+
+});
+
+//Count quiz questions by CATEGORY
+final numOfQuestionsByCategory = Provider<List<int>>((ref) {
+  final List<Question> qList = ref.read(quizQuestionListGlobal);
+  final int qLevel = ref.watch(quizLevel);
+  final List<int> numList = [0, 0, 0, 0, 0];
+
+      if(qLevel != 0){ //this if/else must stay!
+    for (Question question in qList) {
+      if (question.level == qLevel) {
+        if (question.label == 1) numList[1] += 1;
+        if (question.label == 2) numList[2] += 1;
+        if (question.label == 3) numList[3] += 1;
+        if (question.label == 4) numList[4] += 1;
+      }
+    }
+  } else {
+        for (Question question in qList) {
+            if (question.label == 1) numList[1] += 1;
+            if (question.label == 2) numList[2] += 1;
+            if (question.label == 3) numList[3] += 1;
+            if (question.label == 4) numList[4] += 1;
+        }
+      }
+  numList[0] = numList[1] + numList[2] + numList[3] + numList[4];
+  return numList;
+});
+
+//Current quiz Question list - deployed manually, one time
+final quizQuestionList = Provider<List<Question>>((ref) {
+  final List<Question> qList = ref.read(quizQuestionListGlobal);
+  final int chosenLevel = ref.read(quizLevel);
+  final int chosenCategory = ref.read(quizCategory);
+  //TODO: Fix this. No question have level=0, so when I choose all questions, I get an error
+  List<Question> newList = List<Question>.from([
+    for (final q in qList)
+      if (q.level == chosenLevel)
+        if (q.label == chosenCategory) ...[q]
+  ]);
+  newList.shuffle();
+  return newList;
+});
+
+//Current quiz Question
+final quizCurrentQuestion =
+Provider<Question>((ref) => ref.watch(quizQuestionList)[ref.watch(quizCurrentQuestionIndex)]);
+
+//Current quiz question Status
+final isQuestionAnswered = StateProvider<bool>((ref) => false);
 
 
-final sessionPercentIndicator = StateProvider.autoDispose<double>((ref) => 0.5);
+final quizCurrentQuestionIndex = StateProvider<int>((ref) => 0);
+
+
+
+// QUIZ STATE
+// status: initial, ready, complete
+// int: chosen level
+// int: chose category
+// int: List<Question> sessionList
+//
+
+// QUIZ SINGLE QUESTION STATE
+// status: noAnswer, Answered
+// String: question
+// List<BMap>: currentBmap
+
+//
+
 final bMapProvider = StateProvider<List<BMap>>((ref) => []);
-final quizController = StateNotifierProvider.autoDispose<QuizController, QuizState>((ref) => QuizController(ref));
+final quizController = Provider<QuizController>((ref) => QuizController(ref));
 
-class QuizController extends StateNotifier<QuizState> {
+////////////////////////////
+//////// CONTROLLER ////////
+////////////////////////////
+
+class QuizController {
   final Ref _ref;
-  QuizController(this._ref) : super(QuizState.initial()) {
-   log('^^^ QuizController initialized ^^^');
+
+  QuizController(this._ref) {
+    log('^^^ QuizController initialized ^^^');
   }
 
-  List<int> get numOfQuestionsByLevel => _ref.read(quizService).countQuestionsByLevel();
-  List<int> get numOfQuestionsByCategory => _ref.read(quizService).countQuestionsByCategory();
-  Question get currentQuestion => state.questions[state.currentQuestionIndex];
-  double get progressPercentSession => _ref.read(sessionPercentIndicator);
   void setLevel(int lvl) {
-    state = state.copyWith(qLevel: lvl);
+    _ref.read(quizLevel.notifier).state = lvl;
     _ref.read(routeController).navigate(MyScreen.quizChooseCategory);
   }
 
   void setCategory(int cat) {
-    log('Category: $cat');
-    state = state.copyWith(category: cat);
-    getQuestions();
-    log('Passed getQuestions');
-    prepareBMap();
+    _ref.read(quizCategory.notifier).state = cat;
+    prepareSession();
+
+  }
+
+  void prepareSession() {
+    _ref.refresh(quizCurrentQuestionIndex); //reset current question index
+    _ref.refresh(quizQuestionList); //prepare question list based on level and category
+    prepareBMap(); //prepare BMap
     _ref.read(routeController).navigate(MyScreen.quizQuestionSingle);
   }
 
-  void getQuestions() {
-    state = state.copyWith(
-      questions: _ref.read(quizService).getQuizQuestions(state.qLevel, state.category)
-    );
-    state = state.copyWith(
-      totalQuestions: state.questions.length
-    );
-  }
+  // void getQuestions() {
+  //   state = state.copyWith(
+  //       questions: _ref.read(quizService).getQuizQuestions(state.qLevel, state.category));
+  //   state = state.copyWith(totalQuestions: state.questions.length);
+  // }
 
   void checkAnswer(String answer) {
+    final Question currentQuestion = _ref.read(quizCurrentQuestion);
+    final bool isAnswered = _ref.read(isQuestionAnswered);
     log('BMap before');
     log(_ref.read(bMapProvider.notifier).state.toString());
-    if (state.isAnswered) return; //if user already answered, do nothing
+    if (isAnswered) return; //if user already answered, do nothing
     if (currentQuestion.a1 == answer) {
       //right answer
-      state = state.copyWith(
-        status: QuizStatus.rightAnswer,
-        // selectedAnswer: answer,
-        totalQuestionsCorrect: state.totalQuestionsCorrect+1,
-      );
-      // _ref.read(bMapProvider.notifier).state.firstWhere((element) => element.answer == answer).copyWith(color: rightButtonColor);
-
+      _ref.read(quizCorrectAnswers.notifier).state += 1;
     } else {
       //wrong answer
-      state = state.copyWith(
-        status: QuizStatus.wrongAnswer,
-      );
-      //color wrong button
-      // _ref.read(bMapProvider.notifier).state.firstWhere((element) => element.answer == answer)) = .copyWith(color: wrongButtonColor);
-      // //color right button
-      // _ref.read(bMapProvider.notifier).state.firstWhere((element) => element.answer == currentQuestion.a1).copyWith(color: rightButtonColor);
     }
-
+    _ref.read(isQuestionAnswered.notifier).state = true; //set answered to true
     updateBMap(answer);
 
     // log('BMap after');
@@ -81,42 +183,42 @@ class QuizController extends StateNotifier<QuizState> {
   }
 
   void nextQuestion() {
-    final count = state.currentQuestionIndex+1;
-      // state.questions.removeAt(0);
-      state = state.copyWith(
-          status: QuizStatus.notAnswered,
-        currentQuestionIndex: state.currentQuestionIndex + 1
-      );
-    log('CurrentQuestionindex: ${state.currentQuestionIndex}');
+    //if it was the last question, finish quiz
+    if (_ref.read(quizCurrentQuestionIndex.notifier).state+1 == _ref.read(quizTotalQuestions)) {
+      finishQuiz();
+      return;
+    }
+    //if not, get next question
+    _ref.read(isQuestionAnswered.notifier).state = false;
+    _ref.read(quizCurrentQuestionIndex.notifier).state += 1;
     prepareBMap();
   }
 
   void prepareBMap() {
     _ref.read(bMapProvider.notifier).state =
-        _ref.read(quizService).getShuffledBMap(state.questions[state.currentQuestionIndex]);
-      }
+        _ref.read(quizService).getShuffledBMap(_ref.read(quizCurrentQuestion));
+  }
 
-      void updateBMap(String answer) {
+  void updateBMap(String answer) {
+    final Question currentQuestion = _ref.read(quizCurrentQuestion);
     _ref.read(bMapProvider.notifier).state = List<BMap>.from([
       for (final bMap in _ref.read(bMapProvider.notifier).state)
-          if (bMap.answer == currentQuestion.a1) ...[
+        if (bMap.answer == currentQuestion.a1) ...[
           BMap(answer: bMap.answer, color: rightButtonColor)
-          ] else if (bMap.answer == answer) ...[
-            BMap(answer: bMap.answer, color: wrongButtonColor)
+        ] else if (bMap.answer == answer) ...[
+          BMap(answer: bMap.answer, color: wrongButtonColor)
+        ] else ...[
+          bMap
         ]
-        else ...[bMap]
     ]);
     log('BMap after: ${_ref.read(bMapProvider)}');
-      }
+  }
 
-  void startQuiz() {}
 
-  void finnishQuiz() {
+  void finishQuiz() {
     _ref.read(routeController).navigate(MyScreen.sessionFinished);
   }
 
   void resetQuiz() {
-    state = QuizState.initial();
   }
-
 }

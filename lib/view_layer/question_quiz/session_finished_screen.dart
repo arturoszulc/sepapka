@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
 
 class SessionFinished extends StatelessWidget {
   const SessionFinished({Key? key}) : super(key: key);
@@ -29,9 +30,9 @@ class SessionFinished extends StatelessWidget {
                   lineWidth: 13.0,
                   animation: true,
                   animationDuration: 2000,
-                  percent: double.parse(ref.read(manager).userScore) / 100,
+                  percent: double.parse(ref.read(quizFinalScore)) / 100,
                   center: Text(
-                      '${ref.read(manager).userScore} %',
+                      '${ref.read(quizFinalScore)} %',
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
                     ),
 

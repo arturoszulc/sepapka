@@ -13,7 +13,7 @@ class MenuChooseLevel extends ConsumerWidget {
     debugPrint('*** ChooseLevel Screen built ***');
 
     // List<int> countLevels = ref.read(manager).countQuestionsByLevel;
-    List<int> countLevels = ref.watch(quizController.notifier).numOfQuestionsByLevel;
+    List<int> countLevels = ref.watch(numOfQuestionsByLevel);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Wybierz poziom trudności'),
@@ -32,15 +32,13 @@ class MenuChooseLevel extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: Column(
-                      // crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         MenuButton(
                           hasBadge: true,
                           badgeNum: countLevels[0],
                           label: 'wszystkie',
                           onPressed: () {
-                            // await ref.read(manager).chooseQuestionLevel(0);
-                            ref.read(quizController.notifier).setLevel(0);
+                            ref.read(quizController).setLevel(0);
                           },
                         ),
                         MenuButton(
@@ -48,7 +46,7 @@ class MenuChooseLevel extends ConsumerWidget {
                           badgeNum: countLevels[1],
                           label: 'poziom 1',
                           onPressed: () {
-                                  ref.read(quizController.notifier).setLevel(1);
+                                  ref.read(quizController).setLevel(1);
                                 },
                         ),
                         MenuButton(
@@ -57,7 +55,7 @@ class MenuChooseLevel extends ConsumerWidget {
                           label: 'poziom 2',
                           onPressed: () {
                             // await ref.read(manager).chooseQuestionLevel(2);
-                            ref.read(quizController.notifier).setLevel(2);
+                            ref.read(quizController).setLevel(2);
                           },
                         ),
                         MenuButton(
@@ -66,7 +64,7 @@ class MenuChooseLevel extends ConsumerWidget {
                           label: 'poziom 3',
                           onPressed: () {
                             // await ref.read(manager).chooseQuestionLevel(3);
-                            ref.read(quizController.notifier).setLevel(3);
+                            ref.read(quizController).setLevel(3);
                           },
                         ),
                       ],

@@ -85,7 +85,7 @@ class Manager extends ChangeNotifier {
 
   double get progressPercentSession => 0.0;//_questionService.getProgressPercentSession();
 
-  String get userScore => _ref.read(quizService).getUserScore();
+  // String get userScore => _ref.read(quizService).getUserScore();
 
   // Question? get currentQuestion => _questionService.currentQuestion;
 

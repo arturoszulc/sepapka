@@ -19,10 +19,10 @@ class QuizSingleQuestion extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** QuestionSingleScreen built ***');
     final myManager = ref.read(manager);
-    final bool isQuestionAnswered = ref.watch(quizController.select((value) => value.status == QuizStatus.wrongAnswer || value.status == QuizStatus.rightAnswer));
-    Question question = ref.read(quizController.notifier).currentQuestion;
-    List<BMap> bMapList = ref.watch(bMapProvider);
-    debugPrint('QUIZ IS ANSWERED: $isQuestionAnswered');
+    final bool isAnswered = ref.watch(isQuestionAnswered);
+    final Question question = ref.watch(quizCurrentQuestion);
+    final List<BMap> bMapList = ref.watch(bMapProvider);
+    debugPrint('QUIZ IS ANSWERED: $isAnswered');
 
     return WillPopScope(
       onWillPop: () async {
@@ -58,7 +58,7 @@ class QuizSingleQuestion extends ConsumerWidget {
                             answer: e.answer,
                             color: e.color,
                             onSelected: () {
-                              ref.read(quizController.notifier).checkAnswer(e.answer);
+                              ref.read(quizController).checkAnswer(e.answer);
                             })
                         ).toList(),
                         
@@ -103,10 +103,10 @@ class QuizSingleQuestion extends ConsumerWidget {
                 ]),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           floatingActionButton: Visibility(
-            visible: isQuestionAnswered ? true : false,
+            visible: isAnswered ? true : false,
             child: FloatingActionButton.extended(
               onPressed: () {
-                ref.read(quizController.notifier).nextQuestion();
+                ref.read(quizController).nextQuestion();
               },
               label: const Text('Dalej >'),
             ),

@@ -40,7 +40,7 @@ Widget singleQuestionTopBar(BuildContext context) {
             lineHeight: 10.0,
             animationDuration: 800,
             animateFromLastPercent: true,
-            percent: ref.read(quizController.notifier).progressPercentSession,
+            percent: ref.watch(quizPercentProgress),
             linearStrokeCap: LinearStrokeCap.roundAll,
             progressColor: Colors.yellow,
           ),
