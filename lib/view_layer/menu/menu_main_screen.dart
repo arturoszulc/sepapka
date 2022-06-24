@@ -12,14 +12,14 @@ class MenuScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** Menu Main Screen built ***');
-    final myManager = ref.read(manager);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text('v. ${myManager.appVersion} (beta)'),
+            //to avoid double rebuilds, I should put a Consumer here, but it has low performance impact
+            child: Text('v. ${ref.watch(appVersionProvider).value} (beta)'),
           ),
         ],
       ),

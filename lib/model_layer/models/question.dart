@@ -9,7 +9,7 @@ class Question {
   final int level;
   final String assetPath;
 
-  Question({
+  const Question({
     required this.id,
     required this.q,
     required this.a1,
@@ -20,6 +20,19 @@ class Question {
     required this.level,
     required this.assetPath,
   });
+
+  factory Question.empty() {
+    return const Question(
+        id: '',
+        q: '',
+        a1: '',
+        a2: '',
+        a3: '',
+        a4: '',
+        label: 0,
+        level: 0,
+        assetPath: '');
+  }
 
   Question.fromJson(Map<String, dynamic> json)
       : id = json['id'],

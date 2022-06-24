@@ -37,10 +37,10 @@ class QuestionListFilter extends ConsumerWidget {
               options: myGroupButtonOptions(context),
               onSelected: (index, isSelected)
               {
-                ref.read(questionListFilterType.notifier).state = index;},
+                ref.read(qListFilterType.notifier).state = index;},
               buttons: qTypeList,
               controller: GroupButtonController(
-                selectedIndex: ref.read(questionListFilterType),
+                selectedIndex: ref.read(qListFilterType),
               ),
             ),
             const SizedBox(height: 20,),
@@ -52,10 +52,10 @@ class QuestionListFilter extends ConsumerWidget {
             GroupButton(
               options: myGroupButtonOptions(context),
               // isRadio: true,
-              onSelected: (index, isSelected) => ref.read(questionListFilterLevel.notifier).state = index,
+              onSelected: (index, isSelected) => ref.read(qListFilterLevel.notifier).state = index,
               buttons: qLevelList,
               controller: GroupButtonController(
-                selectedIndex: ref.read(questionListFilterLevel),
+                selectedIndex: ref.read(qListFilterLevel),
               ),
             ),
             const SizedBox(height: 20,),
@@ -67,10 +67,10 @@ class QuestionListFilter extends ConsumerWidget {
             GroupButton(
               options: myGroupButtonOptions(context),
               isRadio: true,
-              onSelected: (index, isSelected) => ref.read(questionListFilterCategory.notifier).state = index,
+              onSelected: (index, isSelected) => ref.read(qListFilterCategory.notifier).state = index,
               buttons: qCategoryList,
               controller: GroupButtonController(
-                selectedIndex: ref.read(questionListFilterCategory),
+                selectedIndex: ref.read(qListFilterCategory),
               ),
             ),
 

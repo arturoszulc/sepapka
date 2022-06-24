@@ -4,8 +4,6 @@ import 'package:sepapka/utils/custom_widgets/build_question.dart';
 import 'package:sepapka/viewmodel_layer/question_list_controller.dart';
 
 import '../../model_layer/models/question.dart';
-import '../../utils/consts/my_screens.dart';
-import '../../viewmodel_layer/manager.dart';
 import '../../utils/custom_widgets/snackbar_hide_question.dart';
 
 class QuestionListSingle extends ConsumerWidget {
@@ -15,36 +13,39 @@ class QuestionListSingle extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** QuestionListSingle Screen built ***');
     // final myManager = ref.read(manager);
-    final int index = ref.watch(questionListIndex);
-    final int filteredListLength = ref.watch(filteredQuestionList).length - 1;
-    final Question question = ref.watch(questionListCurrentQuestion(index));
-
+    final int index = ref.watch(qListCurrentQuestionIndex);
+    final int filteredListLength = ref.watch(qListFiltered).length - 1;
+    final Question question = ref.watch(qListCurrentQuestion);
+    final bool isQuestionHidden = ref.read(questionListController).isQuestionHidden(question.id);
+    final bool isQuestionEmpty = question.id == ''; //if there's no more question to show
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pytanie ${index + 1} / ${filteredListLength + 1}'),
+        title: Text(
+            isQuestionEmpty ? 'Brak pytań' : 'Pytanie ${index + 1} / ${filteredListLength + 1}'),
         centerTitle: true,
         actions: [
-          Consumer(builder: (context, ref, child) =>
-          ref.watch(questionListController).isQuestionHidden(question.id) ?
-          IconButton(
-              onPressed: () async {
-                ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                ref.read(questionListController).removeQuestionFromHidden();
-                ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie będzie widoczne'));
-              },
-              icon: const Icon(Icons.visibility_off)) :
-              IconButton(
+          isQuestionEmpty ? Container() : //if no question, do not show Icon button
+          isQuestionHidden //if there's a question, show IconButton according to visibility
+              ? IconButton(
                   onPressed: () async {
                     ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                    ref.read(questionListController).moveQuestionToHidden();
-                    ScaffoldMessenger.of(context).showSnackBar(snackBarShowHide(msg: 'Pytanie zostało ukryte'));
+                    ref.read(questionListController).removeQuestionFromHidden(question.id);
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(snackBarShowHide(msg: 'Pytanie będzie widoczne'));
+                  },
+                  icon: const Icon(Icons.visibility_off))
+              : IconButton(
+                  onPressed: () async {
+                    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                    ref.read(questionListController).moveQuestionToHidden(question.id);
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(snackBarShowHide(msg: 'Pytanie zostało ukryte'));
                   },
                   icon: const Icon(Icons.visibility)),
           // buildSettingsMenu(isQuestionHidden),
-          ),
         ],
       ),
-      body: question == null
+      body: isQuestionEmpty
           ? Container()
           : Column(
               children: [
@@ -80,7 +81,9 @@ class QuestionListSingle extends ConsumerWidget {
               ],
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterFloat,
-      floatingActionButton: Padding(
+      floatingActionButton: isQuestionEmpty
+          ? Container()
+          : Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
           mainAxisSize: MainAxisSize.max,
@@ -94,7 +97,7 @@ class QuestionListSingle extends ConsumerWidget {
               onPressed: index == 0
                   ? null
                   : () {
-                ref.read(questionListController).previousQuestion();
+                      ref.read(questionListController).previousQuestion();
                     },
             ),
             IconButton(
@@ -105,7 +108,7 @@ class QuestionListSingle extends ConsumerWidget {
               onPressed: index == filteredListLength
                   ? null
                   : () {
-                ref.read(questionListController).nextQuestion();
+                      ref.read(questionListController).nextQuestion();
                     },
             ),
           ],

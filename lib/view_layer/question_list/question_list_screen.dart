@@ -15,7 +15,7 @@ class QuestionListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** QuestionListScreen built ***');
-    List<Question> qListGlobalFiltered = ref.watch(filteredQuestionList);
+    List<Question> qListGlobalFiltered = ref.watch(qListFiltered);
 
     return Scaffold(
         appBar: AppBar(
@@ -40,7 +40,7 @@ class QuestionListScreen extends ConsumerWidget {
                           'Typ',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(qTypeList[ref.watch(questionListFilterType)]),
+                        Text(qTypeList[ref.watch(qListFilterType)]),
                       ],
                     ),
                     Column(
@@ -50,7 +50,7 @@ class QuestionListScreen extends ConsumerWidget {
                           'Poz. trudności',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(qLevelList[ref.watch(questionListFilterLevel)]),
+                        Text(qLevelList[ref.watch(qListFilterLevel)]),
                       ],
                     ),
                     Column(
@@ -60,7 +60,7 @@ class QuestionListScreen extends ConsumerWidget {
                           'Kategoria',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(qCategoryList[ref.watch(questionListFilterCategory)]),
+                        Text(qCategoryList[ref.watch(qListFilterCategory)]),
                       ],
                     ),
                     const Icon(Icons.filter_list),
@@ -115,7 +115,7 @@ Widget buildTitle(BuildContext context, Question q) {
             builder: (BuildContext context, WidgetRef ref, Widget? child) => Container(
                 alignment: Alignment.centerRight,
                 // color: Colors.grey,
-                child: ref.read(questionListController).isQuestionHidden(q.id)
+                child: ref.watch(questionListController).isQuestionHidden(q.id)
                     ? qListIcons['notShown']! : qListIcons['none']!,
                 //ref.read(manager).getQuestionIcon(q.id)),
           ),

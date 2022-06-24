@@ -10,12 +10,10 @@ import 'package:purchases_flutter/errors.dart';
 import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
 import 'package:purchases_flutter/models/product_wrapper.dart';
 import 'package:sepapka/locator.dart';
-import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/model_layer/models/input_validation_model.dart';
 import 'package:sepapka/model_layer/services/auth_service.dart';
-import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/purchase_service.dart';
 import 'package:sepapka/model_layer/services/quiz_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
@@ -28,6 +26,11 @@ import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 
+final appVersionProvider = FutureProvider<String>((ref) async {
+PackageInfo packageInfo = await PackageInfo.fromPlatform();
+return packageInfo.version;
+});
+
 final manager = ChangeNotifierProvider<Manager>((ref) {
   return Manager(ref);
 });
@@ -37,14 +40,12 @@ class Manager extends ChangeNotifier {
 
   Manager(this._ref) {
     log('^^^ Manager initialized ^^^');
-    //get app version
-    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-      appVersion = packageInfo.version;
-    });
-
     //on initialize, subscribe to stream that checks if user is logged in or not
     // watchAuthUser();
   }
+
+
+
 
   //Services Injection
   // AuthService _authService = serviceLocator.get<AuthService>();
@@ -62,7 +63,6 @@ class Manager extends ChangeNotifier {
 
   String _errorMsg = '';
   String _infoMsg = '';
-  String appVersion = '';
 
   MyScreen _currentScreen = MyScreen.loading;
 

@@ -9,31 +9,31 @@ import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import '../model_layer/models/question.dart';
 
 
-//filtered question list computed automatically base on filters
 
 // FILTERS
-final questionListFilterType = StateProvider<int>((ref) => 0);
-final questionListFilterLevel = StateProvider<int>((ref) => 0);
-final questionListFilterCategory = StateProvider<int>((ref) => 0);
+final qListFilterType = StateProvider<int>((ref) => 0);
+final qListFilterLevel = StateProvider<int>((ref) => 0);
+final qListFilterCategory = StateProvider<int>((ref) => 0);
 
-//FILTERED LIST INDEX
-final questionListIndex = StateProvider<int>((ref) => 0);
+//FILTERED LIST CURRENT INDEX AND LENGTH
+final qListCurrentQuestionIndex = StateProvider<int>((ref) => 0);
+final qListFilteredLength = Provider.autoDispose<int>((ref) {
+  return ref.watch(qListFiltered).length;
+});
 
-final questionListCurrentQuestion = Provider.autoDispose.family<Question, int>((ref, index) {
-  final int index = ref.watch(questionListIndex);
-  final int length = ref.watch(filteredQuestionList).length;
-  log('Index: ${index.toString()}');
-  log('Length: ${length.toString()}');
-  if (index+1 > length) return ref.read(filteredQuestionList).last;
-  return ref.read(filteredQuestionList)[index];
+final qListCurrentQuestion = Provider.autoDispose<Question>((ref) {
+  final int index = ref.watch(qListCurrentQuestionIndex);
+  final int length = ref.watch(qListFilteredLength);
+  if (index+1 > length) return Question.empty();
+  return ref.read(qListFiltered)[index];
 });
 
 // FILTERED LIST COMPUTATION
-final filteredQuestionList = Provider.autoDispose<List<Question>>((ref) {
+final qListFiltered = Provider.autoDispose<List<Question>>((ref) {
   log('&&& Filtering question list... &&&');
-  final int filterType = ref.watch(questionListFilterType);
-  final int filterLevel = ref.watch(questionListFilterLevel);
-  final int filterCategory = ref.watch(questionListFilterCategory);
+  final int filterType = ref.watch(qListFilterType);
+  final int filterLevel = ref.watch(qListFilterLevel);
+  final int filterCategory = ref.watch(qListFilterCategory);
 
   List<Question> qListGlobalFiltered = List.from(questionListGlobalConst);
 
@@ -42,10 +42,18 @@ final filteredQuestionList = Provider.autoDispose<List<Question>>((ref) {
   // 0 = all, 1 = shown, 2 = notShown
   if (filterType != 0) {
     if (filterType == 1) {
-      qListGlobalFiltered.removeWhere((e) => ref.read(userService).hiddenQuestionIds.contains(e.id));
+      qListGlobalFiltered.removeWhere((e) =>
+          ref
+              .read(userService)
+              .hiddenQuestionIds
+              .contains(e.id));
     }
     if (filterType == 2) {
-      qListGlobalFiltered.removeWhere((e) => !ref.read(userService).hiddenQuestionIds.contains(e.id));
+      qListGlobalFiltered.removeWhere((e) =>
+      !ref
+          .read(userService)
+          .hiddenQuestionIds
+          .contains(e.id));
     }
   }
 
@@ -67,41 +75,64 @@ final filteredQuestionList = Provider.autoDispose<List<Question>>((ref) {
 });
 
 
-final questionListController = Provider<QuestionListController>((ref) {
+final questionListController = Provider.autoDispose<QuestionListController>((ref) {
   return QuestionListController(ref);
 });
 
 class QuestionListController {
   final Ref _ref;
+
   QuestionListController(this._ref) {
     log('^^^ QuestionListController initialized ^^^');
   }
 
   void showSingleQuestion(int index) {
-    _ref.read(questionListIndex.notifier).state = index;
+    log('show question no. $index');
+    setIndex(index);
     _ref.read(routeController).navigate(MyScreen.listQuestionSingle);
   }
 
+  //method that recalculates qListCurrentIndex
+  setIndex(int? index) {
+    //why ,,int?"? Because sometimes just want to check if index is not out of range
+    int currentIndex = _ref.read(qListCurrentQuestionIndex);
+    final qListLength = _ref.read(qListFilteredLength);
+    //first set desired index if provided
+    if (index != null) currentIndex = index;
+    //just if index is not out of range
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex + 1 > qListLength) currentIndex = 0;
+    //set desired index
+    log('showing question no. $index');
+
+    _ref.read(qListCurrentQuestionIndex.notifier).state = currentIndex;
+  }
+
   void previousQuestion() {
-    _ref.read(questionListIndex.notifier).state -=1;
+    setIndex(_ref.read(qListCurrentQuestionIndex) - 1);
   }
 
   void nextQuestion() {
-    _ref.read(questionListIndex.notifier).state +=1;
+    setIndex(_ref.read(qListCurrentQuestionIndex) + 1);
   }
 
   bool isQuestionHidden(String qId) {
-    return _ref.read(userService).hiddenQuestionIds.contains(qId);
+    return _ref
+        .read(userService)
+        .hiddenQuestionIds
+        .contains(qId);
   }
 
-  void moveQuestionToHidden() {
-    _ref.read(userService.notifier).moveQuestionToHidden(_ref.read(questionListCurrentQuestion).id);
-    _ref.refresh(filteredQuestionList);
+  void moveQuestionToHidden(String id) {
+    _ref.read(userService.notifier).moveQuestionToHidden(id);
+    _ref.refresh(qListFiltered);
+    setIndex(null);
   }
 
-  void removeQuestionFromHidden() {
-    _ref.read(userService.notifier).removeQuestionFromHidden(_ref.read(questionListCurrentQuestion).id);
-    _ref.refresh(filteredQuestionList);
+  void removeQuestionFromHidden(String id) {
+    _ref.read(userService.notifier).removeQuestionFromHidden(id);
+    _ref.refresh(qListFiltered);
+    setIndex(null);
   }
 
 }
