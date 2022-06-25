@@ -16,6 +16,7 @@ enum MyScreen {
   quizChooseCategory('choose-category'),
   quizQuestionSingle('quiz-question-single'),
   quizFinished('quiz-finished'),
+  remark('remark'),
 
 
 
@@ -43,7 +44,6 @@ enum MyScreen {
 
   //Other
   settings('settings'),
-  remark('/remark'),
   debug('/debug'),
   purchase('/purchase');
 

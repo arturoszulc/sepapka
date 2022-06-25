@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sepapka/utils/custom_widgets/snackbar_hide_question.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
+import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
 
 
 Widget buildSettingsMenu() {
@@ -13,7 +16,10 @@ Widget buildSettingsMenu() {
       itemBuilder: (context) => [
         PopupMenuItem(
           onTap: () async {
-            await ref.read(manager).doNotShowThisQuestionAnymore();
+            ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            ref.read(quizController).moveQuestionToHidden();
+            ScaffoldMessenger.of(context)
+                .showSnackBar(snackBarShowHide(msg: 'Pytanie zostało ukryte'));
           },
           child: Row(
             children: const [
@@ -24,7 +30,7 @@ Widget buildSettingsMenu() {
           ),
         ),
         PopupMenuItem(
-          onTap: () => ref.read(manager).navigate(MyScreen.remark),
+          onTap: () => context.pushNamed(MyScreen.remark.name),
           child: Row(
             children: const [
               Icon(Icons.message),

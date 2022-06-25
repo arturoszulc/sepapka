@@ -85,19 +85,27 @@ final numOfQuestionsByCategory = Provider<List<int>>((ref) {
   return numList;
 });
 
-//Current quiz Question list - deployed manually, one time
+//Prepare quiz Question list - deployed manually, one time
 final quizQuestionList = Provider<List<Question>>((ref) {
-  final List<Question> qList = ref.read(quizQuestionListGlobal);
+  List<Question> qList = List<Question>.from(ref.read(quizQuestionListGlobal));
   final int chosenLevel = ref.read(quizLevel);
   final int chosenCategory = ref.read(quizCategory);
   //TODO: Fix this. No question have level=0, so when I choose all questions, I get an error
-  List<Question> newList = List<Question>.from([
+
+  if (chosenLevel > 0) {   //first filter by level, if it is chosen (greater than 0)
+    qList = List<Question>.from([
     for (final q in qList)
-      if (q.level == chosenLevel)
-        if (q.label == chosenCategory) ...[q]
+      if (q.level == chosenLevel) ...[q]
   ]);
-  newList.shuffle();
-  return newList;
+  }
+  if (chosenCategory > 0) {   //next filter by category, if it is chosen (greater than 0)
+    qList = List<Question>.from([
+      for (final q in qList)
+        if (q.label == chosenCategory) ...[q]
+    ]);
+  }
+  qList.shuffle(); //lastly shuffle the list
+  return qList;
 });
 
 //Current quiz Question
@@ -189,6 +197,11 @@ class QuizController {
     log('BMap after: ${_ref.read(bMapProvider)}');
   }
 
+  void moveQuestionToHidden() {
+    final String qId = _ref.read(quizCurrentQuestion).id;
+    _ref.read(userService.notifier).moveQuestionToHidden(qId);
+    nextQuestion();
+  }
 
   void finishQuiz() {
     _ref.read(routeController).navigate(MyScreen.quizFinished);

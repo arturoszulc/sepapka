@@ -9,6 +9,7 @@ import 'package:sepapka/view_layer/question_list/question_list_filter.dart';
 import 'package:sepapka/view_layer/question_list/question_list_screen.dart';
 import 'package:sepapka/view_layer/question_list/question_list_single.dart';
 import 'package:sepapka/view_layer/question_quiz/quiz_menu.dart';
+import 'package:sepapka/view_layer/question_quiz/remark_screen.dart';
 import 'package:sepapka/view_layer/question_quiz/session_finished_screen.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import '../../utils/consts/my_screens.dart';
@@ -20,7 +21,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     // initialLocation: MyScreen.signIn.path,
-    // debugLogDiagnostics: true,
+    debugLogDiagnostics: true,
     // For demo purposes
     refreshListenable: router,
     // This notifiies `GoRouter` for refresh events
@@ -53,53 +54,58 @@ class RouterNotifier extends ChangeNotifier {
     log('&&& GoRouter redirect method deployed &&&');
     final lastScreen = _ref.read(screenState);
     // final isAuthenticated = _ref.read(authStateProvider).value != null;
-    // debugPrint('@@@ GoRouter redirect function deployed @@@');
-    // debugPrint('@@@ GoRouter state.location: ${state.location} @@@');
+    debugPrint('@@@ GoRouter redirect function deployed @@@');
+    debugPrint('@@@ GoRouter state.location: ${state.location} @@@');
     // debugPrint('@@@ GoRouter LastScreenManual: $lastScreenManual @@@');
     // debugPrint('@@@ GoRouter state.name: ${state.name} @@@');
     //get path of current screen
+    final routingTo = state.location;
 
-
-
-
+    //first check if screen is the same
     final bool isSameScreen = state.location.endsWith(lastScreen.path);
     if (isSameScreen) {
       // debugPrint('The Screen is the same');
       return null;
     }
+
+    //if not, check wether destination is different than current screen
+    // final bool isDestinationDifferent =
+
+
     // //auth permission
     //
     // if (!isAuthenticated && !isSameScreen) {
     //   log('%^&*(%^ USER NOT AUTHENTICATED');
     //   return state.namedLocation(MyScreen.signIn.name);
     // }
-
+    //TODO: Refactor: manual vs. auto routing must be recognized
     final location = state.namedLocation(lastScreen.name);
     // debugPrint('@@@ Resolved new location name');
     return location;
   }
-  List<GoRoute> get _topLevelRoutes => <GoRoute>[
-        GoRoute(
-            name: MyScreen.loading.name,
-            path: MyScreen.loading.path,
-            pageBuilder: (context, state) => MaterialPage(
-                  key: state.pageKey,
-                  child: const LoadingScreen(),
-                )),
-        GoRoute(
-          name: MyScreen.menu.name,
-          path: MyScreen.menu.path,
-          pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const MenuScreen()),
-          routes: _menuSubRoutes,
-        ),
-        GoRoute(
-          name: MyScreen.signIn.name,
-          path: MyScreen.signIn.path,
-          pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: SignInScreen()),
-          routes: _authSubRoutes,
-        ),
-      ];
-
+  List<GoRoute> get _topLevelRoutes {
+    return <GoRoute>[
+  GoRoute(
+  name: MyScreen.loading.name,
+  path: MyScreen.loading.path,
+  pageBuilder: (context, state) => MaterialPage(
+  key: state.pageKey,
+  child: const LoadingScreen(),
+  )),
+  GoRoute(
+  name: MyScreen.menu.name,
+  path: MyScreen.menu.path,
+  pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const MenuScreen()),
+  routes: _menuSubRoutes,
+  ),
+  GoRoute(
+  name: MyScreen.signIn.name,
+  path: MyScreen.signIn.path,
+  pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: SignInScreen()),
+  routes: _authSubRoutes,
+  ),
+  ];
+}
 
   List<GoRoute> get _menuSubRoutes {
     return <GoRoute>[
@@ -154,6 +160,11 @@ class RouterNotifier extends ChangeNotifier {
         name: MyScreen.quizFinished.name,
         path: MyScreen.quizFinished.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizFinished()),
+      ),
+      GoRoute(
+        name: MyScreen.remark.name,
+        path: MyScreen.remark.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: RemarkScreen()),
       ),
     ];
   }

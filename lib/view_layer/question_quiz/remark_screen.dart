@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
+import '../../viewmodel_layer/quiz_controller.dart';
+
 class RemarkScreen extends ConsumerWidget {
   RemarkScreen({Key? key}) : super(key: key);
   String remark = '';
@@ -11,7 +13,7 @@ class RemarkScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** RemarkScreen built ***');
     final myManager = ref.read(manager);
-    Question currentQuestion = Question(id: 'id', q: 'q', a1: 'a1', a2: 'a2', a3: 'a3', a4: 'a4', label: 0, level: 0, assetPath: 'assetPath');//myManager.currentQuestion!;
+    Question currentQuestion = ref.watch(quizCurrentQuestion);//myManager.currentQuestion!;
     final error = myManager.errorMsg;
 
     return SafeArea(
