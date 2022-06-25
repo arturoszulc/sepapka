@@ -8,6 +8,8 @@ import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/view_layer/question_list/question_list_filter.dart';
 import 'package:sepapka/view_layer/question_list/question_list_screen.dart';
 import 'package:sepapka/view_layer/question_list/question_list_single.dart';
+import 'package:sepapka/view_layer/question_quiz/quiz_menu.dart';
+import 'package:sepapka/view_layer/question_quiz/session_finished_screen.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
@@ -18,7 +20,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     // initialLocation: MyScreen.signIn.path,
-    debugLogDiagnostics: true,
+    // debugLogDiagnostics: true,
     // For demo purposes
     refreshListenable: router,
     // This notifiies `GoRouter` for refresh events
@@ -96,27 +98,16 @@ class RouterNotifier extends ChangeNotifier {
           pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: SignInScreen()),
           routes: _authSubRoutes,
         ),
-        GoRoute(
-          name: MyScreen.quizQuestionSingle.name,
-          path: MyScreen.quizQuestionSingle.path,
-          pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizSingleQuestion()),
-        ),
-
       ];
+
 
   List<GoRoute> get _menuSubRoutes {
     return <GoRoute>[
       GoRoute(
-        name: MyScreen.quizChooseLevel.name,
-        path: MyScreen.quizChooseLevel.path,
-        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const MenuChooseLevel()),
-        routes: <GoRoute>[
-          GoRoute(
-            name: MyScreen.quizChooseCategory.name,
-            path: MyScreen.quizChooseCategory.path,
-            pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const ChooseCategory()),
-          ),
-        ],
+        name: MyScreen.quizMenu.name,
+        path: MyScreen.quizMenu.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizMenu()),
+        routes: _quizSubRoutes,
       ),
       GoRoute(
         name: MyScreen.listQuestion.name,
@@ -135,6 +126,34 @@ class RouterNotifier extends ChangeNotifier {
         path: MyScreen.calcMenu.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const CalculatorsMenuScreen()),
         routes: _calcSubRoutes,
+      ),
+    ];
+  }
+
+  List<GoRoute> get _quizSubRoutes {
+    return <GoRoute> [
+      GoRoute(
+        name: MyScreen.quizChooseLevel.name,
+        path: MyScreen.quizChooseLevel.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const MenuChooseLevel()),
+        routes: [
+          GoRoute(
+            name: MyScreen.quizChooseCategory.name,
+            path: MyScreen.quizChooseCategory.path,
+            pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const ChooseCategory()),
+          ),
+        ]
+      ),
+
+      GoRoute(
+        name: MyScreen.quizQuestionSingle.name,
+        path: MyScreen.quizQuestionSingle.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizSingleQuestion()),
+      ),
+      GoRoute(
+        name: MyScreen.quizFinished.name,
+        path: MyScreen.quizFinished.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizFinished()),
       ),
     ];
   }
@@ -205,75 +224,3 @@ class RouterNotifier extends ChangeNotifier {
     ];
   }
 }
-
-
-//        // switch (currentScreen) {
-//        //   // case MyScreen.loading:
-//        //     // return MyScreen.loading.name;
-//        //   case MyScreen.signIn:
-//        //     debugPrint('Case: MyScreen.SignIn');
-//        //     return MyScreen.signIn.name;
-//        //   // case MyScreen.menu:
-//        //     // return const MenuScreen();
-//        //   case MyScreen.resetPassword:
-//        //     debugPrint('Case: MyScreen.resetPassword');
-//        //     return state.namedLocation(currentScreen.path);
-//        //   // // case MyScreen.settings:
-//        //   //   // return const SettingsScreen();
-//        //   // case MyScreen.chooseLevel:
-//        //   //   // return const MenuChooseLevel();
-//        //   // case MyScreen.quizQuestionSingle:
-//        //   //   // return QuestionQuizSingle();
-//        //   // case MyScreen.sessionFinished:
-//        //   //   // return SessionFinished();
-//        //   // case MyScreen.listQuestion:
-//        //   //   // return QuestionListScreen();
-//        //   // case MyScreen.remark:
-//        //   //   // return RemarkScreen();
-//        //   // case MyScreen.debug:
-//        //   //   // return DebugScreen();
-//        //   // case MyScreen.chooseCategory:
-//        //   //   // return ChooseCategory();
-//        //   // case MyScreen.listQuestionSingle:
-//        //   //   // return QuestionListSingle();
-//        //   // case MyScreen.listQuestionFilter:
-//        //   //   // return QuestionListFilter();
-//        //   // case MyScreen.purchase:
-//        //   //   // return PurchaseScreen();
-//        //   // case MyScreen.purchaseError:
-//        //   //   // return PurchaseError();
-//        //   // case MyScreen.purchaseSuccess:
-//        //   //   // return PurchaseSuccess();
-//        //   // case MyScreen.purchasePending:
-//        //   //   // return PurchasePending();
-//        //   // case MyScreen.knowledgeBase:
-//        //   //   // return const KnowledgeBaseMenu();
-//        //   // case MyScreen.tableWireColors:
-//        //   //   // return const WireColors();
-//        //   // case MyScreen.tableWireAmpacity:
-//        //   //   // return WireAmpacity();
-//        //   // case MyScreen.tableWireSymbols:
-//        //   //   // return WireSymbols();
-//        //   // case MyScreen.calcMenu:
-//        //   //   // return const CalculatorsMenuScreen();
-//        //   //   break;
-//        //   // case MyScreen.calcHeatingPowerThreePhase:
-//        //   //   // return CalcHeatingPowerThreePhase();
-//        //   //
-//        //   // case MyScreen.units:
-//        //   //   // return UnitsScreen();
-//        //   default: return null;
-//        // }
-//        }
-//      }
-//
-//    );
-//
-//  }
-//
-//
-//
-//
-//
-//
-// }

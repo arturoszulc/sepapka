@@ -86,49 +86,49 @@ class QuizService {
     return bMapList;
   }
 
-  List<BMap> updateBMap(List<BMap> bMapList, String answer) {
-    debugPrint('BMap before update $bMapList');
-    bMapList.firstWhere((element) => element.answer == answer).copyWith(color: rightButtonColor);
-    debugPrint('BMap after update $bMapList');
-
-    return bMapList;
-  }
-
-
-  Future<Object> prepareGlobalData() async {
-    //Get GlobalData from DB
-    // try {
-    //   globalData = await _databaseService.getGlobalData();
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    //   return Failure(errorGetGlobalData);
-    // }
-
-    //prepare qListGlobal
-
-    qListGlobal.clear();
-    qListGlobalFiltered.clear();
-    // if (_userService.loggedUser!.isPro) {
-    qListGlobal = List<Question>.from(questionListGlobalConst);
-    // } else {
-    //   for (Question question in questionList) {
-    //     if (question.level == 1) {
-    //       qListGlobal.add(question);
-    //     }
-    //   }
-    // }
-
-    debugPrint('qListGlobalLength: ${qListGlobal.length}');
+  // List<BMap> updateBMap(List<BMap> bMapList, String answer) {
+  //   debugPrint('BMap before update $bMapList');
+  //   bMapList.firstWhere((element) => element.answer == answer).copyWith(color: rightButtonColor);
+  //   debugPrint('BMap after update $bMapList');
+  //
+  //   return bMapList;
+  // }
 
 
-    //Sort qListGlobal alphabetically
-    qListGlobal.sort((a, b) => a.q.compareTo(b.q));
-    //update user qNewList
-    // await _userService.updateQNewList(qListGlobal);
-
-    debugPrint('/// QuestionService: Finished preparing GlobalData ///');
-    return Success();
-  }
+  // Future<Object> prepareGlobalData() async {
+  //   //Get GlobalData from DB
+  //   // try {
+  //   //   globalData = await _databaseService.getGlobalData();
+  //   // } catch (e) {
+  //   //   debugPrint(e.toString());
+  //   //   return Failure(errorGetGlobalData);
+  //   // }
+  //
+  //   //prepare qListGlobal
+  //
+  //   qListGlobal.clear();
+  //   qListGlobalFiltered.clear();
+  //   // if (_userService.loggedUser!.isPro) {
+  //   qListGlobal = List<Question>.from(questionListGlobalConst);
+  //   // } else {
+  //   //   for (Question question in questionList) {
+  //   //     if (question.level == 1) {
+  //   //       qListGlobal.add(question);
+  //   //     }
+  //   //   }
+  //   // }
+  //
+  //   debugPrint('qListGlobalLength: ${qListGlobal.length}');
+  //
+  //
+  //   //Sort qListGlobal alphabetically
+  //   qListGlobal.sort((a, b) => a.q.compareTo(b.q));
+  //   //update user qNewList
+  //   // await _userService.updateQNewList(qListGlobal);
+  //
+  //   debugPrint('/// QuestionService: Finished preparing GlobalData ///');
+  //   return Success();
+  // }
 
   // prepareSession() async {
   //   //reset isSessionFinished flag and num of right answers
@@ -161,67 +161,67 @@ class QuizService {
   //   qListCurrentStartLength = qListSession.length;
   // }
 
-  Future checkAnswer(String answer) async {
-    //remove question from qListLocal and qListSession
-    removeCurrentQuestionFromSession();
-    // qListSession.removeAt(0);
+  // Future checkAnswer(String answer) async {
+  //   //remove question from qListLocal and qListSession
+  //   removeCurrentQuestionFromSession();
+  //   // qListSession.removeAt(0);
+  //
+  //   //If right answer
+  //   if (answer == currentQuestion!.a1) {
+  //     //set QuestionStatus
+  //     qStatus = QuestionStatus.rightAnswer;
+  //     //set button color
+  //     // bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
+  //     //add one to countRightAnswers
+  //     numberOfRightAnswers += 1;
+  //   }
+  //   //if wrong answer
+  //   else {
+  //     qStatus = QuestionStatus.wrongAnswer;
+  //     //color wrong button
+  //     // bMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
+  //     // //color right button
+  //     // bMapList.firstWhere((element) => element.answer == currentQuestion!.a1).color =
+  //     //     rightButtonColor;
+  //   }
+  // }
 
-    //If right answer
-    if (answer == currentQuestion!.a1) {
-      //set QuestionStatus
-      qStatus = QuestionStatus.rightAnswer;
-      //set button color
-      // bMapList.firstWhere((element) => element.answer == answer).color = rightButtonColor;
-      //add one to countRightAnswers
-      numberOfRightAnswers += 1;
-    }
-    //if wrong answer
-    else {
-      qStatus = QuestionStatus.wrongAnswer;
-      //color wrong button
-      // bMapList.firstWhere((element) => element.answer == answer).color = wrongButtonColor;
-      // //color right button
-      // bMapList.firstWhere((element) => element.answer == currentQuestion!.a1).color =
-      //     rightButtonColor;
-    }
-  }
+  // Future<Object> getNextQuestion() async {
+  //   qStatus = QuestionStatus.noAnswer;
+  //
+  //   //if there is a question on the list
+  //   if (qListSession.isNotEmpty) {
+  //     //prepare question
+  //     currentQuestion = qListSession.first;
+  //     //create new BMap
+  //     createBMap();
+  //     //success means there's question to show
+  //     return Success();
+  //   } else {
+  //     //if theres no questions left on the list
+  //     return Failure();
+  //   }
+  // }
 
-  Future<Object> getNextQuestion() async {
-    qStatus = QuestionStatus.noAnswer;
+  // List<Question> getSetOfQuestions() {
+  //   //get maximum 10 questions to session list
+  //   //warning: //.toList() below makes the list growable, so I can add or remove elements from it
+  //   return qListSession.slice(0, min(3, qListSession.length)).toList();
+  // }
 
-    //if there is a question on the list
-    if (qListSession.isNotEmpty) {
-      //prepare question
-      currentQuestion = qListSession.first;
-      //create new BMap
-      createBMap();
-      //success means there's question to show
-      return Success();
-    } else {
-      //if theres no questions left on the list
-      return Failure();
-    }
-  }
+  // Object endSession() {
+  //   currentQuestion = null;
+  //   isSessionFinished = true;
+  //   return Success();
+  // }
 
-  List<Question> getSetOfQuestions() {
-    //get maximum 10 questions to session list
-    //warning: //.toList() below makes the list growable, so I can add or remove elements from it
-    return qListSession.slice(0, min(3, qListSession.length)).toList();
-  }
-
-  Object endSession() {
-    currentQuestion = null;
-    isSessionFinished = true;
-    return Success();
-  }
-
-  removeCurrentQuestionFromSession() {
-    qListSession.removeAt(0);
-  }
-
-  double getProgressPercentSession() {
-    return (qListCurrentStartLength - qListSession.length) / qListCurrentStartLength;
-  }
+  // removeCurrentQuestionFromSession() {
+  //   qListSession.removeAt(0);
+  // }
+  //
+  // double getProgressPercentSession() {
+  //   return (qListCurrentStartLength - qListSession.length) / qListCurrentStartLength;
+  // }
 
   //
   // String getUserScore() {

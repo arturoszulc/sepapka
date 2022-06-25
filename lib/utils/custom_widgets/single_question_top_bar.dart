@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/custom_widgets/settings_popupmenu.dart';
 import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
+import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 
 import '../../viewmodel_layer/manager.dart';
@@ -22,7 +24,7 @@ Widget singleQuestionTopBar(BuildContext context) {
               onPressed: () async {
                 bool result = await leaveSessionDialog(context);
                 if (result) {
-                  // ref.read(manager).interruptSession();
+                  ref.read(routeController).navigate(MyScreen.menu);
                 }
               },
               icon: const Icon(Icons.clear),

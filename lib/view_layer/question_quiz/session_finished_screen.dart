@@ -5,9 +5,10 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
+import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
-class SessionFinished extends StatelessWidget {
-  const SessionFinished({Key? key}) : super(key: key);
+class QuizFinished extends StatelessWidget {
+  const QuizFinished({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class SessionFinished extends StatelessWidget {
           builder: (BuildContext context, WidgetRef ref, Widget? child) => FloatingActionButton.extended(
               icon: const Icon(Icons.exit_to_app),
               onPressed: () {
-            ref.read(manager).navigate(MyScreen.menu);
+            ref.read(routeController).navigate(MyScreen.menu);
           }, label: const Text('Powrót do menu'),),
         ),
       ),

@@ -13,19 +13,22 @@ import '../utils/consts/colors.dart';
 import '../utils/question_list.dart';
 
 //// Percent progress calculation ////
-final quizTotalQuestions = StateProvider<int>((ref) => ref.watch(quizQuestionList).length);
-final quizCorrectAnswers = StateProvider<int>((ref) => 0);
+final quizTotalQuestions = StateProvider.autoDispose<int>((ref) => ref.watch(quizQuestionList).length);
+final quizNumOfAnsweredQuestions = StateProvider.autoDispose<int>((ref) => 0);
 
-final quizPercentProgress = Provider<double>((ref) {
+final quizPercentProgress = Provider.autoDispose<double>((ref) {
   final int totalNumOfQuestions = ref.watch(quizTotalQuestions);
-  final int currentQuestionIndex = ref.watch(quizCurrentQuestionIndex);
+  final int questionIndex = ref.watch(quizNumOfAnsweredQuestions);
   log('Quiz totalQuestions: $totalNumOfQuestions');
-  log('Quiz currentIndex: $currentQuestionIndex');
-  if (currentQuestionIndex == 0) return 0.0;
-  return currentQuestionIndex/totalNumOfQuestions;
+  log('Quiz currentIndex: $questionIndex');
+  if (questionIndex == 0) return 0.0;
+  return questionIndex/totalNumOfQuestions;
   // return 0.5;
 });
 // Quiz final score calculation
+
+final quizCorrectAnswers = StateProvider<int>((ref) => 0);
+
 final quizFinalScore = Provider<String>((ref) {
   final int numberOfQuestions = ref.read(quizTotalQuestions);
   final int numberOfRightAnswers = ref.read(quizCorrectAnswers);
@@ -99,36 +102,20 @@ final quizQuestionList = Provider<List<Question>>((ref) {
 
 //Current quiz Question
 final quizCurrentQuestion =
-Provider<Question>((ref) => ref.watch(quizQuestionList)[ref.watch(quizCurrentQuestionIndex)]);
+Provider.autoDispose<Question>((ref) => ref.watch(quizQuestionList)[ref.watch(quizCurrentQuestionIndex)]);
 
 //Current quiz question Status
-final isQuestionAnswered = StateProvider<bool>((ref) => false);
+final isQuestionAnswered = StateProvider.autoDispose<bool>((ref) => false); //for showing ,,next" button
 
+final quizCurrentQuestionIndex = StateProvider.autoDispose<int>((ref) => 0); //current question
 
-final quizCurrentQuestionIndex = StateProvider<int>((ref) => 0);
-
-
-
-// QUIZ STATE
-// status: initial, ready, complete
-// int: chosen level
-// int: chose category
-// int: List<Question> sessionList
-//
-
-// QUIZ SINGLE QUESTION STATE
-// status: noAnswer, Answered
-// String: question
-// List<BMap>: currentBmap
-
-//
-
-final bMapProvider = StateProvider<List<BMap>>((ref) => []);
-final quizController = Provider<QuizController>((ref) => QuizController(ref));
+final bMapProvider = StateProvider<List<BMap>>((ref) => []); //current question BMap
 
 ////////////////////////////
 //////// CONTROLLER ////////
 ////////////////////////////
+
+final quizController = Provider.autoDispose<QuizController>((ref) => QuizController(ref));
 
 class QuizController {
   final Ref _ref;
@@ -149,37 +136,25 @@ class QuizController {
   }
 
   void prepareSession() {
-    _ref.refresh(quizCurrentQuestionIndex); //reset current question index
+    // _ref.refresh(quizCurrentQuestionIndex); //reset current question index
     _ref.refresh(quizQuestionList); //prepare question list based on level and category
     prepareBMap(); //prepare BMap
     _ref.read(routeController).navigate(MyScreen.quizQuestionSingle);
   }
 
-  // void getQuestions() {
-  //   state = state.copyWith(
-  //       questions: _ref.read(quizService).getQuizQuestions(state.qLevel, state.category));
-  //   state = state.copyWith(totalQuestions: state.questions.length);
-  // }
-
   void checkAnswer(String answer) {
     final Question currentQuestion = _ref.read(quizCurrentQuestion);
     final bool isAnswered = _ref.read(isQuestionAnswered);
-    log('BMap before');
-    log(_ref.read(bMapProvider.notifier).state.toString());
     if (isAnswered) return; //if user already answered, do nothing
     if (currentQuestion.a1 == answer) {
       //right answer
-      _ref.read(quizCorrectAnswers.notifier).state += 1;
+      _ref.read(quizCorrectAnswers.notifier).state += 1; //for final score
     } else {
       //wrong answer
     }
     _ref.read(isQuestionAnswered.notifier).state = true; //set answered to true
+    _ref.read(quizNumOfAnsweredQuestions.notifier).state += 1; //for percent progress calculation
     updateBMap(answer);
-
-    // log('BMap after');
-    // log(_ref.read(bMapProvider.notifier).state.toString());
-    // _ref.read(bMapProvider.notifier).state =
-    //     _ref.read(quizService).updateBMap(_ref.read(bMapProvider.notifier).state, answer);
   }
 
   void nextQuestion() {
@@ -216,7 +191,7 @@ class QuizController {
 
 
   void finishQuiz() {
-    _ref.read(routeController).navigate(MyScreen.sessionFinished);
+    _ref.read(routeController).navigate(MyScreen.quizFinished);
   }
 
   void resetQuiz() {
