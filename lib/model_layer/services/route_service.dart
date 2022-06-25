@@ -43,7 +43,7 @@ class RouterNotifier extends ChangeNotifier {
   RouterNotifier(this._ref) {
     _ref.listen<bool>(
       screenSwitched,
-      (_, __) => notifyListeners(), // Obviously more logic can be added here
+      (autoSwitched, __) => autoSwitched! ? notifyListeners() : null, // notify only if true
     );
   }
 
@@ -52,17 +52,51 @@ class RouterNotifier extends ChangeNotifier {
   /// We don't want to trigger a rebuild of the surrounding provider.
   String? _redirectLogic(GoRouterState state) {
     log('&&& GoRouter redirect method deployed &&&');
-    final lastScreen = _ref.read(screenState);
+
+//     ////// NEW //////
+//     final goingTo = state.location;
+//     final lastScreenName = _ref.read(autoScreenName);
+//
+//     final bool isSameScreen = goingTo.endsWith(autoScreen.path);
+//     if (isSameScreen) {
+//       return null;
+//     } else {
+//
+//      _ref.read(autoScreenName.notifier).state = state.name!;
+//     }
+//     ////// END NEW //////
+//
+//
+//
+//     final goingTo = state.location;
+//     final autoScreen = _ref.read(autoScreenName);
+//     final isAutoSwitched = _ref.read(screenSwitched);
+//
+//     if (isAutoSwitched) {
+// //if screen was switched without user interaction,
+//
+// // check if the route is not in progress (to avoid loop)
+//     final bool isSameScreen = goingTo.endsWith(autoScreen.path);
+//       if (isSameScreen) return null;
+//       _ref.read(screenSwitched.notifier).state = false; //reset auto-route flag
+//       return state.namedLocation(autoScreen.name); //go to the screen
+//     }
+//
+//     //if screen was not switched automatically (user called context.go / context.push
+//     else {
+//
+//     }
+
     // final isAuthenticated = _ref.read(authStateProvider).value != null;
     debugPrint('@@@ GoRouter redirect function deployed @@@');
     debugPrint('@@@ GoRouter state.location: ${state.location} @@@');
     // debugPrint('@@@ GoRouter LastScreenManual: $lastScreenManual @@@');
-    // debugPrint('@@@ GoRouter state.name: ${state.name} @@@');
+    debugPrint('@@@ GoRouter state.name: ${state.name} @@@');
     //get path of current screen
     final routingTo = state.location;
+    final bool isSameScreen = goingTo.endsWith(autoScreen.path);
 
     //first check if screen is the same
-    final bool isSameScreen = state.location.endsWith(lastScreen.path);
     if (isSameScreen) {
       // debugPrint('The Screen is the same');
       return null;
@@ -79,7 +113,7 @@ class RouterNotifier extends ChangeNotifier {
     //   return state.namedLocation(MyScreen.signIn.name);
     // }
     //TODO: Refactor: manual vs. auto routing must be recognized
-    final location = state.namedLocation(lastScreen.name);
+    final location = state.namedLocation(autoScreen.name);
     // debugPrint('@@@ Resolved new location name');
     return location;
   }

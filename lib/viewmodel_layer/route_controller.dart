@@ -6,7 +6,7 @@ import '../utils/consts/my_screens.dart';
 // import 'package:flutter/material.dart';
 
 
-final screenState = StateProvider<MyScreen>((ref) => MyScreen.loading);
+final autoScreenName = StateProvider<String>((ref) => MyScreen.loading.name);
 final screenSwitched = StateProvider<bool>((ref) => false);
 
 
@@ -22,9 +22,13 @@ class RouteController {
 
   final Ref _ref;
   void navigate(MyScreen screen) {
-    _ref.read(screenState.notifier).state = screen;
-    final bool switchStatus = _ref.read(screenSwitched.notifier).state;
-    _ref.read(screenSwitched.notifier).state = !switchStatus; //just a simple flag to switch screen
+    _ref.read(autoScreenName.notifier).state = screen;
+
+    //let know that screen was switched manually
+    _ref.read(screenSwitched.notifier).state = true;
+
+    // final bool switchStatus = _ref.read(screenSwitched.notifier).state;
+    // _ref.read(screenSwitched.notifier).state = !switchStatus; //just a simple flag to switch screen
     // log('@@@### RouterState.navigate deployed ###@@@');
     // if (state == screen) state = MyScreen.loading;
     // state = screen;
