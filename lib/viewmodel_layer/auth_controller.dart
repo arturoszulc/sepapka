@@ -103,8 +103,6 @@ class AuthController {
     _ref.read(passwordState.notifier).state = const InputValidationModel(null,null);
     //clear user
     _ref.read(userService.notifier).clearUser();
-    //change appState
-    _ref.read(appStateNotifierProvider.notifier).userSignedOut();
   }
 
 

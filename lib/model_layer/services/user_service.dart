@@ -127,7 +127,7 @@ class UserService extends StateNotifier<AppUser> {
       }
       // _ref.read(routeController).navigate(MyScreen.menu);
     }
-    _ref.read(appStateNotifierProvider.notifier).appInitialized();
+    _ref.read(appStateNotifierProvider.notifier).userSignedIn();
   }
 
   void createUser(String uid) {

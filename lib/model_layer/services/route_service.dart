@@ -55,15 +55,16 @@ class RouterNotifier extends ChangeNotifier {
 
     //App statuses
     final bool isUserSignedIn = _ref.read(appStateNotifierProvider).isSignedIn;
-    final bool isAppInitialized = _ref.read(appStateNotifierProvider).appInitialized;
+    final bool isUserSignedOut = _ref.read(appStateNotifierProvider).isSignedOut;
     final bool appInitError = _ref.read(appStateNotifierProvider).fetchDataError;
 
+    final bool isAppLoading = state.subloc.contains(MyScreen.loading.path);
     final bool isInApp = state.subloc.contains(MyScreen.menu.path);
     final isInSignIn = state.subloc.contains(MyScreen.signIn.path);
 
-    if ((!isUserSignedIn || appInitError) && !isInSignIn) return state.namedLocation(MyScreen.signIn.name);
-    // if (isUserSignedIn && !isAppInitialized) return state.namedLocation(MyScreen.loading.name);
-    if (isAppInitialized && !isInApp) return state.namedLocation(MyScreen.menu.name);
+    if (!isUserSignedIn && !isUserSignedOut && !isAppLoading) return state.namedLocation(MyScreen.loading.name);
+    if ((isUserSignedOut || appInitError) && !isInSignIn) return state.namedLocation(MyScreen.signIn.name);
+    if (isUserSignedIn && !isInApp) return state.namedLocation(MyScreen.menu.name);
     return null;
 
     // // final isAuthenticated = _ref.read(authStateProvider).value != null;

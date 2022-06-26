@@ -33,18 +33,18 @@ class AppStateNotifier extends StateNotifier<AppState> {
   }
 
   void userSignedIn() {
-    state = state.copyWith(isSignedIn: true);
+    state = state.copyWith(isSignedIn: true, isSignedOut: false);
   }
 
   void userSignedOut() {
-    state = AppState.initial();
+    state = state.copyWith(isSignedIn: false, isSignedOut: true);
   }
 
-  void appInitialized() {
-    //means all necessary data (like userData) has been prepared
-    log('/// App initialized ///');
-    state = state.copyWith(appInitialized: true);
-  }
+  // void appInitialized() {
+  //   //means all necessary data (like userData) has been prepared
+  //   log('/// App initialized ///');
+  //   state = state.copyWith(appInitialized: true);
+  // }
 
   void dataFetchError() {
     state = state.copyWith(fetchDataError: true);

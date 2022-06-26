@@ -2,10 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
-import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/question_list.dart';
-import 'package:sepapka/viewmodel_layer/route_controller.dart';
-
 import '../model_layer/models/question.dart';
 
 
@@ -87,9 +84,7 @@ class QuestionListController {
   }
 
   void showSingleQuestion(int index) {
-    log('show question no. $index');
     setIndex(index);
-    _ref.read(routeController).navigate(MyScreen.listQuestionSingle);
   }
 
   //method that recalculates qListCurrentIndex
@@ -103,8 +98,6 @@ class QuestionListController {
     if (currentIndex < 0) currentIndex = 0;
     if (currentIndex + 1 > qListLength) currentIndex = 0;
     //set desired index
-    log('showing question no. $index');
-
     _ref.read(qListCurrentQuestionIndex.notifier).state = currentIndex;
   }
 

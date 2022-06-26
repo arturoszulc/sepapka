@@ -1,28 +1,30 @@
+
+
 class AppState {
   final bool isSignedIn;
-  final bool appInitialized;
+  final bool isSignedOut;
   final bool fetchDataError;
 
   AppState({
     required this.isSignedIn,
-    required this.appInitialized,
+    required this.isSignedOut,
     required this.fetchDataError});
 
   factory AppState.initial() {
     return AppState(
         isSignedIn: false,
-        appInitialized: false,
+        isSignedOut: false,
         fetchDataError: false);
   }
 
   AppState copyWith({
     bool? isSignedIn,
-    bool? appInitialized,
+    bool? isSignedOut,
     bool? fetchDataError,
   }) {
     return AppState(
       isSignedIn: isSignedIn ?? this.isSignedIn,
-      appInitialized: appInitialized ?? this.appInitialized,
+      isSignedOut: isSignedOut ?? this.isSignedOut,
         fetchDataError: fetchDataError ?? this.fetchDataError,
     );
   }

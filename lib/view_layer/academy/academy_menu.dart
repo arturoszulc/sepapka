@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../utils/consts/my_screens.dart';
 import '../../utils/custom_widgets/buttons/menu_button.dart';
@@ -34,7 +35,7 @@ class AcademyMenu extends ConsumerWidget {
                             proOnly: true,
                             label: 'Tablice',
                             onPressed: ()  {
-                               ref.read(manager).navigate(MyScreen.tablesMenu);
+                               context.goNamed(MyScreen.tablesMenu.name);
                             },
                           ),
 
