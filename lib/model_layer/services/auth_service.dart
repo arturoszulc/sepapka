@@ -8,6 +8,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
+import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 import '../../utils/consts/my_screens.dart';
@@ -44,6 +45,7 @@ class AuthService {
     authStateChange.listen((User? user) async {
       if (user != null) {
         log('/// AuthService: User signed in ///');
+        _ref.read(appStateNotifierProvider.notifier).userSignedIn();
         _ref.read(userService.notifier).getUserFromDb(user.uid);
       }
       if (user == null) {

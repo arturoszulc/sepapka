@@ -11,4 +11,14 @@ class AppState {
         isSignedIn: false,
         appInitialized: false);
   }
+
+  AppState copyWith({
+    bool? isSignedIn,
+    bool? appInitialized,
+  }) {
+    return AppState(
+      isSignedIn: isSignedIn ?? this.isSignedIn,
+      appInitialized: appInitialized ?? this.appInitialized,
+    );
+  }
 }

@@ -11,6 +11,7 @@ import 'package:sepapka/view_layer/question_list/question_list_single.dart';
 import 'package:sepapka/view_layer/question_quiz/quiz_menu.dart';
 import 'package:sepapka/view_layer/question_quiz/remark_screen.dart';
 import 'package:sepapka/view_layer/question_quiz/session_finished_screen.dart';
+import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
@@ -41,9 +42,9 @@ class RouterNotifier extends ChangeNotifier {
   /// This implementation exploits `ref.listen()` to add a simple callback that
   /// calls `notifyListeners()` whenever there's change onto a desider provider.
   RouterNotifier(this._ref) {
-    _ref.listen<bool>(
-      screenSwitched,
-      (_, autoSwitched) => autoSwitched ? notifyListeners() : null, // notify only if true
+    _ref.listen<AppStateNotifier>(
+      appStateNotifierProvider.notifier,
+      (_, __) => notifyListeners(), // notify only if true
     );
   }
 

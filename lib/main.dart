@@ -6,6 +6,7 @@ import 'package:sepapka/model_layer/services/auth_service.dart';
 import 'package:sepapka/model_layer/services/route_service.dart';
 import 'package:sepapka/utils/consts/theme_data.dart';
 import 'package:flutter/services.dart';
+import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
           final _router = ref.read(routerProvider);
           //manager initialization to check if user is signed in
           Future.delayed(Duration.zero, (){
-            ref.read(authServiceProvider);
+            ref.read(appStateNotifierProvider.notifier).init();
           });
           return MaterialApp.router(
             routeInformationParser: _router.routeInformationParser,

@@ -13,6 +13,7 @@ import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/consts/question.dart';
+import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import 'database_service.dart';
 
@@ -123,6 +124,7 @@ class UserService extends StateNotifier<AppUser> {
         log('/// UserService: Error updating user ///');
         return;
       }
+      _ref.read(appStateNotifierProvider.notifier).userSignedIn();
       // _ref.read(routeController).navigate(MyScreen.menu);
     }
   }
