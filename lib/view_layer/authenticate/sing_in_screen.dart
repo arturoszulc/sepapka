@@ -130,7 +130,7 @@ class SignInScreen extends ConsumerWidget {
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                ref.read(routeController).navigate(MyScreen.resetPassword);
+                context.goNamed(MyScreen.resetPassword.name);
                 // myManager.navigate(MyScreen.resetPassword);
               },
               child: const Text(

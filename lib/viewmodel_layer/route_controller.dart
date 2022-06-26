@@ -22,7 +22,7 @@ class RouteController {
 
   final Ref _ref;
   void navigate(MyScreen screen) {
-    _ref.read(autoScreenName.notifier).state = screen;
+    _ref.read(autoScreenName.notifier).state = screen.name;
 
     //let know that screen was switched manually
     _ref.read(screenSwitched.notifier).state = true;

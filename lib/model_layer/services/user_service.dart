@@ -114,7 +114,7 @@ class UserService extends StateNotifier<AppUser> {
       state = response.value!;
       log('/// UserService: Got User from DB ///');
       log(response.value.toString());
-      _ref.read(routeController).navigate(MyScreen.menu);
+      // _ref.read(routeController).navigate(MyScreen.menu);
     } else {
       //if error, then assume that user is new and wasn't yet created
       createUser(uid);
@@ -123,7 +123,7 @@ class UserService extends StateNotifier<AppUser> {
         log('/// UserService: Error updating user ///');
         return;
       }
-      _ref.read(routeController).navigate(MyScreen.menu);
+      // _ref.read(routeController).navigate(MyScreen.menu);
     }
   }
 

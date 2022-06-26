@@ -48,7 +48,7 @@ class AuthService {
       }
       if (user == null) {
         log('/// AuthService: User signed out ///');
-        _ref.read(routeController).navigate(MyScreen.signIn);
+        // _ref.read(routeController).navigate(MyScreen.signIn);
       }
     });
   }
