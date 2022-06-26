@@ -4,13 +4,10 @@
 
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/input_validation_model.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
-import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
-import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 import '../model_layer/services/auth_service.dart';
 import '../model_layer/services/validation_service.dart';
@@ -18,28 +15,27 @@ import '../utils/api_status.dart';
 
 
 final authErrorState = StateProvider<String>((ref) => '');
+final authLoading = StateProvider<bool>((ref) => false);
 final emailState = StateProvider<InputValidationModel>((ref) => const InputValidationModel(null, null));
 final passwordState = StateProvider<InputValidationModel>((ref) => const InputValidationModel(null, null));
+final emailRemindErrorState = StateProvider.autoDispose<String>((ref) => '');
+final emailRemindSent = StateProvider.autoDispose<bool>((ref) => false);
 
 final authController = Provider((ref) => AuthController(ref));
 
 class AuthController {
 
   final Ref _ref;
-  AuthController(this._ref//this._authService, this._routeController,
-      ) {
+  AuthController(this._ref) {
     log('^^^ AuthController initialized ^^^');
-      // final _authState = _ref.watch(authStateProvider);
-      // if (_authState.value == null) {
-      //   _ref.read(routeController).navigate(MyScreen.signIn);
-      // } else {
-      //   _ref.read(routeController).navigate(MyScreen.menu);
-      // }
   }
 
 
   setAuthError(String? error) {
     _ref.read(authErrorState.notifier).state = error ?? '';
+  }
+  setEmailRemindError(String? error) {
+    _ref.read(emailRemindErrorState.notifier).state = error ?? '';
   }
 
   void validateEmail(String val) {
@@ -51,7 +47,7 @@ class AuthController {
     final InputValidationModel result = _ref.read(validationService).validatePassword(val);
     _ref.read(passwordState.notifier).state = result;
   }
-
+  // bool get isEmailRemindValid => _ref.read(validationService).isEmailRemindValid(_ref.read(emailRemindState));
   bool get isEmailAndPasswordValid => _ref.read(validationService).isEmailAndPasswordValid(_ref.read(emailState), _ref.read(passwordState));
 
 
@@ -59,38 +55,41 @@ class AuthController {
     final email = _ref.read(emailState).value.toString();
     final password = _ref.read(passwordState).value.toString();
     //start loading app
-    _ref.read(routeController).navigate(MyScreen.loading);
+    _ref.read(appStateNotifierProvider.notifier).appLoading();
     //Try to sign in
     Object signInResult = await _ref.read(authServiceProvider).signInEmail(email.toLowerCase(), password);
     if (signInResult is Failure) {
       setAuthError(signInResult.errorString);
-      _ref.read(routeController).navigate(MyScreen.signIn);
+      _ref.read(appStateNotifierProvider.notifier).userSignedOut(); //signInError should be equal signing out
     }
     if (signInResult is Success) setAuthError(null);
   }
 
   register() async {
-    // //start loading app
-    // _ref.read(routeController).navigate(MyScreen.loading);
-    // //register user
-    // Object registerResult =
-    // await _authService.registerWithEmailAndPassword(email.toLowerCase(), password);
-    // if (registerResult is Failure) {
-    //   setError(registerResult);
-    //   _routeController.navigate(MyScreen.signIn);
-    // }
-    // if (registerResult is Success) {
-    //   setError(null);
-    // }
+    final email = _ref.read(emailState).value.toString();
+    final password = _ref.read(passwordState).value.toString();
+    //start loading app
+    _ref.read(appStateNotifierProvider.notifier).appLoading();
+    //register user
+    Object registerResult =
+    await _ref.read(authServiceProvider).registerWithEmailAndPassword(email.toLowerCase(), password);
+    if (registerResult is Failure) {
+      setAuthError(registerResult.errorString);
+      _ref.read(appStateNotifierProvider.notifier).userSignedOut(); //signInError should be equal signing out
+    }
+    if (registerResult is Success) setAuthError(null);
   }
 
   signInWithGoogle() async {
-    // Object signInGoogleResult = await _authService.signInGoogle();
-    // if (signInGoogleResult is Failure) {
-    //   setError(signInGoogleResult);
-    //   _routeController.navigate(MyScreen.signIn);
-    // }
-    // if (signInGoogleResult is Success) setError(null);
+    Object signInGoogleResult = await _ref.read(authServiceProvider).signInGoogle();
+    if (signInGoogleResult is Failure) {
+      setAuthError(signInGoogleResult.errorString);
+      _ref.read(appStateNotifierProvider.notifier).userSignedOut(); //signInError should be equal signing out
+    }
+    if (signInGoogleResult is Success) {
+      _ref.read(appStateNotifierProvider.notifier).appLoading();
+      setAuthError(null);
+    }
   }
 
   signOut() async {
@@ -104,6 +103,17 @@ class AuthController {
     //clear user
     _ref.read(userService.notifier).clearUser();
   }
+  resetPassword() async {
+    final emailRemind = _ref.read(emailState).value.toString();
+    Object remindResult = await _ref.read(authServiceProvider).resetPassword(emailRemind.toLowerCase());
+    if (remindResult is Failure) {
+      setEmailRemindError(remindResult.errorString);
+    }
+    if (remindResult is Success) {
+      _ref.read(emailRemindSent.notifier).state = true;
+      setEmailRemindError(null);
+    }
 
+  }
 
 }

@@ -157,30 +157,30 @@ class Manager extends ChangeNotifier {
   //   });
   // }
 
-  prepareData(String userId) async {
-    // keep the app in loading state
-    if (_currentScreen != MyScreen.loading) navigate(MyScreen.loading);
-
-    // download user data and create local user object
-    // Object createUserResult = await _userService.createUserLocal(userId);
-    // if (createUserResult is Failure) {
-    //   setError(createUserResult);
-    //   navigate(MyScreen.signIn);
-    //   return;
-    // }
-
-    //next prepare questions
-    // Object prepareDataResult = await _questionService.prepareGlobalData();
-    // if (prepareDataResult is Failure) {
-    //   setError(prepareDataResult);
-    //   navigate(MyScreen.signIn);
-    //   return;
-    // }
-    //reset data entered in sign in screen forms
-    // email.value = null;
-    // password.value = null;
-    navigate(MyScreen.menu);
-  }
+  // prepareData(String userId) async {
+  //   // keep the app in loading state
+  //   if (_currentScreen != MyScreen.loading) navigate(MyScreen.loading);
+  //
+  //   // download user data and create local user object
+  //   // Object createUserResult = await _userService.createUserLocal(userId);
+  //   // if (createUserResult is Failure) {
+  //   //   setError(createUserResult);
+  //   //   navigate(MyScreen.signIn);
+  //   //   return;
+  //   // }
+  //
+  //   //next prepare questions
+  //   // Object prepareDataResult = await _questionService.prepareGlobalData();
+  //   // if (prepareDataResult is Failure) {
+  //   //   setError(prepareDataResult);
+  //   //   navigate(MyScreen.signIn);
+  //   //   return;
+  //   // }
+  //   //reset data entered in sign in screen forms
+  //   // email.value = null;
+  //   // password.value = null;
+  //   navigate(MyScreen.menu);
+  // }
 
   ////////////////////////
   //        AUTH        //
@@ -234,21 +234,21 @@ class Manager extends ChangeNotifier {
   //   navigate(MyScreen.signIn);
   // }
 
-  resetPassword(String email) async {
-    debugPrint('/// manager ResetPassword deployed');
-    navigate(MyScreen.loading);
-    // Object resetPassResult = await _authService.resetPassword(email.toLowerCase());
-    // if (resetPassResult is Failure) {
-    //   await setError(resetPassResult);
-    //   navigate(MyScreen.resetPassword);
-    // }
-    // if (resetPassResult is Success) {
-    //   await setError(null);
-    //   setLoading(true);
-    //   setMessage(msgResetSent);
-    //   navigate(MyScreen.signIn);
-    // }
-  }
+  // resetPassword(String email) async {
+  //   debugPrint('/// manager ResetPassword deployed');
+  //   navigate(MyScreen.loading);
+  //   // Object resetPassResult = await _authService.resetPassword(email.toLowerCase());
+  //   // if (resetPassResult is Failure) {
+  //   //   await setError(resetPassResult);
+  //   //   navigate(MyScreen.resetPassword);
+  //   // }
+  //   // if (resetPassResult is Success) {
+  //   //   await setError(null);
+  //   //   setLoading(true);
+  //   //   setMessage(msgResetSent);
+  //   //   navigate(MyScreen.signIn);
+  //   // }
+  // }
 
   ////////////////////////
   //        USER        //

@@ -21,7 +21,6 @@ class SignInScreen extends ConsumerWidget {
     final InputValidationModel _email = ref.watch(emailState);
     final InputValidationModel _password = ref.watch(passwordState);
     final bool isEmailAndPasswordValid = ref.watch(authController).isEmailAndPasswordValid;
-    // final myManager = ref.read(manager);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
@@ -94,7 +93,7 @@ class SignInScreen extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                    child: ElevatedButton(onPressed: (!isEmailAndPasswordValid)
+                    child: ElevatedButton(onPressed: (_email.value == null || _password.value == null)
                         ? null : () =>
                         _authController.signIn(),
                         child: const Text('Zaloguj się'))
@@ -102,7 +101,7 @@ class SignInScreen extends ConsumerWidget {
                 const SizedBox(width: 20),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: (!isEmailAndPasswordValid)
+                    onPressed: (_email.value == null || _password.value == null)
                         ? null : () =>
                         _authController.register(),
                     child: const Text('Utwórz konto'),

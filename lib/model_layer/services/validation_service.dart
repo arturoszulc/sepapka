@@ -11,7 +11,7 @@ final validationService = Provider<ValidationService>((ref) {
 class ValidationService {
   // InputValidationModel _email = InputValidationModel(null, null);
   InputValidationModel _emailRemind = const InputValidationModel(null, null);
-  InputValidationModel _password = const InputValidationModel(null, null);
+  // InputValidationModel _password = const InputValidationModel(null, null);
   InputValidationModel _remark = const InputValidationModel(null, null);
 
 
@@ -20,6 +20,11 @@ class ValidationService {
 
   final String passwordPatternLength = r'.{6,}';
   final String remarkPattern = r'^[\s.,!?a-zA-ZżźćńółęąśŻŹĆĄŚĘŁÓŃ0-9-]+$';
+
+  // bool isEmailRemindValid(InputValidationModel email) {
+  //   if (email.value != null) return true;
+  //   return false;
+  // }
 
   bool isEmailAndPasswordValid(InputValidationModel email, InputValidationModel password) {
     if (email.value != null && password.value != null) {
@@ -33,7 +38,7 @@ class ValidationService {
 
   InputValidationModel get emailRemind => _emailRemind;
 
-  InputValidationModel get password => _password;
+  // InputValidationModel get password => _password;
 
   InputValidationModel get remark => _remark;
 
@@ -49,7 +54,7 @@ class ValidationService {
   void validateEmailRemind(String val) {
     bool emailValid = RegExp(emailPattern).hasMatch(val);
     if (!emailValid) {
-      _emailRemind = InputValidationModel(null, errorValEmail);
+      _emailRemind = const InputValidationModel(null, errorValEmail);
     } else {
       _emailRemind = InputValidationModel(val, null);
     }

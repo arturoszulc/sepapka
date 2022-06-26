@@ -32,12 +32,17 @@ class AppStateNotifier extends StateNotifier<AppState> {
     _ref.read(authServiceProvider);
   }
 
+  void appLoading() {
+    //set both to false, to imit loading app state
+    state = state.copyWith(isLoading: true);
+  }
+
   void userSignedIn() {
-    state = state.copyWith(isSignedIn: true, isSignedOut: false);
+    state = state.copyWith(isLoading: false, isSignedIn: true, isSignedOut: false);
   }
 
   void userSignedOut() {
-    state = state.copyWith(isSignedIn: false, isSignedOut: true);
+    state = state.copyWith(isLoading: false, isSignedIn: false, isSignedOut: true);
   }
 
   // void appInitialized() {
@@ -46,8 +51,8 @@ class AppStateNotifier extends StateNotifier<AppState> {
   //   state = state.copyWith(appInitialized: true);
   // }
 
-  void dataFetchError() {
-    state = state.copyWith(fetchDataError: true);
+  void signInError() {
+    state = state.copyWith(signInError: true);
   }
 
 

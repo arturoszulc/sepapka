@@ -54,17 +54,19 @@ class RouterNotifier extends ChangeNotifier {
     // log('@@@ GoRouter state.name: ${state.name} @@@');
 
     //App statuses
+    final bool isLoading = _ref.read(appStateNotifierProvider).isLoading;
     final bool isUserSignedIn = _ref.read(appStateNotifierProvider).isSignedIn;
     final bool isUserSignedOut = _ref.read(appStateNotifierProvider).isSignedOut;
-    final bool appInitError = _ref.read(appStateNotifierProvider).fetchDataError;
+    final bool isSignInError = _ref.read(appStateNotifierProvider).signInError;
 
     final bool isAppLoading = state.subloc.contains(MyScreen.loading.path);
     final bool isInApp = state.subloc.contains(MyScreen.menu.path);
     final isInSignIn = state.subloc.contains(MyScreen.signIn.path);
 
-    if (!isUserSignedIn && !isUserSignedOut && !isAppLoading) return state.namedLocation(MyScreen.loading.name);
-    if ((isUserSignedOut || appInitError) && !isInSignIn) return state.namedLocation(MyScreen.signIn.name);
-    if (isUserSignedIn && !isInApp) return state.namedLocation(MyScreen.menu.name);
+    if (isLoading && !isAppLoading) return state.namedLocation(MyScreen.loading.name);
+    // if (!isUserSignedIn && !isUserSignedOut && !isAppLoading) return state.namedLocation(MyScreen.loading.name);
+    if (isUserSignedOut && !isInSignIn && !isLoading) return state.namedLocation(MyScreen.signIn.name);
+    if (isUserSignedIn && !isInApp && !isLoading) return state.namedLocation(MyScreen.menu.name);
     return null;
 
     // // final isAuthenticated = _ref.read(authStateProvider).value != null;
