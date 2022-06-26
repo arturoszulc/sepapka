@@ -29,8 +29,9 @@ class MyApp extends StatelessWidget {
         builder: (context, WidgetRef ref, child) {
           final _router = ref.read(routerProvider);
           //manager initialization to check if user is signed in
+          ref.read(appStateNotifierProvider.notifier).init();
+
           Future.delayed(Duration.zero, (){
-            ref.read(appStateNotifierProvider.notifier).init();
           });
           return MaterialApp.router(
             routeInformationParser: _router.routeInformationParser,

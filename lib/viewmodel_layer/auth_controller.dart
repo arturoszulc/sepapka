@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/input_validation_model.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
+import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
 import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 import '../model_layer/services/auth_service.dart';
@@ -102,7 +103,8 @@ class AuthController {
     _ref.read(passwordState.notifier).state = const InputValidationModel(null,null);
     //clear user
     _ref.read(userService.notifier).clearUser();
-    _ref.read(routeController).navigate(MyScreen.signIn);
+    //change appState
+    _ref.read(appStateNotifierProvider.notifier).userSignedOut();
   }
 
 

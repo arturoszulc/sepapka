@@ -4,17 +4,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sepapka/model_layer/services/auth_service.dart';
-import 'package:sepapka/view_layer/question_list/question_list_filter.dart';
-import 'package:sepapka/view_layer/question_list/question_list_screen.dart';
-import 'package:sepapka/view_layer/question_list/question_list_single.dart';
-import 'package:sepapka/view_layer/question_quiz/quiz_menu.dart';
-import 'package:sepapka/view_layer/question_quiz/remark_screen.dart';
-import 'package:sepapka/view_layer/question_quiz/session_finished_screen.dart';
+
 import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
-import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
+import '../models/appState.dart';
 
 /// Caches and Exposes a [GoRouter]
 final routerProvider = Provider<GoRouter>((ref) {
@@ -42,9 +36,11 @@ class RouterNotifier extends ChangeNotifier {
   /// This implementation exploits `ref.listen()` to add a simple callback that
   /// calls `notifyListeners()` whenever there's change onto a desider provider.
   RouterNotifier(this._ref) {
-    _ref.listen<AppStateNotifier>(
-      appStateNotifierProvider.notifier,
-      (_, __) => notifyListeners(), // notify only if true
+    _ref.listen<AppState>(
+      appStateNotifierProvider,
+      (_, __) {
+        log('/// appStateNotifierProvider CHANGED ///');
+        notifyListeners();}, // notify only if true
     );
   }
 
@@ -53,17 +49,21 @@ class RouterNotifier extends ChangeNotifier {
   /// We don't want to trigger a rebuild of the surrounding provider.
   String? _redirectLogic(GoRouterState state) {
     log('&&& GoRouter redirect method deployed &&&');
-    log('@@@ GoRouter state.location: ${state.location} @@@');
-    log('@@@ GoRouter state.subLoc: ${state.subloc} @@@');
-    log('@@@ GoRouter state.name: ${state.name} @@@');
+    // log('@@@ GoRouter state.location: ${state.location} @@@');
+    // log('@@@ GoRouter state.subLoc: ${state.subloc} @@@');
+    // log('@@@ GoRouter state.name: ${state.name} @@@');
 
+    //App statuses
+    final bool isUserSignedIn = _ref.read(appStateNotifierProvider).isSignedIn;
+    final bool isAppInitialized = _ref.read(appStateNotifierProvider).appInitialized;
+    final bool appInitError = _ref.read(appStateNotifierProvider).fetchDataError;
 
-    final bool isSignedIn = _ref.read(authStateProvider).value != null;
-    final bool isInApp = state.location.contains(MyScreen.menu.path);
-    final isInSignInFlow = state.subloc.contains(MyScreen.signIn.path);
+    final bool isInApp = state.subloc.contains(MyScreen.menu.path);
+    final isInSignIn = state.subloc.contains(MyScreen.signIn.path);
 
-    if (!isSignedIn && !isInSignInFlow) return state.namedLocation(MyScreen.signIn.name);
-    if (isSignedIn && !isInApp) return state.namedLocation(MyScreen.menu.name);
+    if ((!isUserSignedIn || appInitError) && !isInSignIn) return state.namedLocation(MyScreen.signIn.name);
+    // if (isUserSignedIn && !isAppInitialized) return state.namedLocation(MyScreen.loading.name);
+    if (isAppInitialized && !isInApp) return state.namedLocation(MyScreen.menu.name);
     return null;
 
     // // final isAuthenticated = _ref.read(authStateProvider).value != null;

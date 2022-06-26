@@ -1,9 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:sepapka/model_layer/services/purchase_service.dart';
 
-import 'model_layer/services/auth_service.dart';
-import 'model_layer/services/validation_service.dart';
-
 final serviceLocator = GetIt.instance; // GetIt.I is also valid
 
 void setupGetIt(){

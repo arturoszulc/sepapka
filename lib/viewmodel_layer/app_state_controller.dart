@@ -32,23 +32,22 @@ class AppStateNotifier extends StateNotifier<AppState> {
     _ref.read(authServiceProvider);
   }
 
-  void listenAuthChange() {
-    _ref.read(authStateProvider.stream).listen((User? user) {
-
-    });
-  }
-
   void userSignedIn() {
     state = state.copyWith(isSignedIn: true);
   }
 
   void userSignedOut() {
-    state = state.copyWith(isSignedIn: false);
+    state = AppState.initial();
   }
 
   void appInitialized() {
-    //means userData has been prepared
+    //means all necessary data (like userData) has been prepared
+    log('/// App initialized ///');
     state = state.copyWith(appInitialized: true);
+  }
+
+  void dataFetchError() {
+    state = state.copyWith(fetchDataError: true);
   }
 
 

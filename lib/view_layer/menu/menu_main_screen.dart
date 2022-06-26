@@ -51,7 +51,7 @@ class MenuScreen extends ConsumerWidget {
                 MenuButton(
                     label: 'Lista pytań',
                     onPressed: () {
-                      ref.read(routeController).navigate(MyScreen.listQuestion);
+                      context.goNamed(MyScreen.listQuestion.name);
                     }),
                 MenuButton(
                     label: 'Akademia',
@@ -63,12 +63,12 @@ class MenuScreen extends ConsumerWidget {
                     onPressed: () {
                       // context.go(MyScreen.knowledgeBase.name);
                       // context.pop();
-                      ref.read(routeController).navigate(MyScreen.academyMenu);
+                      context.goNamed(MyScreen.academyMenu.name);
                     }),
                 MenuButton(
                     label: 'Kalkulatory',
                     onPressed: () {
-                      ref.read(routeController).navigate(MyScreen.calcMenu);
+                      context.goNamed(MyScreen.calcMenu.name);
                     }),
                 MenuButton(label: 'Wyloguj się', onPressed: () async {
                   await ref.read(authController).signOut();

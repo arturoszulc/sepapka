@@ -122,11 +122,12 @@ class UserService extends StateNotifier<AppUser> {
       final updateResult = updateUserInDb();
       if (updateResult is Failure) {
         log('/// UserService: Error updating user ///');
+        _ref.read(appStateNotifierProvider.notifier).dataFetchError();
         return;
       }
-      _ref.read(appStateNotifierProvider.notifier).userSignedIn();
       // _ref.read(routeController).navigate(MyScreen.menu);
     }
+    _ref.read(appStateNotifierProvider.notifier).appInitialized();
   }
 
   void createUser(String uid) {
