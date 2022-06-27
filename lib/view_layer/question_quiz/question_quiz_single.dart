@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/question.dart';
-import 'package:sepapka/model_layer/models/quiz_state_model.dart';
-import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/utils/custom_widgets/dialog_leave_session.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
@@ -61,42 +59,6 @@ class QuizSingleQuestion extends ConsumerWidget {
                               ref.read(quizController).checkAnswer(e.answer);
                             })
                         ).toList(),
-                        
-                    //   children:  [
-                    //   AnswerButton(
-                    //     qStatus: myManager.qStatus,
-                    //     answer: bMapList[0].answer,
-                    //     color: bMapList[0].color,
-                    //     onSelected: () {
-                    //       myManager.checkAnswer(bMapList[0].answer);
-                    //     },
-                    //   ),
-                    //   AnswerButton(
-                    //     qStatus: myManager.qStatus,
-                    //     answer: bMapList[1].answer,
-                    //     color: bMapList[1].color,
-                    //     onSelected: () {
-                    //       myManager.checkAnswer(bMapList[1].answer);
-                    //     },
-                    //   ),
-                    //   AnswerButton(
-                    //     qStatus: myManager.qStatus,
-                    //     answer: bMapList[2].answer,
-                    //     color: bMapList[2].color,
-                    //     onSelected: () {
-                    //       myManager.checkAnswer(bMapList[2].answer);
-                    //     },
-                    //   ),
-                    //   AnswerButton(
-                    //     qStatus: myManager.qStatus,
-                    //     answer: bMapList[3].answer,
-                    //     color: bMapList[3].color,
-                    //     onSelected: () {
-                    //       myManager.checkAnswer(bMapList[3].answer);
-                    //     },
-                    //   ),
-                    // ]
-                    
                     ),
                   ),
             Expanded(flex: 2, child: Container(),),

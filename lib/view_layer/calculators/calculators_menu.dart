@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sepapka/viewmodel_layer/route_controller.dart';
+import 'package:go_router/go_router.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/custom_widgets/buttons/menu_button.dart';
 import '../../utils/custom_widgets/unlock_button.dart';
-import '../../viewmodel_layer/manager.dart';
 
 class CalculatorsMenuScreen extends ConsumerWidget {
   const CalculatorsMenuScreen({Key? key}) : super(key: key);
@@ -31,7 +30,7 @@ class CalculatorsMenuScreen extends ConsumerWidget {
         label: 'Moc grzania w obwodach 3-fazowych',
         onPressed: () {
           // context.go(MyScreen.calcHeatingPowerThreePhase.path);
-        ref.read(routeController).navigate(MyScreen.calcHeatingPowerThreePhase);
+        context.goNamed(MyScreen.calcHeatingPowerThreePhase.name);
         }),
         ],),
         ),

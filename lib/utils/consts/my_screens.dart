@@ -27,11 +27,14 @@ enum MyScreen {
 
   //Academy
   academyMenu('academy'),
+
+
+  //Tables
   tablesMenu('tables'),
   tableWireColors('table-wire-colors'),
   tableWireAmpacity('table-wire-ampacity'),
   tableWireSymbols('table-wire-symbols'),
-  units('units'),
+  tableUnits('units'),
 
   //Calcs
   calcMenu('calc'),

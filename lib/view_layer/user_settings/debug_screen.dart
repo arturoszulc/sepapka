@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 
@@ -17,7 +18,7 @@ class DebugScreen extends ConsumerWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => myManager.navigate(MyScreen.menu),
+          onPressed: () => context.goNamed(MyScreen.menu.name),
         ),
         title: const Text('DEBUG'),
         centerTitle: true,

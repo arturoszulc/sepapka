@@ -2,15 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/services/quiz_service.dart';
-import 'package:sepapka/utils/consts/my_screens.dart';
-import 'package:sepapka/viewmodel_layer/route_controller.dart';
+import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
 
 import '../model_layer/models/button_map.dart';
 import '../model_layer/models/question.dart';
-import '../model_layer/models/quiz_state_model.dart';
 import '../model_layer/services/user_service.dart';
 import '../utils/consts/colors.dart';
-import '../utils/question_list.dart';
 
 //// Percent progress calculation ////
 final quizTotalQuestions = StateProvider.autoDispose<int>((ref) => ref.watch(quizQuestionList).length);
@@ -134,20 +131,16 @@ class QuizController {
 
   void setLevel(int lvl) {
     _ref.read(quizLevel.notifier).state = lvl;
-    _ref.read(routeController).navigate(MyScreen.quizChooseCategory);
   }
 
   void setCategory(int cat) {
     _ref.read(quizCategory.notifier).state = cat;
-    prepareSession();
-
   }
 
   void prepareSession() {
     // _ref.refresh(quizCurrentQuestionIndex); //reset current question index
     _ref.refresh(quizQuestionList); //prepare question list based on level and category
     prepareBMap(); //prepare BMap
-    _ref.read(routeController).navigate(MyScreen.quizQuestionSingle);
   }
 
   void checkAnswer(String answer) {
@@ -204,7 +197,8 @@ class QuizController {
   }
 
   void finishQuiz() {
-    _ref.read(routeController).navigate(MyScreen.quizFinished);
+    //router will redirect automatically
+    _ref.read(appStateNotifierProvider.notifier).quizFinished();
   }
 
   void resetQuiz() {

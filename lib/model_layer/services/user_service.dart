@@ -11,10 +11,7 @@ import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question_map.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
-import 'package:sepapka/utils/consts/my_screens.dart';
-import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
-import 'package:sepapka/viewmodel_layer/route_controller.dart';
 import 'database_service.dart';
 
 
@@ -251,30 +248,30 @@ class UserService extends StateNotifier<AppUser> {
   //     _loggedUser!.qVersions[0] = qVersions[0];
   //   }
   //   }
+  //
+  // bool isQuestionOnAnyList(String questionId) {
+  //   return isQuestionInQListNew(questionId) != null ||
+  //       isQuestionInPracticeList(questionId) != null ||
+  //       isQuestionInNotShownList(questionId) != null;
+  // }
 
-  bool isQuestionOnAnyList(String questionId) {
-    return isQuestionInQListNew(questionId) != null ||
-        isQuestionInPracticeList(questionId) != null ||
-        isQuestionInNotShownList(questionId) != null;
-  }
+  // QMap? isQuestionInQListNew(String questionId) {
+  //   // return _loggedUser!.qListNew.firstWhereOrNull((qMap) => qMap.id == questionId);
+  // }
+  //
+  // QMap? isQuestionInPracticeList(String questionId) {
+  //   // return _loggedUser!.qListPractice.firstWhereOrNull((qMap) => qMap.id == questionId);
+  // }
+  //
+  // QMap? isQuestionInNotShownList(String questionId) {
+  //   // return _loggedUser!.qListNotShown.firstWhereOrNull((qMap) => qMap.id == questionId);
+  // }
 
-  QMap? isQuestionInQListNew(String questionId) {
-    // return _loggedUser!.qListNew.firstWhereOrNull((qMap) => qMap.id == questionId);
-  }
-
-  QMap? isQuestionInPracticeList(String questionId) {
-    // return _loggedUser!.qListPractice.firstWhereOrNull((qMap) => qMap.id == questionId);
-  }
-
-  QMap? isQuestionInNotShownList(String questionId) {
-    // return _loggedUser!.qListNotShown.firstWhereOrNull((qMap) => qMap.id == questionId);
-  }
-
-  removeQuestionFromAnyQList(String questionId) {
-    // _loggedUser!.qListNew.removeWhere((e) => e.id == questionId);
-    // _loggedUser!.qListPractice.removeWhere((e) => e.id == questionId);
-    // _loggedUser!.qListNotShown.removeWhere((e) => e.id == questionId);
-  }
+  // removeQuestionFromAnyQList(String questionId) {
+  //   // _loggedUser!.qListNew.removeWhere((e) => e.id == questionId);
+  //   // _loggedUser!.qListPractice.removeWhere((e) => e.id == questionId);
+  //   // _loggedUser!.qListNotShown.removeWhere((e) => e.id == questionId);
+  // }
 
   QMap createDefaultQMap(String? qId) {
     return QMap(id: qId, dateModified: DateTime.now().toString().substring(0, 10), fibNum: 0);
@@ -434,14 +431,14 @@ class UserService extends StateNotifier<AppUser> {
   //   }
   // }
 
-  Widget getQListIcon(String qId) {
-    // if (isQuestionInPracticeList(qId) != null) {
-    //   return qListIcons['practice']!;
-    // }
-    if (isQuestionInNotShownList(qId) != null) {
-      return qListIcons['notShown']!;
-    } else {
-      return qListIcons['none']!;
-    }
-  }
+  // Widget getQListIcon(String qId) {
+  //   // if (isQuestionInPracticeList(qId) != null) {
+  //   //   return qListIcons['practice']!;
+  //   // }
+  //   if (isQuestionInNotShownList(qId) != null) {
+  //     return qListIcons['notShown']!;
+  //   } else {
+  //     return qListIcons['none']!;
+  //   }
+  // }
 }

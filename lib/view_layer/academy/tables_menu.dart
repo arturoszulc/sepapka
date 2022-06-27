@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../utils/consts/my_screens.dart';
 import '../../utils/custom_widgets/buttons/menu_button.dart';
 import '../../utils/custom_widgets/unlock_button.dart';
-import '../../viewmodel_layer/manager.dart';
 
 class TablesMenu extends ConsumerWidget {
   const TablesMenu({Key? key}) : super(key: key);
@@ -34,28 +34,28 @@ class TablesMenu extends ConsumerWidget {
                           proOnly: true,
                           label: 'Kodowanie barw przewodów',
                           onPressed: ()  {
-                            ref.read(manager).navigate(MyScreen.tableWireColors);
+                            context.goNamed(MyScreen.tableWireColors.name);
                           },
                         ),
                         MenuButton(
                           proOnly: true,
                           label: 'Symbole przewodów',
                           onPressed: () {
-                            ref.read(manager).navigate(MyScreen.tableWireSymbols);
+                            context.goNamed(MyScreen.tableWireSymbols.name);
                           },
                         ),
                         MenuButton(
                           proOnly: true,
                           label: 'Obciążalność przewodów',
                           onPressed: ()  {
-                            ref.read(manager).navigate(MyScreen.tableWireAmpacity);
+                            context.goNamed(MyScreen.tableWireAmpacity.name);
                           },
                         ),
                         MenuButton(
                           proOnly: true,
                           label: 'Jednostki i wielkości',
                           onPressed: ()  {
-                            ref.read(manager).navigate(MyScreen.units);
+                            context.goNamed(MyScreen.tableUnits.name);
                           },
                         ),
 

@@ -1,11 +1,9 @@
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/appState.dart';
 import 'package:sepapka/model_layer/services/auth_service.dart';
 
-import '../model_layer/services/user_service.dart';
 
 final appState = Provider<AppState>((ref) => AppState.initial());
 
@@ -53,6 +51,14 @@ class AppStateNotifier extends StateNotifier<AppState> {
 
   void signInError() {
     state = state.copyWith(signInError: true);
+  }
+
+  void quizFinished() {
+    state = state.copyWith(isQuizFinished: true);
+  }
+
+  void quitQuiz() {
+    state = state.copyWith(isQuizFinished: false);
   }
 
 

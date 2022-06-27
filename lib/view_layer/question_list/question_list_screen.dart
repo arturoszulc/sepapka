@@ -1,14 +1,10 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sepapka/model_layer/models/question.dart';
-import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/consts/question.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/question_list_controller.dart';
-import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 class QuestionListScreen extends ConsumerWidget {
   const QuestionListScreen({Key? key}) : super(key: key);
@@ -27,7 +23,7 @@ class QuestionListScreen extends ConsumerWidget {
         body: Column(
           children: [
             InkWell(
-              onTap: () => context.goNamed(MyScreen.listQuestionFilter.name),
+              onTap: () => context.pushNamed(MyScreen.listQuestionFilter.name),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
@@ -91,7 +87,7 @@ class QuestionListScreen extends ConsumerWidget {
                             subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
                             onTap: () {
                               ref.read(questionListController).showSingleQuestion(index);
-                              context.goNamed(MyScreen.listQuestionSingle.name);
+                              context.pushNamed(MyScreen.listQuestionSingle.name);
                               // context.read<Manager>().navigate(Screen.listQuestionSingle);
                             },
                           ),

@@ -5,7 +5,6 @@ import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/custom_widgets/buttons/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/auth_controller.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
-import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 class MenuScreen extends ConsumerWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -46,24 +45,23 @@ class MenuScreen extends ConsumerWidget {
                     label: 'Quiz',
                     onPressed: () {
                       context.goNamed(MyScreen.quizChooseLevel.name);
-                      // ref.read(routeController).navigate(MyScreen.quizChooseLevel);
                     }),
-                MenuButton(
-                    label: 'Lista pytań',
-                    onPressed: () {
-                      context.goNamed(MyScreen.listQuestion.name);
-                    }),
+                // MenuButton(
+                //     label: 'Lista pytań',
+                //     onPressed: () {
+                //       context.goNamed(MyScreen.listQuestion.name);
+                //     }),
                 MenuButton(
                     label: 'Akademia',
                     onPressed: () {
+                      context.goNamed(MyScreen.academyMenu.name);
                       // context.read<AcademyManager>().getFileName();
                     }),
                 MenuButton(
                     label: 'Tablice',
                     onPressed: () {
-                      // context.go(MyScreen.knowledgeBase.name);
+                      context.goNamed(MyScreen.tablesMenu.name);
                       // context.pop();
-                      context.goNamed(MyScreen.academyMenu.name);
                     }),
                 MenuButton(
                     label: 'Kalkulatory',

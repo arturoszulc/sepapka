@@ -1,7 +1,7 @@
 import 'package:sepapka/model_layer/models/question.dart';
 
 
-final List<Question> questionListGlobalConst = [
+const List<Question> questionListGlobalConst = [
 
   Question( id:'epoDl89w4G4cRcNFrG7Y', q: 'Przez który z wymienionych przewodów, w warunkach normalnych, nie płynie prąd?', a1: 'ochronny PE', a2: 'neutralny N', a3: 'fazowy L', a4: 'środkowy M', label: 3, level: 1, assetPath: ''),
   Question( id:'AMJEwqpt0BFHrFPBfOa9', q: 'Widoczny na poniższym rysunku układ sieci to', a1: 'sieć TN-S', a2: 'sieć TT', a3: 'sieć TN-C', a4: 'sieć IT', label: 3, level: 1, assetPath: 'uklad_sieci_tns.png'),

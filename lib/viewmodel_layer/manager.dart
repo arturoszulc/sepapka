@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart'; //iconData is from here
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:purchases_flutter/errors.dart';
@@ -19,11 +18,8 @@ import 'package:sepapka/model_layer/services/quiz_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/model_layer/services/validation_service.dart';
 import 'package:sepapka/utils/api_status.dart';
-import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/consts/question.dart';
-import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
-import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 
 final appVersionProvider = FutureProvider<String>((ref) async {
@@ -64,7 +60,7 @@ class Manager extends ChangeNotifier {
   String _errorMsg = '';
   String _infoMsg = '';
 
-  MyScreen _currentScreen = MyScreen.loading;
+  final MyScreen  _currentScreen = MyScreen.loading;
 
   //Manager getters
   bool get loading => _loading;
@@ -272,7 +268,7 @@ class Manager extends ChangeNotifier {
     //   setError(prepareDataResult);
     //   return;
     // }
-    navigate(MyScreen.purchaseSuccess);
+    // navigate(MyScreen.purchaseSuccess);
   }
 
   ////////////////////////
@@ -350,26 +346,26 @@ class Manager extends ChangeNotifier {
     // navigate(MyScreen.listQuestion);
   }
 
-  Question? getSingleFilteredQuestion() {
-    // if (qListGlobalFiltered.isEmpty) return null;
-    // return qListGlobalFiltered[qListGlobalFilteredIndex];
-  }
+  // Question? getSingleFilteredQuestion() {
+  //   // if (qListGlobalFiltered.isEmpty) return null;
+  //   // return qListGlobalFiltered[qListGlobalFilteredIndex];
+  // }
 
-  showSingleFilteredQuestion(int index) {
-    debugPrint('Entered showSingleFilteredQuestion');
-    //update index
-    qListGlobalFilteredIndex = index;
-    //update question
-
-    //update isQuestionHidden
-    if (qListGlobalFiltered.isEmpty) {
-      debugPrint('QListGlobalFiltered IS EMPTY');
-      navigate(MyScreen.listQuestion);
-    } else {
-      //refresh screen
-      navigate(MyScreen.listQuestionSingle);
-    }
-  }
+  // showSingleFilteredQuestion(int index) {
+  //   debugPrint('Entered showSingleFilteredQuestion');
+  //   //update index
+  //   qListGlobalFilteredIndex = index;
+  //   //update question
+  //
+  //   //update isQuestionHidden
+  //   if (qListGlobalFiltered.isEmpty) {
+  //     debugPrint('QListGlobalFiltered IS EMPTY');
+  //     navigate(MyScreen.listQuestion);
+  //   } else {
+  //     //refresh screen
+  //     navigate(MyScreen.listQuestionSingle);
+  //   }
+  // }
 
   sendQuestionRemark() async {
     // Object sendResult = await _questionService.sendQuestionRemark(remark.value!, appVersion);
@@ -415,20 +411,20 @@ class Manager extends ChangeNotifier {
   String? purchaseError;
 
   revenueCatStart() async {
-      navigate(MyScreen.loading);
+      // navigate(MyScreen.loading);
 
       Object initResult = await _purchaseService.init(loggedUser!.documentId);
       if (initResult is Failure) {
         debugPrint(initResult.errorString);
         purchaseError = initResult.errorString;
-        navigate(MyScreen.purchaseError);
+        // navigate(MyScreen.purchaseError);
         return;
       }
       Object getOffersResult = await _purchaseService.getOffers();
       if (getOffersResult is Failure) {
         debugPrint(getOffersResult.errorString);
         purchaseError = getOffersResult.errorString;
-        navigate(MyScreen.purchaseError);
+        // navigate(MyScreen.purchaseError);
         return;
       }
 
@@ -438,7 +434,7 @@ class Manager extends ChangeNotifier {
         finishPurchase(isPurchaseFinished);
         return;
       }
-      navigate(MyScreen.purchase);
+      // navigate(MyScreen.purchase);
   }
 
   buyProduct() async {
@@ -489,7 +485,7 @@ class Manager extends ChangeNotifier {
 
 
   finishPurchase(EntitlementInfo info) async {
-    navigate(MyScreen.loading);
+    // navigate(MyScreen.loading);
     //add userID to revenueCat
     // _purchaseService.addIdToRevenueCat(loggedUser!.documentId);
 
@@ -499,7 +495,7 @@ class Manager extends ChangeNotifier {
     setError(null);
     await goPro();
     //navigate to PurchaseSuccess screen
-    navigate(MyScreen.purchaseSuccess);
+    // navigate(MyScreen.purchaseSuccess);
 
   }
 
@@ -509,7 +505,7 @@ class Manager extends ChangeNotifier {
     }
     if (errorCode == PurchasesErrorCode.paymentPendingError) {
       debugPrint('### payment pending');
-      navigate(MyScreen.purchasePending);
+      // navigate(MyScreen.purchasePending);
     }
     if (errorCode == PurchasesErrorCode.networkError) {
       debugPrint('### network error');
@@ -545,19 +541,19 @@ class Manager extends ChangeNotifier {
   //   debugPrint('NAVIGATING to: $screen');
   //
   // }
-  navigate(MyScreen screen) {
-    debugPrint('NAVIGATING to: $screen');
-    _ref.read(routeController).navigate(screen);
-    _currentScreen = screen;
-    // if (errorMsg.isNotEmpty) setError(null);
-    // notifyListeners();
-  }
+  // navigate(MyScreen screen) {
+  //   debugPrint('NAVIGATING to: $screen');
+  //   _ref.read(routeController).navigate(screen);
+  //   _currentScreen = screen;
+  //   // if (errorMsg.isNotEmpty) setError(null);
+  //   // notifyListeners();
+  // }
 
 
 
-  Widget getQuestionIcon(String qId) {
-    return Icon(Icons.check);
-  }
+  // Widget getQuestionIcon(String qId) {
+  //   return const Icon(Icons.check);
+  // }
 
 // String getBadgePath({int? rankLevel}) {
 //   String badge = '0';

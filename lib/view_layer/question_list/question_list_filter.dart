@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,7 +5,6 @@ import 'package:group_button/group_button.dart';
 import 'package:sepapka/viewmodel_layer/question_list_controller.dart';
 
 import '../../utils/consts/question.dart';
-import '../../viewmodel_layer/manager.dart';
 import '../../utils/custom_widgets/buttons/groupbutton_options.dart';
 
 class QuestionListFilter extends ConsumerWidget {

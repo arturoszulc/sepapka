@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/viewmodel_layer/auth_controller.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import '../../model_layer/models/input_validation_model.dart';
 import '../../utils/consts/colors.dart';

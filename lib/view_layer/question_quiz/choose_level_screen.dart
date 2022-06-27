@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/utils/custom_widgets/buttons/menu_button.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
 
@@ -14,66 +15,54 @@ class MenuChooseLevel extends ConsumerWidget {
 
     // List<int> countLevels = ref.read(manager).countQuestionsByLevel;
     List<int> countLevels = ref.watch(numOfQuestionsByLevel);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Wybierz poziom trudności'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        MenuButton(
-                          hasBadge: true,
-                          badgeNum: countLevels[0],
-                          label: 'wszystkie',
-                          onPressed: () {
-                            ref.read(quizController).setLevel(0);
-                          },
-                        ),
-                        MenuButton(
-                          hasBadge: true,
-                          badgeNum: countLevels[1],
-                          label: 'poziom 1',
-                          onPressed: () {
-                                  ref.read(quizController).setLevel(1);
-                                },
-                        ),
-                        MenuButton(
-                          hasBadge: true,
-                          badgeNum: countLevels[2],
-                          label: 'poziom 2',
-                          onPressed: () {
-                            // await ref.read(manager).chooseQuestionLevel(2);
-                            ref.read(quizController).setLevel(2);
-                          },
-                        ),
-                        MenuButton(
-                          hasBadge: true,
-                          badgeNum: countLevels[3],
-                          label: 'poziom 3',
-                          onPressed: () {
-                            // await ref.read(manager).chooseQuestionLevel(3);
-                            ref.read(quizController).setLevel(3);
-                          },
-                        ),
-                      ],
+    return WillPopScope(
+      onWillPop: () async {
+      context.goNamed(MyScreen.menu.name);
+      return false;},
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Wybierz poziom trudności'),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: qLevelList.map((level) =>
+                            MenuButton(
+                              hasBadge: true,
+                              badgeNum: countLevels[qLevelList.indexOf(level)],
+                              label: level,
+                              onPressed: () {
+                                ref.read(quizController).setLevel(qLevelList.indexOf(level));
+                                context.goNamed(MyScreen.quizChooseCategory.name);
+                              },
+                            ),
+                        ).toList()
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+          context.pushNamed(MyScreen.listQuestion.name);
+        },
+            label: const Text('Lista pytań'),
+          icon: const Icon(Icons.list),
         ),
       ),
     );

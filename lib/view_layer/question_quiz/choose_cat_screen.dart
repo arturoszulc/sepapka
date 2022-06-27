@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/consts/question.dart';
 import 'package:sepapka/utils/custom_widgets/buttons/menu_button.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 
 import '../../viewmodel_layer/quiz_controller.dart';
 
@@ -33,7 +33,6 @@ class ChooseCategory extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: Column(
-                      // crossAxisAlignment: CrossAxisAlignment.stretch,
                       children:  qCategoryList.map((category) =>
                       MenuButton(
                           label: category,
@@ -41,6 +40,8 @@ class ChooseCategory extends ConsumerWidget {
                           badgeNum: countCategories[qCategoryList.indexOf(category)],
                           onPressed: () {
                             ref.read(quizController).setCategory(qCategoryList.indexOf(category));
+                            ref.read(quizController).prepareSession();
+                            context.goNamed(MyScreen.quizQuestionSingle.name);
                           }),
                       ).toList()
 

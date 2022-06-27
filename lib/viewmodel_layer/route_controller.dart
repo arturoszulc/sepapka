@@ -11,9 +11,9 @@ final screenSwitched = StateProvider<bool>((ref) => false);
 
 
 //the routerState only purpose is to notify GoRouter that screen was switched
-final routeController = Provider<RouteController>((ref) {
-  return RouteController(ref);
-});
+// final routeController = Provider<RouteController>((ref) {
+//   return RouteController(ref);
+// });
 
 class RouteController {
   RouteController(this._ref) {

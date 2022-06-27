@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../utils/consts/my_screens.dart';
-import '../../utils/custom_widgets/buttons/menu_button.dart';
 import '../../utils/custom_widgets/unlock_button.dart';
-import '../../viewmodel_layer/manager.dart';
 
 class AcademyMenu extends ConsumerWidget {
   const AcademyMenu({Key? key}) : super(key: key);
@@ -14,7 +10,7 @@ class AcademyMenu extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Tablice'),
+          title: const Text('Akademia'),
           centerTitle: true,
         ),
         body: Center(
@@ -30,15 +26,8 @@ class AcademyMenu extends ConsumerWidget {
                   children: [
                     Expanded(
                       child: Column(
-                        children: [
-                          MenuButton(
-                            proOnly: true,
-                            label: 'Tablice',
-                            onPressed: ()  {
-                               context.goNamed(MyScreen.tablesMenu.name);
-                            },
-                          ),
-
+                        children: const [
+                          Text('To be continued'),
                         ],
                       ),
                     ),

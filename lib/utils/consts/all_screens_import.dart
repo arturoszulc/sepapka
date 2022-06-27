@@ -29,4 +29,4 @@ export 'package:sepapka/view_layer/question_list/question_list_screen.dart';
 export 'package:sepapka/view_layer/question_list/question_list_single.dart';
 export 'package:sepapka/view_layer/question_quiz/quiz_menu.dart';
 export 'package:sepapka/view_layer/question_quiz/remark_screen.dart';
-export 'package:sepapka/view_layer/question_quiz/session_finished_screen.dart';
+export 'package:sepapka/view_layer/question_quiz/quiz_finished.dart';

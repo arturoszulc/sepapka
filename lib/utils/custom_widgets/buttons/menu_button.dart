@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 
-import '../../../viewmodel_layer/manager.dart';
 
 class MenuButton extends ConsumerWidget {
   const MenuButton({

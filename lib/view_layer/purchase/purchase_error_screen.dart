@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../utils/consts/my_screens.dart';
 import '../../viewmodel_layer/manager.dart';
@@ -57,7 +58,7 @@ class PurchaseError extends StatelessWidget {
         builder: (BuildContext context, WidgetRef ref, Widget? child) => FloatingActionButton.extended(
           icon: const Icon(Icons.exit_to_app),
           onPressed: () {
-            ref.read(manager).navigate(MyScreen.menu);
+            context.goNamed(MyScreen.menu.name);
           },
           label: const Text('Powrót do menu'),
         ),

@@ -74,9 +74,9 @@ class ValidationService {
     bool remarkValid = RegExp(remarkPattern).hasMatch(val);
     if (!remarkValid) {
       if (val.isEmpty) {
-        _remark = InputValidationModel(null, null);
+        _remark = const InputValidationModel(null, null);
       } else {
-        _remark = InputValidationModel(null, errorRemarkChars);
+        _remark = const InputValidationModel(null, errorRemarkChars);
       }
     }
     else {

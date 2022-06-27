@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 import 'package:sepapka/utils/tables_data/table_wire_ampacity_data.dart';
 
-import '../../../utils/consts/my_screens.dart';
-import '../../../viewmodel_layer/manager.dart';
 
 class TableWireAmpacity extends StatefulWidget {
   const TableWireAmpacity({Key? key}) : super(key: key);

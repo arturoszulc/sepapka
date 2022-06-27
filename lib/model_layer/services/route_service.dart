@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sepapka/view_layer/academy/tables/table_units.dart';
 
 import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
 import '../../utils/consts/my_screens.dart';
@@ -57,16 +58,25 @@ class RouterNotifier extends ChangeNotifier {
     final bool isLoading = _ref.read(appStateNotifierProvider).isLoading;
     final bool isUserSignedIn = _ref.read(appStateNotifierProvider).isSignedIn;
     final bool isUserSignedOut = _ref.read(appStateNotifierProvider).isSignedOut;
-    final bool isSignInError = _ref.read(appStateNotifierProvider).signInError;
+    // final bool isSignInError = _ref.read(appStateNotifierProvider).signInError;
+    final bool isQuizFinished = _ref.read(appStateNotifierProvider).isQuizFinished;
 
     final bool isAppLoading = state.subloc.contains(MyScreen.loading.path);
     final bool isInApp = state.subloc.contains(MyScreen.menu.path);
     final isInSignIn = state.subloc.contains(MyScreen.signIn.path);
+    final isInQuiz = state.subloc.contains(MyScreen.quizMenu.path);
+    final isInQuizFinished = state.subloc.contains(MyScreen.quizFinished.path);
 
     if (isLoading && !isAppLoading) return state.namedLocation(MyScreen.loading.name);
     // if (!isUserSignedIn && !isUserSignedOut && !isAppLoading) return state.namedLocation(MyScreen.loading.name);
     if (isUserSignedOut && !isInSignIn && !isLoading) return state.namedLocation(MyScreen.signIn.name);
     if (isUserSignedIn && !isInApp && !isLoading) return state.namedLocation(MyScreen.menu.name);
+
+    //Quiz
+    if (isInQuiz && isQuizFinished && !isInQuizFinished) return state.namedLocation(MyScreen.quizFinished.name);
+    if (isInQuizFinished && !isQuizFinished) return state.namedLocation(MyScreen.menu.name);
+
+
     return null;
 
     // // final isAuthenticated = _ref.read(authStateProvider).value != null;
@@ -131,16 +141,16 @@ class RouterNotifier extends ChangeNotifier {
         routes: _quizSubRoutes,
       ),
       GoRoute(
-        name: MyScreen.listQuestion.name,
-        path: MyScreen.listQuestion.path,
-        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuestionListScreen()),
-        routes: _listQuestionSubRoutes,
-      ),
-      GoRoute(
         name: MyScreen.academyMenu.name,
         path: MyScreen.academyMenu.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const AcademyMenu()),
         routes: _academySubRoutes,
+      ),
+      GoRoute(
+        name: MyScreen.tablesMenu.name,
+        path: MyScreen.tablesMenu.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TablesMenu()),
+        routes: _tablesSubRoutes,
       ),
       GoRoute(
         name: MyScreen.calcMenu.name,
@@ -165,7 +175,12 @@ class RouterNotifier extends ChangeNotifier {
           ),
         ]
       ),
-
+      GoRoute(
+        name: MyScreen.listQuestion.name,
+        path: MyScreen.listQuestion.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuestionListScreen()),
+        routes: _listQuestionSubRoutes,
+      ),
       GoRoute(
         name: MyScreen.quizQuestionSingle.name,
         path: MyScreen.quizQuestionSingle.path,
@@ -201,14 +216,35 @@ class RouterNotifier extends ChangeNotifier {
 
   List<GoRoute> get _academySubRoutes {
     return <GoRoute>[
+
+    ];
+  }
+
+  List<GoRoute> get _tablesSubRoutes {
+    return <GoRoute>[
       GoRoute(
-        name: MyScreen.tablesMenu.name,
-        path: MyScreen.tablesMenu.path,
-        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TablesMenu()),
-        routes: _tablesSubRoutes,
+        name: MyScreen.tableWireAmpacity.name,
+        path: MyScreen.tableWireAmpacity.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireAmpacity()),
+      ),
+      GoRoute(
+        name: MyScreen.tableWireColors.name,
+        path: MyScreen.tableWireColors.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireColors()),
+      ),
+      GoRoute(
+        name: MyScreen.tableWireSymbols.name,
+        path: MyScreen.tableWireSymbols.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireSymbols()),
+      ),
+      GoRoute(
+        name: MyScreen.tableUnits.name,
+        path: MyScreen.tableUnits.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableUnits()),
       ),
     ];
   }
+
 
   List<GoRoute> get _calcSubRoutes {
     return <GoRoute>[
@@ -230,23 +266,4 @@ class RouterNotifier extends ChangeNotifier {
     ];
   }
 
-  List<GoRoute> get _tablesSubRoutes {
-    return <GoRoute>[
-      GoRoute(
-        name: MyScreen.tableWireAmpacity.name,
-        path: MyScreen.tableWireAmpacity.path,
-        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireAmpacity()),
-      ),
-      GoRoute(
-        name: MyScreen.tableWireColors.name,
-        path: MyScreen.tableWireColors.path,
-        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireColors()),
-      ),
-      GoRoute(
-        name: MyScreen.tableWireSymbols.name,
-        path: MyScreen.tableWireSymbols.path,
-        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireSymbols()),
-      ),
-    ];
-  }
 }

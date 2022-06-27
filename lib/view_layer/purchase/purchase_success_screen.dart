@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../utils/consts/colors.dart';
 import '../../utils/consts/my_screens.dart';
-import '../../viewmodel_layer/manager.dart';
 
 class PurchaseSuccess extends StatelessWidget {
   const PurchaseSuccess({Key? key}) : super(key: key);
@@ -78,7 +78,7 @@ class PurchaseSuccess extends StatelessWidget {
           backgroundColor: proColor,
           icon: const Icon(Icons.exit_to_app),
           onPressed: () {
-            ref.read(manager).navigate(MyScreen.menu);
+            context.goNamed(MyScreen.menu.name);
           }, label: const Text('Powrót do menu'),),
       ),
 

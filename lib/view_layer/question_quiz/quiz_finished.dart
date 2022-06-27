@@ -1,11 +1,8 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:sepapka/utils/consts/my_screens.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
 import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
-import 'package:sepapka/viewmodel_layer/route_controller.dart';
 
 class QuizFinished extends StatelessWidget {
   const QuizFinished({Key? key}) : super(key: key);
@@ -68,7 +65,8 @@ class QuizFinished extends StatelessWidget {
           builder: (BuildContext context, WidgetRef ref, Widget? child) => FloatingActionButton.extended(
               icon: const Icon(Icons.exit_to_app),
               onPressed: () {
-            ref.read(routeController).navigate(MyScreen.menu);
+                ref.read(appStateNotifierProvider.notifier).quitQuiz();
+            // context.goNamed(MyScreen.menu.name);
           }, label: const Text('Powrót do menu'),),
         ),
       ),

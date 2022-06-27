@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sepapka/utils/tables_data/table_units_data.dart';
 
-import '../../../utils/consts/my_screens.dart';
-import '../../../viewmodel_layer/manager.dart';
 
 
 class TableUnits extends StatefulWidget {
@@ -43,21 +41,29 @@ class _TableUnitsState extends State<TableUnits> {
   );
 
   buildUnitTile(UnitTile unitTile) => Card(
-    child: Row(children: [
-      Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(children: [
+        Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+          Text(unitTile.symbol, style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),),
+        ],),
+            )),
+        Expanded(
+            flex: 3,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-        Text(unitTile.symbol, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),),
-        Text(unitTile.unit, textAlign: TextAlign.center,),
+                Text(unitTile.name, style: const TextStyle(fontSize: 18),),
+                Text(unitTile.unit, style: const TextStyle(fontSize: 12)),
+              ],
+            )),
       ],),
-          )),
-      Expanded(
-          flex: 3,
-          child: Text(unitTile.name, style: TextStyle(fontSize: 18),)),
-    ],),
+    ),
     // visualDensity: VisualDensity(vertical: 3),
     // minLeadingWidth: 100,
     // horizontalTitleGap: 22,

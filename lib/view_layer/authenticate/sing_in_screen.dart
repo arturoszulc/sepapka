@@ -5,9 +5,7 @@ import 'package:sepapka/model_layer/models/input_validation_model.dart';
 import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/viewmodel_layer/auth_controller.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 
-import '../../viewmodel_layer/route_controller.dart';
 
 class SignInScreen extends ConsumerWidget {
   SignInScreen({Key? key}) : super(key: key);
@@ -20,7 +18,7 @@ class SignInScreen extends ConsumerWidget {
     final _authError = ref.watch(authErrorState);
     final InputValidationModel _email = ref.watch(emailState);
     final InputValidationModel _password = ref.watch(passwordState);
-    final bool isEmailAndPasswordValid = ref.watch(authController).isEmailAndPasswordValid;
+    // final bool isEmailAndPasswordValid = ref.watch(authController).isEmailAndPasswordValid;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
