@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sepapka/view_layer/academy/tables/table_units.dart';
+import 'package:sepapka/view_layer/purchase/purchase_wrapper.dart';
 
 import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
 import '../../utils/consts/my_screens.dart';
@@ -157,6 +158,11 @@ class RouterNotifier extends ChangeNotifier {
         path: MyScreen.calcMenu.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const CalculatorsMenuScreen()),
         routes: _calcSubRoutes,
+      ),
+      GoRoute(
+        name: MyScreen.purchaseWrapper.name,
+        path: MyScreen.purchaseWrapper.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const PurchaseWrapper()),
       ),
     ];
   }

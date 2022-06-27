@@ -2,25 +2,28 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/utils/api_status.dart';
 
+final purchaseService = Provider<PurchaseService>((ref) => PurchaseService(ref));
+
 class PurchaseService {
+  final Ref _ref;
+  PurchaseService(this._ref);
+
   static const String _googleApiKey = 'goog_BqkJbAyuNBMUrdkvOSXpxakljWH';
   final String productId = 'sepapka_pro_v1';
-  List<Package> packages = [];
-  Package? package;
-  Product? product;
 
-  Future<Object> init(String userId) async {
+
+  Future<Object> init() async {
+    final userId = _ref.read(userService).id;
     try {
       await Purchases.setDebugLogsEnabled(true);
       await Purchases.setup(_googleApiKey, appUserId: userId);
       return Success();
     }
-    // catch (e) {
-    //   return Failure('### PurchaseService init ERROR: ${e.toString()} ###');
-    // }
     on PlatformException catch (e) {
       return Failure('${e.code}, ${e.message}');
     }
@@ -31,11 +34,11 @@ class PurchaseService {
     try {
       final Offerings offerings = await Purchases.getOfferings();
       if (offerings.current == null) return Failure('### No offers found ###');
-      packages = offerings.current?.availablePackages ?? [];
-      package = packages.firstWhereOrNull((e) => e.product.identifier == productId);
+      final List<Package> packages = offerings.current?.availablePackages ?? [];
+      final Package? package = packages.firstWhereOrNull((e) => e.product.identifier == productId);
       if (package == null) return Failure('36, Nie znaleziono produktu');
-      product = package!.product;
-      return Success();
+      final Product product = package.product;
+      return product;
     } on PlatformException catch (e) {
       return Failure('${e.code}, ${e.message}');
     }
@@ -67,7 +70,7 @@ class PurchaseService {
     }
     //if there was no payment earlier, procceed
     try {
-      PurchaserInfo purchaserInfo = await Purchases.purchasePackage(package!);
+      PurchaserInfo purchaserInfo = await Purchases.purchaseProduct(productId);
       if (purchaserInfo.entitlements.all["Pro"]!.isActive) {
         debugPrint('@@@ PURCHASE CONFIRMED @@@');
         return purchaserInfo.entitlements.all['Pro']!;

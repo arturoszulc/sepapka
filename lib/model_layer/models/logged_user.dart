@@ -34,7 +34,7 @@ class AppUser {
       id: doc.id,
       username: data?[appUserConstUsername] ?? '',
       isPro: data?[appUserConstIsPro] ?? false,
-      hiddenQuestionIds: data?[appUserConstHiddenQuestionIds] ?? [],
+      hiddenQuestionIds: List<String>.from(data?[appUserConstHiddenQuestionIds]),
     );
   }
 

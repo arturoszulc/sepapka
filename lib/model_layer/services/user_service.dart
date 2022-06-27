@@ -24,17 +24,6 @@ class UserService extends StateNotifier<AppUser> {
   UserService(this._ref) : super(AppUser.empty());
 
   final Ref _ref;
-  //Services injection
-  // final DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
-
-  //Properties
-  // bool _loggedUserChanged = false;
-  // bool _userLeveledUp = false;
-  // List<String> _rankNames = [];
-  // List<int> _rankThresholds = [];
-
-  //parsing subString to get rid of time
-  // final DateTime _today = DateTime.parse(DateTime.now().toString().substring(0, 10));
 
   //Models
   LoggedUser? _loggedUser;
@@ -162,6 +151,11 @@ class UserService extends StateNotifier<AppUser> {
     log('HiddenList: ${state.hiddenQuestionIds}');
   }
 
+  Future<void> goPro() async {
+    state = state.copyWith(isPro: true);
+    await _ref.read(databaseService).updateUser(state);
+  }
+
   //////// END NEW ////////
 
 
@@ -273,9 +267,9 @@ class UserService extends StateNotifier<AppUser> {
   //   // _loggedUser!.qListNotShown.removeWhere((e) => e.id == questionId);
   // }
 
-  QMap createDefaultQMap(String? qId) {
-    return QMap(id: qId, dateModified: DateTime.now().toString().substring(0, 10), fibNum: 0);
-  }
+  // QMap createDefaultQMap(String? qId) {
+  //   return QMap(id: qId, dateModified: DateTime.now().toString().substring(0, 10), fibNum: 0);
+  // }
   //
   // List<QMap> getQMapsFromNewList(int qLevel) {
   //   //return only first 10 elements
@@ -325,25 +319,25 @@ class UserService extends StateNotifier<AppUser> {
   //   }
   // }
 
-  moveQMapToNew(String qId) async {
-    //Cut it from NotShownList
-    QMap? qMap = _loggedUser!.qListNotShown.firstWhereOrNull((element) => element.id == qId);
-    if (qMap != null) {
-      _loggedUser!.qListNotShown.remove(qMap);
-      await addQMapToNew(qMap);
-      debugPrint('/// US: Moved QMap to NotShow list ///');
-    }
-  }
-
-  moveQMapToNotShown(String qId) async {
-    //Get QMap by ID from qNewList
-    QMap? qMap = _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == qId);
-    if (qMap != null) {
-      _loggedUser!.qListNew.remove(qMap);
-      await addQMapToNotShown(qMap);
-      debugPrint('/// US: Moved QMap to NotShown list ///');
-    }
-  }
+  // moveQMapToNew(String qId) async {
+  //   //Cut it from NotShownList
+  //   QMap? qMap = _loggedUser!.qListNotShown.firstWhereOrNull((element) => element.id == qId);
+  //   if (qMap != null) {
+  //     _loggedUser!.qListNotShown.remove(qMap);
+  //     await addQMapToNew(qMap);
+  //     debugPrint('/// US: Moved QMap to NotShow list ///');
+  //   }
+  // }
+  //
+  // moveQMapToNotShown(String qId) async {
+  //   //Get QMap by ID from qNewList
+  //   QMap? qMap = _loggedUser!.qListNew.firstWhereOrNull((element) => element.id == qId);
+  //   if (qMap != null) {
+  //     _loggedUser!.qListNew.remove(qMap);
+  //     await addQMapToNotShown(qMap);
+  //     debugPrint('/// US: Moved QMap to NotShown list ///');
+  //   }
+  // }
 
   // QMap? getQMapAndRemove(String qId) {
   //   //method cuts out qMap from it's list and returns it
@@ -353,49 +347,40 @@ class UserService extends StateNotifier<AppUser> {
   //
   // }
 
-  addQMapToNew(QMap qMap) {
-    //Before this method, it is checked if qMap is on any map.
-    //So there's no need to check it again
-    // setLoggedUserChanged(true);
-    _loggedUser!.qListNew.add(qMap);
+  // addQMapToNew(QMap qMap) {
+  //   //Before this method, it is checked if qMap is on any map.
+  //   //So there's no need to check it again
+  //   // setLoggedUserChanged(true);
+  //   _loggedUser!.qListNew.add(qMap);
+  //
+  //   // switch (qLevel) {
+  //   //   case 1:
+  //   //     _loggedUser!.qListNew1.add(qMap);
+  //   //     break;
+  //   //   case 2:
+  //   //     _loggedUser!.qListNew2.add(qMap);
+  //   //     break;
+  //   //   case 3:
+  //   //     _loggedUser!.qListNew3.add(qMap);
+  //   //     break;
+  //   // }
+  // }
 
-    // switch (qLevel) {
-    //   case 1:
-    //     _loggedUser!.qListNew1.add(qMap);
-    //     break;
-    //   case 2:
-    //     _loggedUser!.qListNew2.add(qMap);
-    //     break;
-    //   case 3:
-    //     _loggedUser!.qListNew3.add(qMap);
-    //     break;
-    // }
-  }
+
+  // addQMapToNotShown(QMap qMap) {
+  //   _loggedUser!.qListNotShown.add(qMap);
+  // }
+
+  // wipeUser() {
+  //   // _loggedUser!.rankLevel = 0;
+  //   // _loggedUser!.rankTotalPoints = 0;
+  //   _loggedUser!.qListNew.clear();
+  //   _loggedUser!.qListPractice.clear();
+  //   _loggedUser!.qListNotShown.clear();
+  //
+  // }
 
 
-  addQMapToNotShown(QMap qMap) {
-    _loggedUser!.qListNotShown.add(qMap);
-  }
-
-  wipeUser() {
-    // _loggedUser!.rankLevel = 0;
-    // _loggedUser!.rankTotalPoints = 0;
-    _loggedUser!.qListNew.clear();
-    _loggedUser!.qListPractice.clear();
-    _loggedUser!.qListNotShown.clear();
-
-  }
-
-  Future<Object> goPro() async {
-    // _loggedUser!.isPro = true;
-    // try {
-    //   await _databaseService.updateUser(_loggedUser!);
-    //   return Success();
-    // } catch (e) {
-    //   debugPrint(e.toString());
-      return Failure(errorUpdateUserInDb);
-    // }
-  }
   //
   // getDateDifferenceInDays(QMap question) {
   //   DateTime parsedDate = DateTime.parse(question.dateModified);

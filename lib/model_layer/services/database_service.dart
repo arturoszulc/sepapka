@@ -62,6 +62,22 @@ class DatabaseService {
         .catchError((error) => debugPrint("DB: Failed to create remark: $error"));
   }
 
+  Future<void> savePurchaseDetails(EntitlementInfo info, String userID) {
+    debugPrint('/// DB: writing PurchaseDetails doc... ///');
+    return purchaseCollection
+        .doc()
+        .set({
+      purchaseConstDocumentCreationDate: DateTime.now().toString(),
+      purchaseConstUserID: userID,
+      purchaseConstPurchaseID: info.identifier,
+      purchaseConstProductID: info.productIdentifier,
+      purchaseConstDate: info.latestPurchaseDate,
+      purchaseConstStore: info.store.name,
+    })
+        .then((value) => debugPrint('/// DB: PurchaseDetails sent ///'))
+        .catchError((error) => debugPrint("DB: Error saving PurchaseDetails: $error"));
+  }
+
   ///// END NEW /////
 
   // //UPDATE USER DATA
@@ -130,20 +146,6 @@ class DatabaseService {
     return List<String>.from(doc.get('patronite')).firstWhereOrNull((e) => e == email);
   }
 
-  Future<void> savePurchaseDetails(EntitlementInfo info, String userID) {
-    debugPrint('/// DB: writing PurchaseDetails doc... ///');
-    return purchaseCollection
-        .doc()
-        .set({
-          purchaseDocumentCreationDate: DateTime.now().toString(),
-          purchaseUserID: userID,
-          purchasePurchaseID: info.identifier,
-          purchaseProductID: info.productIdentifier,
-          purchaseDate: info.latestPurchaseDate,
-          purchaseStore: info.store.name,
-        })
-        .then((value) => debugPrint('/// DB: PurchaseDetails sent ///'))
-        .catchError((error) => debugPrint("DB: Error saving PurchaseDetails: $error"));
-  }
+
 
 }

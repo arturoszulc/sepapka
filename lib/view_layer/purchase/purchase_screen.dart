@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/utils/consts/colors.dart';
+import 'package:sepapka/viewmodel_layer/purchase_Controller.dart';
 
 import '../../viewmodel_layer/manager.dart';
 
@@ -19,13 +20,7 @@ class PurchaseScreen extends StatelessWidget {
 
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final String logoName = isDarkMode ? 'sepapka_pro_dark.png' : 'sepapka_pro.png';
-    return Scaffold(
-      // backgroundColor: myPrimaryLight,
-      appBar: AppBar(
-        // title: const Text('Odblokuj pytania'),
-        // centerTitle: true,
-      ),
-      body: Center(
+    return Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           // mainAxisSize: MainAxisSize.min,
@@ -94,13 +89,13 @@ class PurchaseScreen extends StatelessWidget {
                         backgroundColor: proColor,
                         label: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 18.0),
-                          child: Text('Kup za ${ref.read(manager).product?.priceString}',
+                          child: Text('Kup za ${ref.read(purchaseController).product?.priceString}',
                             // 'Kup za ${manager.productPrice} zł',
                             // style: const TextStyle(color: Colors.white),
                           ),
                         ),
                         onPressed: () {
-                              ref.read(manager).buyProduct();
+                              ref.read(purchaseController.notifier).buyProduct();
                         },
                       ),
                     ),
@@ -115,7 +110,7 @@ class PurchaseScreen extends StatelessWidget {
                 )),
           ],
         ),
-      ),
+      );
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       // floatingActionButton: FloatingActionButton.extended(
       //   onPressed: () {
@@ -124,6 +119,6 @@ class PurchaseScreen extends StatelessWidget {
       //   label: Text('Kup za ${manager.productPrice} zł'),
       //   backgroundColor: myComplementary,
       // ),
-    );
+
   }
 }

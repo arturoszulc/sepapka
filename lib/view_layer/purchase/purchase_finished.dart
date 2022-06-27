@@ -4,19 +4,14 @@ import 'package:go_router/go_router.dart';
 import '../../utils/consts/colors.dart';
 import '../../utils/consts/my_screens.dart';
 
-class PurchaseSuccess extends StatelessWidget {
-  const PurchaseSuccess({Key? key}) : super(key: key);
+class PurchaseFinished extends StatelessWidget {
+  const PurchaseFinished({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final String logoName = isDarkMode ? 'sepapka_pro_dark.png' : 'sepapka_pro.png';
-    return Scaffold(
-      appBar: AppBar(
-        // title: const Text('Purchase Error'),
-        // centerTitle: true,
-      ),
-      body: Padding(
+    return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,17 +66,17 @@ class PurchaseSuccess extends StatelessWidget {
               ),
             ),
           ],),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Consumer(
-        builder: (BuildContext context, WidgetRef ref, Widget? child) => FloatingActionButton.extended(
-          backgroundColor: proColor,
-          icon: const Icon(Icons.exit_to_app),
-          onPressed: () {
-            context.goNamed(MyScreen.menu.name);
-          }, label: const Text('Powrót do menu'),),
-      ),
+      );
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: Consumer(
+      //   builder: (BuildContext context, WidgetRef ref, Widget? child) => FloatingActionButton.extended(
+      //     backgroundColor: proColor,
+      //     icon: const Icon(Icons.exit_to_app),
+      //     onPressed: () {
+      //       context.goNamed(MyScreen.menu.name);
+      //     }, label: const Text('Powrót do menu'),),
+      // ),
 
-    );
+
   }
 }

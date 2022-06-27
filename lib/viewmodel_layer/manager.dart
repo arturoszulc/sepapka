@@ -8,7 +8,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:purchases_flutter/errors.dart';
 import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
 import 'package:purchases_flutter/models/product_wrapper.dart';
-import 'package:sepapka/locator.dart';
+import 'package:sepapka/trash/locator.dart';
 import 'package:sepapka/model_layer/models/logged_user.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/model_layer/models/input_validation_model.dart';
@@ -49,7 +49,7 @@ class Manager extends ChangeNotifier {
   // QuizService _questionService = serviceLocator.get<QuizService>();
   // DatabaseService _databaseService = serviceLocator.get<DatabaseService>();
   // ValidationService _validationService = serviceLocator.get<ValidationService>();
-  PurchaseService _purchaseService = serviceLocator.get<PurchaseService>();
+  // PurchaseService _purchaseService = serviceLocator.get<PurchaseService>();
   // RouteService _routeService = serviceLocator.get<RouteService>();
 
   //Manager properties
@@ -403,130 +403,7 @@ class Manager extends ChangeNotifier {
     // notifyListeners();
   }
 
-  ////////////////////////
-  //      PURCHASE      //
-  ////////////////////////
 
-  Product? get product => _purchaseService.product;
-  String? purchaseError;
-
-  revenueCatStart() async {
-      // navigate(MyScreen.loading);
-
-      Object initResult = await _purchaseService.init(loggedUser!.documentId);
-      if (initResult is Failure) {
-        debugPrint(initResult.errorString);
-        purchaseError = initResult.errorString;
-        // navigate(MyScreen.purchaseError);
-        return;
-      }
-      Object getOffersResult = await _purchaseService.getOffers();
-      if (getOffersResult is Failure) {
-        debugPrint(getOffersResult.errorString);
-        purchaseError = getOffersResult.errorString;
-        // navigate(MyScreen.purchaseError);
-        return;
-      }
-
-      Object isPurchaseFinished = await _purchaseService.checkIfPurchaseWasMade();
-      if (isPurchaseFinished is EntitlementInfo) {
-        debugPrint('@@@ PURCHASE CONFIRMED @@@');
-        finishPurchase(isPurchaseFinished);
-        return;
-      }
-      // navigate(MyScreen.purchase);
-  }
-
-  buyProduct() async {
-    Object buyResult = await _purchaseService.buyProduct();
-    if (buyResult is EntitlementInfo) {
-      debugPrint('### Buy product SUCCEEDED! ###');
-      finishPurchase(buyResult);
-    } else {
-      debugPrint('### PURCHASE ERROR ###');
-      handlePurchaseError(buyResult);
-    }
-
-  }
-
-  //DATA OF PURCHASER INFO
-  //I/flutter (15692): ### Purchaser info::
-  // EntitlementInfos(
-  // all: {
-  // Pro: EntitlementInfo(
-  // identifier: Pro,
-  // isActive: true,
-  // willRenew: false,
-  // latestPurchaseDate: 2022-05-25T11:14:24.000Z,
-  // originalPurchaseDate: 2022-05-25T11:14:24.000Z,
-  // productIdentifier: sepapka_pro_v1,
-  // isSandbox: true,
-  // ownershipType: OwnershipType.unknown,
-  // store: Store.playStore,
-  // periodType: PeriodType.normal,
-  // expirationDate: null,
-  // unsubscribeDetectedAt: null,
-  // billingIssueDetectedAt: null)},
-  // active: {
-  // Pro: EntitlementInfo(
-  // identifier: Pro,
-  // isActive: true,
-  // willRenew: false,
-  // latestPurchaseDate: 2022-05-25T11:14:24.000Z,
-  // originalPurchaseDate: 2022-05-25T11:14:24.000Z,
-  // productIdentifier: sepapka_pro_v1,
-  // isSandbox: true,
-  // ownershipType: OwnershipType.unknown,
-  // store: Store.playStore,
-  // periodType: PeriodType.normal,
-  // expirationDate: null,
-  // unsubscribeDetectedAt: null,
-  // billingIssueDetectedAt: null)})
-
-
-  finishPurchase(EntitlementInfo info) async {
-    // navigate(MyScreen.loading);
-    //add userID to revenueCat
-    // _purchaseService.addIdToRevenueCat(loggedUser!.documentId);
-
-    //save purchase details
-    // _databaseService.savePurchaseDetails(info, loggedUser!.documentId);
-    //give user pro permission
-    setError(null);
-    await goPro();
-    //navigate to PurchaseSuccess screen
-    // navigate(MyScreen.purchaseSuccess);
-
-  }
-
-  handlePurchaseError(Object errorCode) {
-    if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
-      debugPrint('### purchase cancelled');
-    }
-    if (errorCode == PurchasesErrorCode.paymentPendingError) {
-      debugPrint('### payment pending');
-      // navigate(MyScreen.purchasePending);
-    }
-    if (errorCode == PurchasesErrorCode.networkError) {
-      debugPrint('### network error');
-    }
-    if (errorCode == PurchasesErrorCode.storeProblemError) {
-      debugPrint('### store problem error');
-    }
-  }
-
-
-  // purchasePatronite(String email) async {
-  //   String? verifyEmailResult = await _databaseService.verifyPatroniteEmail(email);
-  //   if (verifyEmailResult == null) {
-  //     setError(Failure('Nie znaleziono Patrona z takim adresem e-mail'));
-  //     navigate(Screen.purchasePatronite);
-  //   } else {
-  //     setError(null);
-  //     await goPro();
-  //     navigate(Screen.purchaseSuccess);
-  //   }
-  // }
 
 
   ////////////////////////

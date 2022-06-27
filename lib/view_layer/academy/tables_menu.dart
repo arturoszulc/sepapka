@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../utils/consts/my_screens.dart';
 import '../../utils/custom_widgets/buttons/menu_button.dart';
-import '../../utils/custom_widgets/unlock_button.dart';
+import '../../utils/custom_widgets/buttons/unlock_button.dart';
 
 class TablesMenu extends ConsumerWidget {
   const TablesMenu({Key? key}) : super(key: key);

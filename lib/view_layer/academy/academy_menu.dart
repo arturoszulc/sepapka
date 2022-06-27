@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../utils/custom_widgets/unlock_button.dart';
+import '../../utils/custom_widgets/buttons/unlock_button.dart';
 
 class AcademyMenu extends ConsumerWidget {
   const AcademyMenu({Key? key}) : super(key: key);

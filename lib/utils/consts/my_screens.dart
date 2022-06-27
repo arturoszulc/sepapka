@@ -41,9 +41,11 @@ enum MyScreen {
   calcHeatingPowerThreePhase('calc-heating-power-three-phase'),
 
   //Purchase
-  purchasePending('purchase-pending'),
-  purchaseError('purchases-error'),
-  purchaseSuccess('purchase-success'),
+  purchaseWrapper('purchase'),
+  // purchaseLoading('loading'),
+  // purchaseError('error'),
+  // purchasePending('pending'),
+  // purchaseSuccess('success'),
 
   //Other
   settings('settings'),
