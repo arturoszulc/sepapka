@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sepapka/model_layer/models/question.dart';
+import 'package:sepapka/model_layer/services/validation_service.dart';
 import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:sepapka/viewmodel_layer/remark_controller.dart';
 
+import '../../model_layer/models/input_validation_model.dart';
+import '../../utils/custom_widgets/dialog_message.dart';
+import '../../utils/custom_widgets/snackbar_hide_question.dart';
 import '../../viewmodel_layer/quiz_controller.dart';
 
 class RemarkScreen extends ConsumerWidget {
@@ -12,9 +18,10 @@ class RemarkScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** RemarkScreen built ***');
-    final myManager = ref.read(manager);
-    Question currentQuestion = ref.watch(quizCurrentQuestion);//myManager.currentQuestion!;
-    final error = myManager.errorMsg;
+    // final myManager = ref.read(manager);
+    final InputValidationModel _remark = ref.watch(remarkState);
+    final Question currentQuestion = ref.watch(quizCurrentQuestion);
+    final error = ref.watch(remarkErrorState);
 
     return SafeArea(
       child: Scaffold(
@@ -55,20 +62,20 @@ class RemarkScreen extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(
-                  initialValue: myManager.remark.value,
+                  initialValue: _remark.value,
                   textInputAction: TextInputAction.done,
                   // expands: true,
                   maxLines: 6,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     focusedBorder: const OutlineInputBorder(),
-                    errorText: myManager.remark.error,
+                    errorText: _remark.error,
                   ),
                   // hintText: ,
                   onChanged: (String val) {
-                    myManager.validateRemark(val);
+                    ref.read(remarkController).validateRemark(val);
                   },
-                  onTap: () => myManager.setError(null),
+                  onTap: () => ref.read(remarkController).setRemarkError(null),
                 ),
               ),
               Padding(
@@ -87,9 +94,14 @@ class RemarkScreen extends ConsumerWidget {
               Align(
                 alignment: Alignment.center,
                 child: ElevatedButton(
-                  onPressed: (myManager.remark.value == null)
+                  onPressed: (_remark.value == null)
                       ? null
-                      : () => myManager.sendQuestionRemark(),
+                      : () async {
+                    ref.read(remarkController).sendRemark();
+                    context.pop();
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(buildSnackBar(msg: 'Uwaga została wysłana'));
+                  },
                   child: const Text('Wyślij uwagę'),
                 ),
               ),

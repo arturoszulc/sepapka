@@ -102,11 +102,11 @@ class Manager extends ChangeNotifier {
   //ValidationService
   // ValidationModel get email => _validationService.email;
 
-  InputValidationModel get emailRemind => _ref.read(validationService).emailRemind;
+  // InputValidationModel get emailRemind => _ref.read(validationService).emailRemind;
 
   // InputValidationModel get password => _ref.read(validationService).password;
 
-  InputValidationModel get remark => _ref.read(validationService).remark;
+  // InputValidationModel get remark => _ref.read(validationService).remark;
 
   // bool get isEmailAndPasswordValid => _validationService.isEmailAndPasswordValid;
 

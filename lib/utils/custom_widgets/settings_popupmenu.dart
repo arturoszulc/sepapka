@@ -18,7 +18,7 @@ Widget buildSettingsMenu() {
             ScaffoldMessenger.of(context).removeCurrentSnackBar();
             ref.read(quizController).moveQuestionToHidden();
             ScaffoldMessenger.of(context)
-                .showSnackBar(snackBarShowHide(msg: 'Pytanie zostało ukryte'));
+                .showSnackBar(buildSnackBar(msg: 'Pytanie zostało ukryte'));
           },
           child: Row(
             children: const [

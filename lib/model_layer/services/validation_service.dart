@@ -9,10 +9,6 @@ final validationService = Provider<ValidationService>((ref) {
 });
 
 class ValidationService {
-  // InputValidationModel _email = InputValidationModel(null, null);
-  InputValidationModel _emailRemind = const InputValidationModel(null, null);
-  // InputValidationModel _password = const InputValidationModel(null, null);
-  InputValidationModel _remark = const InputValidationModel(null, null);
 
 
   final String emailPattern =
@@ -36,11 +32,11 @@ class ValidationService {
 
   // InputValidationModel get email => _email;
 
-  InputValidationModel get emailRemind => _emailRemind;
+  // InputValidationModel get emailRemind => _emailRemind;
 
   // InputValidationModel get password => _password;
 
-  InputValidationModel get remark => _remark;
+  // InputValidationModel get remark => _remark;
 
   InputValidationModel validateEmail(String val) {
     bool emailValid = RegExp(emailPattern).hasMatch(val);
@@ -51,12 +47,12 @@ class ValidationService {
     }
   }
 
-  void validateEmailRemind(String val) {
+  InputValidationModel validateEmailRemind(String val) {
     bool emailValid = RegExp(emailPattern).hasMatch(val);
     if (!emailValid) {
-      _emailRemind = const InputValidationModel(null, errorValEmail);
+      return const InputValidationModel(null, errorValEmail);
     } else {
-      _emailRemind = InputValidationModel(val, null);
+      return InputValidationModel(val, null);
     }
   }
 
@@ -70,17 +66,17 @@ class ValidationService {
     }
 
 
-  void validateRemark(String val) {
+  InputValidationModel validateRemark(String val) {
     bool remarkValid = RegExp(remarkPattern).hasMatch(val);
     if (!remarkValid) {
       if (val.isEmpty) {
-        _remark = const InputValidationModel(null, null);
+        return const InputValidationModel(null, null);
       } else {
-        _remark = const InputValidationModel(null, errorRemarkChars);
+        return const InputValidationModel(null, errorRemarkChars);
       }
     }
     else {
-      _remark = InputValidationModel(val, null);
+      return InputValidationModel(val, null);
     }
   }
 }

@@ -19,7 +19,10 @@ class DatabaseService {
       .withConverter(
       fromFirestore: AppUser.fromFirestore,
       toFirestore: (AppUser appUser, _) => appUser.toFirestore(),);
-  final CollectionReference remarksCollection = FirebaseFirestore.instance.collection('remarks');
+  final CollectionReference<Remark> remarksCollection = FirebaseFirestore.instance.collection('remarks')
+  .withConverter(
+      fromFirestore: Remark.fromFirestore,
+      toFirestore: (Remark remark, _) => remark.toFirestore());
   final CollectionReference purchaseCollection = FirebaseFirestore.instance.collection('purchases');
 
 //artur1111@test.pl id: 9QcFuBrwpHhgSRojxelidsysmnp2
@@ -48,6 +51,15 @@ class DatabaseService {
         .set(user)
         .then((value) => debugPrint('/// DB: User updated ///'))
         .catchError((error) => debugPrint("DB: Failed to update user: $error"));
+  }
+
+  Future<void> sendQuestionRemark(Remark remark) {
+    debugPrint('/// DB: writing REMARK doc... ///');
+    return remarksCollection
+        .doc()
+        .set(remark)
+        .then((value) => debugPrint('/// DB: Remark sent ///'))
+        .catchError((error) => debugPrint("DB: Failed to create remark: $error"));
   }
 
   ///// END NEW /////
@@ -111,20 +123,7 @@ class DatabaseService {
   // }
 
 
-  Future<void> sendQuestionRemark(Remark remark) {
-    debugPrint('/// DB: writing REMARK doc... ///');
-    return remarksCollection
-        .doc()
-        .set({
-          remarkUserId: remark.userId,
-          remarkAppVersion: remark.appV,
-          remarkDate: remark.date,
-          remarkQuestion: remark.question,
-          remarkText: remark.text,
-        })
-        .then((value) => debugPrint('/// DB: Remark sent ///'))
-        .catchError((error) => debugPrint("DB: Failed to create remark: $error"));
-  }
+
 
   Future<String?> verifyPatroniteEmail(String email) async {
     var doc = await dataCollection.doc('8zhtbUQgofmxdaHyee3X').get();

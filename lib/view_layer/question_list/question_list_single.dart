@@ -31,7 +31,7 @@ class QuestionListSingle extends ConsumerWidget {
                     ScaffoldMessenger.of(context).removeCurrentSnackBar();
                     ref.read(questionListController).removeQuestionFromHidden(question.id);
                     ScaffoldMessenger.of(context)
-                        .showSnackBar(snackBarShowHide(msg: 'Pytanie będzie widoczne'));
+                        .showSnackBar(buildSnackBar(msg: 'Pytanie będzie widoczne'));
                   },
                   icon: const Icon(Icons.visibility_off))
               : IconButton(
@@ -39,7 +39,7 @@ class QuestionListSingle extends ConsumerWidget {
                     ScaffoldMessenger.of(context).removeCurrentSnackBar();
                     ref.read(questionListController).moveQuestionToHidden(question.id);
                     ScaffoldMessenger.of(context)
-                        .showSnackBar(snackBarShowHide(msg: 'Pytanie zostało ukryte'));
+                        .showSnackBar(buildSnackBar(msg: 'Pytanie zostało ukryte'));
                   },
                   icon: const Icon(Icons.visibility)),
           // buildSettingsMenu(isQuestionHidden),
