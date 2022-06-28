@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,12 +47,12 @@ class TableUnits extends ConsumerWidget {
                             ? null
                             : () {
                                 searchInput.clear();
+                                unFocus(context);
                                 ref.read(tableController).search('');
                               },
                         icon: const Icon(Icons.clear),
                       )),
                   onChanged: (val) {
-                    log('changed val');
                     ref.read(tableController).search(val);
                   },
                 ),

@@ -17,7 +17,7 @@ class QuizFinished extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Sesja zakończona!',
+                'Quiz zakończony!',
                 style: Theme.of(context).textTheme.headline3,
               ),
               const SizedBox(height: 30.0),
@@ -27,7 +27,7 @@ class QuizFinished extends StatelessWidget {
                   radius: 120.0,
                   lineWidth: 13.0,
                   animation: true,
-                  animationDuration: 2000,
+                  animationDuration: 1500,
                   percent: double.parse(ref.read(quizFinalScore)) / 100,
                   center: Text(
                       '${ref.read(quizFinalScore)} %',

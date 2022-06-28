@@ -11,7 +11,7 @@ Widget buildQuestion(BuildContext context, Question? question) {
   Column(
     children: [
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         child: Text(
           question.q,
           style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),

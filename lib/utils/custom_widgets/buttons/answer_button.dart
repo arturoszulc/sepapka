@@ -12,14 +12,12 @@ class AnswerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding( //to keep buttons separated
-      padding: const EdgeInsets.symmetric(
-        vertical: 10.0,
-        // horizontal: 30.0,
-      ),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width*0.7,
-        height: 55.0,
+    return Expanded(
+      child: Padding( //to keep buttons separated
+        padding: const EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 40.0,
+        ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: color,

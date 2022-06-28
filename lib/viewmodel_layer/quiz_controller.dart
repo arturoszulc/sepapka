@@ -26,7 +26,7 @@ final quizPercentProgress = Provider.autoDispose<double>((ref) {
 
 final quizCorrectAnswers = StateProvider<int>((ref) => 0);
 
-final quizFinalScore = Provider<String>((ref) {
+final quizFinalScore = Provider.autoDispose<String>((ref) {
   final int numberOfQuestions = ref.read(quizTotalQuestions);
   final int numberOfRightAnswers = ref.read(quizCorrectAnswers);
   double scoreDouble = (numberOfRightAnswers / numberOfQuestions) * 100;
@@ -197,7 +197,7 @@ class QuizController {
   }
 
   void finishQuiz() {
-    //router will redirect automatically
+    //set state and router will redirect automatically
     _ref.read(appStateNotifierProvider.notifier).quizFinished();
   }
 

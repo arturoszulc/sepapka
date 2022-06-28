@@ -48,7 +48,8 @@ class QuizSingleQuestion extends ConsumerWidget {
                   Expanded(
                     flex: 8,
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: bMapList.map((e) =>
                         AnswerButton(
                             answer: e.answer,
