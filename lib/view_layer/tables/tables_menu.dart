@@ -32,6 +32,13 @@ class TablesMenu extends ConsumerWidget {
                       children: [
                         MenuButton(
                           proOnly: true,
+                          label: 'Jednostki i wielkości fizyczne',
+                          onPressed: ()  {
+                            context.goNamed(MyScreen.tableUnits.name);
+                          },
+                        ),
+                        MenuButton(
+                          proOnly: true,
                           label: 'Kodowanie barw przewodów',
                           onPressed: ()  {
                             context.goNamed(MyScreen.tableWireColors.name);
@@ -51,14 +58,6 @@ class TablesMenu extends ConsumerWidget {
                             context.goNamed(MyScreen.tableWireAmpacity.name);
                           },
                         ),
-                        MenuButton(
-                          proOnly: true,
-                          label: 'Jednostki i wielkości',
-                          onPressed: ()  {
-                            context.goNamed(MyScreen.tableUnits.name);
-                          },
-                        ),
-
                       ],
                     ),
                   ),
