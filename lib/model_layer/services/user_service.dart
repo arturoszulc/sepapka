@@ -26,10 +26,10 @@ class UserService extends StateNotifier<AppUser> {
   final Ref _ref;
 
   //Models
-  LoggedUser? _loggedUser;
+  // LoggedUser? _loggedUser;
 
   //Getters
-  LoggedUser? get loggedUser => _loggedUser;
+  // LoggedUser? get loggedUser => _loggedUser;
 
   // bool get loggedUserChanged => _loggedUserChanged;
 

@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../models/mocked_objects.dart';
 
 void main() {
-  mockSetupGetIt();
+  // mockSetupGetIt();
   // UserService userService = UserService();
 
   setUp(() {});

@@ -246,7 +246,7 @@ class RouterNotifier extends ChangeNotifier {
       GoRoute(
         name: MyScreen.tableUnits.name,
         path: MyScreen.tableUnits.path,
-        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableUnits()),
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: TableUnits()),
       ),
     ];
   }

@@ -1,6 +1,5 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sepapka/model_layer/models/question_map.dart';
 
 import '../../utils/consts/strings.dart';
 
@@ -34,7 +33,7 @@ class AppUser {
       id: doc.id,
       username: data?[appUserConstUsername] ?? '',
       isPro: data?[appUserConstIsPro] ?? false,
-      hiddenQuestionIds: List<String>.from(data?[appUserConstHiddenQuestionIds]),
+      hiddenQuestionIds: data?[appUserConstHiddenQuestionIds] ?? [],
     );
   }
 
@@ -68,28 +67,28 @@ class AppUser {
   }
 }
 
-class LoggedUser {
-  String documentId;
-  String username;
-  bool isPro;
-  // List qVersions;
-  List<QMap> qListNew;
-  List<QMap> qListPractice; //not used
-  List<QMap> qListNotShown;
-  // int rankLevel;
-  // int rankTotalPoints;
-
-  LoggedUser(
-      {
-        required this.documentId,
-        required this.username,
-        required this.isPro,
-        // required this.qVersions,
-        required this.qListNew,
-        required this.qListPractice,
-        required this.qListNotShown,
-        // required this.rankLevel,
-        // required this.rankTotalPoints,
-      });
-
-}
+// class LoggedUser {
+//   String documentId;
+//   String username;
+//   bool isPro;
+//   // List qVersions;
+//   List<QMap> qListNew;
+//   List<QMap> qListPractice; //not used
+//   List<QMap> qListNotShown;
+//   // int rankLevel;
+//   // int rankTotalPoints;
+//
+//   LoggedUser(
+//       {
+//         required this.documentId,
+//         required this.username,
+//         required this.isPro,
+//         // required this.qVersions,
+//         required this.qListNew,
+//         required this.qListPractice,
+//         required this.qListNotShown,
+//         // required this.rankLevel,
+//         // required this.rankTotalPoints,
+//       });
+//
+// }

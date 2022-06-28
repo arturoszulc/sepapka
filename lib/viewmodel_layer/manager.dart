@@ -250,11 +250,11 @@ class Manager extends ChangeNotifier {
   //        USER        //
   ////////////////////////
 
-  LoggedUser? get loggedUser => _ref.read(userService.notifier).loggedUser;
+  // LoggedUser? get loggedUser => _ref.read(userService.notifier).loggedUser;
 
   // int get qNewLeft => _userService.loggedUser!.qListNew.length;
 
-  bool get isSessionFinished => _ref.read(quizService).isSessionFinished;
+  // bool get isSessionFinished => _ref.read(quizService).isSessionFinished;
 
   goPro() async {
     // Object goProResult = await _userService.goPro();
