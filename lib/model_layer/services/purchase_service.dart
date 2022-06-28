@@ -37,8 +37,9 @@ class PurchaseService {
       final List<Package> packages = offerings.current?.availablePackages ?? [];
       final Package? package = packages.firstWhereOrNull((e) => e.product.identifier == productId);
       if (package == null) return Failure('36, Nie znaleziono produktu');
-      final Product product = package.product;
-      return product;
+      return package;
+      // final Product product = package.product;
+      // return product;
     } on PlatformException catch (e) {
       return Failure('${e.code}, ${e.message}');
     }
@@ -60,7 +61,7 @@ class PurchaseService {
     }
   }
 
-  Future<Object> buyProduct() async {
+  Future<Object> buyProduct(Package package) async {
     //some users may stay on the PurchaseScreen and try to click on buy button.
     //In order to prevent user from buying the same product again, I am checking if the previous
     //payment was finished (just in case)
@@ -70,7 +71,7 @@ class PurchaseService {
     }
     //if there was no payment earlier, procceed
     try {
-      PurchaserInfo purchaserInfo = await Purchases.purchaseProduct(productId);
+      PurchaserInfo purchaserInfo = await Purchases.purchasePackage(package);
       if (purchaserInfo.entitlements.all["Pro"]!.isActive) {
         debugPrint('@@@ PURCHASE CONFIRMED @@@');
         return purchaserInfo.entitlements.all['Pro']!;

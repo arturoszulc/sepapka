@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/utils/consts/colors.dart';
 import 'package:sepapka/viewmodel_layer/purchase_Controller.dart';
 
-import '../../viewmodel_layer/manager.dart';
 
 class PurchaseScreen extends StatelessWidget {
   const PurchaseScreen({Key? key}) : super(key: key);

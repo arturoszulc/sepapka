@@ -16,7 +16,7 @@ class PurchaseLoading extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(top: 20.0),
-          child: Text('Wczytywanie danych...', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
+          // child: Text('Wczytywanie danych...', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),),
         ),
       ]
       ),

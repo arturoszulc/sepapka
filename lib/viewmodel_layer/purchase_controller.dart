@@ -1,9 +1,6 @@
-import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:purchases_flutter/errors.dart';
-import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:sepapka/model_layer/models/purchase_state_model.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
@@ -13,16 +10,7 @@ import '../model_layer/services/user_service.dart';
 import '../utils/api_status.dart';
 
 
-//
-// final purchaseError = StateProvider.autoDispose<String>((ref) => '');
-//
-// final purchaseStatus = StateProvider.autoDispose<PurchaseStatus>((ref) => PurchaseStatus.loading);
-//
-// final productProvider = Provider<Product?>((ref) => null);
-
 final purchaseController = StateNotifierProvider.autoDispose<PurchaseController, PurchaseStateModel>((ref) => PurchaseController(ref));
-
-// final purchaseController = Provider.autoDispose<PurchaseController>((ref) => PurchaseController(ref));
 
 class PurchaseController extends StateNotifier<PurchaseStateModel>{
   final Ref _ref;
@@ -40,7 +28,7 @@ class PurchaseController extends StateNotifier<PurchaseStateModel>{
 
   revenueCatStart() async {
     // navigate(MyScreen.loading);
-    Timer(const Duration(seconds: 2), () {});
+    // Timer(const Duration(seconds: 2), () {});
     Object initResult = await _ref.read(purchaseService).init();
     if (initResult is Failure) {
       log(initResult.errorString.toString());
@@ -48,14 +36,14 @@ class PurchaseController extends StateNotifier<PurchaseStateModel>{
       state = state.copyWith(status: PurchaseStatus.error);
       return;
     }
-    Object getProduct = await _ref.read(purchaseService).getOffers();
-    if (getProduct is Failure) {
-      log(getProduct.errorString.toString());
-      setPurchaseError(getProduct.errorString);
+    Object getPackage = await _ref.read(purchaseService).getOffers();
+    if (getPackage is Failure) {
+      log(getPackage.errorString.toString());
+      setPurchaseError(getPackage.errorString);
       state = state.copyWith(status: PurchaseStatus.error);
       return;
     }
-    if (getProduct is Product) state = state.copyWith(product: getProduct);
+    if (getPackage is Package) state = state.copyWith(package: getPackage, product: getPackage.product);
 
     Object isPurchaseFinished = await _ref.read(purchaseService).checkIfPurchaseWasMade();
     if (isPurchaseFinished is EntitlementInfo) {
@@ -68,7 +56,7 @@ class PurchaseController extends StateNotifier<PurchaseStateModel>{
   }
 
   buyProduct() async {
-    Object buyResult = await _ref.read(purchaseService).buyProduct();
+    Object buyResult = await _ref.read(purchaseService).buyProduct(state.package!);
     if (buyResult is EntitlementInfo) {
       log('### Buy product SUCCEEDED! ###');
       finishPurchase(buyResult);
@@ -135,7 +123,7 @@ class PurchaseController extends StateNotifier<PurchaseStateModel>{
     }
     if (errorCode == PurchasesErrorCode.paymentPendingError) {
       log('### payment pending');
-      // navigate(MyScreen.purchasePending);
+      state = state.copyWith(status: PurchaseStatus.pending);
     }
     if (errorCode == PurchasesErrorCode.networkError) {
       log('### network error');

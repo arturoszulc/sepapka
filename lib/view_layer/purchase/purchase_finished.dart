@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../utils/consts/colors.dart';
-import '../../utils/consts/my_screens.dart';
 
 class PurchaseFinished extends StatelessWidget {
   const PurchaseFinished({Key? key}) : super(key: key);
@@ -47,7 +46,7 @@ class PurchaseFinished extends StatelessWidget {
             // Icon(Icons.check_box, size: 36, color: Colors.green,),
             const Padding(
               padding: EdgeInsets.all(20.0),
-              child: Text('Transakcja została potwierdzona, a wszystkie funkcje odblokowane.', style: TextStyle(color: proColor, fontSize: 20, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+              child: Text('Transakcja została potwierdzona. Wszystkie funkcje odblokowane.', style: TextStyle(color: proColor, fontSize: 20, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
             ),
             const SizedBox(height: 10,),
              Padding(
@@ -59,12 +58,23 @@ class PurchaseFinished extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  Text('Masz pomysł na przydatną funkcjonalność? Pisz śmiało na:',textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyText1),
+                  Text('Masz pomysł na ciekawą funkcje? Daj znać na:',textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyText1),
                   const SizedBox(height: 10,),
                   Text('kontakt@teoriaelektryki.pl', style: Theme.of(context).textTheme.headline6,),
                 ],
               ),
             ),
+    Consumer(
+      builder: (context, ref, child) => Padding(
+        padding: const EdgeInsets.only(bottom: 20.0),
+        child: FloatingActionButton.extended(
+            backgroundColor: proColor,
+            icon: const Icon(Icons.exit_to_app),
+            onPressed: () {
+              context.pop();
+            }, label: const Text('Powrót'),),
+      ),
+    ),
           ],),
       );
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

@@ -1,4 +1,3 @@
-
 class AppState {
   final bool isLoading;
   final bool isSignedIn;

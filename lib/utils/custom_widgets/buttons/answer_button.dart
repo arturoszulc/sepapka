@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sepapka/utils/consts/question.dart';
 
 
 
 class AnswerButton extends StatelessWidget {
-  final QuestionStatus qStatus;
+  // final QuestionStatus qStatus;
   final String? answer;
   final Color color;
   final VoidCallback onSelected;
 
-  const AnswerButton({Key? key, required this.qStatus, this.answer, required this.color, required this.onSelected}) : super(key: key);
+  const AnswerButton({Key? key, this.answer, required this.color, required this.onSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +25,9 @@ class AnswerButton extends StatelessWidget {
             primary: color,
           ),
           onPressed: () {
-            if (qStatus == QuestionStatus.noAnswer) {
+            // if (qStatus == QuestionStatus.noAnswer) {
               onSelected();
-            }
+            // }
           },
           // minWidth: 300,
           // color: color,

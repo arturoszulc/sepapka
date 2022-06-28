@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/view_layer/purchase/purchase_error.dart';
 import 'package:sepapka/view_layer/purchase/purchase_finished.dart';
 import 'package:sepapka/view_layer/purchase/purchase_loading.dart';
+import 'package:sepapka/view_layer/purchase/purchase_pending.dart';
 import 'package:sepapka/view_layer/purchase/purchase_screen.dart';
 
 import '../../model_layer/models/purchase_state_model.dart';
@@ -25,11 +25,11 @@ class PurchaseWrapper extends StatelessWidget {
               return const PurchaseError();
               case PurchaseStatus.initialized:
               return const PurchaseScreen();
-                break;
-
+              case PurchaseStatus.pending:
+              return const PurchasePending();
               case PurchaseStatus.finished:
                 return const PurchaseFinished();
-                break;
+
             }
           }
       ),

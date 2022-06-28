@@ -1,9 +1,15 @@
 import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sepapka/model_layer/models/appState.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sepapka/model_layer/models/app_state.dart';
 import 'package:sepapka/model_layer/services/auth_service.dart';
 
+
+final appVersionProvider = FutureProvider<String>((ref) async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  return packageInfo.version;
+});
 
 final appState = Provider<AppState>((ref) => AppState.initial());
 

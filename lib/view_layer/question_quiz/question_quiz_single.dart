@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/model_layer/models/button_map.dart';
 import 'package:sepapka/model_layer/models/question.dart';
 import 'package:sepapka/utils/custom_widgets/dialog_leave_session.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
 
 import '../../utils/custom_widgets/buttons/answer_button.dart';
@@ -16,7 +15,7 @@ class QuizSingleQuestion extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('*** QuestionSingleScreen built ***');
-    final myManager = ref.read(manager);
+    // final myManager = ref.read(manager);
     final bool isAnswered = ref.watch(isQuestionAnswered);
     final Question question = ref.watch(quizCurrentQuestion);
     final List<BMap> bMapList = ref.watch(bMapProvider);
@@ -52,7 +51,6 @@ class QuizSingleQuestion extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: bMapList.map((e) =>
                         AnswerButton(
-                            qStatus: myManager.qStatus,
                             answer: e.answer,
                             color: e.color,
                             onSelected: () {

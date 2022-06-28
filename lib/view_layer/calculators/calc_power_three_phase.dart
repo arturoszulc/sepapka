@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../utils/custom_widgets/build_question_image.dart';
-import '../../viewmodel_layer/manager_calc.dart';
+import '../../viewmodel_layer/calc_controller.dart';
 
 class CalcHeatingPowerThreePhase extends ConsumerWidget {
   const CalcHeatingPowerThreePhase({Key? key}) : super(key: key);

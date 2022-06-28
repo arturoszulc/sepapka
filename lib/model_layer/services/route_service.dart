@@ -4,13 +4,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sepapka/view_layer/academy/tables/table_units.dart';
+import 'package:sepapka/view_layer/tables/table_units.dart';
 import 'package:sepapka/view_layer/purchase/purchase_wrapper.dart';
 
 import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
-import '../models/appState.dart';
+import '../models/app_state.dart';
 
 /// Caches and Exposes a [GoRouter]
 final routerProvider = Provider<GoRouter>((ref) {
@@ -200,7 +200,7 @@ class RouterNotifier extends ChangeNotifier {
       GoRoute(
         name: MyScreen.remark.name,
         path: MyScreen.remark.path,
-        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: RemarkScreen()),
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const RemarkScreen()),
       ),
     ];
   }

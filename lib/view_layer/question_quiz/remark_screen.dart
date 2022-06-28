@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sepapka/model_layer/models/question.dart';
-import 'package:sepapka/model_layer/services/validation_service.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/remark_controller.dart';
 
 import '../../model_layer/models/input_validation_model.dart';
-import '../../utils/custom_widgets/dialog_message.dart';
+import '../../utils/consts/errors_messages.dart';
 import '../../utils/custom_widgets/snackbar_hide_question.dart';
 import '../../viewmodel_layer/quiz_controller.dart';
 
 class RemarkScreen extends ConsumerWidget {
-  RemarkScreen({Key? key}) : super(key: key);
-  String remark = '';
+  const RemarkScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -100,7 +97,7 @@ class RemarkScreen extends ConsumerWidget {
                     ref.read(remarkController).sendRemark();
                     context.pop();
                     ScaffoldMessenger.of(context)
-                        .showSnackBar(buildSnackBar(msg: 'Uwaga została wysłana'));
+                        .showSnackBar(buildSnackBar(msg: msgThanksForRemark));
                   },
                   child: const Text('Wyślij uwagę'),
                 ),

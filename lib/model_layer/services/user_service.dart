@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:collection/collection.dart';
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sepapka/model_layer/models/logged_user.dart';
-import 'package:sepapka/model_layer/models/question_map.dart';
+import 'package:sepapka/model_layer/models/app_user_model.dart';
 import 'package:sepapka/utils/api_status.dart';
 import 'package:sepapka/utils/consts/errors_messages.dart';
 import 'package:sepapka/viewmodel_layer/app_state_controller.dart';
@@ -25,74 +23,8 @@ class UserService extends StateNotifier<AppUser> {
 
   final Ref _ref;
 
-  //Models
-  // LoggedUser? _loggedUser;
 
-  //Getters
-  // LoggedUser? get loggedUser => _loggedUser;
-
-  // bool get loggedUserChanged => _loggedUserChanged;
-
-  // bool get userLeveledUp => _userLeveledUp;
-
-  // String get userRankName => _rankNames[_loggedUser!.rankLevel];
-
-  // StreamController<LoggedUser?> loggedUserStreamController = StreamController();
-  //Streams
-  // Stream<LoggedUser?> get loggedUserStream => loggedUserStreamController.stream;
-
-  // setUserLeveledUp(bool flag) {
-  //   _userLeveledUp = flag;
-  // }
-
-  // String getProgressPercentGlobal() {
-  //   int previousThreshold = 0;
-  //   int currentThreshold = _rankThresholds[_loggedUser!.rankLevel];
-  //   if (_loggedUser!.rankLevel > 0) {
-  //     previousThreshold = _rankThresholds[_loggedUser!.rankLevel - 1];
-  //   }
-  //   double progressInt =
-  //       (_loggedUser!.rankTotalPoints - previousThreshold) * 100 / currentThreshold;
-  //   String progressDouble = progressInt.toStringAsFixed(1);
-  //
-  //   return progressDouble;
-  // }
-
-  // addPoints(int points) {
-  //   //add points
-  //   _loggedUser!.rankTotalPoints += points;
-  //   //calculate rank
-  //   if (_loggedUser!.rankTotalPoints >= _rankThresholds[_loggedUser!.rankLevel]) {
-  //     _loggedUser!.rankLevel += 1;
-  //     setUserLeveledUp(true);
-  //   }
-  // }
-
-  // createDefaultLoggedUser(String userId) {
-  //   _loggedUser = LoggedUser(
-  //       documentId: userId,
-  //       username: 'uczeń-' + getRandomString(5),
-  //       isPro: false,
-  //       // rankLevel: 0,
-  //       // rankTotalPoints: 0,
-  //       // qVersions: [1,1,1],
-  //       qListNew: [],
-  //       qListPractice: [],
-  //       qListNotShown: []);
-  // }
-
-  // setLoggedUserChanged(bool status) {
-  //   //some flag to keep track if user has changed (helpful in some loops)
-  //   _loggedUserChanged = status;
-  // }
-
-  //////// NEW ////////
-
-  // void createUser(String uid) {
-  //   log('User created');
-  //   state = state.copyWith(id: uid);
-  //   log(state.toString());
-  // }
+  //// METHODS ////
 
   void getUserFromDb(String uid) async {
     //try to fetch from db
@@ -101,16 +33,14 @@ class UserService extends StateNotifier<AppUser> {
       state = response.value!;
       log('/// UserService: Got User from DB ///');
       log(response.value.toString());
-      // _ref.read(routeController).navigate(MyScreen.menu);
     } else {
-      //if error, then assume that user is new and wasn't yet created
+      //if error, assume that user is new and wasn't yet created
       createUser(uid);
       final updateResult = updateUserInDb();
       if (updateResult is Failure) {
         log('/// UserService: Error updating user ///');
         return;
       }
-      // _ref.read(routeController).navigate(MyScreen.menu);
     }
     _ref.read(appStateNotifierProvider.notifier).userSignedIn();
   }
@@ -119,16 +49,6 @@ class UserService extends StateNotifier<AppUser> {
     log('/// UserService: Created emptyUser ///');
     state = state.copyWith(id: uid);
     log(state.toString());
-  }
-
-  Future<Object> updateUserInDb() async {
-    try {
-      await _ref.read(databaseService).updateUser(state);
-      return Success();
-    } catch (e) {
-      debugPrint(errorUpdateUserInDb);
-      return Failure(errorUpdateUserInDb);
-    }
   }
 
   clearUser() { //clearing user after user pressed signOut button
@@ -140,7 +60,7 @@ class UserService extends StateNotifier<AppUser> {
       ...state.hiddenQuestionIds,
       qId,
     ]);
-    log('HiddenList: ${state.hiddenQuestionIds}');
+    updateUserInDb();
   }
 
   void removeQuestionFromHidden(String qId) {
@@ -148,15 +68,23 @@ class UserService extends StateNotifier<AppUser> {
       for (final id in state.hiddenQuestionIds) //check current elements in list
         if (id != qId) id, //return anything but that one qId
     ]);
-    log('HiddenList: ${state.hiddenQuestionIds}');
+    updateUserInDb();
   }
 
   Future<void> goPro() async {
     state = state.copyWith(isPro: true);
-    await _ref.read(databaseService).updateUser(state);
+    updateUserInDb();
   }
 
-  //////// END NEW ////////
+  Future<Object> updateUserInDb() async {
+    try {
+      await _ref.read(databaseService).updateUser(state);
+      return Success();
+    } catch (e) {
+      debugPrint(errorUpdateUserInDb);
+      return Failure(errorUpdateUserInDb);
+    }
+  }
 
 
   // Future<Object> createUserLocal(String userId) async {

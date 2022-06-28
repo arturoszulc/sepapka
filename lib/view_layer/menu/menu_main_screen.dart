@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 import 'package:sepapka/utils/custom_widgets/buttons/menu_button.dart';
 import 'package:sepapka/viewmodel_layer/auth_controller.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
+
+import '../../viewmodel_layer/app_state_controller.dart';
 
 class MenuScreen extends ConsumerWidget {
   const MenuScreen({Key? key}) : super(key: key);

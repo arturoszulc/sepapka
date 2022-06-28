@@ -16,14 +16,14 @@ export '../../view_layer/calculators/calculators_menu.dart';
 export '../../view_layer/calculators/calc_power_three_phase.dart';
 
 //_tableSubRoutes
-export 'package:sepapka/view_layer/academy/tables/table_wire_ampacity.dart';
-export 'package:sepapka/view_layer/academy/tables/table_wire_symbols.dart';
-export 'package:sepapka/view_layer/academy/tables/table_wire_colors.dart';
+export 'package:sepapka/view_layer/tables/table_wire_ampacity.dart';
+export 'package:sepapka/view_layer/tables/table_wire_symbols.dart';
+export 'package:sepapka/view_layer/tables/table_wire_colors.dart';
 
 //sort it some time...
 export 'package:sepapka/view_layer/question_quiz/choose_cat_screen.dart';
 export 'package:sepapka/view_layer/question_quiz/choose_level_screen.dart';
-export 'package:sepapka/view_layer/academy/tables_menu.dart';
+export 'package:sepapka/view_layer/tables/tables_menu.dart';
 export 'package:sepapka/view_layer/question_list/question_list_filter.dart';
 export 'package:sepapka/view_layer/question_list/question_list_screen.dart';
 export 'package:sepapka/view_layer/question_list/question_list_single.dart';

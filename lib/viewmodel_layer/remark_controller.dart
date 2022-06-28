@@ -5,10 +5,10 @@ import 'package:sepapka/model_layer/models/input_validation_model.dart';
 import 'package:sepapka/model_layer/services/database_service.dart';
 import 'package:sepapka/model_layer/services/user_service.dart';
 import 'package:sepapka/model_layer/services/validation_service.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
 import 'package:sepapka/viewmodel_layer/quiz_controller.dart';
 
 import '../model_layer/models/remark.dart';
+import 'app_state_controller.dart';
 
 
 final remarkState = StateProvider<InputValidationModel>((ref) =>  const InputValidationModel(null, null));

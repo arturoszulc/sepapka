@@ -21,7 +21,7 @@ class StorageService {
       debugPrint(jsonFile);
 
     } on FirebaseException catch (e) {
-      debugPrint('### STORAGE SERVICE ERROR ###');
+      debugPrint('### STORAGE SERVICE ERROR: ${e.toString()} ###');
     }
 
 
