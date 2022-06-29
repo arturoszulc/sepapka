@@ -108,7 +108,7 @@ const List<UnitGroup> unitGroups = [
     UnitTile(name: 'równoważna powierzchnia absorpcji', unit: 'metr kwadratowy', symbol: 'm\u00b2'),
   ]),
   UnitGroup(name: 'Inne', tiles: [
-    UnitTile(name: 'odległość (astronomia)', unit: 'jednostka astronomiczna (1 AU = 1,49597870 x 10^11 m)', symbol: 'AU'),
+    UnitTile(name: 'odległość (astronomia)', unit: 'jednostka astronomiczna (1 AU = 1,49597870x10^11 m)', symbol: 'AU'),
     UnitTile(name: 'odległość (astronomia)', unit: 'rok świetlny (1 ly = 63241 AU)', symbol: 'ly'),
     UnitTile(name: 'odległość (astronomia)', unit: 'parsek (1 pc = 3,26 ly = 206265 AU)', symbol: 'pc'),
     UnitTile(name: 'masa atomowa', unit: 'atomowa jednostka masy (unit)', symbol: 'u'),

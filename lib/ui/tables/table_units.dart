@@ -111,18 +111,6 @@ Widget buildGroupHeader(UnitGroup unitGroup) => Padding(
       ),
 );
 
-// Widget buildUnitTileNew(UnitTile unitTile) => ListTile(
-//     leading: Text(
-//       unitTile.symbol,
-//       style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-//     ),
-//     title: Text(
-//       unitTile.name,
-//       style: const TextStyle(fontSize: 18),
-//     ),
-//   subtitle: Text(unitTile.unit, style: const TextStyle(fontSize: 12)),
-// );
-
 Widget buildUnitTile(UnitTile unitTile) => Card(
       elevation: 1,
       child: Padding(
@@ -130,6 +118,7 @@ Widget buildUnitTile(UnitTile unitTile) => Card(
         child: Row(
           children: [
             Expanded(
+              flex: 2,
                 child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -144,13 +133,13 @@ Widget buildUnitTile(UnitTile unitTile) => Card(
               ),
             )),
             Expanded(
-                flex: 3,
+                flex: 5,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       unitTile.name,
-                      style: const TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 16),
                     ),
                     Text(unitTile.unit, style: const TextStyle(fontSize: 12)),
                   ],
