@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
 
-import '../../../model_layer/services/user_service.dart';
+import '../../../services/user_service.dart';
 
 
 Widget? unlockButton(BuildContext context) {

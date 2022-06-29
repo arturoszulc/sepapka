@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 import 'package:sepapka/utils/custom_widgets/image_full_screen.dart';
 
-import '../../model_layer/models/question.dart';
+import '../../models/question.dart';
 
 
 

@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sepapka/model_layer/services/user_service.dart';
+import 'package:sepapka/services/user_service.dart';
 
 
 class MenuButton extends ConsumerWidget {

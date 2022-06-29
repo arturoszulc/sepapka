@@ -1,4 +1,4 @@
-import 'package:sepapka/model_layer/models/question.dart';
+import 'package:sepapka/models/question.dart';
 
 
 const List<Question> questionListGlobalConst = [
