@@ -2,29 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sepapka/utils/custom_widgets/layout/bullet_list.dart';
 import 'package:sepapka/utils/custom_widgets/layout/header.dart';
+import 'package:sepapka/utils/custom_widgets/layout/image_caption.dart';
+import 'package:sepapka/utils/custom_widgets/layout/paragraph.dart';
 
 import '../../utils/consts/my_screens.dart';
 
 class AcademyLesson extends StatelessWidget {
   const AcademyLesson({Key? key}) : super(key: key);
 
+  static const TextStyle bold = TextStyle(
+    fontWeight: FontWeight.bold
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Lekcja'),
+        centerTitle: true,
         actions: [
           IconButton(onPressed: () {
             context.pushNamed(MyScreen.academyIndex.name);
           }, icon: const Icon(Icons.menu_book)),
         ],
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: const [
             CustomHeader(title: 'Informacje ogólne'),
-            Text('Sieci prądu przemiennego dzielimy na jednofazowe i trójfazowe. Oprócz przewodów fazowych sieć może posiadać przewód neutralny, ochronny lub ochronno-neutralny w różnych konfiguracjach. O tym jakie przewody posiada sieć mówi nam typ sieci.'),
+            CustomParagraph(text: 'Sieci prądu przemiennego dzielimy na *jednofazowe* i *trójfazowe*.'),
+            CustomParagraph(text: 'Oprócz przewodów fazowych, sieć może posiadać przewody: *neutralny*, *ochronny* lub *ochronno-neutralny*. Konfiguracja zależy od *typu sieci* z jakim mamy do czynienia.'),
             CustomHeader(title: 'Podstawowe typy sieci'),
-            Text('Sieci zarówno jedno- jak i trójfazowe dzielimy na sieci typu TN, IT oraz TT. Oprócz tego sieci TN dzielą się na TN-S, TN-C i TN-C-S. Poszczególne litery odnoszą się do następujących francuskich określeń:'),
+            CustomParagraph(text: 'Obecnie stosowane typy sieci to *TN*, *IT* oraz *TT*. Sieci TN dzielą się dodatkowo na *TN-S*, *TN-C* i *TN-C-S*. Poszczególne litery odnoszą się do następujących francuskich określeń:'),
             BulletList(strings: [
               'T – terre – ziemia',
               'I – isolation – izolować',
@@ -32,7 +41,10 @@ class AcademyLesson extends StatelessWidget {
               'S – separe  - oddzielny',
               'C – combine – połączony',
             ]),
-            Text('Każda z liter ma konkretne znaczenie jeśli chodzi o budowę sieci, co pokazuje obrazek poniżej')
+            CustomParagraph(text: 'Znaczenie każdej z liter w kontekście budowy sieci przedstawiono poniżej.'),
+            ImageCaption(path: 'assets/images/cables/przewod_ekranowany.png', caption: 'źródło: bitner.com', ignoreDarkMode: true,),
+            CustomParagraph(text: 'Znaczenie każdej z liter w kontekście budowy sieci przedstawiono poniżej.'),
+
           ],
         ),
       ),

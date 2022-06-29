@@ -6,22 +6,24 @@ class CustomHeader extends StatelessWidget {
   final String title;
   static const TextStyle headerTextStyle = TextStyle(
     fontSize: 18,
-    // color: Colors.black87,
-    height: 1.55,
+    // height: 1.55,
     fontWeight: FontWeight.bold,
   );
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(title, style: headerTextStyle,),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          height: 3,
-          width: 30,
-          color: Colors.grey[300],
-        )
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0, bottom: 5.0),
+      child: Column(
+        children: [
+          Text(title, style: headerTextStyle,),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            height: 3,
+            width: 30,
+            color: Colors.grey[300],
+          )
+        ],
+      ),
     );
   }
 }

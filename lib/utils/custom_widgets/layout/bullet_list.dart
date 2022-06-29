@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 class BulletList extends StatelessWidget {
   final List<String> strings;
   final bool bullets;
+  final bool numbers;
   static const TextStyle bulletListStyle = TextStyle(
     // fontSize: 16,
     // color: Colors.black87,
     height: 1.55,
   );
-  const BulletList({Key? key, required this.strings, this.bullets = false}) : super(key: key);
+  const BulletList({Key? key, required this.strings, this.bullets = false, this.numbers = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,8 @@ class BulletList extends StatelessWidget {
             children: [
               bullets ?
               const Text('\u2022', style: bulletListStyle) :
-                  Text('${strings.indexOf(str) + 1}.', style: bulletListStyle,),
+                  numbers ?
+                  Text('${strings.indexOf(str) + 1}.', style: bulletListStyle,) : Container(),
               const SizedBox(
                 width: 5,
               ),
