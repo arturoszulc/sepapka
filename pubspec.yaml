@@ -91,11 +91,11 @@ flutter:
   assets:
     - assets/images/general/
     - assets/images/launcher/
-    - assets/images/badges/
     - assets/images/questions/
     - assets/images/knowledge_base/wire_ampacity/
     - assets/images/knowledge_base/wire_symbols/
     - assets/images/knowledge_base/three_phase_power/
+    - assets/images/cables/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

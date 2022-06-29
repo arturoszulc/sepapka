@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 import 'package:sepapka/utils/tables_data/table_wire_symbols_data.dart';
 
-import '../../../utils/custom_widgets/line_spacing.dart';
+import '../../utils/custom_widgets/layout/line_spacing.dart';
 
 class TableWireSymbols extends StatelessWidget {
   const TableWireSymbols({Key? key}) : super(key: key);
