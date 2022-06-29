@@ -24,7 +24,7 @@ class MenuButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool isUserPro = ref.watch(userService).isPro;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8.0),
       child: Badge(
         // position: BadgePosition.center(),
         shape: BadgeShape.square,

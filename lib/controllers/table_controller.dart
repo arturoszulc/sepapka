@@ -6,10 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../utils/tables_data/table_units_data.dart';
 
-final unitSearch = StateProvider<String>((ref) => '');
+final unitSearch = StateProvider.autoDispose<String>((ref) => '');
 
-final unitSearchedList = Provider<List<UnitTile>>((ref) {
-  log('unitSeachedList recalculated');
+final unitSearchedList = Provider.autoDispose<List<UnitTile>>((ref) {
   final String searchValue = ref.watch(unitSearch);
   if (searchValue.isEmpty) return [];
   List<UnitTile> unitTileList = [];
@@ -19,13 +18,11 @@ final unitSearchedList = Provider<List<UnitTile>>((ref) {
       if (tile.name.contains(searchValue)) unitTileList.add(tile);
           }
   }
-
-  log(unitTileList.toString());
   return unitTileList;
 
 });
 
-final tableController = Provider<TableController>((ref) => TableController(ref));
+final tableController = Provider.autoDispose<TableController>((ref) => TableController(ref));
 
 
 class TableController {
@@ -35,7 +32,7 @@ class TableController {
     log('^^^ Table Controller initialized ^^^');
   }
 
-  void search(String val) {
+  void searchUnitTable(String val) {
     log('TableController, sending: $val');
     _ref.read(unitSearch.notifier).state = val.toLowerCase();
   }

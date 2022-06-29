@@ -17,54 +17,51 @@ class TablesMenu extends ConsumerWidget {
         centerTitle: true,
       ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        MenuButton(
-                          proOnly: true,
-                          label: 'Jednostki i wielkości fizyczne',
-                          onPressed: ()  {
-                            context.goNamed(MyScreen.tableUnits.name);
-                          },
-                        ),
-                        MenuButton(
-                          proOnly: true,
-                          label: 'Kodowanie barw przewodów',
-                          onPressed: ()  {
-                            context.goNamed(MyScreen.tableWireColors.name);
-                          },
-                        ),
-                        MenuButton(
-                          proOnly: true,
-                          label: 'Symbole przewodów',
-                          onPressed: () {
-                            context.goNamed(MyScreen.tableWireSymbols.name);
-                          },
-                        ),
-                        MenuButton(
-                          proOnly: true,
-                          label: 'Obciążalność przewodów',
-                          onPressed: ()  {
-                            context.goNamed(MyScreen.tableWireAmpacity.name);
-                          },
-                        ),
-                      ],
-                    ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      MenuButton(
+                        proOnly: true,
+                        label: 'Jednostki i wielkości fizyczne',
+                        onPressed: ()  {
+                          context.goNamed(MyScreen.tableUnits.name);
+                        },
+                      ),
+                      MenuButton(
+                        proOnly: true,
+                        label: 'Kodowanie barw przewodów',
+                        onPressed: ()  {
+                          context.goNamed(MyScreen.tableWireColors.name);
+                        },
+                      ),
+                      MenuButton(
+                        proOnly: true,
+                        label: 'Symbole przewodów',
+                        onPressed: () {
+                          context.goNamed(MyScreen.tableWireSymbols.name);
+                        },
+                      ),
+                      MenuButton(
+                        proOnly: true,
+                        label: 'Obciążalność przewodów',
+                        onPressed: ()  {
+                          context.goNamed(MyScreen.tableWireAmpacity.name);
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

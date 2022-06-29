@@ -48,12 +48,12 @@ class TableUnits extends ConsumerWidget {
                             : () {
                                 searchInput.clear();
                                 unFocus(context);
-                                ref.read(tableController).search('');
+                                ref.read(tableController).searchUnitTable('');
                               },
                         icon: const Icon(Icons.clear),
                       )),
                   onChanged: (val) {
-                    ref.read(tableController).search(val);
+                    ref.read(tableController).searchUnitTable(val);
                   },
                 ),
               ),
@@ -80,11 +80,8 @@ class TableUnitsGrouped extends StatelessWidget {
                   value: unitGroup.name,
                   canTapOnHeader: true,
                   headerBuilder: (context, isExpanded) => buildGroupHeader(unitGroup),
-                  body: Padding(
-                    padding: const EdgeInsets.only(bottom: 0.0),
-                    child: Column(
-                      children: <Widget>[...unitGroup.tiles.map(buildUnitTile).toList()],
-                    ),
+                  body: Column(
+                    children: <Widget>[...unitGroup.tiles.map(buildUnitTile).toList()],
                   ),
                 ))
             .toList(),
@@ -140,6 +137,7 @@ Widget buildUnitTile(UnitTile unitTile) => Card(
                 children: [
                   Text(
                     unitTile.symbol,
+                    textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],

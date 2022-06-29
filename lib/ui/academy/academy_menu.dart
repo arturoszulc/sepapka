@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../utils/consts/my_screens.dart';
+import '../../utils/custom_widgets/buttons/menu_button.dart';
 import '../../utils/custom_widgets/buttons/unlock_button.dart';
 
 class AcademyMenu extends ConsumerWidget {
@@ -26,8 +29,12 @@ class AcademyMenu extends ConsumerWidget {
                   children: [
                     Expanded(
                       child: Column(
-                        children: const [
-                          Text('To be continued'),
+                        children: [
+                          MenuButton(
+                              label: 'Lekcja',
+                              onPressed: () {
+                                context.goNamed(MyScreen.academyLesson.name);
+                              }),
                         ],
                       ),
                     ),

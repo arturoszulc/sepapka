@@ -38,43 +38,35 @@ class MenuScreen extends ConsumerWidget {
             width: 20,
             color: Colors.grey[300],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50.0),
-            child: Column(
-              children: [
-                MenuButton(
-                    label: 'Quiz',
-                    onPressed: () {
-                      context.goNamed(MyScreen.quizChooseLevel.name);
-                    }),
-                // MenuButton(
-                //     label: 'Lista pytań',
-                //     onPressed: () {
-                //       context.goNamed(MyScreen.listQuestion.name);
-                //     }),
-                MenuButton(
-                    label: 'Akademia',
-                    onPressed: () {
-                      context.goNamed(MyScreen.academyMenu.name);
-                      // context.read<AcademyManager>().getFileName();
-                    }),
-                MenuButton(
-                    label: 'Tablice',
-                    onPressed: () {
-                      context.goNamed(MyScreen.tablesMenu.name);
-                      // context.pop();
-                    }),
-                MenuButton(
-                    label: 'Kalkulatory',
-                    onPressed: () {
-                      context.goNamed(MyScreen.calcMenu.name);
-                    }),
-                MenuButton(label: 'Wyloguj się', onPressed: () async {
-                  await ref.read(authController).signOut();
-                  // await context.read<Manager>().navigate(Screen.purchase);
-                }),
-              ],
-            ),
+          Column(
+            children: [
+              MenuButton(
+                  label: 'Quiz',
+                  onPressed: () {
+                    context.goNamed(MyScreen.quizChooseLevel.name);
+                  }),
+              MenuButton(
+                  label: 'Akademia',
+                  onPressed: () {
+                    context.goNamed(MyScreen.academyMenu.name);
+                    // context.read<AcademyManager>().getFileName();
+                  }),
+              MenuButton(
+                  label: 'Tablice',
+                  onPressed: () {
+                    context.goNamed(MyScreen.tablesMenu.name);
+                    // context.pop();
+                  }),
+              MenuButton(
+                  label: 'Kalkulatory',
+                  onPressed: () {
+                    context.goNamed(MyScreen.calcMenu.name);
+                  }),
+              MenuButton(label: 'Wyloguj się', onPressed: () async {
+                await ref.read(authController).signOut();
+                // await context.read<Manager>().navigate(Screen.purchase);
+              }),
+            ],
           ),
           // const SizedBox(height: 20),
 

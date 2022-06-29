@@ -11,6 +11,8 @@ import 'package:sepapka/controllers/app_state_controller.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
 import '../models/app_state.dart';
+import '../ui/academy/academy_index.dart';
+import '../ui/academy/academy_lesson.dart';
 
 /// Caches and Exposes a [GoRouter]
 final routerProvider = Provider<GoRouter>((ref) {
@@ -18,7 +20,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     initialLocation: MyScreen.loading.path,
-    debugLogDiagnostics: true,
+    // debugLogDiagnostics: true,
     // For demo purposes
     refreshListenable: router,
     // This notifiies `GoRouter` for refresh events
@@ -222,7 +224,16 @@ class RouterNotifier extends ChangeNotifier {
 
   List<GoRoute> get _academySubRoutes {
     return <GoRoute>[
-
+      GoRoute(
+        name: MyScreen.academyLesson.name,
+        path: MyScreen.academyLesson.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const AcademyLesson()),
+      ),
+      GoRoute(
+        name: MyScreen.academyIndex.name,
+        path: MyScreen.academyIndex.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: AcademyIndex()),
+      ),
     ];
   }
 
