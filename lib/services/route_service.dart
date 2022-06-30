@@ -10,11 +10,10 @@ import 'package:sepapka/ui/purchase/purchase_wrapper.dart';
 import 'package:sepapka/controllers/app_state_controller.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
-import '../models/academy/lesson_model.dart';
 import '../models/app_state.dart';
 import '../ui/academy/academy_index.dart';
 import '../ui/academy/academy_lesson.dart';
-import '../utils/lessons_data/all_lessons.dart';
+import '../ui/academy/academy_unit.dart';
 
 /// Caches and Exposes a [GoRouter]
 final routerProvider = Provider<GoRouter>((ref) {
@@ -198,13 +197,24 @@ class RouterNotifier extends ChangeNotifier {
   List<GoRoute> get _academySubRoutes {
     return <GoRoute>[
       GoRoute(
-        name: MyScreen.academyLesson.name,
-        path: MyScreen.academyLesson.path + '/:id',
+        name: MyScreen.academyUnit.name,
+        path: MyScreen.academyUnit.path,// + '/:uid',
         pageBuilder: (context, state) {
-          final Lesson lesson = allLessons.firstWhere((lesson) => lesson.id == state.params['id']!,
-              orElse: () => Lesson.empty());
-          return MaterialPage(key: state.pageKey, child: AcademyLesson(lesson: lesson));},
+          // final Unit unit = academyUnits.firstWhere((unit) => unit.id == state.params['uid']!,
+          //     orElse: () => Unit.empty());
+          return MaterialPage(key: state.pageKey, child: const AcademyUnit());},
+      routes: [
+        GoRoute(
+          name: MyScreen.academyLesson.name,
+          path: MyScreen.academyLesson.path,// + '/:id',
+          pageBuilder: (context, state) {
+            // final Lesson lesson = cableLessons.firstWhere((lesson) => lesson.id == state.params['id']!,
+            //     orElse: () => Lesson.empty());
+            return MaterialPage(key: state.pageKey, child: const AcademyLesson());},
+        ),
+      ]
       ),
+
       GoRoute(
         name: MyScreen.academyIndex.name,
         path: MyScreen.academyIndex.path,

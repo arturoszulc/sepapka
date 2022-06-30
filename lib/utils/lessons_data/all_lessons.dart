@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:sepapka/models/academy/unit_lesson_model.dart';
 
-import '../../models/academy/lesson_model.dart';
 import 'lessons_cables.dart';
 
-
-final List<Lesson> allLessons = [
-  ...cableLessons,
-  ...gridLessons,
+//List of units
+const List<Unit> academyUnits = [
+  cablesUnit,
+  lowVoltageGridUnit,
 ];
 
 
+const List<Unit> basics = [
+
+];
+
+// Units
+const Unit cablesUnit = Unit(
+    id: '1', title: 'Przewody elektryczne', lessons: cableLessons);
+
+const Unit lowVoltageGridUnit = Unit(id: '2', title: 'Sieci niskiego napięcia', lessons: gridLessons);
+
+
+
+
+//List of Lessons in Units
 const List<Lesson> cableLessons = [
   cableLesson1,
   Lesson(id: '2', title: 'lekcja 2', content: [Text('Lekcja 2')]),

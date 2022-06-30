@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:sepapka/models/academy/lesson_model.dart';
-
+import '../../models/academy/unit_lesson_model.dart';
 import '../custom_widgets/layout/bullet_list.dart';
 import '../custom_widgets/layout/header.dart';
 import '../custom_widgets/layout/image_caption.dart';

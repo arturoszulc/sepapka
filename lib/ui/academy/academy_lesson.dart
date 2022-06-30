@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sepapka/utils/custom_widgets/layout/bullet_list.dart';
-import 'package:sepapka/utils/custom_widgets/layout/header.dart';
-import 'package:sepapka/utils/custom_widgets/layout/image_caption.dart';
-import 'package:sepapka/utils/custom_widgets/layout/paragraph.dart';
-import 'package:sepapka/utils/lessons_data/lessons_cables.dart';
+import 'package:sepapka/controllers/academy_controller.dart';
 
-import '../../models/academy/lesson_model.dart';
+import '../../models/academy/unit_lesson_model.dart';
 import '../../utils/consts/my_screens.dart';
 
-class AcademyLesson extends StatelessWidget {
-  const AcademyLesson({Key? key, required this.lesson}) : super(key: key);
+class AcademyLesson extends ConsumerWidget {
+  const AcademyLesson({Key? key}) : super(key: key);
 
-  final Lesson lesson;
+  // final Lesson lesson;
   static const TextStyle bold = TextStyle(
     fontWeight: FontWeight.bold
   );
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final Lesson lesson = ref.watch(chosenLesson);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lekcja ${lesson.id}'),
+        title: const Text('placeholder'),
         centerTitle: true,
         actions: [
           IconButton(onPressed: () {

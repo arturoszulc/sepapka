@@ -5,7 +5,6 @@ import 'package:sepapka/utils/lessons_data/all_lessons.dart';
 
 import '../../utils/consts/my_screens.dart';
 import '../../utils/custom_widgets/buttons/menu_button.dart';
-import '../../utils/custom_widgets/buttons/unlock_button.dart';
 
 class AcademyMenu extends ConsumerWidget {
   const AcademyMenu({Key? key}) : super(key: key);
@@ -28,22 +27,13 @@ class AcademyMenu extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: Column(
-                      children: cableLessons.map((lesson) =>
+                      children: academyUnits.map((unit) =>
                           MenuButton(
-                            proOnly: cableLessons.indexOf(lesson) > 0 ? true : false,
-                            label: lesson.title,
-                            onPressed: () => context.goNamed(MyScreen.academyLesson.name, params: {'id': lesson.id}),
+                            // proOnly: cableLessons.indexOf(lesson) > 0 ? true : false,
+                            label: unit.title,
+                            onPressed: () => context.goNamed(MyScreen.academyUnit.name),
                           ),
                       ).toList()
-
-
-                      // [
-                      //   MenuButton(
-                      //       label: 'Lekcja',
-                      //       onPressed: () {
-                      //         context.goNamed(MyScreen.academyLesson.name, params: {'id': '1-1'});
-                      //       }),
-                      // ],
                     ),
                   ),
                 ],
@@ -51,8 +41,8 @@ class AcademyMenu extends ConsumerWidget {
             ],
           ),
         ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: unlockButton(context),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButton: unlockButton(context),
     );
   }
 }

@@ -27,6 +27,7 @@ enum MyScreen {
 
   //Academy
   academyMenu('academy'),
+  academyUnit('unit'),
   academyLesson('lesson'),
   academyIndex('index'),
 
