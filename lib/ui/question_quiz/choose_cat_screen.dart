@@ -26,71 +26,68 @@ class ChooseCategory extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Column(
-                      children:  qCategoryList.map((category) =>
-                      MenuButton(
-                          label: category,
-                          hasBadge: true,
-                          badgeNum: countCategories[qCategoryList.indexOf(category)],
-                          onPressed: () {
-                            ref.read(quizController).setCategory(qCategoryList.indexOf(category));
-                            ref.read(quizController).prepareSession();
-                            context.goNamed(MyScreen.quizQuestionSingle.name);
-                          }),
-                      ).toList()
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    children:  qCategoryList.map((category) =>
+                    MenuButton(
+                        label: category,
+                        hasBadge: true,
+                        badgeNum: countCategories[qCategoryList.indexOf(category)],
+                        onPressed: () {
+                          ref.read(quizController).setCategory(qCategoryList.indexOf(category));
+                          ref.read(quizController).prepareSession();
+                          context.goNamed(MyScreen.quizQuestionSingle.name);
+                        }),
+                    ).toList()
 
-                      // [
-                      //   MenuButton(
-                      //     label: qCategoryList[0],
-                      //     hasBadge: true,
-                      //     badgeNum: countQuestionsByCategories[0],
-                      //     onPressed: () {
-                      //       ref.read(quizController.notifier).setCategory(0);
-                      //     },
-                      //   ),
-                      //   MenuButton(
-                      //     label: qCategoryList[1],
-                      //     hasBadge: true,
-                      //     badgeNum: countQuestionsByCategories[1],
-                      //     onPressed: () async {
-                      //       await ref.read(manager).chooseQuestionCategory(1);
-                      //     },
-                      //   ),
-                      //   MenuButton(
-                      //     label: qCategoryList[2],
-                      //     hasBadge: true,
-                      //     badgeNum: countQuestionsByCategories[2],
-                      //     onPressed: () async {
-                      //       await ref.read(manager).chooseQuestionCategory(2);
-                      //     },
-                      //   ),
-                      //   MenuButton(
-                      //     label: qCategoryList[3],
-                      //     hasBadge: true,
-                      //     badgeNum: countQuestionsByCategories[3],
-                      //     onPressed: () async {
-                      //       await ref.read(manager).chooseQuestionCategory(3);
-                      //     },
-                      //   ),
-                      //   MenuButton(
-                      //     label: qCategoryList[4],
-                      //     hasBadge: true,
-                      //     badgeNum: countQuestionsByCategories[4],
-                      //     onPressed: () async {
-                      //       await ref.read(manager).chooseQuestionCategory(4);
-                      //     },
-                      //   ),
-                      // ],
-                    ),
+                    // [
+                    //   MenuButton(
+                    //     label: qCategoryList[0],
+                    //     hasBadge: true,
+                    //     badgeNum: countQuestionsByCategories[0],
+                    //     onPressed: () {
+                    //       ref.read(quizController.notifier).setCategory(0);
+                    //     },
+                    //   ),
+                    //   MenuButton(
+                    //     label: qCategoryList[1],
+                    //     hasBadge: true,
+                    //     badgeNum: countQuestionsByCategories[1],
+                    //     onPressed: () async {
+                    //       await ref.read(manager).chooseQuestionCategory(1);
+                    //     },
+                    //   ),
+                    //   MenuButton(
+                    //     label: qCategoryList[2],
+                    //     hasBadge: true,
+                    //     badgeNum: countQuestionsByCategories[2],
+                    //     onPressed: () async {
+                    //       await ref.read(manager).chooseQuestionCategory(2);
+                    //     },
+                    //   ),
+                    //   MenuButton(
+                    //     label: qCategoryList[3],
+                    //     hasBadge: true,
+                    //     badgeNum: countQuestionsByCategories[3],
+                    //     onPressed: () async {
+                    //       await ref.read(manager).chooseQuestionCategory(3);
+                    //     },
+                    //   ),
+                    //   MenuButton(
+                    //     label: qCategoryList[4],
+                    //     hasBadge: true,
+                    //     badgeNum: countQuestionsByCategories[4],
+                    //     onPressed: () async {
+                    //       await ref.read(manager).chooseQuestionCategory(4);
+                    //     },
+                    //   ),
+                    // ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

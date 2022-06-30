@@ -10,9 +10,11 @@ import 'package:sepapka/ui/purchase/purchase_wrapper.dart';
 import 'package:sepapka/controllers/app_state_controller.dart';
 import '../../utils/consts/my_screens.dart';
 import '../../utils/consts/all_screens_import.dart';
+import '../models/academy/lesson_model.dart';
 import '../models/app_state.dart';
 import '../ui/academy/academy_index.dart';
 import '../ui/academy/academy_lesson.dart';
+import '../utils/lessons_data/all_lessons.dart';
 
 /// Caches and Exposes a [GoRouter]
 final routerProvider = Provider<GoRouter>((ref) {
@@ -20,7 +22,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     initialLocation: MyScreen.loading.path,
-    // debugLogDiagnostics: true,
+    debugLogDiagnostics: true,
     // For demo purposes
     refreshListenable: router,
     // This notifiies `GoRouter` for refresh events
@@ -81,35 +83,6 @@ class RouterNotifier extends ChangeNotifier {
 
 
     return null;
-
-    // // final isAuthenticated = _ref.read(authStateProvider).value != null;
-    // debugPrint('@@@ GoRouter redirect function deployed @@@');
-    // // debugPrint('@@@ GoRouter LastScreenManual: $lastScreenManual @@@');
-    // debugPrint('@@@ GoRouter state.name: ${state.name} @@@');
-    // //get path of current screen
-    // final routingTo = state.location;
-    // final bool isSameScreen = goingTo.endsWith(autoScreen.path);
-    //
-    // //first check if screen is the same
-    // if (isSameScreen) {
-    //   // debugPrint('The Screen is the same');
-    //   return null;
-    // }
-    //
-    // //if not, check wether destination is different than current screen
-    // // final bool isDestinationDifferent =
-    //
-    //
-    // // //auth permission
-    // //
-    // // if (!isAuthenticated && !isSameScreen) {
-    // //   log('%^&*(%^ USER NOT AUTHENTICATED');
-    // //   return state.namedLocation(MyScreen.signIn.name);
-    // // }
-    // //TODO: Refactor: manual vs. auto routing must be recognized
-    // final location = state.namedLocation(autoScreen.name);
-    // // debugPrint('@@@ Resolved new location name');
-    // return location;
   }
   List<GoRoute> get _topLevelRoutes {
     return <GoRoute>[
@@ -226,8 +199,11 @@ class RouterNotifier extends ChangeNotifier {
     return <GoRoute>[
       GoRoute(
         name: MyScreen.academyLesson.name,
-        path: MyScreen.academyLesson.path,
-        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const AcademyLesson()),
+        path: MyScreen.academyLesson.path + '/:id',
+        pageBuilder: (context, state) {
+          final Lesson lesson = allLessons.firstWhere((lesson) => lesson.id == state.params['id']!,
+              orElse: () => Lesson.empty());
+          return MaterialPage(key: state.pageKey, child: AcademyLesson(lesson: lesson));},
       ),
       GoRoute(
         name: MyScreen.academyIndex.name,

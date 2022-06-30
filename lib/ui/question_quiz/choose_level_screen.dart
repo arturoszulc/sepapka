@@ -30,28 +30,25 @@ class MenuChooseLevel extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.5,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        children: qLevelList.map((level) =>
-                            MenuButton(
-                              hasBadge: true,
-                              badgeNum: countLevels[qLevelList.indexOf(level)],
-                              label: level,
-                              onPressed: () {
-                                ref.read(quizController).setLevel(qLevelList.indexOf(level));
-                                context.goNamed(MyScreen.quizChooseCategory.name);
-                              },
-                            ),
-                        ).toList()
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: qLevelList.map((level) =>
+                          MenuButton(
+                            hasBadge: true,
+                            badgeNum: countLevels[qLevelList.indexOf(level)],
+                            label: level,
+                            onPressed: () {
+                              ref.read(quizController).setLevel(qLevelList.indexOf(level));
+                              context.goNamed(MyScreen.quizChooseCategory.name);
+                            },
+                          ),
+                      ).toList()
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),

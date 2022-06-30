@@ -4,12 +4,15 @@ import 'package:sepapka/utils/custom_widgets/layout/bullet_list.dart';
 import 'package:sepapka/utils/custom_widgets/layout/header.dart';
 import 'package:sepapka/utils/custom_widgets/layout/image_caption.dart';
 import 'package:sepapka/utils/custom_widgets/layout/paragraph.dart';
+import 'package:sepapka/utils/lessons_data/lessons_cables.dart';
 
+import '../../models/academy/lesson_model.dart';
 import '../../utils/consts/my_screens.dart';
 
 class AcademyLesson extends StatelessWidget {
-  const AcademyLesson({Key? key}) : super(key: key);
+  const AcademyLesson({Key? key, required this.lesson}) : super(key: key);
 
+  final Lesson lesson;
   static const TextStyle bold = TextStyle(
     fontWeight: FontWeight.bold
   );
@@ -18,7 +21,7 @@ class AcademyLesson extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Lekcja'),
+        title: Text('Lekcja ${lesson.id}'),
         centerTitle: true,
         actions: [
           IconButton(onPressed: () {
@@ -28,26 +31,15 @@ class AcademyLesson extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: const [
-            CustomHeader(title: 'Informacje ogólne'),
-            CustomParagraph(text: 'Sieci prądu przemiennego dzielimy na *jednofazowe* i *trójfazowe*.'),
-            CustomParagraph(text: 'Oprócz przewodów fazowych, sieć może posiadać przewody: *neutralny*, *ochronny* lub *ochronno-neutralny*. Konfiguracja zależy od *typu sieci* z jakim mamy do czynienia.'),
-            CustomHeader(title: 'Podstawowe typy sieci'),
-            CustomParagraph(text: 'Obecnie stosowane typy sieci to *TN*, *IT* oraz *TT*. Sieci TN dzielą się dodatkowo na *TN-S*, *TN-C* i *TN-C-S*. Poszczególne litery odnoszą się do następujących francuskich określeń:'),
-            BulletList(strings: [
-              'T – terre – ziemia',
-              'I – isolation – izolować',
-              'N – neutre – neutralny',
-              'S – separe  - oddzielny',
-              'C – combine – połączony',
-            ]),
-            CustomParagraph(text: 'Znaczenie każdej z liter w kontekście budowy sieci przedstawiono poniżej.'),
-            ImageCaption(path: 'assets/images/cables/przewod_ekranowany.png', caption: 'źródło: bitner.com', ignoreDarkMode: true,),
-            CustomParagraph(text: 'Znaczenie każdej z liter w kontekście budowy sieci przedstawiono poniżej.'),
-
+          children: [
+            Text(lesson.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineSmall,),
+            ...lesson.content
           ],
-        ),
+        )
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        context.goNamed(MyScreen.academyLesson.name, params: {'id': '2'});
+      }, child: const Text('Next lesson'),),
     );
   }
 }

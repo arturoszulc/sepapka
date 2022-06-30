@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BulletList extends StatelessWidget {
+class CustomList extends StatelessWidget {
   final List<String> strings;
   final bool bullets;
   final bool numbers;
@@ -9,7 +9,7 @@ class BulletList extends StatelessWidget {
     // color: Colors.black87,
     height: 1.55,
   );
-  const BulletList({Key? key, required this.strings, this.bullets = false, this.numbers = false}) : super(key: key);
+  const CustomList({Key? key, required this.strings, this.bullets = false, this.numbers = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
