@@ -37,6 +37,7 @@ enum MyScreen {
   tableWireColors('table-wire-colors'),
   tableWireAmpacity('table-wire-ampacity'),
   tableWireSymbols('table-wire-symbols'),
+  tableWireDiameter('table-wire-diameter'),
   tableUnits('units'),
 
   //Calcs

@@ -45,14 +45,11 @@ const Lesson cableLesson2 = Lesson(
       LessonFunFact(text: 'Drogie przewodniki, takie jak srebro i złoto, mają wiele pożądanych zalet. '
           'Stąd żyły miedziane niekiedy posrebrza się lub pozłaca, by zmniejszyć ich rezystancję, osiągnąć odporność na wyższą temperaturę lub odporność na zakłócenia.'
       ),
-      LessonFunFact2(text: 'Drogie przewodniki, takie jak srebro i złoto, mają wiele pożądanych zalet. '
-          'Stąd żyły miedziane niekiedy posrebrza się lub pozłaca, by zmniejszyć ich rezystancję, osiągnąć odporność na wyższą temperaturę lub odporność na zakłócenia.'
-      ),
       LessonHeader(title: 'Przekrój żył'),
       LessonParagraph(text: 'Żyły przewodów mają najczęściej przekrój *okręgu* lub *sektora*.'),
       ImageCaption(path: 'assets/images/cables/cable_shapes.png', ignoreDarkMode: true,),
       LessonParagraph(text: 'Dostępne grubości, czyli *przekroje poprzeczne*, również są ustandaryzowane. Znajdziesz je w tabeli'),
-      LessonButton(icon: Icons.table_chart_outlined, label: 'Przekroje przewodów', screen: MyScreen.tableWireSymbols),
+      LessonButton(icon: Icons.table_chart_outlined, label: 'Przekroje przewodów', screen: MyScreen.tableWireDiameter),
 
     ]);
 

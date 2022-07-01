@@ -56,6 +56,13 @@ class TablesMenu extends ConsumerWidget {
                           context.goNamed(MyScreen.tableWireAmpacity.name);
                         },
                       ),
+                      MenuButton(
+                        proOnly: true,
+                        label: 'Przekroje i średnice przewodów',
+                        onPressed: ()  {
+                          context.goNamed(MyScreen.tableWireDiameter.name);
+                        },
+                      ),
                     ],
                   ),
                 ),

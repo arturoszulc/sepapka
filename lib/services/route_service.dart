@@ -14,6 +14,7 @@ import '../models/app_state.dart';
 import '../ui/academy/academy_index.dart';
 import '../ui/academy/academy_lesson.dart';
 import '../ui/academy/academy_unit.dart';
+import '../ui/tables/table_wire_diameter.dart';
 
 /// Caches and Exposes a [GoRouter]
 final routerProvider = Provider<GoRouter>((ref) {
@@ -239,6 +240,11 @@ class RouterNotifier extends ChangeNotifier {
         name: MyScreen.tableWireSymbols.name,
         path: MyScreen.tableWireSymbols.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireSymbols()),
+      ),
+      GoRoute(
+        name: MyScreen.tableWireDiameter.name,
+        path: MyScreen.tableWireDiameter.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireDiameter()),
       ),
       GoRoute(
         name: MyScreen.tableUnits.name,
