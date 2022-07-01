@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sepapka/controllers/academy_controller.dart';
 import 'package:sepapka/utils/lessons_data/all_lessons.dart';
 
 import '../../utils/consts/my_screens.dart';
@@ -31,7 +32,10 @@ class AcademyMenu extends ConsumerWidget {
                           MenuButton(
                             // proOnly: cableLessons.indexOf(lesson) > 0 ? true : false,
                             label: unit.title,
-                            onPressed: () => context.goNamed(MyScreen.academyUnit.name),
+                            onPressed: () {
+                              ref.read(academyController).chooseUnit(academyUnits.indexOf(unit));
+                              context.goNamed(MyScreen.academyUnit.name);
+                            }
                           ),
                       ).toList()
                     ),

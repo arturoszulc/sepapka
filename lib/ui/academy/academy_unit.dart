@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sepapka/controllers/academy_controller.dart';
+import 'package:sepapka/utils/custom_widgets/lesson_card.dart';
 import '../../utils/consts/my_screens.dart';
-import '../../utils/custom_widgets/buttons/menu_button.dart';
 import '../../utils/custom_widgets/buttons/unlock_button.dart';
 
 class AcademyUnit extends ConsumerWidget {
@@ -20,38 +20,49 @@ class AcademyUnit extends ConsumerWidget {
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
-                      children: unit.lessons.map((lesson) =>
-                          MenuButton(
-                            proOnly: unit.lessons.indexOf(lesson) > 0 ? true : false,
-                            label: lesson.title,
-                            onPressed: () => context.goNamed(MyScreen.academyLesson.name)//, params: {'uid': unit.id, 'id': lesson.id}),
-                          ),
-                      ).toList()
-
-
-                    // [
-                    //   MenuButton(
-                    //       label: 'Lekcja',
-                    //       onPressed: () {
-                    //         context.goNamed(MyScreen.academyLesson.name, params: {'id': '1-1'});
-                    //       }),
-                    // ],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: unit.lessons.length,
+            itemBuilder: (BuildContext context, int index) => LessonCard(
+              lesson: unit.lessons[index],
+              proOnly: index > 5,
+              onTap: () {
+                ref.read(academyController).chooseLesson(index);
+                context.goNamed(MyScreen.academyLesson.name);
+              },
+            )),
+        // child: Column(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   crossAxisAlignment: CrossAxisAlignment.center,
+        //   mainAxisSize: MainAxisSize.max,
+        //   children: [
+        //     Row(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         Expanded(
+        //           child: Column(
+        //               children: unit.lessons.map((lesson) =>
+        //                   MenuButton(
+        //                     proOnly: unit.lessons.indexOf(lesson) > 0 ? true : false,
+        //                     label: lesson.title,
+        //                     onPressed: () => context.goNamed(MyScreen.academyLesson.name)//, params: {'uid': unit.id, 'id': lesson.id}),
+        //                   ),
+        //               ).toList()
+        //
+        //
+        //             // [
+        //             //   MenuButton(
+        //             //       label: 'Lekcja',
+        //             //       onPressed: () {
+        //             //         context.goNamed(MyScreen.academyLesson.name, params: {'id': '1-1'});
+        //             //       }),
+        //             // ],
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ],
+        // ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: unlockButton(context),

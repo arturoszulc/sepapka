@@ -3,9 +3,11 @@ import 'package:sepapka/models/academy/unit_lesson_model.dart';
 import 'package:sepapka/utils/lessons_data/all_lessons.dart';
 
 
-final chosenUnitId = StateProvider<String>((ref) => '');
-final chosenLessonId = StateProvider<String>((ref) => '');
+// final chosenUnitId = StateProvider<String>((ref) => '');
+// final chosenLessonId = StateProvider<String>((ref) => '');
 
+final chosenUnitIndex = StateProvider<int>((ref) => 0);
+final chosenLessonIndex = StateProvider<int>((ref) => 0);
 
 
 final unitsList = Provider.autoDispose<List<Unit>>((ref) {
@@ -13,20 +15,31 @@ final unitsList = Provider.autoDispose<List<Unit>>((ref) {
 });
 
 final chosenUnit = Provider<Unit>((ref) {
-  final String unitId = ref.read(chosenUnitId);
-  return academyUnits.firstWhere((unit) => unit.id == unitId, orElse: () => Unit.empty());
+  final int unitIndex = ref.watch(chosenUnitIndex);
+  return academyUnits[unitIndex];
 });
 
 final chosenLesson = Provider<Lesson>((ref) {
-  final Unit unit = ref.read(chosenUnit);
-  final String lessonId = ref.read(chosenLessonId);
-  return unit.lessons.firstWhere((lesson) => lesson.id == lessonId, orElse: () => Lesson.empty());
+  final Unit unit = ref.watch(chosenUnit);
+  final int lessonIndex = ref.watch(chosenLessonIndex);
+  return unit.lessons[lessonIndex];
 });
 
 
-final academyController = Provider<AcademyController>((ref) => AcademyController());
+final academyController = Provider<AcademyController>((ref) => AcademyController(ref));
 
 class AcademyController {
+    final Ref _ref;
+    const AcademyController(this._ref);
+
+
+    chooseUnit(int index) {
+      _ref.read(chosenUnitIndex.notifier).state = index;
+    }
+
+  chooseLesson(int index) {
+    _ref.read(chosenLessonIndex.notifier).state = index;
+  }
 
 }
 

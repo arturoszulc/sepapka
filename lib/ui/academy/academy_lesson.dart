@@ -29,6 +29,7 @@ class AcademyLesson extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(lesson.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineSmall,),
             ...lesson.content
