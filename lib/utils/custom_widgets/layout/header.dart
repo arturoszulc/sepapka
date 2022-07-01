@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomHeader extends StatelessWidget {
-  const CustomHeader({Key? key, required this.title}) : super(key: key);
+class LessonHeader extends StatelessWidget {
+  const LessonHeader({Key? key, required this.title}) : super(key: key);
 
   final String title;
   static const TextStyle headerTextStyle = TextStyle(

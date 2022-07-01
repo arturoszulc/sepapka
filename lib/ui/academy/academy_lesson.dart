@@ -19,7 +19,7 @@ class AcademyLesson extends ConsumerWidget {
     final Lesson lesson = ref.watch(chosenLesson);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('placeholder'),
+        title: Text.rich(TextSpan(text: lesson.title),),
         centerTitle: true,
         actions: [
           IconButton(onPressed: () {

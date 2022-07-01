@@ -16,54 +16,20 @@ class AcademyUnit extends ConsumerWidget {
     final unit = ref.watch(chosenUnit);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('placeholder'),
+        title: Text(unit.title),
         centerTitle: true,
       ),
-      body: Center(
-        child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: unit.lessons.length,
-            itemBuilder: (BuildContext context, int index) => LessonCard(
-              lesson: unit.lessons[index],
-              proOnly: index > 5,
-              onTap: () {
-                ref.read(academyController).chooseLesson(index);
-                context.goNamed(MyScreen.academyLesson.name);
-              },
-            )),
-        // child: Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-        //   mainAxisSize: MainAxisSize.max,
-        //   children: [
-        //     Row(
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       children: [
-        //         Expanded(
-        //           child: Column(
-        //               children: unit.lessons.map((lesson) =>
-        //                   MenuButton(
-        //                     proOnly: unit.lessons.indexOf(lesson) > 0 ? true : false,
-        //                     label: lesson.title,
-        //                     onPressed: () => context.goNamed(MyScreen.academyLesson.name)//, params: {'uid': unit.id, 'id': lesson.id}),
-        //                   ),
-        //               ).toList()
-        //
-        //
-        //             // [
-        //             //   MenuButton(
-        //             //       label: 'Lekcja',
-        //             //       onPressed: () {
-        //             //         context.goNamed(MyScreen.academyLesson.name, params: {'id': '1-1'});
-        //             //       }),
-        //             // ],
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ],
-        // ),
-      ),
+      body: ListView.builder(
+          shrinkWrap: true,
+          itemCount: unit.lessons.length,
+          itemBuilder: (BuildContext context, int index) => LessonCard(
+            lesson: unit.lessons[index],
+            proOnly: index > 5,
+            onTap: () {
+              ref.read(academyController).chooseLesson(index);
+              context.goNamed(MyScreen.academyLesson.name);
+            },
+          )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: unlockButton(context),
     );
