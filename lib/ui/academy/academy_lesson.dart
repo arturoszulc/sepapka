@@ -16,10 +16,11 @@ class AcademyLesson extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final int lessonIndex = ref.watch(chosenLessonIndex);
     final Lesson lesson = ref.watch(chosenLesson);
     return Scaffold(
       appBar: AppBar(
-        title: Text.rich(TextSpan(text: lesson.title),),
+        title: Text('Lekcja ${lesson.id}'),
         centerTitle: true,
         actions: [
           IconButton(onPressed: () {
@@ -32,13 +33,24 @@ class AcademyLesson extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(lesson.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineSmall,),
-            ...lesson.content
+            ...lesson.content,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+
+                children: [
+                  if(lessonIndex > 0) ElevatedButton(onPressed: () {
+                    ref.read(academyController).chooseLesson(lessonIndex-1);
+                  }, child: const Text('Poprzednia lekcja'),),
+                  ElevatedButton(onPressed: () {
+                    ref.read(academyController).chooseLesson(lessonIndex+1);
+                  }, child: const Text('Następna lekcja'),),
+                ],),
+            ),
           ],
         )
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        context.goNamed(MyScreen.academyLesson.name, params: {'id': '2'});
-      }, child: const Text('Next lesson'),),
     );
   }
 }

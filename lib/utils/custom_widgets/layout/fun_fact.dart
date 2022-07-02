@@ -36,10 +36,13 @@ import 'package:flutter/material.dart';
 // }
 
 
-class LessonFunFact extends StatelessWidget {
-  const LessonFunFact({Key? key, required this.text}) : super(key: key);
+class LessonCard extends StatelessWidget {
+  const LessonCard({Key? key, required this.text, this.isImportant = false, this.isFunFact = false}) : super(key: key);
 
   final String text;
+  final bool isImportant;
+  final bool isFunFact;
+
 
   static const TextStyle funFactHeaderStyle = TextStyle(fontStyle: FontStyle.italic);
   static const TextStyle funFactBodyStyle = TextStyle(fontStyle: FontStyle.italic,);
@@ -56,10 +59,16 @@ class LessonFunFact extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              if (isFunFact) Row(
                 children: [
                   const Icon(Icons.flash_on),
                   Text('  Czy wiesz, że...', style: Theme.of(context).textTheme.bodyLarge,)
+                ],
+              ),
+              if (isImportant) Row(
+                children: [
+                  const Icon(Icons.error_outline),
+                  Text('  Ważne!', style: Theme.of(context).textTheme.bodyLarge,)
                 ],
               ),
               const SizedBox(height: 10,),

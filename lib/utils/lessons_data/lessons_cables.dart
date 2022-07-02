@@ -42,7 +42,7 @@ const Lesson cableLesson2 = Lesson(
       LessonHeader(title: 'Materiał żył'),
       LessonParagraph(text: 'Żyła przewodu jest *przewodnikiem*. Inaczej mówiąc *materiałem o niskiej rezystywności*. A mówiąc najprościej *metalem*.'),
       LessonParagraph(text: 'Najlepiej przewodzącym metalem jest *srebro*, ale ze względu na jego wysoką cenę żyły wykonuje się zwykle z *miedzi* i *aluminium*.'),
-      LessonFunFact(text: 'Drogie przewodniki, takie jak srebro i złoto, mają wiele pożądanych zalet. '
+      LessonCard(text: 'Drogie przewodniki, takie jak srebro i złoto, mają wiele pożądanych zalet. '
           'Stąd żyły miedziane niekiedy posrebrza się lub pozłaca, by zmniejszyć ich rezystancję, osiągnąć odporność na wyższą temperaturę lub odporność na zakłócenia.'
       ),
       LessonHeader(title: 'Przekrój żył'),
