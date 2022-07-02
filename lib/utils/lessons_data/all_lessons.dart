@@ -1,5 +1,5 @@
 import 'package:sepapka/models/academy/unit_lesson_model.dart';
-import 'package:sepapka/utils/lessons_data/lessons_electric_grid.dart';
+import 'package:sepapka/utils/lessons_data/lessons_grid.dart';
 
 import 'lessons_cables.dart';
 

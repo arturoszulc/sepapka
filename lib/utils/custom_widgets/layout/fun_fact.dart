@@ -37,11 +37,12 @@ import 'package:flutter/material.dart';
 
 
 class LessonCard extends StatelessWidget {
-  const LessonCard({Key? key, required this.text, this.isImportant = false, this.isFunFact = false}) : super(key: key);
+  const LessonCard({Key? key, required this.text, this.isImportant = false, this.isFunFact = false, this.isExample = false}) : super(key: key);
 
   final String text;
   final bool isImportant;
   final bool isFunFact;
+  final bool isExample;
 
 
   static const TextStyle funFactHeaderStyle = TextStyle(fontStyle: FontStyle.italic);
@@ -59,9 +60,15 @@ class LessonCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (isFunFact) Row(
+              if (isExample) Row(
                 children: [
                   const Icon(Icons.flash_on),
+                  Text('  Przykład', style: Theme.of(context).textTheme.bodyLarge,)
+                ],
+              ),
+              if (isFunFact) Row(
+                children: [
+                  const Icon(Icons.lightbulb_outline),
                   Text('  Czy wiesz, że...', style: Theme.of(context).textTheme.bodyLarge,)
                 ],
               ),
