@@ -20,12 +20,13 @@ class Unit {
 class Lesson {
   final String id;
   final String title;
+  final String description;
   final List<Widget> content;
 
-  const Lesson({required this.id, required this.title, required this.content});
+  const Lesson({required this.id, required this.title, required this.description, required this.content});
 
   factory Lesson.empty() {
-    return const Lesson(id: '0', title: '', content: [Center(child: Text('Nie znaleziono lekcji'))]);
+    return const Lesson(id: '0', title: '', description: '', content: [Center(child: Text('Nie znaleziono lekcji'))]);
   }
 
 }

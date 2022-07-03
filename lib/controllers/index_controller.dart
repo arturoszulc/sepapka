@@ -6,6 +6,8 @@ import 'dart:developer';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/models/academy/index_entry_model.dart';
 
+import '../utils/lessons_data/index_data.dart';
+
 final indexSearch = StateProvider.autoDispose<String>((ref) => '');
 
 final indexSearchedList = Provider.autoDispose<List<IndexEntry>>((ref) {

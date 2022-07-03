@@ -17,16 +17,31 @@ class LessonCard extends ConsumerWidget {
     final bool isUserPro = ref.read(userService).isPro;
     return Card(
       elevation: proOnly ? isUserPro ? 3 : 1 : 3,
-      child: ListTile(
-        onTap: onTap,
-        contentPadding: const EdgeInsets.all(10.0),
-        title: Text(
-          lesson.title,
-          style: Theme.of(context).textTheme.headlineSmall,
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: InkWell(
+          onTap: onTap,
+          child: Row(
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                  flex: 6,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                Text(lesson.id, style: const TextStyle(fontWeight: FontWeight.bold),),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(lesson.title, style: Theme.of(context).textTheme.headline6,),
+                ),
+                Text(lesson.description, style: Theme.of(context).textTheme.bodyMedium),
+            ],
+          )
         ),
-        subtitle: Text(
-          lesson.id,
-          style: Theme.of(context).textTheme.bodyText1,
+              const Expanded(child: Icon(Icons.arrow_forward_ios),),
+            ],
+          ),
         ),
       ),
     );

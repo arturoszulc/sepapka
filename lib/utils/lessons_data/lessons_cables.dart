@@ -6,8 +6,10 @@ import '../../models/academy/unit_lesson_model.dart';
 import '../../utils/custom_widgets/layout/layout_custom_widgets.dart';
 
 const Lesson cableLesson1 = Lesson(
-    id: '1',
-    title: 'Jak zbudowane są przewody?', content: [
+    id: 'PE-1',
+    title: 'Jak zbudowany jest przewód?',
+    description: 'O tym jak i dlaczego zbudowane są przewody.',
+    content: [
   LessonHeader(title: 'Informacje ogólne'),
   LessonParagraph(text: 'Przewody elektryczne służą do *przesyłania energii elektrycznej*. Stąd ważne, by były one:'
       'by:'),
@@ -36,8 +38,9 @@ const Lesson cableLesson1 = Lesson(
 
 
 const Lesson cableLesson2 = Lesson(
-    id: '2',
+    id: 'PE-2',
     title: 'Żyła - serce każdego przewodu',
+    description: 'O materiałach, przekrojach i właściwościach żył',
     content: [
       LessonHeader(title: 'Materiał żył'),
       LessonParagraph(text: 'Żyła przewodu jest *przewodnikiem*. Inaczej mówiąc *materiałem o niskiej rezystywności*. A mówiąc najprościej *metalem*.'),

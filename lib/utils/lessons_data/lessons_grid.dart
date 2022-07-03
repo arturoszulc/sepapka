@@ -4,8 +4,9 @@ import '../../models/academy/unit_lesson_model.dart';
 import '../../utils/custom_widgets/layout/layout_custom_widgets.dart';
 
 const Lesson gridLesson1 = Lesson(
-  id: '2-1',
+  id: 'SNP-1',
   title: 'Podstawy sieci',
+  description: 'O podstawowych typach sieci i znaczeniu poszczególnych symboli.',
   content: [
     LessonHeader(title: 'Informacje ogólne'),
     LessonParagraph(text: 'Sieci prądu przemiennego dzielimy na *jednofazowe* i *trójfazowe*.'),
@@ -76,7 +77,11 @@ const Lesson gridLesson1 = Lesson(
   ],
 );
 
-const Lesson gridLesson2 = Lesson(id: '2-2', title: 'Budowa sieci TN, TT oraz IT', content: [
+const Lesson gridLesson2 = Lesson(
+    id: 'SNP-2',
+    title: 'Sieci TN, TT oraz IT',
+    description: 'O budowie i zastosowanie podstawowych sieci.',
+    content: [
   LessonHeader(title: 'Sieć TN - informacje ogólne'),
   LessonParagraph(text: 'Sieci typu TN stosuje się w roli:'),
   CustomList(bullets: true, strings: [
