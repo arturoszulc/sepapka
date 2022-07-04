@@ -13,7 +13,7 @@ const Lesson cableLesson1 = Lesson(
   LessonHeader(title: 'Informacje ogólne'),
   LessonParagraph(text: 'Przewody elektryczne służą do *przesyłania energii elektrycznej*. Stąd ważne, by były one:'
       'by:'),
-  CustomList(
+  LessonList(
     bullets: true,
     strings: [
       'oszczędne - czyli nie nagrzewały się i nie marnowały w ten sposób energii elektrycznej,',
@@ -24,7 +24,7 @@ const Lesson cableLesson1 = Lesson(
   LessonHeader(title: 'Budowa'),
   LessonParagraph(text: 'Aby spełnić powyższe założenia, przewody elektryczne składają się zwykle z:'),
   ImageCaption(path: 'assets/images/cables/przewod_ekranowany.png', caption: 'źródło: bitner.com', ignoreDarkMode: true,),
-  CustomList(
+  LessonList(
       numbers: true,
       strings: [
         'żyła - element przewodzący prąd (fachowo: część czynna)',

@@ -6,7 +6,7 @@ import 'lessons_cables.dart';
 //List of units
 const List<Unit> academyUnits = [
   cablesUnit,
-  lowVoltageGridUnit,
+  gridUnit,
 ];
 
 
@@ -18,11 +18,13 @@ const List<Unit> basics = [
 const Unit cablesUnit = Unit(
     id: '1',
     title: 'Przewody elektryczne',
+    description: '',
     lessons: cableLessons);
 
-const Unit lowVoltageGridUnit = Unit(
+const Unit gridUnit = Unit(
     id: '2',
-    title: 'Sieci niskiego napięcia',
+    title: 'Sieci i instalacje niskiego napięcia',
+    description: 'Poznaj budowę, zastosowanie i właśności podstawowych sieci TN, TT oraz IT',
     lessons: gridLessons);
 
 
@@ -38,4 +40,6 @@ const List<Lesson> cableLessons = [
 const List<Lesson> gridLessons = [
   gridLesson1,
   gridLesson2,
+  gridLesson3,
+  gridLesson4,
 ];

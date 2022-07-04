@@ -4,16 +4,18 @@ import 'package:flutter/material.dart';
 class Unit {
   final String id;
   final String title;
+  final String description;
   final List<Lesson> lessons;
 
   const Unit({
     required this.id,
     required this.title,
+    required this.description,
     required this.lessons,
   });
 
   factory Unit.empty() {
-    return const Unit(id: '0', title: '', lessons: []);
+    return const Unit(id: '0', title: '', description: '', lessons: []);
   }
 }
 
