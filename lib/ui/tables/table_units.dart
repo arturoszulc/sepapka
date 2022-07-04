@@ -111,40 +111,37 @@ Widget buildGroupHeader(UnitGroup unitGroup) => Padding(
       ),
 );
 
-Widget buildUnitTile(UnitTile unitTile) => Card(
-      elevation: 1,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
-        child: Row(
+Widget buildUnitTile(UnitTile unitTile) => Padding(
+  padding: const EdgeInsets.symmetric(vertical: 5.0),
+  child: Row(
+    children: [
+      Expanded(
+        flex: 2,
+          child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              flex: 2,
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    unitTile.symbol,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            )),
-            Expanded(
-                flex: 5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      unitTile.name,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    Text(unitTile.unit, style: const TextStyle(fontSize: 12)),
-                  ],
-                )),
+            Text(
+              unitTile.symbol,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
-      ),
-    );
+      )),
+      Expanded(
+          flex: 5,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                unitTile.name,
+                style: const TextStyle(fontSize: 16),
+              ),
+              Text(unitTile.unit, style: const TextStyle(fontSize: 12)),
+            ],
+          )),
+    ],
+  ),
+);

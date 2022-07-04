@@ -3,8 +3,6 @@ import 'package:sepapka/models/academy/unit_lesson_model.dart';
 import 'package:sepapka/utils/lessons_data/all_lessons.dart';
 
 
-//TODO: zabezpieczyć przed możliwością wybrania lekcji która nie istnieje (index > chosenUnit.lessons.length)
-
 final chosenUnitIndex = StateProvider<int>((ref) => 0);
 final chosenLessonIndex = StateProvider<int>((ref) => 0);
 

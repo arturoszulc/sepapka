@@ -87,7 +87,6 @@ final quizQuestionList = Provider<List<Question>>((ref) {
   List<Question> qList = List<Question>.from(ref.read(quizQuestionListGlobal));
   final int chosenLevel = ref.read(quizLevel);
   final int chosenCategory = ref.read(quizCategory);
-  //TODO: Fix this. No question have level=0, so when I choose all questions, I get an error
 
   if (chosenLevel > 0) {   //first filter by level, if it is chosen (greater than 0)
     qList = List<Question>.from([

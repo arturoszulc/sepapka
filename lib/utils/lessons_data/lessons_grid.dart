@@ -82,10 +82,10 @@ const Lesson gridLesson2 = Lesson(
     description: 'O budowie i zastosowanie podstawowych sieci.',
     content: [
   LessonHeader(title: 'Sieć TN - informacje ogólne'),
-  LessonParagraph(text: 'Sieci typu TN stosuje się w roli:'),
+  LessonParagraph(text: 'Sieci typu TN znajdują zastosowanie jako:'),
   LessonList(bullets: true, strings: [
-    'sieci rozdzielczych zasilających budynki mieszkalne / użyteczności publicznej',
-    'instalacji w budynkach i obiektach przemysłowych',
+    'sieci rozdzielcze zasilające budynki mieszkalne / użyteczności publicznej',
+    'instalacje elektryczne w budynkach i obiektach przemysłowych',
   ]),
   LessonParagraph(
       text: 'Sieć typu TN jest siecią *uziemioną* przynajmniej w jednym punkcie. '
@@ -131,11 +131,11 @@ const Lesson gridLesson2 = Lesson(
 
 
   LessonHeader(title: 'Sieć TT - informacje ogólne'),
-  LessonParagraph(text: 'Sieci typu TT stosuje się w roli:'),
+  LessonParagraph(text: 'Sieci typu TT znajduje zastosowanie jako:'),
   LessonList(bullets: true, strings: [
-    'sieci rozdzielczych zasilających budynki mieszkalne / użyteczności publicznej',
-    'instalacji w budynkach i obiektach przemysłowych',
-    'instalacji w obiektach rolniczych i ogrodniczych',
+    'sieci rozdzielcze zasilające budynki mieszkalne / użyteczności publicznej',
+    'instalacje w budynkach i obiektach przemysłowych',
+    'instalacje w obiektach rolniczych i ogrodniczych',
   ]),
   LessonParagraph(
       text: 'Sieć typu TT jest siecią *uziemioną* przynajmniej w jednym punkcie. '
