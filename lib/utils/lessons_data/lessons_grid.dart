@@ -73,7 +73,7 @@ const Lesson gridLesson1 = Lesson(
     LessonCard(
         isExample: true,
         text:
-            'Sieć typu TN-C to sieć, bezpośednio uziemiona (T), której wszystkie elementy przewodzące dostępne są uziemione przez punkt neutralny (N), posiadająca przewód pełniący funkcję ochronną, w tym przypadku (C) przewód ochronno-neutralny PEN'),
+            'Sieć typu TN-C jest bezpośednio uziemiona (T) i wszystkie podłączone do niej części przewodzące dostępne są uziemione przez punkt neutralny (N). Posiada ona również przewód pełniący funkcję ochronną (C), w tym przypadku przewód ochronno-neutralny PEN.'),
   ],
 );
 
@@ -105,7 +105,8 @@ const Lesson gridLesson2 = Lesson(
     'ochronno-neutralny (PEN)',
   ]),
   LessonParagraph(text:'W wersji jednofazowej jest to sieć *dwuprzewodowa*, zaś w trójfazowej *czteroprzewodowa*:'),
-  ImageCaption(path: 'assets/images/questions/error.png'),
+  ImageCaption(path: 'assets/images/grid/grid_tnc_1ph.png'),
+  ImageCaption(path: 'assets/images/grid/grid_tnc_3ph.png'),
 
   LessonHeader(title: 'Sieć TN-S - budowa'),
   LessonParagraph(text: 'Sieć typu TN-S posiada następujące przewody:'),
@@ -115,8 +116,7 @@ const Lesson gridLesson2 = Lesson(
     'ochronny (PE)',
   ]),
   LessonParagraph(text: 'W wersji jednofazowej jest to sieć *trójprzewodowa*, zaś w trójfazowej *pięcioprzewodowa*:'),
-  ImageCaption(path: 'assets/images/questions/uklad_sieci_tns.png'),
-  SizedBox(height: 20),
+  ImageCaption(path: 'assets/images/grid/grid_tns_1ph.png'),
   ImageCaption(path: 'assets/images/grid/grid_tns_3ph.png'),
 
   LessonHeader(title: 'Sieć TN-C-S - budowa'),
@@ -126,7 +126,8 @@ const Lesson gridLesson2 = Lesson(
     'ochronno-neutralny (PEN) (rozdzielony w pewnym momencie na PE i N)',
   ]),
   LessonParagraph(text: 'W wersji jednofazowej jest to sieć *dwuprzewodowa*, która w punkcie rozdziału zamienia się w *trójprzewodową*. Wersja trójfazowa zaś przechodzi z *czteroprzewodowej* w *pięcioprzewodową*.'),
-  ImageCaption(path: 'assets/images/questions/error.png'),
+  ImageCaption(path: 'assets/images/grid/grid_tncs_1ph.png'),
+  ImageCaption(path: 'assets/images/grid/grid_tncs_3ph.png'),
 
 
 
@@ -139,7 +140,7 @@ const Lesson gridLesson2 = Lesson(
   ]),
   LessonParagraph(
       text: 'Sieć typu TT jest siecią *uziemioną* przynajmniej w jednym punkcie. '
-          'Sieć ta nie ma wyprowadzonego przewodu ochronnego, dlatego *części przewodzące dostępne* są *bezpośrednio uziemione*.'),
+          'Z powodu braku przewodu ochronnego *części przewodzące dostępne* muszą być *bezpośrednio uziemione*.'),
 
   LessonHeader(title: 'Sieć TT - budowa'),
   LessonParagraph(text: 'Sieć typu TT posiada następujące przewody:'),
@@ -148,7 +149,8 @@ const Lesson gridLesson2 = Lesson(
     'neutralny (N)',
   ]),
   LessonParagraph(text:'W wersji jednofazowej jest to sieć *dwuprzewodowa*, zaś w trójfazowej *czteroprzewodowa*:'),
-  ImageCaption(path: 'assets/images/questions/error.png'),
+  ImageCaption(path: 'assets/images/grid/grid_tt_1ph.png'),
+  ImageCaption(path: 'assets/images/grid/grid_tt_3ph.png'),
 
 
   LessonHeader(title: 'Sieć IT - informacje ogólne'),
@@ -165,7 +167,7 @@ const Lesson gridLesson2 = Lesson(
   ]),
   LessonParagraph(
       text: 'Sieć typu IT jest siecią *nieuziemioną* lub *uziemioną przez dużą impedancję*. '
-          'Mimo to części przewodzące połączone z tą siecią muszą być *bezpośrednio uziemione*.'),
+          'Części przewodzące dostępne połączone z tą siecią muszą być *bezpośrednio uziemione*.'),
 
   LessonHeader(title: 'Sieć IT - budowa'),
   LessonParagraph(text: 'Sieć typu IT posiada następujące przewody:'),
@@ -174,11 +176,12 @@ const Lesson gridLesson2 = Lesson(
     'neutralny (N)',
   ]),
   LessonParagraph(text:'W wersji jednofazowej jest to sieć *dwuprzewodowa*, zaś w trójfazowej *czteroprzewodowa*.'),
+  ImageCaption(path: 'assets/images/grid/grid_it_1ph.png'),
+  ImageCaption(path: 'assets/images/grid/grid_it_3ph.png'),
   LessonCard(
       isFunFact: true,
-      text: 'Brak uziemienia sieci IT stanowi jej największą zaletę, ale stanowi też spore wyzwanie w przypadku obwodów trójfazowych z niesymetrycznymi odbiornikami.'
-          'Stąd, tam gdzie to możliwe, preferuje się stosowanie odbiorników symetrycznych i rezygnację z przewodu neutralnego.'),
-  ImageCaption(path: 'assets/images/questions/error.png'),
+      text: 'Brak uziemienia sieci IT stanowi jej największą zaletę, ale też spore wyzwanie w przypadku obwodów trójfazowych z niesymetrycznymi odbiornikami.'
+          'Stąd tam gdzie to możliwe zaleca się stosowanie odbiorników symetrycznych i całkowitą rezygnację z przewodu neutralnego.'),
 
 ]);
 

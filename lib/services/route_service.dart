@@ -211,7 +211,7 @@ class RouterNotifier extends ChangeNotifier {
           pageBuilder: (context, state) {
             // final Lesson lesson = cableLessons.firstWhere((lesson) => lesson.id == state.params['id']!,
             //     orElse: () => Lesson.empty());
-            return MaterialPage(key: state.pageKey, child: const AcademyLesson());},
+            return MaterialPage(key: state.pageKey, child: AcademyLesson());},
         ),
       ]
       ),

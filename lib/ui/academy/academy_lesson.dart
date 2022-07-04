@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -7,8 +9,13 @@ import '../../models/academy/unit_lesson_model.dart';
 import '../../utils/consts/my_screens.dart';
 
 class AcademyLesson extends ConsumerWidget {
-  const AcademyLesson({Key? key}) : super(key: key);
+  AcademyLesson({Key? key}) : super(key: key);
 
+
+  final ScrollController _scrollController = ScrollController(
+    initialScrollOffset: 0.0,
+    keepScrollOffset: false,
+  );
   // final Lesson lesson;
   static const TextStyle bold = TextStyle(
     fontWeight: FontWeight.bold
@@ -16,11 +23,13 @@ class AcademyLesson extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    log('/// AcademyLesson built ///');
+    final int numOfLessons = ref.watch(chosenUnit).lessons.length;
     final int lessonIndex = ref.watch(chosenLessonIndex);
     final Lesson lesson = ref.watch(chosenLesson);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lekcja ${lesson.id}'),
+        title: Text('Lekcja ${lessonIndex+1}'),
         centerTitle: true,
         actions: [
           IconButton(onPressed: () {
@@ -29,6 +38,7 @@ class AcademyLesson extends ConsumerWidget {
         ],
       ),
       body: SingleChildScrollView(
+controller: _scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -40,10 +50,12 @@ class AcademyLesson extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
 
                 children: [
-                  if(lessonIndex > 0) ElevatedButton(onPressed: () {
+                  if(lessonIndex > 0) ElevatedButton(onPressed: ()  {
+                    _scrollController.jumpTo(0.0);
                     ref.read(academyController).chooseLesson(lessonIndex-1);
                   }, child: const Text('Poprzednia lekcja'),),
-                  ElevatedButton(onPressed: () {
+                  if(lessonIndex+1<numOfLessons)ElevatedButton(onPressed: () {
+                    _scrollController.jumpTo(0.0);
                     ref.read(academyController).chooseLesson(lessonIndex+1);
                   }, child: const Text('Następna lekcja'),),
                 ],),
