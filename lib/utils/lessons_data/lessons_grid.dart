@@ -191,7 +191,7 @@ const Lesson gridLesson2 = Lesson(
 const Lesson gridLesson3 = Lesson(
     id: '3',
     title: 'Zakresy napięciowe instalacji elektrycznych',
-    description: 'O standardach napięciowych w instalacjach prądu przemiennego i stałego',
+    description: 'O standardzie niskiego napięcia w instalacjach prądu przemiennego i stałego',
     content: [
       LessonHeader(title: 'Niskie napięcie'),
       LessonParagraph(text: 'Górną granicą dla sieci i instalacji *niskiego napięcia* są wartości:'),
@@ -232,11 +232,58 @@ const Lesson gridLesson3 = Lesson(
       LessonParagraph(text: 'Jeśli sieć jest nieuziemiona (typ IT), wówczas dotyczy jej limit 1500 V między biegunami.'),
     ]);
 
+
+
 const Lesson gridLesson4 = Lesson(
     id: '4',
-    title: 'Napięcia znamionowe w Polsce',
-    description: 'O napięciach znamionowych i preferowanych prądu stałego i przemiennego',
-    content: []);
+    title: 'Napięcia znamionowe',
+    description: 'O napięciach znamionowych, preferowanych i uzupełniających',
+    content: [
+      LessonHeader(title: 'Napięcie znamionowe sieci'),
+      LessonParagraph(text: 'Aby urządzenia elektryczne działały w całej Europie, a poszczególne kraje mogły bez przeszkód handlować energią elektryczną, wprowadzono wspólny standard dla sieci niskiego napięcia o częstotliwości 50 Hz, wynoszący *230/400 V*.'),
+      LessonParagraph(text: 'Standard ten, wprowadzony wraz z normą IEC 60038, dotyczy napięcia dostarczanego do *obiektów budowlanych* i *instalacji o podobnych zastosowaniach*. Zapis 230/400 V jest zapisem skróconym, w którym pierwsza wartość to napięcie *fazowe*, zaś druga *międzyfazowe*.'),
+      LessonCard(
+          isFunFact: true,
+          text: 'Normę IEC 60038 wprowadzono w 1983 roku. '
+              'Wtedy Polska sieć energetyczna dostarczała odbiorcom napięcie o wartości 220/380 V. '
+              'Zgodnie z normą mieliśmy czas do końca 2003r, by przejść na system 230/400 V. I choć jej nowelizacja wydłużyła ten czas do 2008r., nam udało się wdrożyć zmianę zgodnie z pierwotnym terminem.'),
+      LessonParagraph(text: 'Utrzymanie sztywnych wartości 230/400 V w rozległej sieci energetycznej jest niemożliwe. Stąd norma dopuszczają odchylenie na poziomie +/- 10%. Daje to kolejno:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            '207 V - 253 V dla napięcia fazowego',
+            '358 V - 438 V dla napięcia międzyfazowego',
+          ]),
+      LessonHeader(title: 'Inne napięcia znamionowe'),
+      LessonParagraph(text: 'Dla urządzeń dużej i małej mocy norma IEC 60038 określa szereg dodatkowych napięć znamionowych'),
+      LessonParagraph(text: 'W przemyśle, poza wspomnianymi wcześniej 230 i 400 V, stosuje się następujące napięcia:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            '690, 1000 V - dla prądu przemiennego',
+            '220, 440, 600 V - dla prądu stałego',
+          ]),
+      LessonParagraph(text: 'W przypadku urządzeń *trójfazowych małej mocy*, preferowanym napięciem jest 48 V (między fazami). Dla urządzeń *jednofazowych* oraz *na napięcie stałe* (w tym baterii) możliwości jest nieco więcej:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            '6, 12, 24, 48, 110 V - dla prądu przemiennego',
+            '6, 12, 24, 36, 48, 60, 72, 96, 110 V - dla prądu stałego',
+          ]),
+      LessonHeader(title: 'Napięcia uzupełniające'),
+      LessonParagraph(text: 'Być może zastanawiasz się dlaczego telefony ładujemy napięciem 5 V, skoro nie ma go wśród szeregu napięć preferowanych? I co z napięciem 3 V, tak lubianym przez elektroników? Bez obaw. Twórcy normy uznali chyba, że napięć wciąż jest za mało i dlatego wprowadzili dodatkowy szereg *napięć uzupełniających*:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            '5, 15, 42, 100 V - dla prądu przemiennego',
+            '2.4, 3, 4, 4.5, 5, 7.5, 9, 15, 30, 40, 80, 125 V - dla prądu stałego',
+          ]),
+      LessonParagraph(text: 'Co właściwie oznaczają pojęcia *napięcie preferowane* i *napięcie uzupełniające*? Tej informacji próżno szukać w samej normie, aczkolwiek znajdziemy tam notatkę, która mówi:'),
+      LessonList(strings: [',,Uznaje się, że ze względów technicznych i ekonomicznych, pewne określone obszary zastosowań mogą wymagać dodatkowych napięć." [tłum. własne]']),
+      LessonParagraph(text: 'Innymi słowy, wszystko co powyżej 230 V jest sztywno określone, a poniżej mamy póki co dowolność i jedynie pewne *preferowane* wskazówki.'),
+
+
+    ]);
 
 
 

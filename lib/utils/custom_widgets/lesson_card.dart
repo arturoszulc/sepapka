@@ -30,10 +30,10 @@ class AcademyCard extends ConsumerWidget {
               ? 3
               : 1
           : 3,
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: InkWell(
-          onTap: onTap,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
           child: Row(
             children: [
               Expanded(

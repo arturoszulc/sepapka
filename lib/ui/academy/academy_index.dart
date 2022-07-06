@@ -32,7 +32,6 @@ class AcademyIndex extends ConsumerWidget {
           unFocus(context);
         },
         child: Column(
-          // mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
               child: Padding(
@@ -47,10 +46,10 @@ class AcademyIndex extends ConsumerWidget {
                         onPressed: ref.watch(indexSearch).isEmpty
                             ? null
                             : () {
-                          searchInput.clear();
-                          unFocus(context);
-                          ref.read(indexController).searchIndex('');
-                        },
+                                searchInput.clear();
+                                unFocus(context);
+                                ref.read(indexController).searchIndex('');
+                              },
                         icon: const Icon(Icons.clear),
                       )),
                   onChanged: (val) {
@@ -59,13 +58,10 @@ class AcademyIndex extends ConsumerWidget {
                 ),
               ),
             ),
-            const Expanded(
-                flex: 7,
-                child: IndexEntryList()),
+            const Expanded(flex: 7, child: IndexEntryList()),
           ],
         ),
       ),
-
     );
   }
 }
@@ -79,47 +75,32 @@ class IndexEntryList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final List<IndexEntry> indexList = ref.watch(indexSearchedList);
     return ListView.separated(
-      itemCount: indexList.length,
-      separatorBuilder: (context, index){
-        return const Divider(color: Colors.grey, height: 2.0);
-      },
-      itemBuilder: (BuildContext context, int index) {
-        final entry = indexList[index];
-        return ExpansionTile(
-          // value: indexList[index].title,
-          // canTapOnHeader: true,
-          // headerBuilder: (context, isExpanded) => ListTile(title: Text(indexList[index].title, style: const TextStyle(fontSize: 18),)),
-          title: Text(entry.title),
-
-          // children: [buildPanelBody(entry)],
-          children: [buildPanelBody(indexList[index])]);
-
-      }
-      //     ExpansionPanelList.radio(
-      //   children: indexList.map((entry) =>
-      //       ExpansionPanelRadio(
-      //         value: entry.title,
-      //           canTapOnHeader: true,
-      //           headerBuilder: (context, isExpanded) => ListTile(title: Text(entry.title, style: const TextStyle(fontSize: 18),)),
-      //           body: buildPanelBody(entry),
-      //       )
-      //   ).toList(),
-      // ),
-    );
+        itemCount: indexList.length,
+        separatorBuilder: (context, index) {
+          return const Divider(color: Colors.grey, height: 2.0);
+        },
+        itemBuilder: (BuildContext context, int index) {
+          final entry = indexList[index];
+          return ExpansionTile(
+              title: Text(entry.title),
+              children: [buildPanelBody(indexList[index])]);
+        }
+        );
   }
-
-
-
 
   Widget buildPanelBody(IndexEntry entry) {
     return Padding(
       padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0, bottom: 25.0),
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('ang. ${entry.translation}', style: const TextStyle(fontStyle: FontStyle.italic),),
-          const SizedBox(height: 10,),
+          Text(
+            'ang. ${entry.translation}',
+            style: const TextStyle(fontStyle: FontStyle.italic),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           Text(entry.description),
         ],
       ),
