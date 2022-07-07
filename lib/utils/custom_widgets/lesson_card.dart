@@ -23,12 +23,12 @@ class AcademyCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool isUserPro = ref.read(userService).isPro;
-    final bool isAvailable = (proOnly && isUserPro) || !proOnly;
+    final bool isUserPro = ref.watch(userService).isPro;
+    final bool isButtonActive = (proOnly && isUserPro) || !proOnly;
     return Card(
-      elevation: isAvailable ? 3 : 1,
+      elevation: isButtonActive ? 3 : 1,
       child: InkWell(
-        onTap: isAvailable ? onTap : null,
+        onTap: isButtonActive ? onTap : null,
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Row(
@@ -54,7 +54,7 @@ class AcademyCard extends ConsumerWidget {
                     ],
                   )),
               Expanded(
-                child: isAvailable ? const Icon(Icons.arrow_forward_ios) : const Icon(Icons.lock),
+                child: isButtonActive ? const Icon(Icons.arrow_forward_ios) : const Icon(Icons.lock),
               ),
             ],
           ),

@@ -9,7 +9,7 @@ const List<LayingWiresMethod> layingWiresMethods = [
       'A2',
       '\u2022 wielożyłowe\n'
           '\u2022 w termoizolacji\n'
-          '\u2022 w rurach, listwach lub beezpośrednio',
+          '\u2022 w rurach, listwach lub bezpośrednio',
       'assets/images/knowledge_base/wire_ampacity/wire_ampacity_a2.png'),
   LayingWiresMethod(
       'B1',

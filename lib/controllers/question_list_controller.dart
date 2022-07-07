@@ -8,9 +8,9 @@ import '../models/question.dart';
 
 
 // FILTERS
-final qListFilterType = StateProvider<int>((ref) => 0);
-final qListFilterLevel = StateProvider<int>((ref) => 0);
-final qListFilterCategory = StateProvider<int>((ref) => 0);
+final qListFilterType = StateProvider.autoDispose<int>((ref) => 0);
+final qListFilterLevel = StateProvider.autoDispose<int>((ref) => 0);
+final qListFilterCategory = StateProvider.autoDispose<int>((ref) => 0);
 
 //FILTERED LIST CURRENT INDEX AND LENGTH
 final qListCurrentQuestionIndex = StateProvider<int>((ref) => 0);

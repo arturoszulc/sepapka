@@ -17,7 +17,7 @@ final indexSearchedList = Provider.autoDispose<List<IndexEntry>>((ref) {
   List<IndexEntry> filteredList = [];
 
   for (final entry in indexList) {
-      if (entry.title.contains(searchValue)) filteredList.add(entry);
+      if (entry.title.toLowerCase().contains(searchValue)) filteredList.add(entry);
 
   }
   return filteredList;
