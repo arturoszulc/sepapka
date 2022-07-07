@@ -191,7 +191,7 @@ const Lesson gridLesson2 = Lesson(
 const Lesson gridLesson3 = Lesson(
     id: '3',
     title: 'Zakresy napięciowe instalacji elektrycznych',
-    description: 'O standardzie niskiego napięcia w instalacjach prądu przemiennego i stałego',
+    description: 'O standardzie niskiego napięcia w instalacjach prądu przemiennego i stałego.',
     content: [
       LessonHeader(title: 'Niskie napięcie'),
       LessonParagraph(text: 'Górną granicą dla sieci i instalacji *niskiego napięcia* są wartości:'),
@@ -237,7 +237,7 @@ const Lesson gridLesson3 = Lesson(
 const Lesson gridLesson4 = Lesson(
     id: '4',
     title: 'Napięcia znamionowe',
-    description: 'O napięciach znamionowych, preferowanych i uzupełniających',
+    description: 'O napięciach znamionowych, preferowanych i uzupełniających.',
     content: [
       LessonHeader(title: 'Napięcie znamionowe sieci'),
       LessonParagraph(text: 'Aby urządzenia elektryczne działały w całej Europie, a poszczególne kraje mogły bez przeszkód handlować energią elektryczną, wprowadzono wspólny standard dla sieci niskiego napięcia o częstotliwości 50 Hz, wynoszący *230/400 V*.'),

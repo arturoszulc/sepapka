@@ -27,6 +27,7 @@ class AcademyLesson extends ConsumerWidget {
     final int numOfLessons = ref.watch(chosenUnit).lessons.length;
     final int lessonIndex = ref.watch(chosenLessonIndex);
     final Lesson lesson = ref.watch(chosenLesson);
+    final bool isNextLesson = ref.watch(isNextLessonAvailable);
     return Scaffold(
       appBar: AppBar(
         title: Text('Lekcja ${lessonIndex+1}'),
@@ -54,7 +55,7 @@ controller: _scrollController,
                     _scrollController.jumpTo(0.0);
                     ref.read(academyController).chooseLesson(lessonIndex-1);
                   }, child: const Text('Poprzednia lekcja'),),
-                  if(lessonIndex+1<numOfLessons)ElevatedButton(onPressed: () {
+                  if(isNextLesson)ElevatedButton(onPressed: () {
                     _scrollController.jumpTo(0.0);
                     ref.read(academyController).chooseLesson(lessonIndex+1);
                   }, child: const Text('Następna lekcja'),),

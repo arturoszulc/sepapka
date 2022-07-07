@@ -29,7 +29,7 @@ class AcademyUnit extends ConsumerWidget {
             upperText: 'Lekcja ${index+1}',
                 middleText: lesson.title,
                 lowerText: lesson.description,
-                proOnly: index > 5,
+                proOnly: index > 1,
                 onTap: () {
                   ref.read(academyController).chooseLesson(index);
                   context.goNamed(MyScreen.academyLesson.name);

@@ -24,14 +24,11 @@ class AcademyCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bool isUserPro = ref.read(userService).isPro;
+    final bool isAvailable = (proOnly && isUserPro) || !proOnly;
     return Card(
-      elevation: proOnly
-          ? isUserPro
-              ? 3
-              : 1
-          : 3,
+      elevation: isAvailable ? 3 : 1,
       child: InkWell(
-        onTap: onTap,
+        onTap: isAvailable ? onTap : null,
         child: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Row(
@@ -56,8 +53,8 @@ class AcademyCard extends ConsumerWidget {
                       lowerText.isEmpty ? const SizedBox() : Text(lowerText, style: Theme.of(context).textTheme.bodyMedium),
                     ],
                   )),
-              const Expanded(
-                child: Icon(Icons.arrow_forward_ios),
+              Expanded(
+                child: isAvailable ? const Icon(Icons.arrow_forward_ios) : const Icon(Icons.lock),
               ),
             ],
           ),

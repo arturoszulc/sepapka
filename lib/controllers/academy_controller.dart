@@ -1,11 +1,23 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sepapka/models/academy/unit_lesson_model.dart';
+import 'package:sepapka/services/user_service.dart';
 import 'package:sepapka/utils/lessons_data/all_lessons.dart';
 
 
 final chosenUnitIndex = StateProvider<int>((ref) => 0);
 final chosenLessonIndex = StateProvider<int>((ref) => 0);
 
+final isNextLessonAvailable = Provider<bool>((ref) {
+  final unitLength = ref.watch(chosenUnit).lessons.length;
+  final currentIndex = ref.watch(chosenLessonIndex);
+  final isUserPro = ref.watch(userService).isPro;
+
+  final bool reachedEnd = currentIndex+1 == unitLength;
+
+  if (!isUserPro && currentIndex > 0) return false;
+  if (reachedEnd) return false;
+  return true;
+});
 
 final unitsList = Provider.autoDispose<List<Unit>>((ref) {
   return academyUnits;
