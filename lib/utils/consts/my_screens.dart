@@ -43,6 +43,7 @@ enum MyScreen {
   //Calcs
   calc_menu('calc'),
   calc_heating_power_three_phase('calc-heating-power-three-phase'),
+  calc_ohms_law('calc-ohms-law'),
 
   //Purchase
   purchase_wrapper('purchase'),

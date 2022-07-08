@@ -14,6 +14,7 @@ import '../models/app_state.dart';
 import '../ui/academy/academy_index.dart';
 import '../ui/academy/academy_lesson.dart';
 import '../ui/academy/academy_unit.dart';
+import '../ui/calculators/calc_ohms_law.dart';
 import '../ui/tables/table_wire_diameter.dart';
 
 /// Caches and Exposes a [GoRouter]
@@ -258,10 +259,18 @@ class RouterNotifier extends ChangeNotifier {
   List<GoRoute> get _calcSubRoutes {
     return <GoRoute>[
       GoRoute(
+        name: MyScreen.calc_ohms_law.name,
+        path: MyScreen.calc_ohms_law.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const CalcOhmsLaw()),
+      ),
+      GoRoute(
         name: MyScreen.calc_heating_power_three_phase.name,
         path: MyScreen.calc_heating_power_three_phase.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const CalcHeatingPowerThreePhase()),
       ),
+
+
+
     ];
   }
 

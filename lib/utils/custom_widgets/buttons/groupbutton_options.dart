@@ -29,3 +29,18 @@ buttonWidth: 100,
 
   );
 }
+
+
+GroupButtonOptions unitGroupButtonOptions(BuildContext context) {
+  return GroupButtonOptions(
+    // elevation: 1,
+    // unselectedTextStyle: Theme.of(context).textTheme.bodySmall,
+    // textPadding: const EdgeInsets.symmetric(horizontal: 5.0,),
+    // spacing: 10.0,
+    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+    selectedTextStyle: TextStyle(color: flexSchemeLight.onPrimary),
+    // unselectedColor: Colors.white,
+    // mainGroupAlignment: MainGroupAlignment.spaceEvenly,
+
+  );
+}
