@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sepapka/utils/custom_widgets/build_question_image.dart';
 import 'package:sepapka/utils/custom_widgets/image_full_screen.dart';
 
-import '../../model_layer/models/question.dart';
+import '../../models/question.dart';
 
 
 
@@ -11,7 +11,7 @@ Widget buildQuestion(BuildContext context, Question? question) {
   Column(
     children: [
       Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
         child: Text(
           question.q,
           style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),

@@ -1,19 +1,22 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sepapka/model_layer/services/user_service.dart';
-import '../models/mocked_objects.dart';
+
+//How to mock stateNotifier
+// class MyNotifier extends StateNotifier<int> {
+//   ...
+// }
+//
+// class MyNotifierMock extends StateNotifier with Mock implements MyNotifier {
+//   MyNotifierMock(int initialValue): super(initialValue);
+// }
 
 void main() {
-  mockSetupGetIt();
-  UserService userService = UserService();
 
   setUp(() {});
   tearDown(() {});
 
   test('setLoggedUserChanged test', () {
 
-    userService.setLoggedUserChanged(true);
 
-    expect(userService.loggedUserChanged, true);
 
   });
 

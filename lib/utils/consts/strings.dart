@@ -12,6 +12,12 @@ const String userQListNew = 'qListNew';
 const String userQListPractice = 'qListPractice';
 const String userQListNotShown = 'qListNotShown';
 
+//NEW AppUser model props
+const String appUserConstId = 'id';
+const String appUserConstUsername = 'username';
+const String appUserConstIsPro = 'isPro';
+const String appUserConstHiddenQuestionIds = 'hiddenQuestionIds';
+
 //Question model properties
 const String questionQ = 'q';
 const String questionA1 = 'a1';
@@ -29,25 +35,25 @@ const String globalDataRankNames = 'rankNames';
 const String globalDataRankThresholds = 'rankThresholds';
 
 //Remark model properties
-const String remarkUserId = 'userId';
-const String remarkAppVersion = 'appVersion';
-const String remarkDate = 'date';
-const String remarkQuestion = 'question';
-const String remarkText = 'text';
+const String remarkConstUserId = 'userId';
+const String remarkConstAppVersion = 'appVersion';
+const String remarkConstDate = 'date';
+const String remarkConstQuestion = 'question';
+const String remarkConstText = 'text';
 
 //PurchaseDetails properties
-const String purchaseUserID = 'userID';
-const String purchasePurchaseID = 'purchaseID';
-const String purchaseProductID = 'productID';
-const String purchaseDate = 'purchaseDate';
-const String purchaseStore = 'store';
+const String purchaseConstUserID = 'userID';
+const String purchaseConstPurchaseID = 'purchaseID';
+const String purchaseConstProductID = 'productID';
+const String purchaseConstDate = 'purchaseDate';
+const String purchaseConstStore = 'store';
 
-const String purchaseDocumentCreationDate = 'documentCreationDate';
-const String purchaseVerificationDataLocal = 'verificationDataLocal';
-const String purchaseVerificationDataServer = 'verificationDataServer';
-const String purchaseVerificationDataSource = 'verificationDataSource';
-const String purchaseTimestamp = 'transactionTimestamp';
-const String purchaseStatus = 'status';
+const String purchaseConstDocumentCreationDate = 'documentCreationDate';
+const String purchaseConstVerificationDataLocal = 'verificationDataLocal';
+const String purchaseConstVerificationDataServer = 'verificationDataServer';
+const String purchaseConstVerificationDataSource = 'verificationDataSource';
+const String purchaseConstTimestamp = 'transactionTimestamp';
+const String purchaseConstStatus = 'status';
 
 //JSON fileNames
 const String questionsFileName1 = 'questionList1';

@@ -1,34 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:sepapka/utils/consts/question.dart';
 
 
 
 class AnswerButton extends StatelessWidget {
-  final QuestionStatus qStatus;
+  // final QuestionStatus qStatus;
   final String? answer;
   final Color color;
   final VoidCallback onSelected;
 
-  const AnswerButton({Key? key, required this.qStatus, this.answer, required this.color, required this.onSelected}) : super(key: key);
+  const AnswerButton({Key? key, this.answer, required this.color, required this.onSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding( //to keep buttons separated
-      padding: const EdgeInsets.symmetric(
-        vertical: 10.0,
-        // horizontal: 30.0,
-      ),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width*0.7,
-        height: 65.0,
+    return Expanded(
+      child: Padding( //to keep buttons separated
+        padding: const EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 40.0,
+        ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: color,
           ),
           onPressed: () {
-            if (qStatus == QuestionStatus.noAnswer) {
+            // if (qStatus == QuestionStatus.noAnswer) {
               onSelected();
-            }
+            // }
           },
           // minWidth: 300,
           // color: color,

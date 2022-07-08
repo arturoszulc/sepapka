@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sepapka/viewmodel_layer/manager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 
 Future buildMessageDialog(BuildContext context, String message) {
@@ -33,12 +33,13 @@ Future buildMessageDialog(BuildContext context, String message) {
       //   ],
       // ),
       actions: [
-        TextButton(
-          onPressed: () {
-            context.read<Manager>().setMessage('');
-            Navigator.of(context).pop();
-          },
-          child: const Text('OK'),
+        Consumer(
+      builder: (context, WidgetRef ref, child) => TextButton(
+            onPressed: () {
+              context.pop();
+            },
+            child: const Text('OK'),
+          ),
         ),
       ],
     ),

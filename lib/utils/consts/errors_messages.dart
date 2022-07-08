@@ -5,7 +5,7 @@
 const String msgResetSent = 'Link do zresetowania hasła został wysłany na podany adres e-mail';
 const String msgProgressReset = 'Wszelkie postępy zostały skasowane';
 const String msgThanksForRemark = 'Dziękuję za przesłanie uwagi!';
-const String msgLeaveSession = 'Czy na pewno chcesz przerwać sesję?';
+const String msgLeaveSession = 'Czy na pewno chcesz przerwać quiz?';
 
 
 ////////////////
