@@ -29,7 +29,7 @@ class TablesMenu extends ConsumerWidget {
                   child: Column(
                     children: [
                       MenuButton(
-                        proOnly: true,
+                        proOnly: false,
                         label: 'Jednostki i wielkości fizyczne',
                         onPressed: ()  {
                           context.goNamed(MyScreen.tableUnits.name);

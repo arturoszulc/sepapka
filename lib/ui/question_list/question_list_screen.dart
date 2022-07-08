@@ -27,46 +27,51 @@ class QuestionListScreen extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Typ',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(qTypeList[ref.watch(qListFilterType)]),
-                      ],
+                    Expanded(
+                      flex: 2,
+
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Typ',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(qTypeList[ref.watch(qListFilterType)]),
+                        ],
+                      ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Poz. trudności',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(qLevelList[ref.watch(qListFilterLevel)]),
-                      ],
+                    Expanded(
+                      flex: 2,
+
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Poziom',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(qLevelList[ref.watch(qListFilterLevel)]),
+                        ],
+                      ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Kategoria',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text(qCategoryList[ref.watch(qListFilterCategory)]),
-                      ],
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Kategoria',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(qCategoryList[ref.watch(qListFilterCategory)]),
+                        ],
+                      ),
                     ),
                     const Icon(Icons.filter_list),
-                    // IconButton(
-                    //   padding: EdgeInsets.zero,
-                    //   constraints: const BoxConstraints(),
-                    //   onPressed: () {},
-                    //   icon: const Icon(Icons.filter_list),
-                    // ),
                   ],
                 ),
               ),
@@ -88,7 +93,6 @@ class QuestionListScreen extends ConsumerWidget {
                             onTap: () {
                               ref.read(questionListController).showSingleQuestion(index);
                               context.pushNamed(MyScreen.listQuestionSingle.name);
-                              // context.read<Manager>().navigate(Screen.listQuestionSingle);
                             },
                           ),
                         );
@@ -103,7 +107,6 @@ Widget buildTitle(BuildContext context, Question q) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 8.0, right: 0),
     child: Row(
-      // mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -115,7 +118,6 @@ Widget buildTitle(BuildContext context, Question q) {
                 // color: Colors.grey,
                 child: ref.watch(questionListController).isQuestionHidden(q.id)
                     ? qListIcons['notShown']! : qListIcons['none']!,
-                //ref.read(manager).getQuestionIcon(q.id)),
           ),
         ),
         ),
@@ -143,10 +145,6 @@ Widget buildSubtitle(BuildContext context, Question q) {
         // textAlign: TextAlign.right,
         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
-      // context.read<Manager>().getQuestionIcon(q.id),
-
-      // SizedBox(width: 15.0),
-      // Icon(Icons.new_releases, color: Colors.grey),
     ],
   );
 }

@@ -20,8 +20,6 @@ class CalculatorsMenuScreen extends ConsumerWidget {
         centerTitle: true,
         ),
         body: Center(
-        child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50.0),
         child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -33,7 +31,6 @@ class CalculatorsMenuScreen extends ConsumerWidget {
         context.goNamed(MyScreen.calcHeatingPowerThreePhase.name);
         }),
         ],),
-        ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: unlockButton(context),

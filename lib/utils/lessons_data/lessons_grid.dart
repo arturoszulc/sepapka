@@ -259,7 +259,7 @@ const Lesson gridLesson4 = Lesson(
               'Zgodnie z normą mieliśmy czas do końca 2003r, by przejść na system 230/400 V. I choć jej nowelizacja wydłużyła ten czas do 2008r., nam udało się wdrożyć zmianę zgodnie z pierwotnym terminem.'),
       LessonParagraph(
           text:
-              'Utrzymanie sztywnych wartości 230/400 V w rozległej sieci energetycznej jest niemożliwe. Stąd norma dopuszczają odchylenie na poziomie +/- 10%. Daje to kolejno:'),
+              'Utrzymanie sztywnych wartości 230/400 V w rozległej sieci energetycznej jest niemożliwe. Stąd norma dopuszcza odchylenie na poziomie +/- 10%. Daje to kolejno:'),
       LessonList(bullets: true, strings: [
         '207 V - 253 V dla napięcia fazowego',
         '358 V - 438 V dla napięcia międzyfazowego',
@@ -285,7 +285,7 @@ const Lesson gridLesson4 = Lesson(
       LessonHeader(title: 'Napięcia uzupełniające'),
       LessonParagraph(
           text:
-              'Być może zastanawiasz się dlaczego telefony ładujemy napięciem 5 V, skoro nie ma go wśród szeregu napięć preferowanych? I co z napięciem 3 V, tak lubianym przez elektroników? Bez obaw. Twórcy normy uznali chyba, że napięć wciąż jest zbyt mało, dlatego wprowadzili dodatkowy szereg *napięć uzupełniających*:'),
+              'Być może zastanawiasz się dlaczego ładowarki smartfonowe mają napięcie 5 V, skoro nie ma go wśród szeregu napięć preferowanych? I co z napięciem 3 V, tak lubianym przez elektroników? Bez obaw. Twórcy normy uznali chyba, że napięć wciąż jest zbyt mało, dlatego wprowadzili dodatkowy szereg *napięć uzupełniających*:'),
       LessonList(bullets: true, strings: [
         '5, 15, 42, 100 V - dla prądu przemiennego',
         '2.4, 3, 4, 4.5, 5, 7.5, 9, 15, 30, 40, 80, 125 V - dla prądu stałego',
