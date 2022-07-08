@@ -68,17 +68,17 @@ class RouterNotifier extends ChangeNotifier {
 
     final bool isAppLoading = state.subloc.contains(MyScreen.loading.path);
     final bool isInApp = state.subloc.contains(MyScreen.menu.path);
-    final isInSignIn = state.subloc.contains(MyScreen.signIn.path);
-    final isInQuiz = state.subloc.contains(MyScreen.quizMenu.path);
-    final isInQuizFinished = state.subloc.contains(MyScreen.quizFinished.path);
+    final isInSignIn = state.subloc.contains(MyScreen.sing_in.path);
+    final isInQuiz = state.subloc.contains(MyScreen.quiz_menu.path);
+    final isInQuizFinished = state.subloc.contains(MyScreen.quiz_finished.path);
 
     if (isLoading && !isAppLoading) return state.namedLocation(MyScreen.loading.name);
     // if (!isUserSignedIn && !isUserSignedOut && !isAppLoading) return state.namedLocation(MyScreen.loading.name);
-    if (isUserSignedOut && !isInSignIn && !isLoading) return state.namedLocation(MyScreen.signIn.name);
+    if (isUserSignedOut && !isInSignIn && !isLoading) return state.namedLocation(MyScreen.sing_in.name);
     if (isUserSignedIn && !isInApp && !isLoading) return state.namedLocation(MyScreen.menu.name);
 
     //Quiz
-    if (isInQuiz && isQuizFinished && !isInQuizFinished) return state.namedLocation(MyScreen.quizFinished.name);
+    if (isInQuiz && isQuizFinished && !isInQuizFinished) return state.namedLocation(MyScreen.quiz_finished.name);
     if (isInQuizFinished && !isQuizFinished) return state.namedLocation(MyScreen.menu.name);
 
 
@@ -100,8 +100,8 @@ class RouterNotifier extends ChangeNotifier {
   routes: _menuSubRoutes,
   ),
   GoRoute(
-  name: MyScreen.signIn.name,
-  path: MyScreen.signIn.path,
+  name: MyScreen.sing_in.name,
+  path: MyScreen.sing_in.path,
   pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: SignInScreen()),
   routes: _authSubRoutes,
   ),
@@ -111,32 +111,32 @@ class RouterNotifier extends ChangeNotifier {
   List<GoRoute> get _menuSubRoutes {
     return <GoRoute>[
       GoRoute(
-        name: MyScreen.quizMenu.name,
-        path: MyScreen.quizMenu.path,
+        name: MyScreen.quiz_menu.name,
+        path: MyScreen.quiz_menu.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizMenu()),
         routes: _quizSubRoutes,
       ),
       GoRoute(
-        name: MyScreen.academyMenu.name,
-        path: MyScreen.academyMenu.path,
+        name: MyScreen.academy_menu.name,
+        path: MyScreen.academy_menu.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const AcademyMenu()),
         routes: _academySubRoutes,
       ),
       GoRoute(
-        name: MyScreen.tablesMenu.name,
-        path: MyScreen.tablesMenu.path,
+        name: MyScreen.tables_menu.name,
+        path: MyScreen.tables_menu.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TablesMenu()),
         routes: _tablesSubRoutes,
       ),
       GoRoute(
-        name: MyScreen.calcMenu.name,
-        path: MyScreen.calcMenu.path,
+        name: MyScreen.calc_menu.name,
+        path: MyScreen.calc_menu.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const CalculatorsMenuScreen()),
         routes: _calcSubRoutes,
       ),
       GoRoute(
-        name: MyScreen.purchaseWrapper.name,
-        path: MyScreen.purchaseWrapper.path,
+        name: MyScreen.purchase_wrapper.name,
+        path: MyScreen.purchase_wrapper.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const PurchaseWrapper()),
       ),
     ];
@@ -145,31 +145,31 @@ class RouterNotifier extends ChangeNotifier {
   List<GoRoute> get _quizSubRoutes {
     return <GoRoute> [
       GoRoute(
-        name: MyScreen.quizChooseLevel.name,
-        path: MyScreen.quizChooseLevel.path,
+        name: MyScreen.quiz_choose_level.name,
+        path: MyScreen.quiz_choose_level.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const MenuChooseLevel()),
         routes: [
           GoRoute(
-            name: MyScreen.quizChooseCategory.name,
-            path: MyScreen.quizChooseCategory.path,
+            name: MyScreen.quiz_choose_category.name,
+            path: MyScreen.quiz_choose_category.path,
             pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const ChooseCategory()),
           ),
         ]
       ),
       GoRoute(
-        name: MyScreen.listQuestion.name,
-        path: MyScreen.listQuestion.path,
+        name: MyScreen.list_question.name,
+        path: MyScreen.list_question.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuestionListScreen()),
         routes: _listQuestionSubRoutes,
       ),
       GoRoute(
-        name: MyScreen.quizQuestionSingle.name,
-        path: MyScreen.quizQuestionSingle.path,
+        name: MyScreen.quiz_question_single.name,
+        path: MyScreen.quiz_question_single.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizSingleQuestion()),
       ),
       GoRoute(
-        name: MyScreen.quizFinished.name,
-        path: MyScreen.quizFinished.path,
+        name: MyScreen.quiz_finished.name,
+        path: MyScreen.quiz_finished.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuizFinished()),
       ),
       GoRoute(
@@ -183,13 +183,13 @@ class RouterNotifier extends ChangeNotifier {
   List<GoRoute> get _listQuestionSubRoutes {
     return <GoRoute>[
       GoRoute(
-        name: MyScreen.listQuestionFilter.name,
-        path: MyScreen.listQuestionFilter.path,
+        name: MyScreen.list_question_filter.name,
+        path: MyScreen.list_question_filter.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuestionListFilter()),
       ),
       GoRoute(
-        name: MyScreen.listQuestionSingle.name,
-        path: MyScreen.listQuestionSingle.path,
+        name: MyScreen.list_question_single.name,
+        path: MyScreen.list_question_single.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const QuestionListSingle()),
       ),
     ];
@@ -198,16 +198,16 @@ class RouterNotifier extends ChangeNotifier {
   List<GoRoute> get _academySubRoutes {
     return <GoRoute>[
       GoRoute(
-        name: MyScreen.academyUnit.name,
-        path: MyScreen.academyUnit.path,// + '/:uid',
+        name: MyScreen.academy_unit.name,
+        path: MyScreen.academy_unit.path,// + '/:uid',
         pageBuilder: (context, state) {
           // final Unit unit = academyUnits.firstWhere((unit) => unit.id == state.params['uid']!,
           //     orElse: () => Unit.empty());
           return MaterialPage(key: state.pageKey, child: const AcademyUnit());},
       routes: [
         GoRoute(
-          name: MyScreen.academyLesson.name,
-          path: MyScreen.academyLesson.path,// + '/:id',
+          name: MyScreen.academy_lesson.name,
+          path: MyScreen.academy_lesson.path,// + '/:id',
           pageBuilder: (context, state) {
             // final Lesson lesson = cableLessons.firstWhere((lesson) => lesson.id == state.params['id']!,
             //     orElse: () => Lesson.empty());
@@ -217,8 +217,8 @@ class RouterNotifier extends ChangeNotifier {
       ),
 
       GoRoute(
-        name: MyScreen.academyIndex.name,
-        path: MyScreen.academyIndex.path,
+        name: MyScreen.academy_index.name,
+        path: MyScreen.academy_index.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: AcademyIndex()),
       ),
     ];
@@ -227,28 +227,28 @@ class RouterNotifier extends ChangeNotifier {
   List<GoRoute> get _tablesSubRoutes {
     return <GoRoute>[
       GoRoute(
-        name: MyScreen.tableWireAmpacity.name,
-        path: MyScreen.tableWireAmpacity.path,
+        name: MyScreen.table_wire_ampacity.name,
+        path: MyScreen.table_wire_ampacity.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireAmpacity()),
       ),
       GoRoute(
-        name: MyScreen.tableWireColors.name,
-        path: MyScreen.tableWireColors.path,
+        name: MyScreen.table_wire_colors.name,
+        path: MyScreen.table_wire_colors.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireColors()),
       ),
       GoRoute(
-        name: MyScreen.tableWireSymbols.name,
-        path: MyScreen.tableWireSymbols.path,
+        name: MyScreen.table_wire_symbols.name,
+        path: MyScreen.table_wire_symbols.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireSymbols()),
       ),
       GoRoute(
-        name: MyScreen.tableWireDiameter.name,
-        path: MyScreen.tableWireDiameter.path,
+        name: MyScreen.table_wire_diameter.name,
+        path: MyScreen.table_wire_diameter.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const TableWireDiameter()),
       ),
       GoRoute(
-        name: MyScreen.tableUnits.name,
-        path: MyScreen.tableUnits.path,
+        name: MyScreen.table_units.name,
+        path: MyScreen.table_units.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: TableUnits()),
       ),
     ];
@@ -258,8 +258,8 @@ class RouterNotifier extends ChangeNotifier {
   List<GoRoute> get _calcSubRoutes {
     return <GoRoute>[
       GoRoute(
-        name: MyScreen.calcHeatingPowerThreePhase.name,
-        path: MyScreen.calcHeatingPowerThreePhase.path,
+        name: MyScreen.calc_heating_power_three_phase.name,
+        path: MyScreen.calc_heating_power_three_phase.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const CalcHeatingPowerThreePhase()),
       ),
     ];
@@ -268,8 +268,8 @@ class RouterNotifier extends ChangeNotifier {
   List<GoRoute> get _authSubRoutes {
     return <GoRoute>[
       GoRoute(
-        name: MyScreen.resetPassword.name,
-        path: MyScreen.resetPassword.path,
+        name: MyScreen.reset_password.name,
+        path: MyScreen.reset_password.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: ResetPasswordScreen()),
       ),
     ];

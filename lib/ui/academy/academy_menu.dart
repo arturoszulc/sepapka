@@ -31,7 +31,7 @@ class AcademyMenu extends ConsumerWidget {
               proOnly: index > 5,
               onTap: () {
                 ref.read(academyController).chooseUnit(academyUnits.indexOf(unit));
-                context.goNamed(MyScreen.academyUnit.name);
+                context.goNamed(MyScreen.academy_unit.name);
               },
             );
           }),

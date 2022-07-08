@@ -23,7 +23,7 @@ class QuestionListScreen extends ConsumerWidget {
         body: Column(
           children: [
             InkWell(
-              onTap: () => context.pushNamed(MyScreen.listQuestionFilter.name),
+              onTap: () => context.pushNamed(MyScreen.list_question_filter.name),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
@@ -92,7 +92,7 @@ class QuestionListScreen extends ConsumerWidget {
                             subtitle: buildSubtitle(context, qListGlobalFiltered[index]),
                             onTap: () {
                               ref.read(questionListController).showSingleQuestion(index);
-                              context.pushNamed(MyScreen.listQuestionSingle.name);
+                              context.pushNamed(MyScreen.list_question_single.name);
                             },
                           ),
                         );

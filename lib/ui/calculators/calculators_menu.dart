@@ -28,7 +28,7 @@ class CalculatorsMenuScreen extends ConsumerWidget {
         label: 'Moc grzania w obwodach 3-fazowych',
         onPressed: () {
           // context.go(MyScreen.calcHeatingPowerThreePhase.path);
-        context.goNamed(MyScreen.calcHeatingPowerThreePhase.name);
+        context.goNamed(MyScreen.calc_heating_power_three_phase.name);
         }),
         ],),
         ),

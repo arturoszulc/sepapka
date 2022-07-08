@@ -32,35 +32,35 @@ class TablesMenu extends ConsumerWidget {
                         proOnly: false,
                         label: 'Jednostki i wielkości fizyczne',
                         onPressed: ()  {
-                          context.goNamed(MyScreen.tableUnits.name);
+                          context.goNamed(MyScreen.table_units.name);
                         },
                       ),
                       MenuButton(
                         proOnly: true,
                         label: 'Kodowanie barw przewodów',
                         onPressed: ()  {
-                          context.goNamed(MyScreen.tableWireColors.name);
+                          context.goNamed(MyScreen.table_wire_colors.name);
                         },
                       ),
                       MenuButton(
                         proOnly: true,
                         label: 'Symbole przewodów',
                         onPressed: () {
-                          context.goNamed(MyScreen.tableWireSymbols.name);
+                          context.goNamed(MyScreen.table_wire_symbols.name);
                         },
                       ),
                       MenuButton(
                         proOnly: true,
                         label: 'Obciążalność przewodów',
                         onPressed: ()  {
-                          context.goNamed(MyScreen.tableWireAmpacity.name);
+                          context.goNamed(MyScreen.table_wire_ampacity.name);
                         },
                       ),
                       MenuButton(
                         proOnly: true,
                         label: 'Przekroje i średnice przewodów',
                         onPressed: ()  {
-                          context.goNamed(MyScreen.tableWireDiameter.name);
+                          context.goNamed(MyScreen.table_wire_diameter.name);
                         },
                       ),
                     ],
