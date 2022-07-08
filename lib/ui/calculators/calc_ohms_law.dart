@@ -75,15 +75,16 @@ class OhmsLawVisualisation extends ConsumerWidget {
     final double resistance = ref.watch(calcOhmsLawResistanceValue);
     final double voltage = ref.watch(calcOhmsLawVoltageValue);
 
+    final String currentUnit = ref.watch(calcOhmsLawCurrentUnit);
     final String resistanceUnit = ref.watch(calcOhmsLawResistanceUnit);
     final String voltageUnit = ref.watch(calcOhmsLawVoltageUnit);
     return Row(
       children: [
-        const Expanded(child: SizedBox()),
+        // const Expanded(child: SizedBox()),
         Expanded(
-          flex: 2,
+          flex: 4,
           child: Text(
-            '$current A',
+            '$current ${currentUnit}A',
             style: ohmsLawStyle,
             textAlign: TextAlign.right,
           ),
@@ -97,14 +98,17 @@ class OhmsLawVisualisation extends ConsumerWidget {
           ),
         ),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('${voltage.round()} ${voltageUnit}V', style: ohmsLawStyle),
-              Divider(
-                color: ohmsLawStyle?.color, //Theme.of(context).textTheme.headlineMedium?.color,
-                thickness: 3,
+              SizedBox(
+                width: 150,
+                child: Divider(
+                  color: ohmsLawStyle?.color, //Theme.of(context).textTheme.headlineMedium?.color,
+                  thickness: 3,
+                ),
               ),
               Text(
                 '${resistance.round()} $resistanceUnit\u03a9',
@@ -113,7 +117,9 @@ class OhmsLawVisualisation extends ConsumerWidget {
             ],
           ),
         ),
-        const Expanded(child: SizedBox()),
+        const Expanded(
+            flex: 1,
+            child: SizedBox()),
       ],
     );
   }
@@ -153,13 +159,9 @@ class CalcSlider extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (addValue != null) IconButton(
-                // padding: const EdgeInsets.only(left: 10, right: 0),
-                //   constraints: const BoxConstraints(),
                   onPressed: () => addValue!(-1), icon: const Icon(Icons.remove)),
               Text(name, style: Theme.of(context).textTheme.headlineSmall),
               if (addValue != null) IconButton(
-                // padding: const EdgeInsets.only(left: 0, right: 10),
-                // constraints: const BoxConstraints(),
                   onPressed: () => addValue!(1), icon: const Icon(Icons.add)),
             ],
           ),
@@ -284,8 +286,11 @@ class CalcChooseUnitButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return GroupButton(
       options: unitGroupButtonOptions(context),
-        buttons: unitPrefixes.map((prefix) => prefix+unitBase).toList(),
-        onSelected: (index, isSelected) => choosePrefix(index)
+        buttons: selectableUnitPrefixes.map((prefix) => prefix+unitBase).toList(),
+        onSelected: (index, isSelected) => choosePrefix(index),
+      controller: GroupButtonController(
+        // selectedIndex:
+      ),
         );
   }
 }
