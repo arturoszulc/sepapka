@@ -6,17 +6,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 const selectableUnitPrefixes = ['\u00b5','m','','k','M'];
 const calculatedUnitPrefixes = ['p','n','\u00b5','m','','k','M','G','T'];
 
-final calcOhmsLawResistanceUnit = StateProvider.autoDispose<String>((ref) => selectableUnitPrefixes[2]);
-final calcOhmsLawVoltageUnit = StateProvider.autoDispose<String>((ref) => selectableUnitPrefixes[2]);
-final calcOhmsLawCurrentUnit = Provider.autoDispose<String>((ref) {
-  final String resistanceUnit = ref.watch(calcOhmsLawResistanceUnit);
-  final String voltageUnit = ref.watch(calcOhmsLawVoltageUnit);
-  final int resistanceUnitIndex = selectableUnitPrefixes.indexOf(resistanceUnit)-2;
-  final int voltageUnitIndex = selectableUnitPrefixes.indexOf(voltageUnit)-2;
+final calcOhmsLawResistanceUnitIndex = StateProvider.autoDispose<int>((ref) => 2);
+final calcOhmsLawVoltageUnitIndex = StateProvider.autoDispose<int>((ref) => 2);
+
+final calcOhmsLawCurrentUnitIndex = Provider.autoDispose<int>((ref) {
+
+  final int resistanceUnitIndex = ref.watch(calcOhmsLawResistanceUnitIndex)-2;
+  final int voltageUnitIndex = ref.watch(calcOhmsLawVoltageUnitIndex)-2;
   int currentUnitIndex = 4;
   currentUnitIndex = currentUnitIndex + voltageUnitIndex - resistanceUnitIndex;
-  log('currentIndex: $currentUnitIndex');
-  return calculatedUnitPrefixes[currentUnitIndex];
+  return currentUnitIndex;
 });
 
 final calcOhmsLawResistanceValue = StateProvider.autoDispose<double>((ref) => 50);
@@ -35,13 +34,13 @@ class CalcOhmsLawController {
   final Ref _ref;
   CalcOhmsLawController(this._ref);
 
-  setResistanceUnit(int index)
+  setResistanceUnitIndex(int index)
   {
-    _ref.read(calcOhmsLawResistanceUnit.notifier).state = selectableUnitPrefixes[index];
+    _ref.read(calcOhmsLawResistanceUnitIndex.notifier).state = index;
   }
-  setVoltageUnit(int index)
+  setVoltageUnitIndex(int index)
   {
-    _ref.read(calcOhmsLawVoltageUnit.notifier).state = selectableUnitPrefixes[index];
+    _ref.read(calcOhmsLawVoltageUnitIndex.notifier).state = index;
   }
 
   setResistanceValue(double val) {

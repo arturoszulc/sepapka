@@ -37,7 +37,9 @@ class CalcOhmsLaw extends ConsumerWidget {
           ),
           CalcChooseUnitButtons(
               unitBase: '\u03a9',
-          choosePrefix: (index) => ref.read(calcOhmsLawController).setResistanceUnit(index),),
+          choosePrefix: (index) => ref.read(calcOhmsLawController).setResistanceUnitIndex(index),
+          selectedIndex: ref.watch(calcOhmsLawResistanceUnitIndex),
+          ),
 
           const SizedBox(
             height: 50,
@@ -54,7 +56,10 @@ class CalcOhmsLaw extends ConsumerWidget {
           ),
           CalcChooseUnitButtons(
             unitBase: 'V',
-            choosePrefix: (index) => ref.read(calcOhmsLawController).setVoltageUnit(index),),
+            choosePrefix: (index) => ref.read(calcOhmsLawController).setVoltageUnitIndex(index),
+            selectedIndex: ref.watch(calcOhmsLawVoltageUnitIndex),
+
+          ),
 
         ],
       ),
@@ -69,22 +74,26 @@ class OhmsLawVisualisation extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextStyle? ohmsLawStyle = Theme.of(context).textTheme.headlineLarge;
+    final TextStyle? ohmsLawStyle = Theme.of(context).textTheme.headlineMedium;
     // log('/// OhmsLawCalcRebuilt ///');
-    final String current = ref.watch(calcOhmsLawCurrentValue);
-    final double resistance = ref.watch(calcOhmsLawResistanceValue);
-    final double voltage = ref.watch(calcOhmsLawVoltageValue);
+    final String currentValue = ref.watch(calcOhmsLawCurrentValue);
+    final String resistanceValue = ref.watch(calcOhmsLawResistanceValue).toStringAsFixed(2);
+    final String voltageValue = ref.watch(calcOhmsLawVoltageValue).toStringAsFixed(2);
 
-    final String currentUnit = ref.watch(calcOhmsLawCurrentUnit);
-    final String resistanceUnit = ref.watch(calcOhmsLawResistanceUnit);
-    final String voltageUnit = ref.watch(calcOhmsLawVoltageUnit);
+    final int currentUnitIndex = ref.watch(calcOhmsLawCurrentUnitIndex);
+    final int voltageUnitIndex = ref.watch(calcOhmsLawVoltageUnitIndex);
+    final int resistanceIndex = ref.watch(calcOhmsLawResistanceUnitIndex);
+
+    final String currentUnit = calculatedUnitPrefixes[currentUnitIndex];
+    final String voltageUnit = selectableUnitPrefixes[voltageUnitIndex];
+    final String resistanceUnit = selectableUnitPrefixes[resistanceIndex];
     return Row(
       children: [
         // const Expanded(child: SizedBox()),
         Expanded(
-          flex: 4,
+          // flex: 3,
           child: Text(
-            '$current ${currentUnit}A',
+            '$currentValue ${currentUnit}A',
             style: ohmsLawStyle,
             textAlign: TextAlign.right,
           ),
@@ -98,28 +107,31 @@ class OhmsLawVisualisation extends ConsumerWidget {
           ),
         ),
         Expanded(
-          flex: 3,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('${voltage.round()} ${voltageUnit}V', style: ohmsLawStyle),
-              SizedBox(
-                width: 150,
-                child: Divider(
-                  color: ohmsLawStyle?.color, //Theme.of(context).textTheme.headlineMedium?.color,
-                  thickness: 3,
+          // flex: 2,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('$voltageValue ${voltageUnit}V', style: ohmsLawStyle),
+                SizedBox(
+                  width: 140,
+                  child: Divider(
+                    color: ohmsLawStyle?.color, //Theme.of(context).textTheme.headlineMedium?.color,
+                    thickness: 3,
+                  ),
                 ),
-              ),
-              Text(
-                '${resistance.round()} $resistanceUnit\u03a9',
-                style: ohmsLawStyle,
-              ),
-            ],
+                Text(
+                  '$resistanceValue $resistanceUnit\u03a9',
+                  style: ohmsLawStyle,
+                ),
+              ],
+            ),
           ),
         ),
-        const Expanded(
-            flex: 1,
-            child: SizedBox()),
+        // const Expanded(
+        //     flex: 1,
+        //     child: SizedBox()),
       ],
     );
   }
@@ -166,7 +178,6 @@ class CalcSlider extends StatelessWidget {
             ],
           ),
           Slider(
-
             value: value,
             min: min,
             max: max,
@@ -277,10 +288,11 @@ class CalcSlider extends StatelessWidget {
 // }
 
 class CalcChooseUnitButtons extends StatelessWidget {
-  const CalcChooseUnitButtons({Key? key, required this.unitBase, required this.choosePrefix}) : super(key: key);
+  const CalcChooseUnitButtons({Key? key, required this.unitBase, required this.choosePrefix, required this.selectedIndex}) : super(key: key);
 
   final String unitBase;
   final Function(int) choosePrefix;
+  final int selectedIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -289,7 +301,7 @@ class CalcChooseUnitButtons extends StatelessWidget {
         buttons: selectableUnitPrefixes.map((prefix) => prefix+unitBase).toList(),
         onSelected: (index, isSelected) => choosePrefix(index),
       controller: GroupButtonController(
-        // selectedIndex:
+        selectedIndex: selectedIndex,
       ),
         );
   }
