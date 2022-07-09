@@ -28,12 +28,14 @@ class CalcOhmsLaw extends ConsumerWidget {
           ),
           CalcSlider(
             name: 'Rezystancja',
-            value: ref.watch(calcOhmsLawResistanceValue),
+            value: ref.watch(calcOhmsLawResistanceFractionSwitch) ? ref.watch(calcOhmsLawResistanceFractionalPart) : ref.watch(calcOhmsLawResistanceWholePart),
             min: 1,
             max: 1000,
             divisions: 999,
-            onChanged: (val) => ref.read(calcOhmsLawController).setResistanceValue(val),
-            addValue: (val) => ref.read(calcOhmsLawController).addResistance(val),
+            onChanged: (double val) => ref.read(calcOhmsLawController).setResistanceValue(val),
+            addValue: (double val) => ref.read(calcOhmsLawController).addResistance(val),
+            switchFraction: (bool val) => ref.read(calcOhmsLawController).switchResistanceFraction(val),
+            isFraction: ref.watch(calcOhmsLawResistanceFractionSwitch),
           ),
           CalcChooseUnitButtons(
               unitBase: '\u03a9',
@@ -52,6 +54,7 @@ class CalcOhmsLaw extends ConsumerWidget {
             divisions: 999,
             onChanged: (val) => ref.read(calcOhmsLawController).setVoltageValue(val),
             addValue: (val) => ref.read(calcOhmsLawController).addVoltage(val),
+            switchFraction: (val) {},
 
           ),
           CalcChooseUnitButtons(
@@ -77,7 +80,7 @@ class OhmsLawVisualisation extends ConsumerWidget {
     final TextStyle? ohmsLawStyle = Theme.of(context).textTheme.headlineMedium;
     // log('/// OhmsLawCalcRebuilt ///');
     final String currentValue = ref.watch(calcOhmsLawCurrentValue);
-    final String resistanceValue = ref.watch(calcOhmsLawResistanceValue).toStringAsFixed(2);
+    final String resistanceValue = ref.watch(calcOhmsLawResistanceVal).toStringAsFixed(2);
     final String voltageValue = ref.watch(calcOhmsLawVoltageValue).toStringAsFixed(2);
 
     final int currentUnitIndex = ref.watch(calcOhmsLawCurrentUnitIndex);
@@ -145,6 +148,8 @@ class CalcSlider extends StatelessWidget {
         required this.min,
         required this.max,
         this.divisions,
+        this.isFraction = false,
+        required this.switchFraction,
         required this.onChanged,
         this.addValue,
       })
@@ -156,6 +161,9 @@ class CalcSlider extends StatelessWidget {
   final double min;
   final double max;
   final int? divisions;
+  /// Switching to decimal Slider
+  final bool isFraction;
+  final Function(bool) switchFraction;
   /// Call method when user changed slider position
   final Function(double) onChanged;
   /// Call method when +/- buttons were pushed
@@ -165,18 +173,36 @@ class CalcSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     // log('/// CalcSlider rebuilt ///');
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
+          Stack(
             children: [
-              if (addValue != null) IconButton(
-                  onPressed: () => addValue!(-1), icon: const Icon(Icons.remove)),
-              Text(name, style: Theme.of(context).textTheme.headlineSmall),
-              if (addValue != null) IconButton(
-                  onPressed: () => addValue!(1), icon: const Icon(Icons.add)),
-            ],
+              Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (addValue != null) IconButton(
+                    onPressed: () => addValue!(-1), icon: const Icon(Icons.remove)),
+                Text(name, style: Theme.of(context).textTheme.headlineSmall),
+                if (addValue != null) IconButton(
+                    onPressed: () => addValue!(1), icon: const Icon(Icons.add)),
+              ],
+            ),
+              TextButton(
+                  onPressed: () => switchFraction(!isFraction),
+                  child: isFraction ? const Text('0.00<') : const Text('>0.00')),//const Icon(Icons.access_alarm),),
+            ]
           ),
+          isFraction ?
+          Slider(
+            activeColor: Theme.of(context).colorScheme.onPrimaryContainer,
+            value: value,
+            min: 0,
+            max: 100,
+            divisions: 100,
+            // label: value.round().toString(),
+            onChanged: (val) => onChanged(val),
+          ) :
           Slider(
             value: value,
             min: min,

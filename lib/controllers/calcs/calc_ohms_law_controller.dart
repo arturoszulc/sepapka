@@ -6,6 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 const selectableUnitPrefixes = ['\u00b5','m','','k','M'];
 const calculatedUnitPrefixes = ['p','n','\u00b5','m','','k','M','G','T'];
 
+final calcOhmsLawResistanceFractionSwitch = StateProvider.autoDispose<bool>((ref) => false);
+
+
 final calcOhmsLawResistanceUnitIndex = StateProvider.autoDispose<int>((ref) => 2);
 final calcOhmsLawVoltageUnitIndex = StateProvider.autoDispose<int>((ref) => 2);
 
@@ -18,10 +21,18 @@ final calcOhmsLawCurrentUnitIndex = Provider.autoDispose<int>((ref) {
   return currentUnitIndex;
 });
 
-final calcOhmsLawResistanceValue = StateProvider.autoDispose<double>((ref) => 50);
+final calcOhmsLawResistanceWholePart = StateProvider<double>((ref) => 50);
+final calcOhmsLawResistanceFractionalPart = StateProvider<double>((ref) => 15);
+final calcOhmsLawResistanceVal = Provider<double>((ref) {
+  final double whole = ref.watch(calcOhmsLawResistanceWholePart);
+  final double fractional = ref.watch(calcOhmsLawResistanceFractionalPart);
+  final double value = whole + (fractional/100);
+  return value;
+});
+
 final calcOhmsLawVoltageValue = StateProvider.autoDispose<double>((ref) => 50);
 final calcOhmsLawCurrentValue = Provider.autoDispose<String>((ref) {
-  final double resistance = ref.watch(calcOhmsLawResistanceValue);
+  final double resistance = ref.watch(calcOhmsLawResistanceVal);
   final double voltage = ref.watch(calcOhmsLawVoltageValue);
   return (voltage/resistance).toStringAsFixed(2);
 });
@@ -44,7 +55,13 @@ class CalcOhmsLawController {
   }
 
   setResistanceValue(double val) {
-    _ref.read(calcOhmsLawResistanceValue.notifier).state = val;
+    final isFraction = _ref.read(calcOhmsLawResistanceFractionSwitch);
+    if (isFraction) {
+      _ref.read(calcOhmsLawResistanceFractionalPart.notifier).state = val;
+    }
+    else {
+      _ref.read(calcOhmsLawResistanceWholePart.notifier).state = val;
+    }
   }
 
   setVoltageValue(double val) {
@@ -52,9 +69,20 @@ class CalcOhmsLawController {
   }
 
   addResistance(double val) {
-   _ref.read(calcOhmsLawResistanceValue.notifier).state = _ref.read(calcOhmsLawResistanceValue.notifier).state + val;
+    final isFraction = _ref.read(calcOhmsLawResistanceFractionSwitch);
+    if (isFraction) {
+      _ref.read(calcOhmsLawResistanceFractionalPart.notifier).state += val;
+    }
+    else {
+      _ref.read(calcOhmsLawResistanceWholePart.notifier).state += val;
+    }
   }
   addVoltage(double val) {
-    _ref.read(calcOhmsLawVoltageValue.notifier).state = _ref.read(calcOhmsLawVoltageValue.notifier).state + val;
+    // _ref.read(calcOhmsLawVoltageValue.notifier).state = _ref.read(calcOhmsLawVoltageValue.notifier).state + val;
   }
+
+  switchResistanceFraction(bool isFraction) {
+    _ref.read(calcOhmsLawResistanceFractionSwitch.notifier).state = isFraction;
+  }
+
 }
