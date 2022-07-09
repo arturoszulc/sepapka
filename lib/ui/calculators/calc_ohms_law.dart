@@ -27,6 +27,29 @@ class CalcOhmsLaw extends ConsumerWidget {
             child: OhmsLawVisualisation(),
           ),
           CalcSlider(
+            name: 'Napięcie',
+            value: ref.watch(calcOhmsLawVoltageFractionSwitch) ? ref.watch(calcOhmsLawVoltageFractionalPart) : ref.watch(calcOhmsLawVoltageWholePart),
+            min: 1,
+            max: 1000,
+            divisions: 999,
+            onChanged: (val) => ref.read(calcOhmsLawController).setVoltageValue(val),
+            addValue: (val) => ref.read(calcOhmsLawController).addVoltage(val),
+            switchFraction: (bool val) => ref.read(calcOhmsLawController).switchVoltageFraction(val),
+            isFraction: ref.watch(calcOhmsLawVoltageFractionSwitch),
+
+          ),
+          CalcChooseUnitButtons(
+            unitBase: 'V',
+            choosePrefix: (index) => ref.read(calcOhmsLawController).setVoltageUnitIndex(index),
+            selectedIndex: ref.watch(calcOhmsLawVoltageUnitIndex),
+          ),
+
+
+          const SizedBox(
+            height: 50,
+          ),
+
+          CalcSlider(
             name: 'Rezystancja',
             value: ref.watch(calcOhmsLawResistanceFractionSwitch) ? ref.watch(calcOhmsLawResistanceFractionalPart) : ref.watch(calcOhmsLawResistanceWholePart),
             min: 1,
@@ -38,30 +61,9 @@ class CalcOhmsLaw extends ConsumerWidget {
             isFraction: ref.watch(calcOhmsLawResistanceFractionSwitch),
           ),
           CalcChooseUnitButtons(
-              unitBase: '\u03a9',
-          choosePrefix: (index) => ref.read(calcOhmsLawController).setResistanceUnitIndex(index),
-          selectedIndex: ref.watch(calcOhmsLawResistanceUnitIndex),
-          ),
-
-          const SizedBox(
-            height: 50,
-          ),
-          CalcSlider(
-            name: 'Napięcie',
-            value: ref.watch(calcOhmsLawVoltageValue),
-            min: 1,
-            max: 1000,
-            divisions: 999,
-            onChanged: (val) => ref.read(calcOhmsLawController).setVoltageValue(val),
-            addValue: (val) => ref.read(calcOhmsLawController).addVoltage(val),
-            switchFraction: (val) {},
-
-          ),
-          CalcChooseUnitButtons(
-            unitBase: 'V',
-            choosePrefix: (index) => ref.read(calcOhmsLawController).setVoltageUnitIndex(index),
-            selectedIndex: ref.watch(calcOhmsLawVoltageUnitIndex),
-
+            unitBase: '\u03a9',
+            choosePrefix: (index) => ref.read(calcOhmsLawController).setResistanceUnitIndex(index),
+            selectedIndex: ref.watch(calcOhmsLawResistanceUnitIndex),
           ),
 
         ],
@@ -80,7 +82,7 @@ class OhmsLawVisualisation extends ConsumerWidget {
     final TextStyle? ohmsLawStyle = Theme.of(context).textTheme.headlineMedium;
     // log('/// OhmsLawCalcRebuilt ///');
     final String currentValue = ref.watch(calcOhmsLawCurrentValue);
-    final String resistanceValue = ref.watch(calcOhmsLawResistanceVal).toStringAsFixed(2);
+    final String resistanceValue = ref.watch(calcOhmsLawResistanceValue).toStringAsFixed(2);
     final String voltageValue = ref.watch(calcOhmsLawVoltageValue).toStringAsFixed(2);
 
     final int currentUnitIndex = ref.watch(calcOhmsLawCurrentUnitIndex);
@@ -188,9 +190,12 @@ class CalcSlider extends StatelessWidget {
                     onPressed: () => addValue!(1), icon: const Icon(Icons.add)),
               ],
             ),
-              TextButton(
-                  onPressed: () => switchFraction(!isFraction),
-                  child: isFraction ? const Text('0.00<') : const Text('>0.00')),//const Icon(Icons.access_alarm),),
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: TextButton(
+                    onPressed: () => switchFraction(!isFraction),
+                    child: isFraction ? const Text('0.00<') : const Text('>0.00')),
+              ),//const Icon(Icons.access_alarm),),
             ]
           ),
           isFraction ?
@@ -198,9 +203,8 @@ class CalcSlider extends StatelessWidget {
             activeColor: Theme.of(context).colorScheme.onPrimaryContainer,
             value: value,
             min: 0,
-            max: 100,
-            divisions: 100,
-            // label: value.round().toString(),
+            max: 99,
+            divisions: 99,
             onChanged: (val) => onChanged(val),
           ) :
           Slider(
@@ -208,7 +212,6 @@ class CalcSlider extends StatelessWidget {
             min: min,
             max: max,
             divisions: divisions,
-            // label: value.round().toString(),
             onChanged: (val) => onChanged(val),
           ),
         ]);
