@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sepapka/ui/calculators/calc_voltage_divider.dart';
 import 'package:sepapka/ui/tables/table_units.dart';
 import 'package:sepapka/ui/purchase/purchase_wrapper.dart';
 
@@ -262,6 +263,11 @@ class RouterNotifier extends ChangeNotifier {
         name: MyScreen.calc_ohms_law.name,
         path: MyScreen.calc_ohms_law.path,
         pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const CalcOhmsLaw()),
+      ),
+      GoRoute(
+        name: MyScreen.calc_voltage_divider.name,
+        path: MyScreen.calc_voltage_divider.path,
+        pageBuilder: (context, state) => MaterialPage(key: state.pageKey, child: const CalcVoltageDivider()),
       ),
       GoRoute(
         name: MyScreen.calc_heating_power_three_phase.name,

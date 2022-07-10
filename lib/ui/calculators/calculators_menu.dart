@@ -30,6 +30,12 @@ class CalculatorsMenuScreen extends ConsumerWidget {
                 }),
             MenuButton(
                 proOnly: true,
+                label: 'Dzielnik napięcia',
+                onPressed: () {
+                  context.goNamed(MyScreen.calc_voltage_divider.name);
+                }),
+            MenuButton(
+                proOnly: true,
                 label: 'Moc grzania w obwodach 3-fazowych',
                 onPressed: () {
                   context.goNamed(MyScreen.calc_heating_power_three_phase.name);
