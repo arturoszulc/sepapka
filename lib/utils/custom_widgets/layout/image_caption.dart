@@ -28,7 +28,7 @@ class ImageCaption extends StatelessWidget {
             ),
           ),
           if (caption.isNotEmpty) const SizedBox(height: 10,),
-          Text(caption, style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic),),
+          if (caption.isNotEmpty) Text(caption, style: const TextStyle(fontSize: 12, fontStyle: FontStyle.italic),),
         ],
       ),
     );

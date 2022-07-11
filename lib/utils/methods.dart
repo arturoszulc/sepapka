@@ -1,3 +1,84 @@
+import 'dart:developer' as log;
+import 'dart:math';
+
+class UnitPrefix {
+  final int exponent;
+  final String prefix;
+  final int multiplicator;
+
+  const UnitPrefix(this.exponent, this.prefix, this.multiplicator);
+
+  factory UnitPrefix.empty() => const UnitPrefix(0, '', 0);
+}
+
+const List<UnitPrefix> listOfPrefixes = [
+  UnitPrefix(-18, 'a', 0),
+  UnitPrefix(-17, 'a', 1),
+  UnitPrefix(-16, 'a', 2),
+  UnitPrefix(-15, 'f', 0),
+  UnitPrefix(-14, 'f', 1),
+  UnitPrefix(-13, 'f', 2),
+  UnitPrefix(-12, 'p', 0),
+  UnitPrefix(-11, 'p', 1),
+  UnitPrefix(-10, 'p', 2),
+  UnitPrefix(-9, 'n', 0),
+  UnitPrefix(-8, 'n', 1),
+  UnitPrefix(-7, 'n', 2),
+  UnitPrefix(-6, '\u00b5', 0),
+  UnitPrefix(-5, '\u00b5', 1),
+  UnitPrefix(-4, '\u00b5', 2),
+  UnitPrefix(-3, 'm', 0),
+  UnitPrefix(-2, 'm', 1),
+  UnitPrefix(-1, 'm', 2),
+  UnitPrefix(0, '', 0),
+  UnitPrefix(1, '', 1),
+  UnitPrefix(2, '', 2),
+  UnitPrefix(3, 'k', 0),
+  UnitPrefix(4, 'k', 1),
+  UnitPrefix(5, 'k', 2),
+  UnitPrefix(6, 'M', 0),
+  UnitPrefix(7, 'M', 1),
+  UnitPrefix(8, 'M', 2),
+  UnitPrefix(9, 'G', 0),
+  UnitPrefix(10, 'G', 1),
+  UnitPrefix(11, 'G', 2),
+  UnitPrefix(12, 'T', 0),
+  UnitPrefix(13, 'T', 1),
+  UnitPrefix(14, 'T', 2),
+  UnitPrefix(15, 'P', 0),
+  UnitPrefix(16, 'P', 1),
+  UnitPrefix(17, 'P', 2),
+  UnitPrefix(18, 'E', 0),
+  UnitPrefix(19, 'E', 1),
+  UnitPrefix(20, 'E', 2),
+];
+
+const Map<int,String> prefixMap = {
+  18: 'E',
+  15: 'P',
+  12: 'T',
+  9: 'G',
+  6: 'M',
+  3: 'k',
+  0: '',
+  -3: 'm',
+  -6: '\u00b5',
+  -9: 'n',
+  -12: 'p',
+  -15: 'f',
+  -18: 'a',
+};
+
+String convertNumberToDisplay(double number, int exponent) {
+
+   final UnitPrefix unitPrefix = listOfPrefixes.firstWhere((prefix) => prefix.exponent == exponent);
+   final newNumber = (number*pow(10, unitPrefix.multiplicator)).toStringAsFixed(2);
+   final prefix = unitPrefix.prefix;
+   final displayNumber = '$newNumber $prefix';
+   return displayNumber;
+}
+
+
 // import 'dart:math';
 //
 // import 'package:sepapka/trash/question_map.dart';
