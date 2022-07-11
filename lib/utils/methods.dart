@@ -4,14 +4,20 @@ import 'dart:math';
 class UnitPrefix {
   final int exponent;
   final String prefix;
-  final int multiplicator;
+  final int multiplication;
 
-  const UnitPrefix(this.exponent, this.prefix, this.multiplicator);
+  const UnitPrefix(this.exponent, this.prefix, this.multiplication);
 
   factory UnitPrefix.empty() => const UnitPrefix(0, '', 0);
 }
 
 const List<UnitPrefix> listOfPrefixes = [
+  UnitPrefix(-24, 'y', 0),
+  UnitPrefix(-23, 'y', 1),
+  UnitPrefix(-22, 'y', 2),
+  UnitPrefix(-21, 'z', 0),
+  UnitPrefix(-20, 'z', 1),
+  UnitPrefix(-19, 'z', 2),
   UnitPrefix(-18, 'a', 0),
   UnitPrefix(-17, 'a', 1),
   UnitPrefix(-16, 'a', 2),
@@ -51,28 +57,18 @@ const List<UnitPrefix> listOfPrefixes = [
   UnitPrefix(18, 'E', 0),
   UnitPrefix(19, 'E', 1),
   UnitPrefix(20, 'E', 2),
+  UnitPrefix(21, 'Z', 0),
+  UnitPrefix(22, 'Z', 1),
+  UnitPrefix(23, 'Z', 2),
+  UnitPrefix(24, 'Y', 0),
+  UnitPrefix(25, 'Y', 1),
+  UnitPrefix(26, 'Y', 2),
 ];
-
-const Map<int,String> prefixMap = {
-  18: 'E',
-  15: 'P',
-  12: 'T',
-  9: 'G',
-  6: 'M',
-  3: 'k',
-  0: '',
-  -3: 'm',
-  -6: '\u00b5',
-  -9: 'n',
-  -12: 'p',
-  -15: 'f',
-  -18: 'a',
-};
 
 String convertNumberToDisplay(double number, int exponent) {
 
    final UnitPrefix unitPrefix = listOfPrefixes.firstWhere((prefix) => prefix.exponent == exponent);
-   final newNumber = (number*pow(10, unitPrefix.multiplicator)).toStringAsFixed(2);
+   final newNumber = (number*pow(10, unitPrefix.multiplication)).toStringAsFixed(2);
    final prefix = unitPrefix.prefix;
    final displayNumber = '$newNumber $prefix';
    return displayNumber;

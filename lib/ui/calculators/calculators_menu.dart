@@ -23,13 +23,11 @@ class CalculatorsMenuScreen extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             MenuButton(
-                proOnly: true,
                 label: 'Prawo Ohma',
                 onPressed: () {
                   context.goNamed(MyScreen.calc_ohms_law.name);
                 }),
             MenuButton(
-                proOnly: true,
                 label: 'Dzielnik napięcia',
                 onPressed: () {
                   context.goNamed(MyScreen.calc_voltage_divider.name);
