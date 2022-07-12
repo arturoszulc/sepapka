@@ -5,7 +5,7 @@ import 'lessons_cables.dart';
 
 //List of units
 const List<Unit> academyUnits = [
-  // cablesUnit,
+  cablesUnit,
   gridUnit,
 ];
 
