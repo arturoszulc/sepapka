@@ -29,3 +29,15 @@ buttonWidth: 100,
 
   );
 }
+
+
+GroupButtonOptions unitGroupButtonOptions(BuildContext context) {
+  return GroupButtonOptions(
+    // elevation: 1,
+    // unselectedShadow: [],
+    // selectedShadow: [],
+    unselectedTextStyle: TextStyle(color: Theme.of(context).textTheme.bodyText1!.color, fontSize: 12),
+    borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+    selectedTextStyle: TextStyle(color: flexSchemeLight.onPrimary, fontSize: 12),
+  );
+}

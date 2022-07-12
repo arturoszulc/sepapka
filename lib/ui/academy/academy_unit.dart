@@ -32,7 +32,7 @@ class AcademyUnit extends ConsumerWidget {
                 proOnly: index > 1,
                 onTap: () {
                   ref.read(academyController).chooseLesson(index);
-                  context.goNamed(MyScreen.academyLesson.name);
+                  context.goNamed(MyScreen.academy_lesson.name);
                 },
               );
         }),

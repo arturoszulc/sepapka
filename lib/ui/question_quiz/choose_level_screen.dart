@@ -42,7 +42,7 @@ class MenuChooseLevel extends ConsumerWidget {
                             label: level,
                             onPressed: () {
                               ref.read(quizController).setLevel(qLevelList.indexOf(level));
-                              context.goNamed(MyScreen.quizChooseCategory.name);
+                              context.goNamed(MyScreen.quiz_choose_category.name);
                             },
                           ),
                       ).toList()
@@ -56,7 +56,7 @@ class MenuChooseLevel extends ConsumerWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton.extended(
             onPressed: () {
-          context.pushNamed(MyScreen.listQuestion.name);
+          context.pushNamed(MyScreen.list_question.name);
         },
             label: const Text('Lista pytań'),
           icon: const Icon(Icons.list),

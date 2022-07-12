@@ -34,7 +34,7 @@ class AcademyLesson extends ConsumerWidget {
         centerTitle: true,
         actions: [
           IconButton(onPressed: () {
-            context.pushNamed(MyScreen.academyIndex.name);
+            context.pushNamed(MyScreen.academy_index.name);
           }, icon: const Icon(Icons.menu_book)),
         ],
       ),

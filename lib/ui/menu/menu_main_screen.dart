@@ -43,24 +43,24 @@ class MenuScreen extends ConsumerWidget {
               MenuButton(
                   label: 'Quiz',
                   onPressed: () {
-                    context.goNamed(MyScreen.quizChooseLevel.name);
+                    context.goNamed(MyScreen.quiz_choose_level.name);
                   }),
               MenuButton(
                   label: 'Akademia',
                   onPressed: () {
-                    context.goNamed(MyScreen.academyMenu.name);
+                    context.goNamed(MyScreen.academy_menu.name);
                     // context.read<AcademyManager>().getFileName();
                   }),
               MenuButton(
                   label: 'Tablice',
                   onPressed: () {
-                    context.goNamed(MyScreen.tablesMenu.name);
+                    context.goNamed(MyScreen.tables_menu.name);
                     // context.pop();
                   }),
               MenuButton(
                   label: 'Kalkulatory',
                   onPressed: () {
-                    context.goNamed(MyScreen.calcMenu.name);
+                    context.goNamed(MyScreen.calc_menu.name);
                   }),
               MenuButton(label: 'Wyloguj się', onPressed: () async {
                 await ref.read(authController).signOut();

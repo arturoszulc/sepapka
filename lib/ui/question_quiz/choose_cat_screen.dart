@@ -39,7 +39,7 @@ class ChooseCategory extends ConsumerWidget {
                         onPressed: () {
                           ref.read(quizController).setCategory(qCategoryList.indexOf(category));
                           ref.read(quizController).prepareSession();
-                          context.goNamed(MyScreen.quizQuestionSingle.name);
+                          context.goNamed(MyScreen.quiz_question_single.name);
                         }),
                     ).toList()
 

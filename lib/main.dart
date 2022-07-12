@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
           Future.delayed(Duration.zero, (){
           });
           return MaterialApp.router(
+            routeInformationProvider: _router.routeInformationProvider,
             routeInformationParser: _router.routeInformationParser,
             routerDelegate: _router.routerDelegate,
             title: 'SEPapka',

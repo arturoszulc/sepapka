@@ -14,7 +14,7 @@ Widget? unlockButton(BuildContext context) {
         :
     FloatingActionButton.extended(
             onPressed: () {
-              context.pushNamed(MyScreen.purchaseWrapper.name);
+              context.pushNamed(MyScreen.purchase_wrapper.name);
             },
             label: Row(
               children: const [
