@@ -30,20 +30,16 @@ class LessonList extends StatelessWidget {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child:
-                Text(
+              Text(
           customBullets.isNotEmpty ?
-              customBullets[strings.indexOf(str)] : bullets ?
+              '${customBullets[strings.indexOf(str)]} - ' : bullets ?
           '\u2022' : numbers ?
           '${strings.indexOf(str) + 1}.' : '',
           textAlign: TextAlign.right, style: bulletListStyle,),
-              ),
               const SizedBox(
                 width: 5,
               ),
               Expanded(
-                flex: 6,
                 child: Text(str, textAlign: TextAlign.left, softWrap: true, style: bulletListStyle),
               ),
             ],
