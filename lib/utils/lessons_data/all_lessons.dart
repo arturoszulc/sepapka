@@ -35,6 +35,7 @@ const Unit gridUnit = Unit(
 const List<Lesson> cableLessons = [
   cableLesson1,
   cableLesson2,
+  cableLesson3,
 ];
 
 const List<Lesson> gridLessons = [

@@ -131,4 +131,167 @@ const Lesson cableLesson2 = Lesson(
     ]);
 
 
+const Lesson cableLesson3 = Lesson(
+    id: 'PE-3',
+    title: 'Izolacja żył',
+    description: 'O rodzajach i właściwościach izolacji przewodów',
+    content: [
+      LessonHeader(title: 'Po co izolacja?'),
+      LessonParagraph(text: 'Izolacja żyły stosowana jest w celu:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'oddzielenia żył przewodu od siebie, by nie doszło do zwarcia,',
+            'ochrony żył przed wpływem wilgoci i środków chemicznych,',
+            'ochrony człowieka przed dotknięciem żyły i porażeniem,',
+          ]),
+      LessonCard(
+          isImportant: true,
+          text: 'Izolacja żyły jest pierwszą linią ochrony przed porażeniem prądem elektrycznym. '
+              'W teorii ochrony przeciwporażeniowej zaliczamy ją do środków ochrony podstawowej (czyli przed dotykiem bezpośrednim),'),
+      LessonHeader(title: 'Materiały izolacji'),
+      LessonParagraph(text: 'Do najpopularniejszych materiałów stosowanych jako izolacje przewodów, należą:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'polwinit (PVC, PCW)',
+            'polietylen (PE)',
+            'polietylen spieniony (Foam PE)',
+            'polietylen usieciowany (XLPE)',
+            'elastomery termoplastyczne (TPE)',
+            'tworzywa bezhalogenowe (HFFR)',
+            'gumy',
+          ]),
 
+      LessonHeader(title: 'Polwinit (PVC, PCW)'),
+      LessonParagraph(text: 'Zastosowanie:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'instalacje elektryczne do 1 kV',
+          ]),
+      LessonParagraph(text: 'Zalety:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'tani',
+            'nie rozprzestrzenia płomienia',
+            'jest odporny na oleje, ozon, promieniowanie UV i większość rozpuszczalników',
+          ]),
+      LessonParagraph(text: 'Wady:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'niezbyt wysoka wytrzymałość elektryczna (maks. 1 kV)',
+            'maksymalna temperatura pracy to 70\u00b0C',
+            'twardnieje w niskich temperaturach',
+            'podczas pożaru wydziela gęsty, trujący dym',
+          ]),
+
+
+      LessonHeader(title: 'Polietylen (PE)'),
+      LessonParagraph(text: 'Zastosowanie:'),
+      LessonList(
+          bullets: true,
+          strings: [
+        'instalacje elektryczne powyżej 1 kV',
+        'transmisja danych',
+      ]),
+      LessonParagraph(text: 'Zalety:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'lekki',
+            'odporny na działanie wody i większości związków chemicznych',
+            'ma niską pojemność i wysoką odporność elektryczną',
+          ]),
+      LessonParagraph(text: 'Wady:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'brak odporności na UV'
+            'łatwopalny',
+            'podczas pożaru skapują z niego płonące krople',
+          ]),
+
+
+
+      LessonHeader(title: 'Polietylen spieniony (Foam PE)'),
+      LessonParagraph(text: 'Zastosowanie:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'transmisja danych wysokich częstotliwości (przewody koncentryczne)',
+          ]),
+      LessonParagraph(text: 'Zalety:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'niższa przenikalność elektryczna w porónaniu ze zwykłym PE',
+            'odporność na wnikanie wody',
+          ]),
+      LessonParagraph(text: 'Wady:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'niska wytrzymałość mechaniczna',
+          ]),
+
+
+      LessonHeader(title: 'Polietylen usieciowany (XLPE)'),
+      LessonParagraph(text: 'Zastosowanie:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'kable energetyczne',
+          ]),
+      LessonParagraph(text: 'Zalety:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'wysoka odporność na temperaturę (90\u00b0C)',
+            'wysoka wytrzymałość elektryczna i mechaniczna',
+            'niepalny',
+            'odporny na większość związków chemicznych, UV i warunki atmosferyczne',
+          ]),
+      LessonParagraph(text: 'Wady:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'cena',
+          ]),
+
+
+
+      LessonHeader(title: 'elastomery termoplastyczne (TPE)'),
+      LessonParagraph(text: 'Zastosowanie:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'wszędzie tam, gdzie temperatury mogą być zabójcze dla innych materiałów',
+          ]),
+      LessonParagraph(text: 'Zalety:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'odporny na temperaturę w zakresie -50\u00b0C - 105\u00b0C'
+            'elastyczny',
+            'niepalny',
+            'odporny na większość związków chemicznych, UV i warunki atmosferyczne',
+          ]),
+      LessonParagraph(text: 'Wady:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'cena',
+          ]),
+
+
+// Izolacja żyły ma za zadanie oddzielad żyły przewodu od siebie, tak aby nie mogły się ze sobą stykad.
+// Ma również osłaniad żyłę przed wpływem wilgoci i działaniem środków chemicznych, a
+// człowieka powinna chronid przed porażeniem prądem elektrycznym. Wykonywana jest głównie z
+// tworzyw sztucznych (polwinitu albo polietylenu sieciowanego) lub też z różnych gatunków gumy.
+// Izolację stanowid może również lakier (np. dla przewodów nawojowych) albo papier nasycony olejem
+// mineralnym (w przypadku kabli).
+
+]);
