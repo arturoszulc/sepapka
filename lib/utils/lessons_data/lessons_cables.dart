@@ -259,6 +259,7 @@ const Lesson cableLesson3 = Lesson(
           bullets: true,
           strings: [
             'cena',
+            'z powodu starzenia się do wnętrza może wnikać woda (powstała specjalna odmiana XLPE wolna od tej wady, zwana XLVLDPE), '
           ]),
 
 
@@ -268,22 +269,69 @@ const Lesson cableLesson3 = Lesson(
       LessonList(
           bullets: true,
           strings: [
-            'wszędzie tam, gdzie temperatury mogą być zabójcze dla innych materiałów',
+            'wszędzie tam, gdzie panują agresywne warunki i wymagania wysokiej czystości (np. przemysł spożywczy)',
           ]),
       LessonParagraph(text: 'Zalety:'),
       LessonList(
           bullets: true,
           strings: [
-            'odporny na temperaturę w zakresie -50\u00b0C - 105\u00b0C'
+            'odporny na temperaturę w zakresie -50\u00b0C - 90\u00b0C',
             'elastyczny',
             'niepalny',
-            'odporny na większość związków chemicznych, UV i warunki atmosferyczne',
+            'łatwy w czyszczeniu',
+            'odporny na większość związków chemicznych, UV, warunki atmosferyczne, a nawet czyszczenie parą',
           ]),
       LessonParagraph(text: 'Wady:'),
       LessonList(
           bullets: true,
           strings: [
             'cena',
+            'ulega deformacji pod wpływem zbyt wysokiej temperatury i ciśnienia',
+          ]),
+
+
+      LessonHeader(title: 'tworzywa bezhalogenowe (HFFR)'),
+      LessonParagraph(text: 'Zastosowanie:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'miejsca zagrożone pożarem/wybuchem, miejsca publiczne',
+          ]),
+      LessonParagraph(text: 'Zalety:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'takie jak polwinit + brak trującego dymu w czasie pożaru',
+          ]),
+      LessonParagraph(text: 'Wady:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'niska odporność na większość czynników agresywnych (np. kwasów)',
+          ]),
+
+
+      LessonHeader(title: 'gumy'),
+      LessonParagraph(text: 'Zastosowanie:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'odbiorniki ruchome, również narażone na skrajne temperatury (np. żelazko)',
+          ]),
+      LessonParagraph(text: 'Zalety:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'odporne na bardzo wysokie temperatury (guma silikonowa nawet 180\u00b0C',
+                'elastyczne (nawet w niskich temperaturach)',
+            'ognioodporne',
+          ]),
+      LessonParagraph(text: 'Wady:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'wrażliwe na UV i chemię ropopochodną (np. benzynę)',
+            'ulegają starzeniu',
           ]),
 
 
@@ -294,4 +342,15 @@ const Lesson cableLesson3 = Lesson(
 // Izolację stanowid może również lakier (np. dla przewodów nawojowych) albo papier nasycony olejem
 // mineralnym (w przypadku kabli).
 
+]);
+
+
+const Lesson cableLesson4 = Lesson(
+    id: 'PE-4', 
+    title: 'Ekran i powłoka', 
+    description: 'O zewnętrznych warstwach przewodu', 
+    content: [
+  LessonHeader(title: 'Po co jest powłoka?'),
+      LessonParagraph(text: 'Powłoka ma za zadanie nie tylko trzymać wszystkie żyły przewodu ')
+  
 ]);

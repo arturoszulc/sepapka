@@ -11,7 +11,7 @@ const List<IndexEntry> indexList = [
   IndexEntry(title: 'dotyk bezpośredni',description: 'Inaczej: dotknięcie części czynnej (czyli przewodnika znajdującego się pod napięciem).', translation: 'direct contact'),
   IndexEntry(title: 'dotyk pośredni',description: 'Inaczej: dotknięcie części przewodzącej dostęnej, która w wyniku uszkodzenia znalazła się pod napięciem.', translation: 'indirect contact'),
   IndexEntry(title: 'ekwipotencjalność',description: 'Stan, w którym kilka przewodników ma ten sam potencjał elektryczny.', translation: 'equipotentiality'),
-  IndexEntry(title: 'FELV',description: 'Bardzo niskie napięcie funkcjonalne.', translation: 'functional extra-low voltage'),
+  IndexEntry(title: 'FELV',description: 'Bardzo niskie napięcie funkcjonalne.\nW odróżnieniu od SELV i PELV nie ma tutaj niezawodnej separacji od innych obwodów. Dlatego mimo zastosowania napięcia bezpiecznego, FELV nie może być stosowane jako środek ochrony przeciwporażeniowej', translation: 'functional extra-low voltage'),
   IndexEntry(title: 'główna szyna uziemiająca',description: 'W skrócie: GSU. Metalowa szyna, za pomocą której łączymy z uziomem wszelkie przewody ochronne i wyrównawcze', translation: 'main earthing terminal, groundbus'),
   IndexEntry(title: 'impedancja uziemienia',description: 'Impedancja mierzona między dowolnym punktem sieci/instalacji/urządzenia, a potencjałem ziemi', translation: 'impedance of earth'),
   IndexEntry(title: 'instalacja elektryczna',description: 'Zespół urządzeń elektrycznych, służący dostarczaniu energii elektrycznej z sieci rozdzielczej do odbiorników', translation: 'electrical installation'),

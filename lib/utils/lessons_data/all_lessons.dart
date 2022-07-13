@@ -36,6 +36,7 @@ const List<Lesson> cableLessons = [
   cableLesson1,
   cableLesson2,
   cableLesson3,
+  cableLesson4,
 ];
 
 const List<Lesson> gridLessons = [
