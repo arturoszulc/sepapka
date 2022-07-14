@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sepapka/utils/consts/my_screens.dart';
+import 'package:sepapka/utils/consts/strings.dart';
+import 'package:sepapka/utils/custom_widgets/buttons/lessonButtonLink.dart';
 import 'package:sepapka/utils/custom_widgets/buttons/lesson_button.dart';
 import 'package:sepapka/utils/custom_widgets/layout/lesson_image_text_row.dart';
 
@@ -347,10 +351,52 @@ const Lesson cableLesson3 = Lesson(
 
 const Lesson cableLesson4 = Lesson(
     id: 'PE-4', 
-    title: 'Ekran i powłoka', 
-    description: 'O zewnętrznych warstwach przewodu', 
+    title: 'Warstwy zewnętrzne',
+    description: 'O ekranie, powłoce, odzieży i pancerzu',
     content: [
-  LessonHeader(title: 'Po co jest powłoka?'),
-      LessonParagraph(text: 'Powłoka ma za zadanie nie tylko trzymać wszystkie żyły przewodu ')
-  
-]);
+  LessonHeader(title: 'Rodzaje warstw'),
+      LessonParagraph(text: 'Warstwy zewnętrzne nie tylko utrzymują poszczególne żyły razem, ale stanowią dla nich dodatkową ochronę przed wieloma czynnikami zewnętrznymi.'),
+      LessonParagraph(text: 'Wśród warstw zewnętrznych wyróżniamy:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'ekran',
+            'powłokę',
+            'pancerz',
+            'odzież',
+          ]),
+      LessonHeader(title: 'Ekran'),
+      LessonParagraph(text: 'Jest to specjalna, cienka warstwa mająca na celu *ochronę przed zakłóceniami*. Może ona być wykonana z:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'folii aluminiowej',
+            'splecionych drucików miedzianych (cynowanych)',
+            'polietylenu z dodatkiem grafitu',
+          ]),
+      LessonParagraph(text: 'Ekran może chronić zarówno przed *zakłóceniami elektromagnetycznymi z zewnątrz*, jak i *stabilizować rozkład pola elektrycznego* w przewodach energetycznych'),
+      LessonParagraph(text: 'W zależności od sytuacji, ekran podłącza się do *zacisku uziemiającego* z jednej lub z dwóch stron.'),
+      LessonParagraph(text: 'O podstawach ekranowania możesz przeczytać w poradniku przygotowanym przez firmę Phoenix Contact:'),
+      LessonButtonLink(label: 'Podstawy ekranowania', url: 'https://www.phoenixcontact.com/pl-pl/technologie/ekranowanie/podstawy-ekranowania'),
+      LessonHeader(title: 'Powłoka'),
+      LessonParagraph(text: 'Powłoka stanowi dodatkową ochronę żył przed uszkodzeniami mechanicznymi i wnikaniem do wnętrza wody. Wykonuje się ją z takich samych materiałów jak izolację żyły (patrz poprzednia lekcja).'),
+      LessonParagraph(text: 'Najcześciej spotykanymi powłokami są polwinit (przewody instalacyjne, układane na stałe) oraz guma, którą znajdziemy na przewodach przeznaczonych do pracy na zewnątrz, szczególnie przy odbiornikach ruchomych.'),
+      LessonParagraph(text: 'Jeśli warunki są trudne (np. wysoka temperatura, wilgotność) przewód może zostać wyposażony w specjalnie pogrubioną powłokę (nazywamy ją wtedy *oponą*) lub powłokę podwójną'),
+      ImageCaption(path: 'assets/images/cables/cable_double_insulation.png', ignoreDarkMode: true, caption: 'Przewód w podwójnej powłoce (źródło: speckable.pl)',),
+      //Obrazek podwójnej powłoki
+      LessonHeader(title: 'Pancerz'),
+      LessonParagraph(text: 'Pancerz umieszcza się zwykle między dwiema warstwami powłoki. Wykonuje się go najczęściej z:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'taśmy stalowej',
+            'drutu stalowego',
+          ]),
+      LessonParagraph(text: 'Przewód pokryty pancerzem nazywamy *przewodem zbrojonym*. Funkcją pancerza jest oczywiście ochrona przewodu przed uszkodzeniem'),
+      LessonHeader(title: 'Odzież'),
+      LessonParagraph(text: 'Odzież to warstwa materiału włóknistego (np. bawełny). Pokryty nią przewód nazywamy *sznurem*.'),
+LessonParagraph(text: 'Odzież zabezpiecza żyły przewodu przed *wysoką temperaturą*. W odróżnieniu od polwinitu i polietylenu, *nie topi się*. Jest też znacznie tańsza od specjalistycznych, silikonowych powłok odpornych na wysokie temperatury.'),
+      LessonParagraph(text: 'Stąd sznury stały się bardzo popularnymi przewodami zasilającymi *sprzęty gospodarstwa domowego*, takie jak żelazka, kuchenki elektryczne, czy opiekacze'),
+      ImageCaption(path: 'assets/images/cables/cable_iron_cord.png', ignoreDarkMode: true, caption: 'Sznur mieszkaniowy',),
+
+    ]);
