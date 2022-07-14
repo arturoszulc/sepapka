@@ -27,7 +27,7 @@ const Lesson cableLesson1 = Lesson(
   ),
   LessonHeader(title: 'Budowa'),
   LessonParagraph(text: 'Aby spełnić powyższe założenia, przewody elektryczne składają się zwykle z:'),
-  ImageCaption(path: 'assets/images/cables/przewod_ekranowany.png', caption: 'źródło: bitner.com', ignoreDarkMode: true,),
+  ImageCaption(path: 'assets/images/cables/cable_construction.png', caption: 'źródło: bitner.com', ignoreDarkMode: true,),
   LessonList(
       numbers: true,
       strings: [
@@ -47,18 +47,18 @@ const Lesson cableLesson2 = Lesson(
     description: 'O materiałach, przekrojach i właściwościach żył',
     content: [
       LessonHeader(title: 'Materiał żył'),
-      LessonParagraph(text: 'Żyła przewodu jest *przewodnikiem*. Inaczej mówiąc *materiałem o niskiej rezystywności*. A mówiąc najprościej *metalem*.'),
+      LessonParagraph(text: 'Żyła przewodu jest *przewodnikiem*, czyli *materiałem o niskiej rezystywności*. Mówiąc najprościej: *metalem*.'),
       LessonParagraph(text: 'Najlepiej przewodzącym metalem jest *srebro*, ale ze względu na jego wysoką cenę żyły wykonuje się zwykle z *miedzi* i *aluminium*.'),
       LessonCard(
           isFunFact: true,
-          text: 'Drogie przewodniki, takie jak srebro i złoto, mają wiele pożądanych zalet. '
+          text: 'Srebro i złoto, mimo wysokiej ceny, posiadają wiele pożądanych cech. '
           'Stąd żyły miedziane niekiedy posrebrza się lub pozłaca, by zmniejszyć ich rezystancję, osiągnąć odporność na wyższą temperaturę lub odporność na zakłócenia.'
       ),
       LessonHeader(title: 'Kształt żył'),
       LessonParagraph(text: 'Żyły przewodów stosowanych w instalacjach niskiego napięcia mają najczęściej przekrój *okręgu* lub wycinka okręgu, zwanego *sektorem*.'),
       ImageCaption(path: 'assets/images/cables/cable_circular_sector_shapes.png', ignoreDarkMode: true,),
-      LessonParagraph(text: 'Zaletą przewodów z żyłami sektorowymi jest znacznie lepsze wykorzystanie dostępnej przestrzeni. '
-          'Innymi słowy, porównując dwa przewody o takiej samej obciążalności prądowej, ten z żyłami sektorowymi będzie miał *mniejszą średnicę* i to mimo potrzeby zastosowania nieco grubszej izolacji.'),
+      LessonParagraph(text: 'Zaletą żył sektorowych jest znacznie lepsze wykorzystanie dostępnej przestrzeni w przewodzie wielożyłowym. Wadą jest konieczność stosowania nieco grubszej izolacji.'),
+      LessonParagraph(text: 'Wspomniana wada nie zmienia faktu, że przewód sektorowy będzie miał *mniejszą średnicę*, od przewodu z żyłami okrągłymi o tej samej obciążalności prądowej.'),
       ImageCaption(path: 'assets/images/cables/cable_circular_vs_sector.png', ignoreDarkMode: true,),
       LessonHeader(title: 'Budowa żył'),
       LessonParagraph(text: 'Żyły wykonane z jednego, litego kawałka metalu (tzw. *jednodrutowe*) są podatne na złamania, stąd nie nadają się one do zasilania odbiorników ruchomych. '
@@ -95,7 +95,7 @@ const Lesson cableLesson2 = Lesson(
           Text('żyła sektorowa, wielodrutowa', textAlign: TextAlign.left,)
         ],),
       LessonHeader(title: 'Klasy żył'),
-      LessonParagraph(text: 'Z racji że liczba i grubość drutów w żyle wpływa na jej giętkość, norma *IEC 60228* wprowadza 4 standardowe klasy giętkości:'),
+      LessonParagraph(text: 'Przewody wielodrutowe mogą być zbudowane z różnej liczby drucików (o różnej grubości), co wpływa na ich *elastyczność*. Stąd norma *IEC 60228* wprowadziła dodatkowy podział żył na 4 klasy giętkości:'),
       LessonList(
           customBullets: ['klasa 1', 'klasa 2', 'klasa 5', 'klasa 6'],
           strings: [
@@ -104,8 +104,8 @@ const Lesson cableLesson2 = Lesson(
             'żyły wielodrutowe, giętkie, z cienkich drutów (tzw. linka), do odbiorników ruchomych.\nPrzykłady: OWY, OMY, H05VV-F',
             'żyły wielodrutowe, bardzo giętkie, z bardzo cienkich drutów (tzw. linka giętka), do odbiorników ruchomych.\nPrzykłady: SMYp, H03VH-H',
           ]),
-      LessonParagraph(text: 'U producentów przewodów znaleźć możemy szczegółowe tabele ukazujące liczbę drutów (i ich średnice) z jakich składają się przeowdy poszczególnych klas.'),
-      LessonParagraph(text: 'Dla przykładu, przewód o przekroju 1,5 mm\u00b2 posiada'),
+      LessonParagraph(text: 'U producentów przewodów znaleźć możemy szczegółowe tabele prezentujące liczbę i średnicę drutów z jakich składają się przewody poszczególnych klas.'),
+      LessonParagraph(text: 'Dla przykładu, wartości te dla przewodu o przekroju 1,5 mm\u00b2 prezentują się następująco:'),
       LessonList(
           customBullets: ['klasa 1', 'klasa 2', 'klasa 5', 'klasa 6'],
           strings: [
@@ -115,21 +115,16 @@ const Lesson cableLesson2 = Lesson(
             '84 drutów o średnicy 0,15 mm każdy',
           ]),
       LessonHeader(title: 'Przekroje żył'),
-      LessonParagraph(text: 'Przyjęło się, by poszczególne grubości żył rozróżniać nie na podstawie ich średnicy, a *pola przekroju poprzecznego*. I tak przewody potocznie nazywane *jedynką*, *półtorówką*, czy *czwórką* odpowiadają przekrojom równym *1, 1,5 oraz 4 mm\u00b2*'),
-      LessonParagraph(text: 'Polsce kupimy głównie przewody objęte normą europejską, a więc o przekrojach:'),
+      LessonParagraph(text: 'Najważniejszą cechą każdej żyły jest *pole przekroju poprzecznego*. Im jest ono wyższe, tym większy prąd jest w stanie wytrzymać żyła.'),
+      LessonParagraph(text: 'Europejska norma *IEC 60228* obejmuje również ten aspekt i tak u producentów znajdziemy przewody o następujących przekrojach żył:'),
       LessonParagraph(text: '0,5; 0,75; 1; 1,5; 2,5; 4; 6; 10; 16; 25; 35; 50; 70; 95; 120; 150; 185; 240; 300; 400; 500; 630; 800; 1000 mm\u00b2'),
       LessonCard(
           isFunFact: true,
           text: 'Norma dopuszcza stosowanie innych przekrojów w przypadku specjalnych zastosowań.\nPrzykładem może być przekrój 0,34 mm\u00b2, popularny w technice pomiarowej i sprzęcie audio, czy przekrój 2000 mm\u00b2, stosowany w liniach wysokiego napięcia.'),
-      LessonParagraph(text: 'Warto wiedzieć, że poza naszą europejską normą, na rynku znajdziemy też przewody opisane jako *AWG* (ang. American Wire Gauge).'),
-      LessonParagraph(text: 'Jest to standard stosowany między innymi w USA oraz Wielkiej Brytanii. Jedyny problem jest taki, że nie da się go w prosty sposób przeliczyć na nasz szereg.'),
-      LessonParagraph(text: 'To znaczy, że w standardzie AWG nie znajdziemy odpowiednika europejskiej żyły 2,5 mm\u00b2. Najbliżej będą w tym wypadku AWG13 (przekrój 2,62 mm\u00b2) lub AWG14 (przekrój 2,08 mm\u00b2).'),
-      LessonParagraph(text: 'Mimo braku przełożenia co do przekroju żył, jesteśmy w stanie dobrać odpowiedniki AWG pod względem zbliżonej *obciążalności prądowej długotrwałej*. Nie musimy też robić tego sami, bo producenci przewodów przygotowali dla nas specjalne tabele. Do jednej z nich prowadzi poniższy przycisk:'),
-      //DY = H05V-U - drut kl. 1
-      //LY = H05V-R - linka sztywna kl. 2
-      //LgY = H05V-K - linka giętka kl. 5
-      //OWY, OMY = H05VV-F - linka giętka kl. 5
-      //SMYp = H03VH-H - linka supergięka kl.6
+      LessonParagraph(text: 'Warto wiedzieć, że na rynku możemy spotkać również przewody opisane jako *AWG* (ang. American Wire Gauge). Jest to standard stosowany między innymi w USA oraz Wielkiej Brytanii.'),
+      LessonParagraph(text: 'Niestety nie da się go w prosty sposób przeliczyć na nasz europejski szereg. To znaczy, że w standardzie AWG nie znajdziemy odpowiednika europejskiej żyły 2,5 mm\u00b2. Najbliżej będą w tym wypadku AWG13 (przekrój 2,62 mm\u00b2) lub AWG14 (przekrój 2,08 mm\u00b2).'),
+      LessonParagraph(text: 'Stąd, chcąc dobrać zamiennik w szeregu AWG, zawsze wybieramy ten o nieco większym przekroju. Wtedy mamy pewność, że wytrzyma on *co najmniej taki sam prąd*. Zgodnie z tą zasadą, szukają odpowiednikeim żyły 2,5 mm\u00b2 powinniśmy wybrać AWG13.'),
+      LessonParagraph(text: 'Jeśli nie chce nam się szukać i porównywać przekrojów w obu szeregach, możemy skorzystać z gotowych tabel udostępnionych przez producentów przewodów. Do jednej z nich prowadzi poniższy przycisk:'),
       LessonButton(icon: Icons.table_chart_outlined, label: 'Przekroje przewodów', screen: MyScreen.table_wire_diameter),
 
     ]);
@@ -140,19 +135,19 @@ const Lesson cableLesson3 = Lesson(
     title: 'Izolacja żył',
     description: 'O rodzajach i właściwościach izolacji przewodów',
     content: [
-      LessonHeader(title: 'Po co izolacja?'),
-      LessonParagraph(text: 'Izolacja żyły stosowana jest w celu:'),
+      LessonHeader(title: 'Cel izolacji'),
+      LessonParagraph(text: 'Izolacja żył stosowana jest w celu:'),
       LessonList(
           bullets: true,
           strings: [
             'oddzielenia żył przewodu od siebie, by nie doszło do zwarcia,',
             'ochrony żył przed wpływem wilgoci i środków chemicznych,',
-            'ochrony człowieka przed dotknięciem żyły i porażeniem,',
+            'ochrony człowieka przed dotknięciem żyły i porażeniem.',
           ]),
       LessonCard(
           isImportant: true,
           text: 'Izolacja żyły jest pierwszą linią ochrony przed porażeniem prądem elektrycznym. '
-              'W teorii ochrony przeciwporażeniowej zaliczamy ją do środków ochrony podstawowej (czyli przed dotykiem bezpośrednim),'),
+              'W teorii ochrony przeciwporażeniowej zaliczamy ją do środków ochrony podstawowej (czyli przed dotykiem bezpośrednim).'),
       LessonHeader(title: 'Materiały izolacji'),
       LessonParagraph(text: 'Do najpopularniejszych materiałów stosowanych jako izolacje przewodów, należą:'),
       LessonList(
@@ -180,7 +175,7 @@ const Lesson cableLesson3 = Lesson(
           strings: [
             'tani',
             'nie rozprzestrzenia płomienia',
-            'jest odporny na oleje, ozon, promieniowanie UV i większość rozpuszczalników',
+            'odporny na oleje, ozon, promieniowanie UV i większość rozpuszczalników',
           ]),
       LessonParagraph(text: 'Wady:'),
       LessonList(
@@ -191,6 +186,9 @@ const Lesson cableLesson3 = Lesson(
             'twardnieje w niskich temperaturach',
             'podczas pożaru wydziela gęsty, trujący dym',
           ]),
+      LessonCard(
+          isImportant: true,
+          text: 'Polwinit to plastyfikwoany polichlorek winylu, którego skrót to PVC lub PCW. Określenie PCV jest niepoprawne i nie należy go używać.'),
 
 
       LessonHeader(title: 'Polietylen (PE)'),
@@ -207,18 +205,17 @@ const Lesson cableLesson3 = Lesson(
           strings: [
             'lekki',
             'odporny na działanie wody i większości związków chemicznych',
-            'ma niską pojemność i wysoką odporność elektryczną',
+            'bardziej wytrzymały elektrycznie niż PVC (powyżej 1 kV)',
+            'mniej podatny na zakłócenia niż PVC (mniejsza pojemność elektryczna)',
           ]),
       LessonParagraph(text: 'Wady:'),
       LessonList(
           bullets: true,
           strings: [
-            'brak odporności na UV'
+            'nie lubi UV',
             'łatwopalny',
             'podczas pożaru skapują z niego płonące krople',
           ]),
-
-
 
       LessonHeader(title: 'Polietylen spieniony (Foam PE)'),
       LessonParagraph(text: 'Zastosowanie:'),
@@ -231,7 +228,7 @@ const Lesson cableLesson3 = Lesson(
       LessonList(
           bullets: true,
           strings: [
-            'niższa przenikalność elektryczna w porónaniu ze zwykłym PE',
+            'mniej podatny na zakłócenia niż PE',
             'odporność na wnikanie wody',
           ]),
       LessonParagraph(text: 'Wady:'),
@@ -263,7 +260,7 @@ const Lesson cableLesson3 = Lesson(
           bullets: true,
           strings: [
             'cena',
-            'z powodu starzenia się do wnętrza może wnikać woda (powstała specjalna odmiana XLPE wolna od tej wady, zwana XLVLDPE), '
+            'z powodu starzenia, do wnętrza może wnikać woda (wolna od tej wady jest odmiana XLPE, zwana XLVLDPE), '
           ]),
 
 
@@ -273,13 +270,13 @@ const Lesson cableLesson3 = Lesson(
       LessonList(
           bullets: true,
           strings: [
-            'wszędzie tam, gdzie panują agresywne warunki i wymagania wysokiej czystości (np. przemysł spożywczy)',
+            'wszędzie tam, gdzie panują agresywne warunki i wymagana jest wysoka czystość (np. przemysł spożywczy)',
           ]),
       LessonParagraph(text: 'Zalety:'),
       LessonList(
           bullets: true,
           strings: [
-            'odporny na temperaturę w zakresie -50\u00b0C - 90\u00b0C',
+            'odporny na temperaturę w zakresie -50\u00b0C \u00F7 90\u00b0C',
             'elastyczny',
             'niepalny',
             'łatwy w czyszczeniu',
@@ -326,8 +323,8 @@ const Lesson cableLesson3 = Lesson(
       LessonList(
           bullets: true,
           strings: [
-            'odporne na bardzo wysokie temperatury (guma silikonowa nawet 180\u00b0C',
-                'elastyczne (nawet w niskich temperaturach)',
+            'odporne na bardzo wysokie temperatury (guma silikonowa nawet 180\u00b0C)',
+                'elastyczne w każdej temperaturze',
             'ognioodporne',
           ]),
       LessonParagraph(text: 'Wady:'),
@@ -337,15 +334,6 @@ const Lesson cableLesson3 = Lesson(
             'wrażliwe na UV i chemię ropopochodną (np. benzynę)',
             'ulegają starzeniu',
           ]),
-
-
-// Izolacja żyły ma za zadanie oddzielad żyły przewodu od siebie, tak aby nie mogły się ze sobą stykad.
-// Ma również osłaniad żyłę przed wpływem wilgoci i działaniem środków chemicznych, a
-// człowieka powinna chronid przed porażeniem prądem elektrycznym. Wykonywana jest głównie z
-// tworzyw sztucznych (polwinitu albo polietylenu sieciowanego) lub też z różnych gatunków gumy.
-// Izolację stanowid może również lakier (np. dla przewodów nawojowych) albo papier nasycony olejem
-// mineralnym (w przypadku kabli).
-
 ]);
 
 
@@ -374,14 +362,15 @@ const Lesson cableLesson4 = Lesson(
             'splecionych drucików miedzianych (cynowanych)',
             'polietylenu z dodatkiem grafitu',
           ]),
+      ImageCaption(path: 'assets/images/cables/cable_shielded.png', ignoreDarkMode: true,),
       LessonParagraph(text: 'Ekran może chronić zarówno przed *zakłóceniami elektromagnetycznymi z zewnątrz*, jak i *stabilizować rozkład pola elektrycznego* w przewodach energetycznych'),
       LessonParagraph(text: 'W zależności od sytuacji, ekran podłącza się do *zacisku uziemiającego* z jednej lub z dwóch stron.'),
       LessonParagraph(text: 'O podstawach ekranowania możesz przeczytać w poradniku przygotowanym przez firmę Phoenix Contact:'),
       LessonButtonLink(label: 'Podstawy ekranowania', url: 'https://www.phoenixcontact.com/pl-pl/technologie/ekranowanie/podstawy-ekranowania'),
       LessonHeader(title: 'Powłoka'),
       LessonParagraph(text: 'Powłoka stanowi dodatkową ochronę żył przed uszkodzeniami mechanicznymi i wnikaniem do wnętrza wody. Wykonuje się ją z takich samych materiałów jak izolację żyły (patrz poprzednia lekcja).'),
-      LessonParagraph(text: 'Najcześciej spotykanymi powłokami są polwinit (przewody instalacyjne, układane na stałe) oraz guma, którą znajdziemy na przewodach przeznaczonych do pracy na zewnątrz, szczególnie przy odbiornikach ruchomych.'),
-      LessonParagraph(text: 'Jeśli warunki są trudne (np. wysoka temperatura, wilgotność) przewód może zostać wyposażony w specjalnie pogrubioną powłokę (nazywamy ją wtedy *oponą*) lub powłokę podwójną'),
+      LessonParagraph(text: 'Najcześciej spotykanymi powłokami są *polwinit* (przewody instalacyjne układane na stałe) oraz *guma*, którą znajdziemy na przewodach przeznaczonych do pracy na zewnątrz i przy odbiornikach ruchomych.'),
+      LessonParagraph(text: 'Jeśli warunki są trudne (np. wysoka temperatura, wilgotność) przewód może zostać wyposażony w specjalnie pogrubioną powłokę (nazywamy ją wtedy *oponą*) lub powłokę podwójną.'),
       ImageCaption(path: 'assets/images/cables/cable_double_insulation.png', ignoreDarkMode: true, caption: 'Przewód w podwójnej powłoce (źródło: speckable.pl)',),
       //Obrazek podwójnej powłoki
       LessonHeader(title: 'Pancerz'),
@@ -392,7 +381,8 @@ const Lesson cableLesson4 = Lesson(
             'taśmy stalowej',
             'drutu stalowego',
           ]),
-      LessonParagraph(text: 'Przewód pokryty pancerzem nazywamy *przewodem zbrojonym*. Funkcją pancerza jest oczywiście ochrona przewodu przed uszkodzeniem'),
+      LessonParagraph(text: 'Pancerz ma za zadanie chronić przed uszkodzeniami mechanicznymi. Pokryty nim przewód nazywamy *przewodem zbrojonym* lub *opancerzonym*.'),
+      ImageCaption(path: 'assets/images/cables/cable_armoured.png', caption: 'Przewód zbrojony (źródło: zexum.com)', ignoreDarkMode: true,),
       LessonHeader(title: 'Odzież'),
       LessonParagraph(text: 'Odzież to warstwa materiału włóknistego (np. bawełny). Pokryty nią przewód nazywamy *sznurem*.'),
 LessonParagraph(text: 'Odzież zabezpiecza żyły przewodu przed *wysoką temperaturą*. W odróżnieniu od polwinitu i polietylenu, *nie topi się*. Jest też znacznie tańsza od specjalistycznych, silikonowych powłok odpornych na wysokie temperatury.'),
