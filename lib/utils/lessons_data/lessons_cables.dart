@@ -20,8 +20,8 @@ const Lesson cableLesson1 = Lesson(
   LessonList(
     customBullets: ['oszczędne', 'bezpieczne','wytrzymałe'],
     strings: [
-      'czyli nie nagrzewały się i nie marnowały w ten sposób energii elektrycznej,',
-      'nie chcemy by parzenie kawy i suszenie włosów suszarką wzbudzały w nas strach, ',
+      'czyli nie nagrzewały się i nie marnowały w ten sposób energii elektrycznej.',
+      'nie chcemy by parzenie kawy i suszenie włosów suszarką wzbudzały w nas strach. ',
       'prucie każdego roku ścian i układanie nowej instalacji byłoby bardzo problematyczne.',
     ],
   ),
@@ -31,10 +31,10 @@ const Lesson cableLesson1 = Lesson(
   LessonList(
       numbers: true,
       strings: [
-        'żyła - element przewodzący prąd (fachowo: część czynna)',
-        'izolacja - powłoka otaczająca żyły. Chroni je przed zwarciem między sobą i korozją',
-        'ekran - element chroniący przed zakłóceniami elektromagnetycznymi',
-        'warstwy ochronne - dodatkowa powłoka, pancerz lub odzież, w zależności od potrzeb',
+        'żyła - element przewodzący prąd (fachowo: część czynna),',
+        'izolacja - powłoka otaczająca żyły. Chroni je przed zwarciem między sobą i korozją,',
+        'ekran - element chroniący przed zakłóceniami elektromagnetycznymi,',
+        'warstwy ochronne - dodatkowa powłoka, pancerz lub odzież, w zależności od potrzeb,',
       ]),
   LessonParagraph(text: 'Poszczególne elementy przewodu zostały dokładnie opisane w kolejnych lekcjach.'),
 
@@ -48,7 +48,7 @@ const Lesson cableLesson2 = Lesson(
     content: [
       LessonHeader(title: 'Materiał żył'),
       LessonParagraph(text: 'Żyła przewodu jest *przewodnikiem*, czyli *materiałem o niskiej rezystywności*. Mówiąc najprościej: *metalem*.'),
-      LessonParagraph(text: 'Najlepiej przewodzącym metalem jest *srebro*, ale ze względu na jego wysoką cenę żyły wykonuje się zwykle z *miedzi* i *aluminium*.'),
+      LessonParagraph(text: 'Najlepiej przewodzącym metalem jest *srebro*, ale ze względu na jego wysoką cenę, żyły wykonuje się zwykle z *miedzi* i *aluminium*.'),
       LessonCard(
           isFunFact: true,
           text: 'Srebro i złoto, mimo wysokiej ceny, posiadają wiele pożądanych cech. '
@@ -61,7 +61,7 @@ const Lesson cableLesson2 = Lesson(
       LessonParagraph(text: 'Wspomniana wada nie zmienia faktu, że przewód sektorowy będzie miał *mniejszą średnicę*, od przewodu z żyłami okrągłymi o tej samej obciążalności prądowej.'),
       ImageCaption(path: 'assets/images/cables/cable_circular_vs_sector.png', ignoreDarkMode: true,),
       LessonHeader(title: 'Budowa żył'),
-      LessonParagraph(text: 'Żyły wykonane z jednego, litego kawałka metalu (tzw. *jednodrutowe*) są podatne na złamania, stąd nie nadają się one do zasilania odbiorników ruchomych. '
+      LessonParagraph(text: 'Żyły wykonane z jednego, litego kawałka metalu (tzw. *jednodrutowe*) są podatne na złamania, stąd nie nadają się do zasilania odbiorników ruchomych. '
           'Aby temu zaradzić, wprowadzono żyły skręcane z dużej ilości cienkich drucików (tzw. *wielodrutowe*).'),
       LessonParagraph(text: 'W celu rozróżnienia poszczególnych konstrukcji, norma *IEC 60228* wprowadziła następujące oznaczenia:'),
       LessonImageTextRow(
@@ -120,7 +120,7 @@ const Lesson cableLesson2 = Lesson(
       LessonParagraph(text: '0,5; 0,75; 1; 1,5; 2,5; 4; 6; 10; 16; 25; 35; 50; 70; 95; 120; 150; 185; 240; 300; 400; 500; 630; 800; 1000 mm\u00b2'),
       LessonCard(
           isFunFact: true,
-          text: 'Norma dopuszcza stosowanie innych przekrojów w przypadku specjalnych zastosowań.\nPrzykładem może być przekrój 0,34 mm\u00b2, popularny w technice pomiarowej i sprzęcie audio, czy przekrój 2000 mm\u00b2, stosowany w liniach wysokiego napięcia.'),
+          text: 'Norma dopuszcza stosowanie innych przekrojów w przypadku specjalnych zastosowań.\nPrzykładem może być przekrój 0,34 mm\u00b2, popularny w technice pomiarowej i sprzęcie audio, czy przekrój 2000 mm\u00b2 stosowany w liniach wysokiego napięcia.'),
       LessonParagraph(text: 'Warto wiedzieć, że na rynku możemy spotkać również przewody opisane jako *AWG* (ang. American Wire Gauge). Jest to standard stosowany między innymi w USA oraz Wielkiej Brytanii.'),
       LessonParagraph(text: 'Niestety nie da się go w prosty sposób przeliczyć na nasz europejski szereg. To znaczy, że w standardzie AWG nie znajdziemy odpowiednika europejskiej żyły 2,5 mm\u00b2. Najbliżej będą w tym wypadku AWG13 (przekrój 2,62 mm\u00b2) lub AWG14 (przekrój 2,08 mm\u00b2).'),
       LessonParagraph(text: 'Stąd, chcąc dobrać zamiennik w szeregu AWG, zawsze wybieramy ten o nieco większym przekroju. Wtedy mamy pewność, że wytrzyma on *co najmniej taki sam prąd*. Zgodnie z tą zasadą, szukają odpowiednikeim żyły 2,5 mm\u00b2 powinniśmy wybrać AWG13.'),
