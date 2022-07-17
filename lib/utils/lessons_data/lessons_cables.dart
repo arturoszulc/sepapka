@@ -390,3 +390,45 @@ LessonParagraph(text: 'Odzież zabezpiecza żyły przewodu przed *wysoką temper
       ImageCaption(path: 'assets/images/cables/cable_iron_cord.png', ignoreDarkMode: true, caption: 'Sznur mieszkaniowy',),
 
     ]);
+
+
+const Lesson cableLesson5 = Lesson(id: 'PE-5', title: 'Rodzaje przewodów', description: 'O dostępnych typach przewodów', content: [
+  LessonHeader(title: '')
+  //YLgY-S(p)
+  //Przewód samochodowy (S) na napięcie zanamionowe 24 V o żyłach z drutów miedzianych (Lg) w izolacji polwinitowej (Y), powłoce polwinitowej (Y), prostokątny (p).
+  
+]);
+
+
+
+const Lesson cableLesson6 = Lesson(
+    id: 'PE-6',
+    title: 'Znakowanie przewodów',
+    description: 'O barwach i oznaczeniach przewodów',
+    content: [
+      LessonHeader(title: 'Informacje ogólne'),
+      LessonParagraph(text: 'Aby uniknąć pomyłek w stylu podłączenia przewodu fazowego do zacisku uziemienia, poszczególne przewody oznacza się barwami i dodatkowymi oznaczeniami.'),
+      LessonParagraph(text: 'Listę wszystkich dostępnych barw i jej kodów skróconych znajdziesz w poniższej tabeli:'),
+      LessonButton(icon: Icons.table_chart_outlined, label: 'Tabela barw przewodów', screen: MyScreen.table_wire_colors),
+      LessonParagraph(text: 'Przewody powinny być oznaczone barwą na całej długości (barwna izolacja lub znaczniki).'),
+      LessonParagraph(text: 'Jeśli nie jest to możliwe, dopuszcza się oznaczenia barwne tylko w widocznych i dostępnych miejscach lub ostatecznie na obu końcach przewodu'),
+      LessonHeader(title: 'Barwa żółto-zielona'),
+      LessonParagraph(text: 'Najważniejszą barwą dla każdego elektryka jest barwa *żółto-zielona*'),
+      LessonParagraph(text:'Żyłę o takiej barwie możemy wykorzystywać tylko i wyłacznie w roli *przewódu ochronnego PE*. Jeśli przewody *uziemiający* i *wyrównawczy* pełnią są wykorzystywanie w ochronie przeciwporażeniowej, wówczas stają się niejako przewodami ochronnymi i one również mogą mieć barwę żółto-zieloną.'),
+      LessonCard(
+          isImportant: true,
+          text: 'Aby zminimalizować ryzyko pomyłki, w przewodzie posiadającym żyłę żółto-zieloną nie mogą znajdować się inne żyły o barwie żółtej lub zielonej'),
+      LessonParagraph(text: 'Przewody ochronne nieposiadające izolacji (np. szynoprzewody) powinny być owinięte naprzemienne żółtymi i zielonymi paskami. Paski te powinny mieć szerokość 15 \u00F7 100 mm i stykać się ze sobą'),
+      LessonCard(
+          isFunFact: true,
+          text: 'W USA i Kanadzie przewód ochronny oznacza się barwą zieloną'),
+
+      LessonHeader(title: 'Barwa jasnoniebieska'),
+      LessonParagraph(text: 'Drugą najważniejszą barwą dla każdego elektryka jest barwa *jasnoniebieska*'),
+      LessonParagraph(text: 'Barwa ta jest zarezerwowana dla *przewodu neutralnego N* i jego odpowiednika w obwodach prądu stałęgo, czyli *przewodu środkowego M*'),
+      LessonParagraph(text: 'W przeciwieństwie do barwy żółto-zielonej istnieje pewne odstępstwo. Otóż jeżeli w danym obwodzie nie ma przewodu neutralnego ani środkowego, dopuszcza się wykorzystanie barwy jasnoneibieskiej w innym celu (np. do sterowania)'),
+      LessonParagraph(text: 'Podobnie jak w przypadku barwy żółto-zielonej, szynoprzewody powinny być oznaczone jasnoniebieskimi paskami o szerokości 15 \u00F7 100 mm, rozmieszczonymi dość blisko siebie, we wszystkich widocznych i dostępnych miejscach'),
+      LessonCard(
+          isFunFact: true,
+          text: 'W USA i Kanadzie przewód neutralny i środkowy oznacza się barwą białą'),
+    ]);
