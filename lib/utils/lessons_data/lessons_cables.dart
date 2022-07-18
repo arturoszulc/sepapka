@@ -392,8 +392,107 @@ LessonParagraph(text: 'Odzież zabezpiecza żyły przewodu przed *wysoką temper
     ]);
 
 
-const Lesson cableLesson5 = Lesson(id: 'PE-5', title: 'Rodzaje przewodów', description: 'O dostępnych typach przewodów', content: [
-  LessonHeader(title: '')
+const Lesson cableLesson5 = Lesson(
+    id: 'PE-5',
+    title: 'Rodzaje i oznaczenia przewodów',
+    description: 'O dostępnych typach przewodów',
+    content: [
+      LessonHeader(title: 'Dostępne rodzaje przewodów'),
+  LessonParagraph(text: 'Wchodząc na stronę dowolnego producenta przewodów (Bitner, Lapp, Helukabel, Eltrim, Elpar itp.), znajdziemy całą gamę przewodów jedno- i wielożyłowych do różnych zastosowań.'),
+  LessonParagraph(text: 'Elektrycy wykonujący instalacje domowe i przemysłowe, będą w swojej pracy wykorzystywać głównie:'),
+  LessonList(
+      bullets: true,
+      strings: [
+        'przewody instalacyjne (np. YDYżo, YDYp)',
+        'przewody do odbiorników ruchomych (np. OWY, OMY, SM)',
+        'kable (np. YAKY, YKY)',
+        'przewody do przyłączy napowietrznych (AsXS)',
+        'przewody komputerowe, alarmowe i telefoniczne (np. UTP, TDY)',
+        'przewody antenowe, koncentryczne (np. YWDXpek)',
+        'światłowody',
+      ]),
+  LessonParagraph(text: 'Z kolei automatycy i pracownicy utrzymania ruchu mogą napotkać dodatkowo:'),
+  LessonList(
+      bullets: true,
+      strings: [
+        'przewody sterownicze',
+        'przewody specjalne (do stref zagrożonych wybuchem, higieniczne, wysokotemperaturowe itp.)',
+        'przewody do serwonapędów',
+        'przewody kompensacyjne',
+      ]),
+  LessonParagraph(text: 'Poszukując przewodu do konkretnego zastosowania, najlepiej przejrzeć ofertę dowolnego producenta lub skontaktować się z przedstawicielem handlowym.'),
+  LessonHeader(title: 'Sposoby oznaczania przewodów'),
+  LessonParagraph(text: 'W Polsce posługujemy się dwoma systemami oznaczeń:'),
+  LessonList(
+      bullets: true,
+      strings: [
+        'polskim (norma PN-E 90411:1993)',
+        'europejskim (norma PN-HD 361 S3:2002)'
+      ]),
+
+  LessonHeader(title: 'System polski'),
+  LessonParagraph(text: 'Norma definiująca polski system oznaczania przewodów została *wycofana* w 2002 roku.'),
+  LessonParagraph(text: 'Mimo to, wielu elektryków i producentów do dziś pozostaje przy polskim systemie.'),
+  LessonParagraph(text: 'Zgodnie z jego założeniami, każdy przewód musi być oznaczony:'),
+  LessonList(
+      bullets: true,
+      strings: [
+        'symbolem literowym (np. YDY)',
+        'liczbą oraz przekrojem żył (np. 3x2,5)',
+        'napięciem znamionowym (np. 300/500 V)'
+      ]),
+  LessonHeader(title: 'System polski - symbol literowy'),
+  LessonParagraph(text: 'Symbol literowy koduje budowę przewodu (materiał żyły, izolacji oraz powłoki, występowanie ekranu, kształt przewodu itp.) oraz jego cechy szczególne i przeznaczenie (sterowniczy, spawalniczy, samonośny, niepalny itd.)'),
+  LessonParagraph(text: 'Wszystkie symbole wraz z przykładami znajdziesz w tabeli poniżej:'),
+      LessonButton(icon: Icons.table_chart_outlined, label: 'Symbole przewodów', screen: MyScreen.table_wire_symbols),
+      LessonParagraph(text: 'Problemem polskiej symboliki jest fakt, że poszczególne znaki symbolu literowego *nie mają swojego stałego miejsca*, co pokazują dwa poniższe przykłady.'),
+      LessonCard(
+          isExample: true,
+          text: 'W przewodzie AsXS, oznaczenie dodatkowe ,,s" (przewód samonośny) występuje *na drugim miejscu*.\n\n'
+              'Z kolei inne oznaczenia dodatkowe, jak na przykład ,,p" (przewód o płaskiej budowie), występują *na końcu* symbolu np. YDYp.'),
+      LessonCard(
+          isExample: true,
+          text: 'Polwinit (PVC) oznaca się literą Y. Jeśli zarówno powłoka przewodu jak i izolacja żył wykonana jest z polwinitu, wówczas, litera Y występuje dwukrotnie (np. YDY).\n\n'
+              'Inaczej jest z gumą. Jeśli izolacja żył przewodu oponowego warsztatowego (symbol OW) jest z polwinitu (symbol Y), to otrzymujemy symbol OWY. Jeśli jednak izolacja jest z gumy, to jej symbolu na końcu już nie podajemy, przez co zostaje tylko OW.'),
+      LessonParagraph(text: 'Wspomniane mieszanie i pomijane pewnych oznaczeń może sprawiać początkującym elektrykom trudności w zdekodowaniu niektórych rzadziej spotykanych przewodów. Problem ten rozwiązał system europejski, o którym opowiem nieco później.'),
+
+      LessonHeader(title: 'System polski - liczba i przekrój żył'),
+      LessonParagraph(text: 'Tutaj system jest dość jednoznaczy i zapis wygląda następująco: *liczba żył x przekrój żył*.'),
+LessonParagraph(text: 'W przypadku przewodów z żyłami *grupowowanymi* (np. skrętek) podajemy *liczba grup x liczba żył w grupie x przekrój żył*. Poniżej przykłady:'),
+      LessonList(
+          customBullets: ['3x1,5', '4x16', '1x0,5', '4x2x0,5', '16x3x0,5'],
+          strings: [
+        '3 żyły o przekroju 1,5 mm\u00b2 każda',
+        '4 żyły o przekroju 16 mm\u00b2 każda',
+        '1 żyła o przekroju 0,5 mm\u00b2',
+        '4 pary żył o przekroju 0,5 mm\u00b2 każda',
+        '16 trójek żył o przekrojach 0,5 mm\ubb02 każda',
+      ]),
+      LessonParagraph(text: 'W przypadku *przewodów jednożyłowych*, jak *1x0,5* podawanie liczby żył nie jest konieczne i wystarczy zapis: *0,5*. Mimo to producenci często pozostawiają zapis *1x0,5*, zapewne dla utrzymania konwencji.'),
+      LessonHeader(title: 'System polski - napięcie znamionowe'),
+      LessonParagraph(text: '*Napięcie znamionowe* to takie, na które dany przewód był projektowany.'),
+      LessonParagraph(text: 'Dla *przewodów wielożyłowych* są to zawsze *dwie wartości* np. 300/500 V'),
+      LessonParagraph(text: 'Pierwsza oznacza *napięcie między żyła, a ziemią (lub ekranem)*. Druga oznacza *napięcie między żyłami*'),
+      LessonParagraph(text: 'Dla *przewodów jednożyłowych* z oczywistych względów wystarczy *jedna wartość*, np. DY 0,5 750V.'),
+      LessonParagraph(text: 'U producentów znajdziemy przewody o następujących napięciach znamionowych:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            '300/300 V',
+            '300/500 V',
+            '450/750 V',
+            '600/1000 V',
+            '1000/1000 V',
+          ]),
+      LessonParagraph(text: 'W typowych *instalacjach domowych* teoretycznie wystarczą przewody 300/300 V (odbiorniki jednofazowe) i 300/500 V (odbiorniki trójfazowe). Jednak przewody wyższej jakości i trwałości są zwykle produkowane na napięcia 450/750 V (i wyższee).'),
+      LessonParagraph(text: 'Zdarza się, że dla przewodów wielożyłowych producenci podają tylko tę wyższą wartość napięcia (np. YDYpżo 3x1,5 750 V). '
+          'Wówczas to elektryk musi domyślić się, że tą niższą wartością jest 450 V.'),
+
+
+      LessonHeader(title: 'System europejski'),
+      LessonCard(
+      isExample: true,
+      text: 'Przewód o symbolu YDYp wyposażony jest w '),
   //YLgY-S(p)
   //Przewód samochodowy (S) na napięcie zanamionowe 24 V o żyłach z drutów miedzianych (Lg) w izolacji polwinitowej (Y), powłoce polwinitowej (Y), prostokątny (p).
   
@@ -403,22 +502,22 @@ const Lesson cableLesson5 = Lesson(id: 'PE-5', title: 'Rodzaje przewodów', desc
 
 const Lesson cableLesson6 = Lesson(
     id: 'PE-6',
-    title: 'Znakowanie przewodów',
-    description: 'O barwach i oznaczeniach przewodów',
+    title: 'Barwy przewodów',
+    description: 'O kolorach i ich znaczeniu',
     content: [
       LessonHeader(title: 'Informacje ogólne'),
-      LessonParagraph(text: 'Aby uniknąć pomyłek w stylu podłączenia przewodu fazowego do zacisku uziemienia, poszczególne przewody oznacza się barwami i dodatkowymi oznaczeniami.'),
-      LessonParagraph(text: 'Listę wszystkich dostępnych barw i jej kodów skróconych znajdziesz w poniższej tabeli:'),
+      LessonParagraph(text: 'Aby uniknąć pomyłek w stylu podłączenia przewodu fazowego do zacisku uziemienia, przewody oznacza się *barwami*.'),
+      LessonParagraph(text: 'Listę wszystkich dostępnych barw i ich skróconych kodów znajdziesz w poniższej tabeli:'),
       LessonButton(icon: Icons.table_chart_outlined, label: 'Tabela barw przewodów', screen: MyScreen.table_wire_colors),
-      LessonParagraph(text: 'Przewody powinny być oznaczone barwą na całej długości (barwna izolacja lub znaczniki).'),
-      LessonParagraph(text: 'Jeśli nie jest to możliwe, dopuszcza się oznaczenia barwne tylko w widocznych i dostępnych miejscach lub ostatecznie na obu końcach przewodu'),
+      LessonParagraph(text: 'Przewody powinny być oznaczone barwą na całej długości (barwna izolacja).'),
+      LessonParagraph(text: 'Jeśli nie jest to możliwe, dopuszcza się oznaczenia *barwnymi znacznikami* tylko w widocznych i dostępnych miejscach lub ostatecznie na obu końcach przewodu'),
       LessonHeader(title: 'Barwa żółto-zielona'),
       LessonParagraph(text: 'Najważniejszą barwą dla każdego elektryka jest barwa *żółto-zielona*'),
-      LessonParagraph(text:'Żyłę o takiej barwie możemy wykorzystywać tylko i wyłacznie w roli *przewódu ochronnego PE*. Jeśli przewody *uziemiający* i *wyrównawczy* pełnią są wykorzystywanie w ochronie przeciwporażeniowej, wówczas stają się niejako przewodami ochronnymi i one również mogą mieć barwę żółto-zieloną.'),
+      LessonParagraph(text:'Żyłę pokrytą taką barwą możemy wykorzystywać tylko i wyłacznie w roli *przewódu ochronnego PE*. Jeśli przewody *uziemiający (PEL)* i *wyrównawczy (FB)* są wykorzystywanie w ochronie przeciwporażeniowej, wówczas stają się niejako przedłużeniem przewodu ochronnego i one również powinny mieć barwę żółto-zieloną.'),
       LessonCard(
           isImportant: true,
-          text: 'Aby zminimalizować ryzyko pomyłki, w przewodzie posiadającym żyłę żółto-zieloną nie mogą znajdować się inne żyły o barwie żółtej lub zielonej'),
-      LessonParagraph(text: 'Przewody ochronne nieposiadające izolacji (np. szynoprzewody) powinny być owinięte naprzemienne żółtymi i zielonymi paskami. Paski te powinny mieć szerokość 15 \u00F7 100 mm i stykać się ze sobą'),
+          text: 'Aby zminimalizować ryzyko pomyłki, w przewodzie wielożyłowym posiadającym żyłę żółto-zieloną nie mogą znajdować się inne żyły o barwie żółtej lub zielonej'),
+      LessonParagraph(text: 'Przewody ochronne nieposiadające izolacji (np. szynoprzewody) powinny być owinięte naprzemienne żółtymi i zielonymi paskami. Paski te powinny mieć szerokość 15 \u00F7 100 mm i przylegać do siebie'),
       LessonCard(
           isFunFact: true,
           text: 'W USA i Kanadzie przewód ochronny oznacza się barwą zieloną'),
@@ -426,9 +525,36 @@ const Lesson cableLesson6 = Lesson(
       LessonHeader(title: 'Barwa jasnoniebieska'),
       LessonParagraph(text: 'Drugą najważniejszą barwą dla każdego elektryka jest barwa *jasnoniebieska*'),
       LessonParagraph(text: 'Barwa ta jest zarezerwowana dla *przewodu neutralnego N* i jego odpowiednika w obwodach prądu stałęgo, czyli *przewodu środkowego M*'),
-      LessonParagraph(text: 'W przeciwieństwie do barwy żółto-zielonej istnieje pewne odstępstwo. Otóż jeżeli w danym obwodzie nie ma przewodu neutralnego ani środkowego, dopuszcza się wykorzystanie barwy jasnoneibieskiej w innym celu (np. do sterowania)'),
-      LessonParagraph(text: 'Podobnie jak w przypadku barwy żółto-zielonej, szynoprzewody powinny być oznaczone jasnoniebieskimi paskami o szerokości 15 \u00F7 100 mm, rozmieszczonymi dość blisko siebie, we wszystkich widocznych i dostępnych miejscach'),
+      LessonParagraph(text: 'Jeżeli w danym obwodzie nie ma przewodu neutralnego ani środkowego (np. w obwodach sterowania), dopuszcza się wykorzystanie barwy jasnoniebieskiej w innym celu'),
+      LessonParagraph(text: 'Szynoprzewody pozbawione izolacji być oznaczone jasnoniebieskimi paskami o szerokości 15 \u00F7 100 mm, rozmieszczonymi w równych, niewielkich odstępach.'),
       LessonCard(
           isFunFact: true,
           text: 'W USA i Kanadzie przewód neutralny i środkowy oznacza się barwą białą'),
+
+      LessonHeader(title: 'Przewód PEN'),
+      LessonParagraph(text: 'Przewód ochronno-neutralny PEN (spotykany w sieciach typu TN-C) jest jedynym przewodem, na którym znajdziemy aż *trzy barwy*: żółtą, zieloną i jasnoniebieską'),
+      LessonParagraph(text: 'Norma *PN-HD 60364* mówi, że przewód ten może być oznaczony dwojako:'),
+      LessonList(
+          bullets: true,
+          strings: [
+            'barwą żółto-zieloną na całej długości i jasnoniebieskimi znacznikami na obu końcach',
+            'barwą jasnoniebieską na całej długości i żółto-zielonymi znacznikami na obu końcach',
+          ]),
+
+      LessonHeader(title: 'Barwy przewodów fazowych'),
+      LessonParagraph(text: 'Dla jak najlepszego odróżnienia przewodów fazowych od przewodów PE i N, norma *PN-HD 60364* zaleca następujące barwy:'),
+      LessonList(
+          customBullets: ['L1','L2','L3'],
+          strings: [
+            'brązową',
+            'czarną',
+            'szarą',
+          ]),
+      LessonParagraph(text: 'Warto zauważyć, że barwy te są uszeregowane *alfabetycznie* (b-c-s), co pomaga zapamiętać ich kolejność.'),
+      LessonParagraph(text: 'W przypadku *obwodów prądu stałego*, jedynymi znormalizowanymi kolorami jest oczywiście barwa żółto-zielona (przewód ochronny PE) oraz jasnoniebieska (przewód środkowy M).'),
+      LessonParagraph(text: 'Kolory biegunów dodatniego (L+) i ujemnego (L-) nie są znormalizowane.'),
+      LessonHeader(title: 'Inne barwy'),
+      LessonParagraph(text: 'Pozostałę barwy mogą być stosowane bez specjalnych ograniczeń, z tym że w przewodzie wielożyłowym o kolorowych żyłach, każda z nich powinna mieć niepowtarzalną barwę.'),
+      LessonParagraph(text: 'W przewodach o kilkudziesięciu żyłach niepowtarzalność uzyskuje się dzięi dwukolorwym wzorom (ale nie żółto-zielonym)'),
+      LessonParagraph(text: 'W przewodach parowanych dopuszcza się powtarzanie barw, jeśli przewód taki jest sparowany (np. przez skręcenie) z innym przewodem o niepowtarzalnej barwie'),
     ]);

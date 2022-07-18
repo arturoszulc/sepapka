@@ -21,7 +21,7 @@ class LessonButton extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20.0),
       child: ElevatedButton.icon(
         icon: Icon(icon),
         style: ElevatedButton.styleFrom(
