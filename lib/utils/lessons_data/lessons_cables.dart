@@ -21,19 +21,19 @@ const Lesson cableLesson1 = Lesson(
     customBullets: ['oszczędne', 'bezpieczne','wytrzymałe'],
     strings: [
       'czyli nie nagrzewały się i nie marnowały w ten sposób energii elektrycznej.',
-      'nie chcemy by parzenie kawy i suszenie włosów suszarką wzbudzały w nas strach. ',
-      'prucie każdego roku ścian i układanie nowej instalacji byłoby bardzo problematyczne.',
+      'nie chcemy, by parzenie kawy i suszenie włosów suszarką wzbudzały w nas strach. ',
+      'kucie ścian co roku i układanie nowej instalacji byłoby bardzo problematyczne.',
     ],
   ),
   LessonHeader(title: 'Budowa'),
   LessonParagraph(text: 'Aby spełnić powyższe założenia, przewody elektryczne składają się zwykle z:'),
-  ImageCaption(path: 'assets/images/cables/cable_construction2.png', caption: 'źródło: cablematic.com', ignoreDarkMode: true,),
+  ImageCaption(path: 'assets/images/cables/cable_construction.png', caption: 'źródło: cablematic.com', ignoreDarkMode: true,),
   LessonList(
       numbers: true,
       strings: [
-        'żyła - element przewodzący prąd (fachowo: część czynna),',
-        'izolacja - powłoka otaczająca żyły. Chroni je przed zwarciem między sobą i korozją,',
-        'warstwy zewnętrzne - dodatkowa powłoka, pancerz, ekran lub odzież, w zależności od potrzeb,',
+        'żyła - element przewodzący prąd (fachowo: część czynna)',
+        'izolacja - powłoka otaczająca żyły. Chroni je przed zwarciem między sobą i korozją',
+        'warstwy zewnętrzne - dodatkowa powłoka, pancerz, ekran lub odzież, w zależności od potrzeb',
       ]),
   LessonParagraph(text: 'Poszczególne elementy przewodu zostały dokładnie opisane w kolejnych lekcjach.'),
 
@@ -46,7 +46,7 @@ const Lesson cableLesson2 = Lesson(
     description: 'O materiałach, przekrojach i właściwościach żył',
     content: [
       LessonHeader(title: 'Materiał żył'),
-      LessonParagraph(text: 'Żyła przewodu jest *przewodnikiem*, czyli *materiałem o niskiej rezystywności* lub po prostu *metalem*.'),
+      LessonParagraph(text: 'Żyła przewodu jest *przewodnikiem*, czyli *materiałem o niskiej rezystywności*. Do tej grupy zaliczamy wszystkie *metale*.'),
       LessonParagraph(text: 'Najlepiej przewodzącym metalem jest *srebro*, ale ze względu na jego wysoką cenę, żyły wykonuje się zwykle z *miedzi* i *aluminium*.'),
       LessonCard(
           isFunFact: true,
@@ -56,11 +56,11 @@ const Lesson cableLesson2 = Lesson(
       LessonHeader(title: 'Kształt żył'),
       LessonParagraph(text: 'Żyły przewodów stosowanych w instalacjach niskiego napięcia mają najczęściej przekrój *okręgu* lub wycinka okręgu, zwanego *sektorem*.'),
       ImageCaption(path: 'assets/images/cables/cable_circular_sector_shapes.png', ignoreDarkMode: true,),
-      LessonParagraph(text: 'Zaletą żył sektorowych jest znacznie lepsze wykorzystanie dostępnej przestrzeni w przewodzie wielożyłowym. Wadą jest konieczność stosowania nieco grubszej izolacji.'),
+      LessonParagraph(text: 'Zaletą żył sektorowych jest znacznie *lepsze wykorzystanie przestrzeni* w okrągłym przewodzie wielożyłowym. Wadą jest konieczność stosowania nieco *grubszej izolacji*.'),
       LessonParagraph(text: 'Wspomniana wada nie zmienia faktu, że przewód sektorowy będzie miał *mniejszą średnicę* od przewodu z żyłami okrągłymi, o tej samej obciążalności prądowej.'),
       ImageCaption(path: 'assets/images/cables/cable_circular_vs_sector.png', ignoreDarkMode: true,),
       LessonHeader(title: 'Budowa żył'),
-      LessonParagraph(text: 'Żyły wykonane z jednego, litego kawałka metalu (tzw. *jednodrutowe*) są podatne na złamania, stąd nie nadają się do zasilania odbiorników ruchomych. '
+      LessonParagraph(text: 'Żyły wykonane z jednego, litego kawałka metalu (tzw. *jednodrutowe*) są podatne na złamania, przez co nie nadają się do zasilania odbiorników ruchomych. '
           'Aby temu zaradzić, wprowadzono żyły skręcane z dużej ilości cienkich drucików (tzw. *wielodrutowe*).'),
       LessonParagraph(text: 'W celu rozróżnienia poszczególnych konstrukcji, norma *IEC 60228* wprowadziła następujące oznaczenia:'),
       LessonImageTextRow(
@@ -94,7 +94,7 @@ const Lesson cableLesson2 = Lesson(
           Text('żyła sektorowa, wielodrutowa', textAlign: TextAlign.left,)
         ],),
       LessonHeader(title: 'Klasy żył'),
-      LessonParagraph(text: 'Przewody wielodrutowe mogą być zbudowane z różnej liczby drucików (o różnej grubości), co wpływa na ich *elastyczność*. Stąd norma *IEC 60228* wprowadziła dodatkowy podział żył na 4 klasy giętkości:'),
+      LessonParagraph(text: 'Liczba oraz grubość drucików z jakich zbudowana jest żyła wielodrutowa ma wpływ na jej *elastyczność*. Stąd norma *IEC 60228* wprowadziła dodatkowy podział żył na 4 klasy giętkości:'),
       LessonList(
           customBullets: ['klasa 1', 'klasa 2', 'klasa 5', 'klasa 6'],
           strings: [
@@ -114,14 +114,15 @@ const Lesson cableLesson2 = Lesson(
             '84 drutów o średnicy 0,15 mm każdy',
           ]),
       LessonHeader(title: 'Przekroje żył'),
-      LessonParagraph(text: 'Najważniejszą cechą każdej żyły jest jej *pole przekroju poprzecznego*. Im jest ono wyższe, tym większy prąd jest w stanie wytrzymać żyła.'),
+      LessonParagraph(text: 'Najważniejszą cechą każdej żyły jest jej *pole przekroju poprzecznego*.'),
+      LessonParagraph(text: 'Im jest ono wyższe, tym *większy prąd* możemy przepuścić przez żyłę, nie doprowadzając do jej *nadmiernego nagrzania* (co może stopić izolację).'),
       LessonParagraph(text: 'Europejska norma *IEC 60228* obejmuje również ten aspekt i tak u producentów znajdziemy przewody o następujących przekrojach żył:'),
       LessonParagraph(text: '0,5; 0,75; 1; 1,5; 2,5; 4; 6; 10; 16; 25; 35; 50; 70; 95; 120; 150; 185; 240; 300; 400; 500; 630; 800; 1000 mm\u00b2'),
       LessonCard(
           isFunFact: true,
           text: 'Norma dopuszcza stosowanie innych przekrojów w przypadku specjalnych zastosowań.\nPrzykładem może być przekrój 0,34 mm\u00b2, popularny w technice pomiarowej i sprzęcie audio, czy przekrój 2000 mm\u00b2 stosowany w liniach wysokiego napięcia.'),
       LessonParagraph(text: 'Warto wiedzieć, że na rynku możemy spotkać również przewody opisane jako *AWG* (ang. American Wire Gauge). Jest to standard stosowany między innymi w USA oraz Wielkiej Brytanii.'),
-      LessonParagraph(text: 'Niestety nie da się go w prosty sposób przeliczyć na nasz europejski szereg. To znaczy, że w standardzie AWG nie znajdziemy odpowiednika europejskiej żyły 2,5 mm\u00b2. Najbliżej będą w tym wypadku AWG13 (przekrój 2,62 mm\u00b2) lub AWG14 (przekrój 2,08 mm\u00b2).'),
+      LessonParagraph(text: 'Niestety nie da się go w prosty sposób przeliczyć na nasz europejski szereg. To znaczy, że w standardzie AWG nie znajdziemy odpowiednika żyły 2,5 mm\u00b2. Najbliżej będą w tym wypadku AWG13 (przekrój 2,62 mm\u00b2) lub AWG14 (przekrój 2,08 mm\u00b2).'),
       LessonParagraph(text: 'Stąd, chcąc dobrać zamiennik w szeregu AWG, musimy albo zagłębić się w *tabele obciążalności prądowej*, albo skorzystać z *gotowych tabel* przygotowanych przez producentów przewodów. Do jednej z nich prowadzi poniższy przycisk:'),
       LessonButton(icon: Icons.table_chart_outlined, label: 'Przekroje przewodów', screen: MyScreen.table_wire_diameter),
 
@@ -138,9 +139,9 @@ const Lesson cableLesson3 = Lesson(
       LessonList(
           bullets: true,
           strings: [
-            'oddzielenia żył przewodu od siebie, by nie doszło do zwarcia,',
-            'ochrony żył przed wpływem wilgoci i środków chemicznych,',
-            'ochrony człowieka przed dotknięciem żyły i porażeniem.',
+            'oddzielenia żył przewodu od siebie, by nie doszło do zwarcia',
+            'ochrony żył przed wpływem wilgoci i środków chemicznych',
+            'ochrony człowieka przed dotknięciem żyły i porażeniem',
           ]),
       LessonCard(
           isImportant: true,
@@ -186,7 +187,7 @@ const Lesson cableLesson3 = Lesson(
           ]),
       LessonCard(
           isImportant: true,
-          text: 'Polwinit to plastyfikwoany polichlorek winylu, którego skrót to PVC lub PCW. Określenie PCV jest niepoprawne i nie należy go używać.'),
+          text: 'Polwinit to inaczej plastyfikowany polichlorek winylu, w skrócie *PVC* lub *PCW*. Określenie PCV jest niepoprawne i nie należy go używać.'),
 
 
       LessonHeader(title: 'Polietylen (PE)'),
@@ -352,7 +353,7 @@ const Lesson cableLesson4 = Lesson(
             'odzież',
           ]),
       LessonHeader(title: 'Ekran'),
-      LessonParagraph(text: 'Jest to opcjonalna cienka warstwa, mająca na celu *ochronę przed zakłóceniami*. Wykonuje się ją z:'),
+      LessonParagraph(text: 'Jest opcjonalną, cienką warstwa, mająca na celu *ochronę przed zakłóceniami*. Wykonuje się go z:'),
       LessonList(
           bullets: true,
           strings: [
@@ -361,17 +362,25 @@ const Lesson cableLesson4 = Lesson(
             'polietylenu z dodatkiem grafitu',
           ]),
       ImageCaption(path: 'assets/images/cables/cable_shielded.png', ignoreDarkMode: true,),
-      LessonParagraph(text: 'Ekran może chronić przed *zakłóceniami elektromagnetycznymi z zewnątrz*, jak i *stabilizować rozkład pola elektrycznego* w przewodach energetycznych.'),
-LessonParagraph(text: 'Napotkamy go głównie w przewodach przeznaczonych do *komunikacji*, *sterowania*, a także *zasilania silników* poprzez przemienniki częstotliwości.'),
+      LessonParagraph(text: 'Ekran może chronić przed *zakłóceniami elektromagnetycznymi*, jak i *stabilizować rozkład pola elektrycznego* w przewodach energetycznych.'),
+LessonParagraph(text: 'Napotkamy go głównie w przewodach przeznaczonych do *komunikacji*, *sterowania*, a także zasilania odbiorników przez *przemienniki częstotliwości*.'),
       LessonParagraph(text: 'W zależności od sytuacji, ekran podłącza się do *zacisku uziemiającego* z jednej lub z dwóch stron.'),
       LessonParagraph(text: 'O podstawach ekranowania możesz przeczytać w poradniku przygotowanym przez firmę Phoenix Contact:'),
       LessonButtonLink(label: 'Podstawy ekranowania', url: 'https://www.phoenixcontact.com/pl-pl/technologie/ekranowanie/podstawy-ekranowania'),
+
       LessonHeader(title: 'Powłoka'),
-      LessonParagraph(text: 'Powłoka stanowi dodatkową ochronę żył przed uszkodzeniami mechanicznymi i wnikaniem do wnętrza wody. Wykonuje się ją z takich samych materiałów jak izolację żył (patrz poprzednia lekcja).'),
-      LessonParagraph(text: 'Najcześciej spotykanymi powłokami są: *polwinit* (przewody instalacyjne układane na stałe) oraz *guma*, (przewody przeznaczone do pracy na zewnątrz i przy odbiornikach ruchomych).'),
+      LessonParagraph(text: 'Powłoka stanowi dodatkową ochronę żył przed:'),
+      LessonList(
+          bullets: true,
+          strings: [
+        'uszkodzeniami mechanicznymi',
+            'wnikaniem do wnętrza wody',
+      ]),
+      LessonParagraph(text: 'Wykonuje się ją z takich samych materiałów jak izolację żył (patrz poprzednia lekcja).'),
+      LessonParagraph(text: 'Najcześciej spotykanymi powłokami są: *polwinit* (przewody instalacyjne układane na stałe) oraz *guma* (przewody przeznaczone do pracy na zewnątrz i przy odbiornikach ruchomych).'),
       LessonParagraph(text: 'Jeśli warunki są trudne (np. wysoka temperatura, wilgotność) przewód może zostać wyposażony w specjalnie pogrubioną powłokę (nazywamy ją wtedy *oponą*) lub powłokę podwójną.'),
       ImageCaption(path: 'assets/images/cables/cable_double_insulation.png', ignoreDarkMode: true, caption: 'Przewód w podwójnej powłoce (źródło: speckable.pl)',),
-      //Obrazek podwójnej powłoki
+
       LessonHeader(title: 'Pancerz'),
       LessonParagraph(text: 'Pancerz umieszcza się zwykle między dwiema warstwami powłoki. Wykonuje się go z:'),
       LessonList(
@@ -453,11 +462,11 @@ const Lesson cableLesson5 = Lesson(
           isExample: true,
           text: 'Polwinit (PVC) oznaca się literą Y. Jeśli zarówno powłoka przewodu jak i izolacja żył wykonana jest z polwinitu, wówczas, litera Y występuje dwukrotnie (np. YDY).\n\n'
               'Inaczej jest z gumą. Jeśli izolacja żył przewodu oponowego warsztatowego (symbol OW) jest z polwinitu (symbol Y), to otrzymujemy symbol OWY. Jeśli jednak izolacja jest z gumy, to jej symbolu na końcu już nie podajemy i zostaje po prostu OW.'),
-      LessonParagraph(text: 'Wspomniane mieszanie i pomijane pewnych oznaczeń może sprawiać początkującym elektrykom trudności w zdekodowaniu niektórych rzadziej spotykanych przewodów. Problem ten rozwiązał system europejski, o którym opowiem nieco później.'),
+      LessonParagraph(text: 'Powyższe nieścisłości mogą sprawiać początkującym elektrykom trudności w zdekodowaniu niektórych rzadziej spotykanych przewodów. Problem ten częściowo rozwiązuje system europejski, o którym za chwilę.'),
 
       LessonHeader(title: 'System polski - liczba i przekrój żył'),
       LessonParagraph(text: 'Tutaj system jest dość jednoznaczy i zapis wygląda następująco: *liczba żył x przekrój żył*.'),
-LessonParagraph(text: 'W przypadku przewodów z żyłami *grupowowanymi* (np. skrętek) podajemy *liczba grup x liczba żył w grupie x przekrój żył*. Poniżej przykłady:'),
+LessonParagraph(text: 'W przypadku przewodów z żyłami *grupowanymi* (np. skrętek) podajemy *liczba grup x liczba żył w grupie x przekrój żył*. Poniżej przykłady:'),
       LessonList(
           customBullets: ['3x1,5', '4x16', '1x0,5', '4x2x0,5', '16x3x0,5'],
           strings: [
@@ -489,23 +498,23 @@ LessonParagraph(text: 'W przypadku przewodów z żyłami *grupowowanymi* (np. sk
 
 
       LessonHeader(title: 'System europejski'),
-      LessonParagraph(text: 'System ten, często zwany *zharmonizowanym*, pojawił się w 2002 roku, zastępując system polski.'),
-      LessonParagraph(text: 'Koduje on wszystkie cechy przewodu za pomocą *9 znaków* (lub grup znaków), z których każdy ma swoje *stałe miejsce*'),
+      LessonParagraph(text: 'System ten, zwany *zharmonizowanym*, pojawił się w 2002 roku, zastępując system polski.'),
+      LessonParagraph(text: 'Koduje on wszystkie cechy przewodu za pomocą *9 znaków* (lub grup znaków), z których każdy ma swoje *stałe miejsce*.'),
       LessonParagraph(text: 'Po szczegóły ponownie odsyłam do tabeli i zakładki ,,zharmonizowane":'),
       LessonButton(icon: Icons.table_chart_outlined, label: 'Symbole przewodów', screen: MyScreen.table_wire_symbols),
-      LessonParagraph(text: 'Jak widać system ten jest dość *ograniczony*, gdyż obejmuje on jedynie najczęściej stosowane przewody instalacyjne.'),
-      LessonParagraph(text: 'Nie przewiduje on kodu chociażby dla przewodów na napięcia powyżej 750 V, czy przewodów specjalistycznych (jak skrętki, kable itp.)'),
+      LessonParagraph(text: 'System ten, jest niewątpliwie *lepiej uporządkowany* od polskiego, ale przy tym niestety bardziej *ograniczony*.'),
+      LessonParagraph(text: 'Nie przewiduje on bowiem kodu dla przewodów na napięcia powyżej 750 V, czy przewodów specjalistycznych (np. skrętek)'),
       LessonParagraph(text: 'W takiej sytuacji producenci stosują inne, wypracowane przez lata oznaczenia. Wśród nich:'),
       LessonList(
           bullets: true,
           strings: [
             'LiYY - przewód w izolacji PVC, do transmisji danych',
-            'SiHF - przewód oponowy, odporny na wysoką temperaturę (do 180\u00b0C',
+            'SiHF - przewód oponowy, odporny na wysoką temperaturę (do 180\u00b0C)',
             'UTP, STP, S-STP - skrętki komputerowe (sieć LAN)',
             'FZ-LSi - przewód do rur neonowych',
             'NYY - kabel energetyczny / sterujący',
           ]),
-      LessonParagraph(text: ''),
+      LessonParagraph(text: 'Reasumując, oba systemy mają swoje wady i zalety, jednak żaden z nich *nie jest systemem kompletnym* i pewnie długo się takiego nie doczekamy.'),
   //YLgY-S(p)
   //Przewód samochodowy (S) na napięcie zanamionowe 24 V o żyłach z drutów miedzianych (Lg) w izolacji polwinitowej (Y), powłoce polwinitowej (Y), prostokątny (p).
   
@@ -523,29 +532,30 @@ const Lesson cableLesson6 = Lesson(
       LessonParagraph(text: 'Listę wszystkich dostępnych barw i ich skróconych kodów znajdziesz w poniższej tabeli:'),
       LessonButton(icon: Icons.table_chart_outlined, label: 'Tabela barw przewodów', screen: MyScreen.table_wire_colors),
       LessonParagraph(text: 'Przewody powinny być oznaczone barwą na całej długości (barwna izolacja).'),
-      LessonParagraph(text: 'Jeśli nie jest to możliwe, dopuszcza się oznaczenia *barwnymi znacznikami* tylko w widocznych i dostępnych miejscach lub ostatecznie na obu końcach przewodu'),
+      LessonParagraph(text: 'Jeśli nie jest to możliwe, dopuszcza się oznaczenia *barwnymi znacznikami* tylko w widocznych i dostępnych miejscach lub ostatecznie na obu końcach przewodu.'),
       LessonHeader(title: 'Barwa żółto-zielona'),
       LessonParagraph(text: 'Najważniejszą barwą dla każdego elektryka jest barwa *żółto-zielona*'),
-      LessonParagraph(text:'Żyłę pokrytą taką barwą możemy wykorzystać tylko i wyłacznie w roli *przewódu ochronnego PE*. Jeśli przewody *uziemiający (PEL)* i *wyrównawczy (FB)* są wykorzystywanie w ochronie przeciwporażeniowej, wówczas stają się niejako przedłużeniem przewodu ochronnego i one również powinny mieć barwę żółto-zieloną.'),
+      LessonParagraph(text:'Żyłę pokrytą taką barwą możemy wykorzystać tylko i wyłacznie w roli *przewodu ochronnego PE*.'),
+      LessonParagraph(text: 'Jeśli przewody *uziemiający (PEL)* i *wyrównawczy (FB)* są wykorzystywanie w ochronie przeciwporażeniowej, wówczas stają się niejako przedłużeniem przewodu ochronnego i również powinny mieć barwę żółto-zieloną.'),
       LessonCard(
           isImportant: true,
           text: 'Aby zminimalizować ryzyko pomyłki, w przewodzie wielożyłowym posiadającym żyłę żółto-zieloną nie mogą znajdować się inne żyły o barwie żółtej i zielonej.'),
-      LessonParagraph(text: 'Przewody ochronne *nieposiadające izolacji* (np. szynoprzewody) powinny być owinięte naprzemienne żółtymi i zielonymi paskami. Paski te powinny mieć szerokość 15 \u00F7 100 mm i przylegać do siebie'),
+      LessonParagraph(text: 'Przewody ochronne *nieposiadające izolacji* (np. szynoprzewody) powinny być owinięte naprzemienne żółtymi i zielonymi paskami. Paski te powinny mieć szerokość 15 \u00F7 100 mm i przylegać do siebie.'),
       LessonCard(
           isFunFact: true,
           text: 'W USA i Kanadzie przewód ochronny oznacza się barwą zieloną.'),
 
       LessonHeader(title: 'Barwa jasnoniebieska'),
-      LessonParagraph(text: 'Drugą najważniejszą barwą dla każdego elektryka jest barwa *jasnoniebieska*'),
-      LessonParagraph(text: 'Barwa ta jest zarezerwowana dla *przewodu neutralnego N* i jego odpowiednika w obwodach prądu stałęgo, czyli *przewodu środkowego M*'),
+      LessonParagraph(text: 'Drugą najważniejszą barwą dla każdego elektryka jest barwa *jasnoniebieska*.'),
+      LessonParagraph(text: 'Barwa ta jest zarezerwowana dla *przewodu neutralnego N* i jego odpowiednika w obwodach prądu stałęgo, czyli *przewodu środkowego M*.'),
       LessonParagraph(text: 'Jeżeli w danym obwodzie nie ma przewodu neutralnego ani środkowego (np. w obwodach sterowania), dopuszcza się wykorzystanie barwy jasnoniebieskiej w innym celu.'),
       LessonParagraph(text: 'Szynoprzewody pozbawione izolacji muszą być oznaczone jasnoniebieskimi paskami o szerokości 15 \u00F7 100 mm, rozmieszczonymi w równych, niewielkich odstępach.'),
       LessonCard(
           isFunFact: true,
-          text: 'W USA i Kanadzie przewód neutralny i środkowy oznacza się barwą białą'),
+          text: 'W USA i Kanadzie przewód neutralny i środkowy oznacza się barwą białą.'),
 
       LessonHeader(title: 'Przewód PEN'),
-      LessonParagraph(text: 'Przewód ochronno-neutralny PEN (spotykany w sieciach typu TN-C) jest jedynym przewodem, na którym znajdziemy aż *trzy barwy*: żółtą, zieloną i jasnoniebieską'),
+      LessonParagraph(text: 'Przewód ochronno-neutralny PEN (spotykany w sieciach typu TN-C) jest jedynym przewodem, na którym znajdziemy aż *trzy barwy*: żółtą, zieloną i jasnoniebieską.'),
       LessonParagraph(text: 'Norma *PN-HD 60364* mówi, że przewód ten może być oznaczony dwojako:'),
       LessonList(
           bullets: true,
@@ -566,7 +576,7 @@ const Lesson cableLesson6 = Lesson(
       LessonParagraph(text: 'Warto zauważyć, że barwy te są uszeregowane *alfabetycznie* (b-c-s), co pomaga zapamiętać ich kolejność.'),
       LessonParagraph(text: 'W przypadku *obwodów prądu stałego*, barwy bieguna dodatniego (L+) i ujemnego (L-) nie są znormalizowane.'),
       LessonHeader(title: 'Inne barwy'),
-      LessonParagraph(text: 'Pozostałę barwy mogą być stosowane bez specjalnych ograniczeń, z tym że w przewodzie wielożyłowym o kolorowych żyłach, każda z nich powinna mieć *niepowtarzalną barwę*.'),
+      LessonParagraph(text: 'Pozostałę barwy mogą być stosowane bez większych ograniczeń, z tym że w przewodzie wielożyłowym o kolorowych żyłach, każda z nich powinna mieć *niepowtarzalną barwę*.'),
       LessonParagraph(text: 'W przewodach sterowniczych o kilkudziesięciu żyłach niepowtarzalność uzyskuje się dzięki *dwukolorowym wzorom* lub zastąpieniu kolorów *numerami*.'),
       ImageCaption(path: 'assets/images/cables/cable_numbered_wires.png', caption: 'źródło: sklephelukabel.pl', ignoreDarkMode: true,),
       LessonParagraph(text: 'W przewodach *alarmowych* i *telefonicznych* zdarza się, że barwy się powtarzają (najczęściej biała). Wtedy rozróżnia się je poprzez *skręcenie* ich z żyłami barwnymi (np. *YTKSY 2x2x0,5* o parach biała-czerwona i biała-niebieska).'),

@@ -29,8 +29,6 @@ class TableWireSymbols extends StatelessWidget {
           child: TabBarView(children: [
             tabPolish(context),
             tabHarmonized(context),
-            // buildRankTop(context),
-            // buildRankUser(context),
           ]),
         ),
       ),
@@ -156,17 +154,17 @@ class TableWireSymbols extends StatelessWidget {
   List<Widget> polishExamples() {
     return [
       wireSymbolExampleTemplate(
-          symbol: 'LgY 450/750V ',
+          symbol: 'LgY 750V ',
           description:
-              'przewód miedziany, na napięcie 450/750 V, izolacja polwinitowa (PVC), linka do układania na stałe, jednożyłowy'),
+              'przewód miedziany, na napięcie 750 V, izolacja polwinitowa (PVC), linka do układania na stałe, jednożyłowy'),
       wireSymbolExampleTemplate(
-          symbol: 'DY 450/750V ',
+          symbol: 'DY 750V ',
           description:
-              'przewód miedziany, na napięcie 450/750 V, izolacja polwinitowa (PVC), drut'),
+              'przewód miedziany, na napięcie 750 V, izolacja polwinitowa (PVC), drut'),
       wireSymbolExampleTemplate(
-          symbol: 'OWY 300/500V',
+          symbol: 'OWY 2x1,5 300/500V',
           description:
-              'przewód miedziany, na napięcie 300/500 V, izolacja polwinitowa (PVC), powłoka polwinitowa (PVC), linka do odbiorników ruchomych, jednożyłowy'),
+              'przewód miedziany, na napięcie 300/500 V, izolacja polwinitowa (PVC), powłoka polwinitowa (PVC), linka do odbiorników ruchomych, 2-żyłowy, przekrój 1,5mm\u00b2'),
       wireSymbolExampleTemplate(
           symbol: 'YAKY 4x16 0,6/1 kV',
           description:
@@ -183,15 +181,15 @@ class TableWireSymbols extends StatelessWidget {
       wireSymbolExampleTemplate(
           symbol: 'H07 V-K',
           description:
-              'przewód zharmonizowany, na napięcie 450/750 V, izolacja polwinitowa (PVC), linka do układania na stałe, jednożyłowy'),
+              'przewód zharmonizowany, na napięcie 750 V, izolacja polwinitowa (PVC), linka do układania na stałe, jednożyłowy'),
       wireSymbolExampleTemplate(
           symbol: 'H07 V-U',
           description:
-              'przewód zharmonizowany, na napięcie 450/750 V, izolacja polwinitowa (PVC), drut'),
+              'przewód zharmonizowany, na napięcie 750 V, izolacja polwinitowa (PVC), drut'),
       wireSymbolExampleTemplate(
-          symbol: 'H05 VV-F',
+          symbol: 'H05 VV-F 2x1,5',
           description:
-              'przewód zharmonizowany, na napięcie 300/500 V, izolacja polwinitowa (PVC), powłoka polwinitowa (PVC), linka do odbiorników ruchomych, jednożyłowy'),
+              'przewód zharmonizowany, na napięcie 300/500 V, izolacja polwinitowa (PVC), powłoka polwinitowa (PVC), linka do odbiorników ruchomych, 2-żyłowy, przekrój 1,5mm\u00B2'),
       wireSymbolExampleTemplate(
           symbol: 'H05 VV-F 3G1,5',
           description:
@@ -214,63 +212,5 @@ class TableWireSymbols extends StatelessWidget {
       ),
     );
   }
-
-//OLD COPY
-
-// Widget buildSymbolTable(BuildContext context, Map<String, List<WireSymbol>> data) {
-//   double width = MediaQuery
-//       .of(context)
-//       .size
-//       .width;
-//   const double globalPadding = 10.0;
-//   const double tablePadding = 15.0;
-//   double firstCellWidth = (width - (2*globalPadding) - (2*tablePadding))*0.7;
-//   double secondCellWidth = (width - (2*globalPadding) - (2*tablePadding))*0.3;
-//   return SingleChildScrollView(
-//       scrollDirection: Axis.vertical,
-//       child: Column(
-//         children:
-//         data.entries.map<Widget>((data) =>
-//             Padding(
-//               padding: const EdgeInsets.all(globalPadding),
-//
-//               child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.stretch,
-//                   children: [
-//               Padding(
-//                 padding: const EdgeInsets.all(8.0),
-//                 child: Text(data.key, style: const TextStyle(fontWeight: FontWeight.bold)),
-//               ),
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: tablePadding),
-//             child: DataTable(
-//               horizontalMargin: 0,
-//               columnSpacing: 0,
-//               headingRowHeight: 0,
-//               columns: const [
-//                 DataColumn(label: Text('')),
-//                 DataColumn(label: Text(''))
-//               ],
-//               rows: data.value.map<DataRow>((e) =>
-//               (DataRow(cells: [
-//                 DataCell(Container(
-//                     // color: Colors.red,
-//                     width: firstCellWidth,
-//                     child: Text(e.description,))),
-//                 DataCell(Container(
-//                     // color: Colors.green,
-//                     width: secondCellWidth,
-//                     child: Text(e.symbol, textAlign: TextAlign.right,)))
-//               ]
-//               )),
-//               ).toList(),
-//             ),
-//           ),
-//           ],
-//         ),
-//
-//       )).toList(),),
-//   );
-// }
 
 }
