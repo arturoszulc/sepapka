@@ -28,7 +28,6 @@ class PurchaseScreen extends StatelessWidget {
               flex: 1,
               child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.5,
-                  // child: buildImage(context, 'assets/images/general/$logoName')),
                   child: Image.asset('assets/images/general/$logoName')),
             ),
             Expanded(
@@ -53,12 +52,12 @@ class PurchaseScreen extends StatelessWidget {
                     ListTile(
                       contentPadding: tilePadding,
                       leading: Icon(
-                        Icons.settings,
+                        Icons.school,
                         size: iconSize,
                         color: iconColor,
                       ),
                       title: Text(
-                        'uzyskaj dostęp do nadchodzących funkcji',
+                        'uzyskaj dostęp do wszystkich lekcji Akademii',
                         style: featuresTextStyle,
                       ),
                     ),
