@@ -6,11 +6,15 @@ import 'package:sepapka/utils/consts/theme_data.dart';
 import 'package:flutter/services.dart';
 import 'package:sepapka/controllers/app_state_controller.dart';
 
+import 'firebase_options.dart';
+
 
 void main() async {
   WidgetsFlutterBinding
       .ensureInitialized(); // wymagane do inicjalizacji Firebase
-  await Firebase.initializeApp(); // wymagane do inicjalizacji Firebase
+  await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform
+  ); // wymagane do inicjalizacji Firebase
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   // setupGetIt();
   runApp(const ProviderScope(child: MyApp()));
