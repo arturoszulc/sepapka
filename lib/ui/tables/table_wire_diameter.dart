@@ -38,9 +38,9 @@ class TableWireDiameter extends StatelessWidget {
       children: const [
         Text('Wartości przekrojów i średnic pochodzą z normy DIN VDE 0295.'),
         SizedBox(height: 10,),
-        Text('Podane średnice są średnicami maksymalnymi dla przewodów miedzianych typu linka (klasa 2).'),
+        Text('Podane średnice są średnicami maksymalnymi dla przewodów miedzianych wielodrutowych (klasa 2).'),
         SizedBox(height: 10,),
-        Text('Podane odpowiedniki normy amerykańskiej AWG są jedynie przybliżonymi ekwiwalentami pod względem obciążalności długotrwałej. Dane pochodzą z dokumentu ,,Budowa żyły według DIN VDE 0295, IEC 60228 i HD 383", dostępnego na stronie producenta Helukabel')
+        Text('Podane odpowiedniki normy amerykańskiej AWG są jedynie przybliżonymi ekwiwalentami pod względem obciążalności długotrwałej. Dane pochodzą z dokumentu ,,Budowa żyły według DIN VDE 0295, IEC 60228 i HD 383", dostępnego na stronie producenta Helukabel.')
 
       ],
     ),

@@ -46,7 +46,7 @@ controller: _scrollController,
             Text(lesson.title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.headlineSmall,),
             ...lesson.content,
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
 
