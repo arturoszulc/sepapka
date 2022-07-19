@@ -5,7 +5,7 @@ import 'lessons_cables.dart';
 
 //List of units
 const List<Unit> academyUnits = [
-  // cablesUnit,
+  cablesUnit,
   gridUnit,
 ];
 
@@ -35,6 +35,10 @@ const Unit gridUnit = Unit(
 const List<Lesson> cableLessons = [
   cableLesson1,
   cableLesson2,
+  cableLesson3,
+  cableLesson4,
+  cableLesson5,
+  cableLesson6,
 ];
 
 const List<Lesson> gridLessons = [
